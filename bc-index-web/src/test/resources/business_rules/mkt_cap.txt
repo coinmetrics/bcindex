@@ -1,0 +1,2 @@
+USDT_BTC=2
+USDT_NXT=4
