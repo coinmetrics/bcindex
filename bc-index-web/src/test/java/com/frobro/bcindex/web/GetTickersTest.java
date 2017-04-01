@@ -1,7 +1,9 @@
 package com.frobro.bcindex.web;
 
+import com.frobro.bcindex.web.service.BusinessRules;
 import com.frobro.bcindex.web.service.TickerService;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -11,6 +13,7 @@ import java.io.IOException;
  */
 public class GetTickersTest {
 
+  @Ignore
   @Test
   public void testRestCall() throws IOException {
     TickerService service = new TickerService();
@@ -29,7 +32,8 @@ public class GetTickersTest {
     service.put("a",a).put("b",b);
 
     // then
-    Assert.assertEquals(30.0, service.getLatestSum(),0.001);
+    double expected = (a+b) / (new BusinessRules().getDivisor());
+    Assert.assertEquals(expected, service.getIndexValue(),0.001);
     Assert.assertEquals(b, service.getLatestCap().iterator().next().getMktCap(),0.001);
   }
 }

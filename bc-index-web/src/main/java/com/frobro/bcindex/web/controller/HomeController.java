@@ -7,10 +7,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Created by rise on 3/21/17.
@@ -27,8 +26,10 @@ public class HomeController {
     Collection<Index> idxList = tickerService.getLatestCap();
     model.addAttribute("idxList", idxList);
 
-    double latestSum = tickerService.getLatestSum();
-    model.addAttribute("lastSum", latestSum);
+    double latestSum = tickerService.getIndexValue();
+    DecimalFormat df = new DecimalFormat("#.####");
+    df.setRoundingMode(RoundingMode.CEILING);
+    model.addAttribute("indexValue", df.format(latestSum));
 
     return "home";
   }

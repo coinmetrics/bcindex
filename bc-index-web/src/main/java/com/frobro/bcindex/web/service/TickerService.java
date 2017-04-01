@@ -27,6 +27,7 @@ public class TickerService {
 
   private Map<String, Index> tickers = new TreeMap<>();
   private String endPoint = "https://poloniex.com/public?command=returnTicker";
+  private final double divisor = new BusinessRules().getDivisor();
 
   public void updateTickers() throws IOException {
 
@@ -114,14 +115,14 @@ public class TickerService {
     return idxDisplay;
   }
 
-  public double getLatestSum() {
+  public double getIndexValue() {
     double sum = 0;
     for (Index ticker : tickers.values()) {
       if (ticker.isMktCapValid()) {
         sum += ticker.getMktCap();
       }
     }
-    return sum;
+    return sum/divisor;
   }
 
   public TickerService put(String name, double cap) {

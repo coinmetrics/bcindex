@@ -11,9 +11,13 @@ import java.util.Properties;
  * Created by rise on 3/23/17.
  */
 public class BusinessRules {
-
+  private static final double DIVISOR = 21459914.4259048;
   private static final String MKT_CAP_FILE = "business_rules/mkt_cap.txt";
   private static final String DELIMINATOR = "=";
+
+  public double getDivisor() {
+    return DIVISOR;
+  }
 
   public Map<String,Double> getMarketCapRules() {
     Properties prop = new Properties();
