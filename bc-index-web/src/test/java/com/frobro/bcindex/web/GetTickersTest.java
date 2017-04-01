@@ -20,13 +20,16 @@ public class GetTickersTest {
 
   @Test
   public void testSum() throws IOException {
+    // given
     TickerService service = new TickerService();
     double a = 10;
     double b = 20;
+
+    // when
     service.put("a",a).put("b",b);
 
+    // then
     Assert.assertEquals(30.0, service.getLatestSum(),0.001);
-
     Assert.assertEquals(b, service.getLatestCap().iterator().next().getMktCap(),0.001);
   }
 }

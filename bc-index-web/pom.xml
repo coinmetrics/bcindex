@@ -38,7 +38,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
       </plugin>
-      <!-- deply to heroku
+      <!-- deply to heroku -->
       <plugin>
         <groupId>com.heroku.sdk</groupId>
         <artifactId>heroku-maven-plugin</artifactId>
@@ -46,11 +46,10 @@
         <configuration>
           <appName>phonetest-720</appName>
           <processTypes>
-            <web>java -Dserver.port=$PORT -jar target/nos-1.0-SNAPSHOT.jar</web>
+            <web>java -Dserver.port=$PORT -jar target/bc-index-web-1.0-SNAPSHOT.jar</web>
           </processTypes>
         </configuration>
       </plugin>
-      -->
     </plugins>
   </build>
 

@@ -63,16 +63,37 @@ public class TickerService {
   }
 
   private void populateTickers(String json) throws IOException {
-    ObjectMapper mapper = new ObjectMapper();
-    JsonNode root = mapper.readTree(json);
+    JsonNode root = getRoot(json);
+
+    Set<String> indexes = Index.getIndexes();
+
     root.fields().forEachRemaining(node -> {
-      Index currPair = new Index().setName(node.getKey());
 
-      currPair.setLast(Double.parseDouble(node.getValue()
-          .get(CurrPairJson.LAST_KEY).textValue()));
-
-      tickers.put(currPair.getName(), currPair);
+      String indexName = node.getKey();
+      if (indexes.contains(indexName)) {
+        saveIndex(indexName, getVal(node.getValue()));
+        indexes.remove(indexName);
+      }
     });
+  }
+
+  private JsonNode getRoot(String json) throws IOException {
+    ObjectMapper mapper = new ObjectMapper();
+    return mapper.readTree(json);
+  }
+
+  private void saveIndex(String indexName, String priceStr) {
+    Index currPair = newIndex(indexName, priceStr);
+    tickers.put(currPair.getName(), currPair);
+  }
+
+  private Index newIndex(String indexName, String priceStr) {
+    Index currPair = new Index().setName(indexName);
+    return currPair.setLast(Double.parseDouble(priceStr));
+  }
+
+  private String getVal(JsonNode node) {
+    return node.get(CurrPairJson.LAST_KEY).textValue();
   }
 
   public Collection<Index> getLatestCap() {

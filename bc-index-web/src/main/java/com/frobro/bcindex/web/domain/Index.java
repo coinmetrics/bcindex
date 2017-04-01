@@ -4,7 +4,9 @@ import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.service.BusinessRules;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by rise on 3/23/17.
@@ -22,6 +24,10 @@ public class Index implements Comparable<Index> {
   private String name;
   private double last;
   private double mktCap = UNINITIALIZED;
+
+  public static Set<String> getIndexes() {
+    return MULT.keySet();
+  }
 
   @Override
   public int compareTo(Index other) {
