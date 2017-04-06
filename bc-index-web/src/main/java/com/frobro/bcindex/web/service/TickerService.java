@@ -122,7 +122,11 @@ public class TickerService {
         sum += ticker.getMktCap();
       }
     }
-    return sum/divisor;
+    return (sum + getConstant())/divisor;
+  }
+
+  public double getConstant() {
+    return 16223125;
   }
 
   public TickerService put(String name, double cap) {
