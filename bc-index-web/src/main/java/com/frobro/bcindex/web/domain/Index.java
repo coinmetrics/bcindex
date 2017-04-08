@@ -25,6 +25,10 @@ public class Index implements Comparable<Index> {
   private double last;
   private double mktCap = UNINITIALIZED;
 
+  public static boolean isBitCoinTicker(String ticker) {
+    return "USDT_BTC".equalsIgnoreCase(ticker);
+  }
+
   public static Set<String> getIndexes() {
     return MULT.keySet();
   }

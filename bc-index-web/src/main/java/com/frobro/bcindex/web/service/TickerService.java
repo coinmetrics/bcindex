@@ -28,21 +28,27 @@ public class TickerService {
   private Map<String, Index> tickers = new TreeMap<>();
   private String endPoint = "https://poloniex.com/public?command=returnTicker";
   private final double divisor = new BusinessRules().getDivisor();
+  private double numUsdperBtc = -1;
 
   public void updateTickers() throws IOException {
+    String response = makeApiCall();
+    populateTickers(response);
+  }
 
-    CloseableHttpClient httpClient = HttpClients.createDefault();
+  private String makeApiCall() throws IOException {
     String response = EMPTY_RESPONSE;
+    CloseableHttpClient httpClient = HttpClients.createDefault();
     try {
+
       HttpGet getRequest = new HttpGet(
           endPoint);
       getRequest.addHeader("accept", "application/json");
       response = httpClient.execute(getRequest, createResponseHandler());
 
     } finally {
-    httpClient.close();
+      httpClient.close();
     }
-    populateTickers(response);
+    return response;
   }
 
   private ResponseHandler<String> createResponseHandler() {
@@ -74,6 +80,9 @@ public class TickerService {
       if (indexes.contains(indexName)) {
         saveIndex(indexName, getVal(node.getValue()));
         indexes.remove(indexName);
+      }
+      else if (Index.isBitCoinTicker(indexName)) {
+        numUsdperBtc = Double.parseDouble(getVal(node.getValue()));
       }
     });
   }
@@ -122,7 +131,7 @@ public class TickerService {
         sum += ticker.getMktCap();
       }
     }
-    return (sum + getConstant())/divisor;
+    return ((sum + getConstant())/divisor)*numUsdperBtc;
   }
 
   public double getConstant() {
