@@ -1,4 +1,4 @@
-package com.frobro.bcindex.web;
+package com.frobro.bcindex.web.service;
 
 import com.frobro.bcindex.web.service.BusinessRules;
 import com.frobro.bcindex.web.service.TickerService;
@@ -7,6 +7,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.Optional;
 
 /**
  * Created by rise on 3/23/17.
@@ -17,7 +18,6 @@ public class GetTickersTest {
   @Test
   public void testRestCall() throws IOException {
     TickerService service = new TickerService();
-
     service.updateTickers();
   }
 
@@ -27,6 +27,7 @@ public class GetTickersTest {
     TickerService service = new TickerService();
     double a = 10;
     double b = 20;
+    service.init();
 
     // when
     service.put("a",a).put("b",b);

@@ -2,7 +2,6 @@ package com.frobro.bcindex.web.service;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,14 +24,20 @@ public class TickerService {
   private static final BcLog log = BcLog.getLogger(TickerService.class);
   private static final String EMPTY_RESPONSE = "noop";
 
-  private Map<String, Index> tickers = new TreeMap<>();
   private String endPoint = "https://poloniex.com/public?command=returnTicker";
-  private final double divisor = new BusinessRules().getDivisor();
-  private double numUsdperBtc = -1;
+  private IndexCalculator indexCalculator = new IndexCalculator();
+
+  public TickerService() {
+  }
 
   public void updateTickers() throws IOException {
     String response = makeApiCall();
-    populateTickers(response);
+    updateTickers(response);
+  }
+
+  public void updateTickers(String apiResponse)throws IOException {
+    Map<String, Index> tickers = populateTickers(apiResponse);
+    indexCalculator.updateLast(tickers);
   }
 
   private String makeApiCall() throws IOException {
@@ -69,22 +74,20 @@ public class TickerService {
     };
   }
 
-  private void populateTickers(String json) throws IOException {
+  private Map<String,Index> populateTickers(String json) throws IOException {
+    Map<String, Index> tickers = new TreeMap<>();
     JsonNode root = getRoot(json);
 
-    Set<String> indexes = Index.getIndexes();
+    Set<String> indexes = new BusinessRules().getIndexes();
 
     root.fields().forEachRemaining(node -> {
 
       String indexName = node.getKey();
       if (indexes.contains(indexName)) {
-        saveIndex(indexName, getVal(node.getValue()));
-        indexes.remove(indexName);
-      }
-      else if (Index.isBitCoinTicker(indexName)) {
-        numUsdperBtc = Double.parseDouble(getVal(node.getValue()));
+        addTicker(tickers, indexName, node.getValue());
       }
     });
+    return tickers;
   }
 
   private JsonNode getRoot(String json) throws IOException {
@@ -92,9 +95,9 @@ public class TickerService {
     return mapper.readTree(json);
   }
 
-  private void saveIndex(String indexName, String priceStr) {
-    Index currPair = newIndex(indexName, priceStr);
-    tickers.put(currPair.getName(), currPair);
+  private void addTicker(Map<String,Index> tickerMap, String name, JsonNode node) {
+    Index currPair = newIndex(name, getVal(node));
+    tickerMap.put(currPair.getName(), currPair);
   }
 
   private Index newIndex(String indexName, String priceStr) {
@@ -107,41 +110,23 @@ public class TickerService {
   }
 
   public Collection<Index> getLatestCap() {
-    List<Index> sorted = new ArrayList<>(tickers.values());
-    Collections.reverse(sorted);
-    return sorted;
-  }
-
-  public List<String> mktCapAsStrings() {
-    List<String> idxDisplay = new ArrayList<>(tickers.size());
-    tickers.values().stream().forEach(val -> {
-      double mktCap = val.getMktCap();
-
-      idxDisplay.add(val.getName()
-          + " [mkt cap: " + mktCap
-          + ", last price: " + val.getLast() + "]");
-    });
-    return idxDisplay;
+    return indexCalculator.getSortedValues();
   }
 
   public double getIndexValue() {
-    double sum = 0;
-    for (Index ticker : tickers.values()) {
-      if (ticker.isMktCapValid()) {
-        sum += ticker.getMktCap();
-      }
-    }
-    return ((sum + getConstant())/divisor)*numUsdperBtc;
+    return indexCalculator.getLastIndexValue();
   }
 
   public double getConstant() {
-    return 16223125;
+    return indexCalculator.getConstant();
   }
 
-  public TickerService put(String name, double cap) {
-    Index idx = new Index().setName(name)
-        .setLast(0).setMktCap(cap);
-    tickers.put(idx.getName(), idx);
+  void init() {
+    indexCalculator.updateLast(new HashMap<>());
+  }
+
+  TickerService put(String name, double cap) {
+    indexCalculator.put(name, 0, cap);
     return this;
   }
 }

@@ -14,23 +14,18 @@ import java.util.Set;
 public class Index implements Comparable<Index> {
 
   private static final BcLog log = BcLog.getLogger(Index.class);
-  private static final Map<String,Double> MULT = new HashMap<>();
   private static final double UNINITIALIZED = -99999;
-  static {
-    // should be config file
-    MULT.putAll(new BusinessRules().getMarketCapRules());
-  }
-
+  private static final String BITCOIN_TICKER = "USDT_BTC";
   private String name;
   private double last;
   private double mktCap = UNINITIALIZED;
 
   public static boolean isBitCoinTicker(String ticker) {
-    return "USDT_BTC".equalsIgnoreCase(ticker);
+    return BITCOIN_TICKER.equalsIgnoreCase(ticker);
   }
 
-  public static Set<String> getIndexes() {
-    return MULT.keySet();
+  public static String getBitCoinTicker() {
+    return BITCOIN_TICKER;
   }
 
   @Override
@@ -55,33 +50,8 @@ public class Index implements Comparable<Index> {
   }
 
   public Index setLast(double last) {
-    checkName();
     this.last = last;
-
-    setMktCap();
     return this;
-  }
-
-  private void setMktCap() {
-    Double multiplier = MULT.get(name);
-    if (checkMultiplier(multiplier)) {
-      mktCap = last*multiplier;
-    }
-  }
-
-  private boolean checkMultiplier(Double val) {
-    boolean shouldSkip = Boolean.TRUE;
-    if (val == null) {
-      shouldSkip = Boolean.FALSE;
-      log.debug("did not find a multiplier for " + name + " skipping");
-    }
-    return shouldSkip;
-  }
-
-  private void checkName() {
-    if (name == null) {
-      throw new IllegalStateException("the index name must be set before last price");
-    }
   }
 
   public double getMktCap() {

@@ -36,10 +36,11 @@ public class BcLog {
   }
 
   public void debug(String msg) {
+    log(DEBUG, msg);
   }
 
   private void log(String level, String msg) {
-    System.out.println(level + " " + className + " " + msg);
+    System.out.println("["+ level + "]" + " " + className + " " + msg);
   }
 
   private String createClassString(Class clz) {
