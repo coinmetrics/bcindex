@@ -1,2 +1,2 @@
 # bcindex
-block chaing index
+block chain index
