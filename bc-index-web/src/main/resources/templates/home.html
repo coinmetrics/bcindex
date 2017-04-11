@@ -7,6 +7,7 @@
     <title>Block Chain Index</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
 
+
 </head>
 <body>
     <!-- Static navbar -->
@@ -19,30 +20,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Project name</a>
+                <a class="navbar-brand" href="home.html">Bletchley Indices</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li class="dropdown-header">Nav header</li>
-                            <li><a href="#">Separated link</a></li>
-                            <li><a href="#">One more separated link</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="../navbar/">Default</a></li>
-                    <li class="active"><a href="./">Static top <span class="sr-only">(current)</span></a></li>
-                    <li><a href="../navbar-fixed-top/">Fixed top</a></li>
+                    <li class="active"><a href="#Data">Data</a></li>
+                    <li><a href="Methodology.html">Methodology</a></li>
+                    <li><a href="About.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
                 </ul>
             </div><!--/.nav-collapse -->
         </div>
@@ -51,13 +36,17 @@
     <div class="container">
 
         <!-- Main component for a primary marketing message or call to action -->
-        <div class="jumbotron">
-            <h1 th:text="' Index Value: ' + ${indexValue}">Index Value: 0.0</h1>
-            <p>This example is a quick exercise to illustrate how the default, static and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
-            <p>To see the difference between static and fixed top navbars, just scroll.</p>
-            <p>
-                <a class="btn btn-lg btn-primary" href="../../components/#navbar" role="button">View navbar docs &raquo;</a>
-            </p>
+            <h1 th:text="' Index Value: ' + ${indexValue}">Last 0.0</h1>
+            <p>High</p>
+            <p>Low</p>
+            <p>Change</p>
+            <p>Percent Change</p>
+            <p>Previous Close</p>
+            Graphs go under this tab. I would like a drop-down menu to select each index (launching with Bletchley 10 and Bletchley 10 Even) and then a tab button next to it to select each of the following currencies (units): USD, BTC, CNY, ETH
+            <p></p>
+            For each selected pair, I would then like to display a real-time updating last price, every minute is fine. A high and low value over the time period selected, and the previous close value, which will be the value of the index as of 4 PM EST. Also a net change, and a percent change from the opening of the time period selected.
+            <p></p>
+            The time periods would ideally be, hour, day, week, month, year, max. Obviously upon launch we won’t back out all of that data. Hopefully we can go back a month upon launch. I would also like this graph to be able to highlight and select certain timeframes. 
         </div>
 
     </div> <!-- /container -->
