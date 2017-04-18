@@ -51,7 +51,7 @@
             <p>
             The time periods would ideally be, hour, day, week, month, year, max. Obviously upon launch we won’t back out all of that data. Hopefully we can go back a month upon launch. I would also like this graph to be able to highlight and select certain timeframes.
             </p>
-        <canvas id="myChart" width="300" height="300"></canvas>
+        <canvas id="myChart" width="700" height="300"></canvas>
     </div> <!-- /container -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <script>
@@ -59,7 +59,7 @@
         var myChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+                labels: ["2017-04-01", "2017-04-02", "2017-04-03", "2017-04-04", "2017-04-05", "2017-04-06"],
                 datasets: [{
                     label: 'The Index',
                     data: [12, 19, 3, 5, 2, 3],
@@ -73,16 +73,15 @@
                 }]
             },
             options: {
-                responsive: true,
-//                maintainAspectRatio: true,
+                responsive: false,
+                maintainAspectRatio: false,
                 scales: {
                     yAxes: [{
                         ticks: {
                             beginAtZero:true
                         },
                         scaleLabel: {
-                            display: true,
-                            labelString: 'Index Value'
+                            display: true
                             }
                     }],
                     xAxes: [{
