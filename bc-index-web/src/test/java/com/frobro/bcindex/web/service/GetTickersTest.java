@@ -33,8 +33,8 @@ public class GetTickersTest {
     service.put("a",a).put("b",b);
 
     // then
-    double expected = -1*(a+ b + service.getConstant()) / (new BusinessRules().getDivisor());
-    Assert.assertEquals(expected, service.getIndexValue(),0.001);
+    double expectedIndexValue = -1*(a+ b + service.getConstant()) / (new BusinessRules().getDivisor());
+    Assert.assertEquals(expectedIndexValue, service.getIndexValue(),0.001);
     Assert.assertEquals(b, service.getLatestCap().iterator().next().getMktCap(),0.001);
   }
 }

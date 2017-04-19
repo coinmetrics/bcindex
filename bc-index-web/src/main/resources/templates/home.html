@@ -42,13 +42,57 @@
             <p>Change</p>
             <p>Percent Change</p>
             <p>Previous Close</p>
+            <p>
             Graphs go under this tab. I would like a drop-down menu to select each index (launching with Bletchley 10 and Bletchley 10 Even) and then a tab button next to it to select each of the following currencies (units): USD, BTC, CNY, ETH
-            <p></p>
+            </p>
+            <p>
             For each selected pair, I would then like to display a real-time updating last price, every minute is fine. A high and low value over the time period selected, and the previous close value, which will be the value of the index as of 4 PM EST. Also a net change, and a percent change from the opening of the time period selected.
-            <p></p>
-            The time periods would ideally be, hour, day, week, month, year, max. Obviously upon launch we won’t back out all of that data. Hopefully we can go back a month upon launch. I would also like this graph to be able to highlight and select certain timeframes. 
-        </div>
-
+            </p>
+            <p>
+            The time periods would ideally be, hour, day, week, month, year, max. Obviously upon launch we won’t back out all of that data. Hopefully we can go back a month upon launch. I would also like this graph to be able to highlight and select certain timeframes.
+            </p>
+        <canvas id="myChart" width="700" height="300"></canvas>
     </div> <!-- /container -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script>
+        var ctx = document.getElementById("myChart");
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ["2017-04-01", "2017-04-02", "2017-04-03", "2017-04-04", "2017-04-05", "2017-04-06"],
+                datasets: [{
+                    label: 'The Index',
+                    data: [12, 19, 3, 5, 2, 3],
+                    backgroundColor: [
+                        'rgba(255,153,0,0.4)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: false,
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        },
+                        scaleLabel: {
+                            display: true
+                            }
+                    }],
+                    xAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Date'
+                        }
+                    }]
+                }
+            }
+        });
+</script>
 </body>
 </html>
