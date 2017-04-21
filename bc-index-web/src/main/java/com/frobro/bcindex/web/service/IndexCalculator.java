@@ -24,7 +24,7 @@ public class IndexCalculator {
   }
 
   public double getConstant() {
-    return 16223125;
+    return 16280750;
   }
 
   public double getLastIndexValue() {
