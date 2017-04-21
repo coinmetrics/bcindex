@@ -12,7 +12,8 @@ import java.util.*;
  */
 public class BusinessRules {
   private static final BcLog log = BcLog.getLogger(BusinessRules.class);
-  private static final double DIVISOR = 21595511.53;
+  private static final double DIVISOR = 21599771.0134701;
+  private static final double CONSTANT = 16223125;
   private static final String MKT_CAP_FILE = "business_rules/mkt_cap.txt";
   private static final String DELIMINATOR = "=";
   private static Map<String,Double> multiplerMapping;
@@ -49,6 +50,10 @@ public class BusinessRules {
       throw new RuntimeException(ioe);
     }
     return MULT;
+  }
+
+  public double getConstant() {
+    return CONSTANT;
   }
 
   public double getDivisor() {

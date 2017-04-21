@@ -13,6 +13,7 @@ public class IndexCalculator {
   private static final BcLog log = BcLog.getLogger(IndexCalculator.class);
   private final BusinessRules businessRules;
   private final double divisor;
+  private final double constant;
 
   private Map<String,Index> lastIndexList;
   private double lastIndexValue;
@@ -21,10 +22,11 @@ public class IndexCalculator {
   public IndexCalculator() {
     businessRules = new BusinessRules();
     divisor = businessRules.getDivisor();
+    constant = businessRules.getConstant();
   }
 
   public double getConstant() {
-    return 16280750;
+    return constant;
   }
 
   public double getLastIndexValue() {
