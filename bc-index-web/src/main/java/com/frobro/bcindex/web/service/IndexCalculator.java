@@ -114,9 +114,9 @@ public class IndexCalculator {
 
   private void logCalculationEven(double lastSum, double UsdResultEven, double btcResultEven) {
     log.debug("last even sum: " + lastSum
-        + " constant: " + getConstantEven() + " divsor: "
+        + " even constant: " + getConstantEven() + " even divsor: "
         + divisorEven + " usd-btc: " + getUsdPerBtc()
-        + " index value USD=" + UsdResultEven + ", BTC=" + btcResultEven);
+        + " even index value USD=" + UsdResultEven + ", even BTC=" + btcResultEven);
   }
 
   private void updateMarketCapIfValid(Optional<Double> multiplier, String ticker) {
