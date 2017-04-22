@@ -86,7 +86,7 @@ public class IndexCalculator {
     }
     double btcResult = ((lastSum + getConstant())/divisor);
     double usdResult = btcResult*getUsdPerBtc();
-    logCalculationEven(lastSum, usdResult, btcResult);
+    logCalculation(lastSum, usdResult, btcResult);
     return usdResult;
   }
 
