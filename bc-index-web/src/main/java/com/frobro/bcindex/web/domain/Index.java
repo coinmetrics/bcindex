@@ -15,18 +15,9 @@ public class Index implements Comparable<Index> {
 
   private static final BcLog log = BcLog.getLogger(Index.class);
   private static final double UNINITIALIZED = -99999;
-  private static final String BITCOIN_TICKER = "USDT_BTC";
   private String name;
   private double last;
   private double mktCap = UNINITIALIZED;
-
-  public static boolean isBitCoinTicker(String ticker) {
-    return BITCOIN_TICKER.equalsIgnoreCase(ticker);
-  }
-
-  public static String getBitCoinTicker() {
-    return BITCOIN_TICKER;
-  }
 
   @Override
   public int compareTo(Index other) {

@@ -58,7 +58,7 @@ public class IndexCalculator {
   private double getUsdPerBtc() {
     double numUsdPerBtc = -1;
 
-    Index usdBtc = lastIndexList.get(Index.getBitCoinTicker());
+    Index usdBtc = lastIndexList.get(BletchleyData.getUsdBtcTicker());
 
     if (usdBtc != null) {
       numUsdPerBtc = usdBtc.getLast();

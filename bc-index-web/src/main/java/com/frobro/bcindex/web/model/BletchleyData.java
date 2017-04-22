@@ -15,6 +15,10 @@ public class BletchleyData {
   private double lastUsdBtc;
   private Map<String,Index> lastIndexes = new HashMap<>();
 
+  public static String getUsdBtcTicker() {
+    return USD_BTC_KEY;
+  }
+
   public BletchleyData setLastUsdBtc(double last) {
     Index newEntry = new Index()
         .setName(USD_BTC_KEY)
