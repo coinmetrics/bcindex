@@ -58,8 +58,16 @@ public class BusinessRules {
     return CONSTANT;
   }
 
+  public double getConstantEven() {
+    return CONSTANT_EVEN;
+  }
+
   public double getDivisor() {
     return DIVISOR;
+  }
+
+  public double getDivisorEven() {
+    return DIVISOR_EVEN;
   }
 
   public Set<String> getIndexes() {

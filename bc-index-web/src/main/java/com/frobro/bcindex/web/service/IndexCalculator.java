@@ -14,23 +14,38 @@ public class IndexCalculator {
   private final BusinessRules businessRules;
   private final double divisor;
   private final double constant;
+  private final double divisorEven;
+  private final double constantEven;
 
   private Map<String,Index> lastIndexList;
   private double lastIndexValue;
   private double lastSum;
+  private Map<String,Index> lastIndexListEven;
+  private double lastIndexValueEven;
+  private double lastSumEven;
 
   public IndexCalculator() {
     businessRules = new BusinessRules();
     divisor = businessRules.getDivisor();
     constant = businessRules.getConstant();
+    divisorEven = businessRules.getDivisorEven();
+    constantEven = businessRules.getConstantEven();
   }
 
   public double getConstant() {
     return constant;
   }
 
+  public double getConstantEven() {
+    return constantEven;
+  }
+
   public double getLastIndexValue() {
     return lastIndexValue;
+  }
+
+  public double getLastIndexValueEven() {
+    return lastIndexValueEven;
   }
 
   public double updateLast(Map<String,Index> lastIndexes) {
