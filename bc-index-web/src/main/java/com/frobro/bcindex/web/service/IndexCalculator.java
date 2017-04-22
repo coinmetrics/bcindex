@@ -52,6 +52,7 @@ public class IndexCalculator {
     lastIndexList = lastIndexes;
     calculateMarketCap();
     lastIndexValue = calculateIndexValue();
+    lastIndexValueEven = calculateIndexValueEven();
     return lastIndexValue;
   }
 
@@ -92,11 +93,33 @@ public class IndexCalculator {
     return usdResult;
   }
 
+  private double calculateIndexValueEven() {
+    log.info("calculating 10 even index value");
+
+    lastSum = 0;
+    for (Index ticker : lastIndexList.values()) {
+      if (ticker.isMktCapValid()) {
+        lastSum += ticker.getMktCap();
+      }
+    }
+    double btcResultEven = ((lastSum + getConstantEven())/divisorEven);
+    double usdResultEven = btcResultEven*getUsdPerBtc();
+    logCalculationEven(usdResultEven, btcResultEven);
+    return usdResultEven;
+  }
+
   private void logCalculation(double UsdResult, double btcResult) {
     log.debug("last mkt cap sum: " + lastSum
         + " constant: " + getConstant() + " divsor: "
         + divisor + " usd-btc: " + getUsdPerBtc()
         + " index value USD=" + UsdResult + ", BTC=" + btcResult);
+  }
+
+  private void logCalculationEven(double UsdResultEven, double btcResultEven) {
+    log.debug("last even sum: " + lastSum
+        + " constant: " + getConstantEven() + " divsor: "
+        + divisorEven + " usd-btc: " + getUsdPerBtc()
+        + " index value USD=" + UsdResultEven + ", BTC=" + btcResultEven);
   }
 
   private void updateMarketCapIfValid(Optional<Double> multiplier, String ticker) {
