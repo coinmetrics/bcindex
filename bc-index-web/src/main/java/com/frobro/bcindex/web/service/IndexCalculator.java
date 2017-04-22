@@ -19,10 +19,7 @@ public class IndexCalculator {
 
   private Map<String,Index> lastIndexList;
   private double lastIndexValue;
-  private double lastSum;
-  private Map<String,Index> lastIndexListEven;
   private double lastIndexValueEven;
-  private double lastSumEven;
 
   public IndexCalculator() {
     businessRules = new BusinessRules();
@@ -81,7 +78,7 @@ public class IndexCalculator {
   private double calculateIndexValue() {
     log.info("calculating index value");
 
-    lastSum = 0;
+    double lastSum = 0;
     for (Index ticker : lastIndexList.values()) {
       if (ticker.isMktCapValid()) {
         lastSum += ticker.getMktCap();
@@ -89,14 +86,14 @@ public class IndexCalculator {
     }
     double btcResult = ((lastSum + getConstant())/divisor);
     double usdResult = btcResult*getUsdPerBtc();
-    logCalculation(usdResult, btcResult);
+    logCalculationEven(lastSum, usdResult, btcResult);
     return usdResult;
   }
 
   private double calculateIndexValueEven() {
     log.info("calculating 10 even index value");
 
-    lastSum = 0;
+    double lastSum = 0;
     for (Index ticker : lastIndexList.values()) {
       if (ticker.isMktCapValid()) {
         lastSum += ticker.getMktCap();
@@ -104,18 +101,18 @@ public class IndexCalculator {
     }
     double btcResultEven = ((lastSum + getConstantEven())/divisorEven);
     double usdResultEven = btcResultEven*getUsdPerBtc();
-    logCalculationEven(usdResultEven, btcResultEven);
+    logCalculationEven(lastSum, usdResultEven, btcResultEven);
     return usdResultEven;
   }
 
-  private void logCalculation(double UsdResult, double btcResult) {
+  private void logCalculation(double lastSum, double UsdResult, double btcResult) {
     log.debug("last mkt cap sum: " + lastSum
         + " constant: " + getConstant() + " divsor: "
         + divisor + " usd-btc: " + getUsdPerBtc()
         + " index value USD=" + UsdResult + ", BTC=" + btcResult);
   }
 
-  private void logCalculationEven(double UsdResultEven, double btcResultEven) {
+  private void logCalculationEven(double lastSum, double UsdResultEven, double btcResultEven) {
     log.debug("last even sum: " + lastSum
         + " constant: " + getConstantEven() + " divsor: "
         + divisorEven + " usd-btc: " + getUsdPerBtc()
