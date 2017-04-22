@@ -2,6 +2,7 @@ package com.frobro.bcindex.web.service;
 
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.domain.Index;
+import com.frobro.bcindex.web.model.BletchleyData;
 
 import java.util.*;
 
@@ -45,13 +46,14 @@ public class IndexCalculator {
     return lastIndexValueEven;
   }
 
-  public double updateLast(Map<String,Index> lastIndexes) {
-    lastIndexList = lastIndexes;
+  public double updateLast(BletchleyData newData) {
+    lastIndexList = newData.getLastIndexes();
     calculateMarketCap();
     lastIndexValue = calculateIndexValue();
     lastIndexValueEven = calculateIndexValueEven();
     return lastIndexValue;
   }
+
 
   private double getUsdPerBtc() {
     double numUsdPerBtc = -1;

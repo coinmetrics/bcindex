@@ -18,7 +18,10 @@ public class GetTickersTest {
   @Test
   public void testRestCall() throws IOException {
     TickerService service = new TickerService();
-    service.updateTickers();
+//    service.updateTickers();
+    String res = service.makeApiCallBtc();
+    System.out.println(res);
+    service.updateTickerBtc(res);
   }
 
   @Test

@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.domain.Index;
+import com.frobro.bcindex.web.model.BletchleyData;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -23,30 +24,54 @@ public class TickerService {
 
   private static final BcLog log = BcLog.getLogger(TickerService.class);
   private static final String EMPTY_RESPONSE = "noop";
+  private final static String COIN_CAP_ENDPOINT = "http://www.coincap.io/global";
+  private final static String POLONIEX_ENDPOINT = "https://poloniex.com/public?command=returnTicker";
 
-  private String endPoint = "https://poloniex.com/public?command=returnTicker";
   private IndexCalculator indexCalculator = new IndexCalculator();
+  private BletchleyData lastData = emptyData();
 
   public TickerService() {
   }
 
   public void updateTickers() throws IOException {
-    String response = makeApiCall();
+    lastData = new BletchleyData();
+
+    String response = makeCallTenMembers();
     updateTickers(response);
+    
+    String btcResponse = makeApiCallBtc();
+    updateTickerBtc(btcResponse);
+
+    indexCalculator.updateLast(lastData);
+  }
+
+  public void updateTickerBtc(String response) throws IOException {
+    ObjectMapper mapper = new ObjectMapper();
+    CoinCapDto dto = mapper.readValue(response, CoinCapDto.class);
+    lastData.setLastUsdBtc(dto.getBtcPrice());
   }
 
   public void updateTickers(String apiResponse)throws IOException {
     Map<String, Index> tickers = populateTickers(apiResponse);
-    indexCalculator.updateLast(tickers);
+    lastData.setMembers(tickers);
   }
 
-  private String makeApiCall() throws IOException {
+
+  public String makeApiCallBtc() throws IOException {
+    return makeApiCall(COIN_CAP_ENDPOINT);
+  }
+  
+  private String makeCallTenMembers() throws IOException {
+    return makeApiCall(POLONIEX_ENDPOINT);
+  }
+
+  private String makeApiCall(String endpoint) throws IOException {
     String response = EMPTY_RESPONSE;
     CloseableHttpClient httpClient = HttpClients.createDefault();
     try {
 
       HttpGet getRequest = new HttpGet(
-          endPoint);
+          endpoint);
       getRequest.addHeader("accept", "application/json");
       response = httpClient.execute(getRequest, createResponseHandler());
 
@@ -55,7 +80,6 @@ public class TickerService {
     }
     return response;
   }
-
   private ResponseHandler<String> createResponseHandler() {
     return new ResponseHandler<String>() {
 
@@ -122,7 +146,11 @@ public class TickerService {
   }
 
   void init() {
-    indexCalculator.updateLast(new HashMap<>());
+    indexCalculator.updateLast(emptyData());
+  }
+
+  private BletchleyData emptyData() {
+    return new BletchleyData();
   }
 
   TickerService put(String name, double cap) {
