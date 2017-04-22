@@ -21,6 +21,15 @@ public class HomeController {
 
   @RequestMapping("/")
   public String index(Model model) throws IOException {
+    return renderHome(model);
+  }
+
+  @RequestMapping("/home")
+  public String home(Model model) throws IOException {
+    return renderHome(model);
+  }
+
+  private String renderHome(Model model) throws IOException {
     tickerService.updateTickers();
 
     Collection<Index> idxList = tickerService.getLatestCap();

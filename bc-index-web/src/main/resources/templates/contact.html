@@ -24,10 +24,10 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="home.html">Data</a></li>
-                    <li><a href="Methodology.html">Methodology</a></li>
-                    <li><a href="About.html">About</a></li>
-                    <li class="active"><a href="contact.html">Contact</a></li>
+                    <li><a th:href="@{/home}" href="home.html">Data</a></li>
+                    <li><a th:href="@{/methodology}" href="methodology.html">Methodology</a></li>
+                    <li><a th:href="@{/about}" href="about.html">About</a></li>
+                    <li class="active"><a th:href="@{/contact}" href="contact.html">Contact</a></li>
                 </ul>
             </div><!--/.nav-collapse -->
         </div>
@@ -35,14 +35,18 @@
 
     <div class="container">
 
-<p></p>
-Please contact us at BletchleyIndexes@gmail.com with any comments, questions, partnership inquires or requests to subscribe to historical data.
-<br><br>
-Donations are greatly appreciated and will go towards adding more features and new indexes. The Bletchley Indexes are currently run 100% on donations.<br><br>
-  <img src="donate.png" ></a><br><br>
-  <p>Bitcoin address: 1E3fLBHfAwBsuRbytF3ZvWxeFHs6Km7dAs</p>
+        <p></p>
+        Please contact us at BletchleyIndexes@gmail.com with any comments, questions, partnership inquires or requests to subscribe to historical data.
+        <br/><br/>
+        Donations are greatly appreciated and will go towards adding more features and new indexes. The Bletchley Indexes are currently run 100% on donations.
+        <br/><br/>
 
-    <p>Ethereum address: 0xe38a3c0327063826727494d5436570265e17ab51</p>
+
+        <img th:src="@{/img/Donate.png}" src="../static/img/Donate.png" />
+        <br/><br/>
+
+        <p>Bitcoin address: 1E3fLBHfAwBsuRbytF3ZvWxeFHs6Km7dAs</p>
+        <p>Ethereum address: 0xe38a3c0327063826727494d5436570265e17ab51</p>
 
     </div> <!-- /container -->
 
