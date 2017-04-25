@@ -18,6 +18,7 @@ public class Index implements Comparable<Index> {
   private String name;
   private double last;
   private double mktCap = UNINITIALIZED;
+  private double evenMult = UNINITIALIZED;
 
   @Override
   public int compareTo(Index other) {
@@ -35,6 +36,11 @@ public class Index implements Comparable<Index> {
     return this;
   }
 
+  public Index setEvenMult(double mult) {
+    this.evenMult = mult;
+    return this;
+  }
+
   public Index setMktCap(double cap) {
     this.mktCap = cap;
     return this;
@@ -43,6 +49,10 @@ public class Index implements Comparable<Index> {
   public Index setLast(double last) {
     this.last = last;
     return this;
+  }
+
+  public double getEvenMult() {
+    return evenMult;
   }
 
   public double getMktCap() {

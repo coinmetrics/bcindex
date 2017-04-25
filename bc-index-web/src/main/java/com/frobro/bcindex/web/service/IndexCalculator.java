@@ -46,12 +46,11 @@ public class IndexCalculator {
     return lastIndexValueEven;
   }
 
-  public double updateLast(BletchleyData newData) {
+  public void updateLast(BletchleyData newData) {
     lastIndexList = newData.getLastIndexes();
     calculateMarketCap();
     lastIndexValue = calculateIndexValue();
     lastIndexValueEven = calculateIndexValueEven();
-    return lastIndexValue;
   }
 
 
@@ -72,7 +71,11 @@ public class IndexCalculator {
     lastIndexList.keySet().stream().forEach(ticker -> {
 
       Optional<Double> multiplier = businessRules.getMultipler(ticker);
-      updateMarketCapIfValid(multiplier, ticker);
+      MultiplierService multService = new MultiplierService(lastIndexList)
+          .updateMarketCapIfValid(multiplier, ticker);
+
+      Optional<Double> evenMultipler = businessRules.getEvenMultipler(ticker);
+      multService.updateEvenMktCapIfValid(evenMultipler, ticker);
     });
     return this;
   }
@@ -98,7 +101,7 @@ public class IndexCalculator {
     double lastSum = 0;
     for (Index ticker : lastIndexList.values()) {
       if (ticker.isMktCapValid()) {
-        lastSum += ticker.getMktCap();
+        lastSum += ticker.getEvenMult();
       }
     }
     double btcResultEven = ((lastSum + getConstantEven())/divisorEven);
@@ -119,26 +122,6 @@ public class IndexCalculator {
         + " even constant: " + getConstantEven() + " even divsor: "
         + divisorEven + " usd-btc: " + getUsdPerBtc()
         + " even index value USD=" + UsdResultEven + ", even BTC=" + btcResultEven);
-  }
-
-  private void updateMarketCapIfValid(Optional<Double> multiplier, String ticker) {
-    if (multiplier.isPresent()) {
-      updateMarketCap(multiplier.get(), lastIndexList.get(ticker));
-    }
-    else {
-      log.error("cannot calculate market cap for ticker '"
-          + ticker + "' no multiplier exists in " + businessRules.getRulesFileName());
-    }
-  }
-
-  private void updateMarketCap(double multiplier, Index indexForTicker) {
-    double last = indexForTicker.getLast();
-    double mktCap = last*multiplier;
-
-    log.debug("updating ticker: " + indexForTicker.getName()
-      + " last: " + last + " mkt cap: " + mktCap);
-
-    indexForTicker.setMktCap(mktCap);
   }
 
   public void put(String name, double last, double mktCap) {

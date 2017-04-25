@@ -141,6 +141,10 @@ public class TickerService {
     return indexCalculator.getLastIndexValue();
   }
 
+  public double getEvenIndexValue() {
+    return indexCalculator.getLastIndexValueEven();
+  }
+
   public double getConstant() {
     return indexCalculator.getConstant();
   }

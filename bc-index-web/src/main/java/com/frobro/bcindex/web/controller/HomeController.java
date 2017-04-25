@@ -36,10 +36,17 @@ public class HomeController {
     model.addAttribute("idxList", idxList);
 
     double latestSum = tickerService.getIndexValue();
-    DecimalFormat df = new DecimalFormat("#.####");
-    df.setRoundingMode(RoundingMode.CEILING);
-    model.addAttribute("indexValue", df.format(latestSum));
+    model.addAttribute("indexValue", format(latestSum));
+
+    double latestEven = tickerService.getEvenIndexValue();
+    model.addAttribute("evenIndex", format(latestEven));
 
     return "home";
+  }
+
+  private String format(double val) {
+    DecimalFormat df = new DecimalFormat("#.####");
+    df.setRoundingMode(RoundingMode.CEILING);
+    return df.format(val);
   }
 }

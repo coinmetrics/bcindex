@@ -18,6 +18,8 @@ public class JpaIndex {
   private Date date;
   private double indexValueUsd;
   private double usdPerBtc;
+  private double evenIndexValueUsd;
+  private double evenIndexValueBtc;
 
   public double getIndexValueUsd() {
     return indexValueUsd;
