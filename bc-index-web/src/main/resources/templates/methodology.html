@@ -4,9 +4,36 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Block Chain Index</title>
+    <title>Bletchley Indexes</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/> 
+    <style>
+#weights {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
 
+#weights td, #weights th {
+    border-bottom: 1px solid #ddd;
+    padding: 8px;
+    
+}
+
+#weights tr:nth-child(even){background-color: #f2f2f2;}
+
+#weights tr:hover {background-color: #ddd;}
+
+#weights th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4C80AF;
+    color: white;
+    border-bottom: 1px solid #ddd;
+}
+</style>
 
 </head>
 <body>
@@ -24,7 +51,7 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a th:href="@{/home}" href="home.html">Data</a></li>
+                    <li><a th:href="@{/home}" href="home.html">Home</a></li>
                     <li class="active"><a th:href="@{/methodology}" href="methodology.html">Methodology</a></li>
                     <li><a th:href="@{/about}" href="about.html">About</a></li>
                     <li><a th:href="@{/contact}" href="contact.html">Contact</a></li>
@@ -33,26 +60,35 @@
             </div><!--/.nav-collapse -->
         </div>
     </nav>
-<p></p>
 
-    <div class="container">
-    <a href="#Introduction">Introduction</a>
-    <br/>
-    <a href="#10 Index">Bletchley 10 Index</a>
-    <br/>
-    <a href="#20 Index">Bletchley 20 Index</a>
-    <br/>
-    <a href="#Eligibility Criteria">Eligibility Criteria</a>
-    <br/>
-    <a href="#Index Calculation">Index Calculation</a>
-    <br/>
-    <a href="#Index Rebalancing">Index Rebalancing</a>
-    <br/>
-    <a href="#Index Weights">Index Weights</a>
-    <br/>
-    <a href="#Base Values">Creation Dates and Values</a>
-    <br/>
-        
+
+<div style="margin-left:10%">  
+<div style="margin-right:25%">  
+
+<!-- Sidebar -->
+<div class="w3-sidebar w3-bar-block w3-card-2" style="width:20%;right:0;">
+  <h3>Contents</h3>
+  <ul>
+  <li><a href="#Introduction">Introduction</a>
+    <ul>
+  <li><a href="#10 Index">Bletchley 10 Index</a></li>
+  <li><a href="#20 Index">Bletchley 20 Index</a></li>
+    </ul>
+  </li>
+  <li><a href="#Eligibility Criteria">Eligibility Criteria</a></li>
+  <li><a href="#Index Calculation">Index Calculation</a></li>
+  <li><a href="#Index Rebalancing">Index Rebalancing</a></li>
+  <li><a href="#Index Weights">Index Weights</a></li>
+  <li><a href="#Base Values">Creation Dates and Values</a></li>
+</ul>
+<p>&nbsp;</p>
+</div>
+
+    
+    <div class="w3-container">
+     
+
+
         <!--Detailed Methodology Links:
         <br/>
         <br/>
@@ -60,6 +96,9 @@
         <p></p>
         <li><a href="math_Methodology.pdf">Mathematical Methodology</a></li>
         --><br/>
+
+    <h1>Bletchley Indexes Methodology</h1>
+        <p></p><br/>
         <a name="Introduction"></a>
         <b>Introduction</b>
         <br/><br/>
@@ -106,11 +145,11 @@
         <b>Index Weights</b>
         <br/><br/>
         <!--Bletchley 10 Index-->
-        <table>
 
-        <tr>
-        <th>Bletchley 10 Index&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-        <th>Creation Weight&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+<table id="weights">
+  <tr>
+        <th>Bletchley 10 Index</th>
+        <th>Creation Weight</th>
         <th>April 19th, 2017 Rebalance</th>
         </tr>
 
@@ -145,7 +184,7 @@
         <td>1.09%</td>
         </tr>
         <tr>
-        <td>Ethereum Classic&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td>Ethereum Classic</td>
         <td>0.70%</td>
         <td>0.97%</td>
         </tr>
@@ -171,13 +210,14 @@
         </tr>
         </table>
 
+
         <br/>
         <!--Bletchley 10 Even Index -->
-        <table>
+        <table id="weights">
 
         <tr>
-        <th>Bletchley 10 Even Index&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-        <th>Creation Weight&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+        <th>Bletchley 10 Even Index</th>
+        <th>Creation Weight</th>
         <th>April 19th, 2017 Rebalance</th>
         </tr>
 
@@ -212,7 +252,7 @@
         <td>10.00%</td>
         </tr>
         <tr>
-        <td>Ethereum Classic&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td>Ethereum Classic</td>
         <td>10.00%</td>
         <td>10.00%</td>
         </tr>
@@ -242,13 +282,13 @@
         <b>Creation Dates and Values</b>
         <br/><br/>
         <!--Bletchley 10 Index-->
-        <table>
+        <table id="weights">
 
         <tr>
-        <th>Index&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-        <th>Creation Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-        <th>Base Value USD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-        <th>Base Value XBT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+        <th>Index</th>
+        <th>Creation Date</th>
+        <th>Base Value USD</th>
+        <th>Base Value BTC</th>
         </tr>
 
         <tr>
@@ -258,7 +298,7 @@
         <td>1</td>
         </tr>
         <tr>
-        <td>Bletchley 10 Even&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td>Bletchley 10 Even</td>
         <td>3/18/2017</td>
         <td>1000</td>
         <td>1</td>
@@ -270,7 +310,7 @@
         <td>0.1</td>
         </tr>
         <tr>
-        <td>Bletchley 20 Even&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td>Bletchley 20 Even</td>
         <td>4/19/2017</td>
         <td>100</td>
         <td>0.1</td>
@@ -279,8 +319,9 @@
         <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 
 
-
+        </div>
     </div> <!-- /container -->
+</div>
 
 </body>
 </html>
