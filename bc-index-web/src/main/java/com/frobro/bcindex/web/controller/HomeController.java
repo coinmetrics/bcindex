@@ -2,6 +2,8 @@ package com.frobro.bcindex.web.controller;
 
 import com.frobro.bcindex.web.domain.Index;
 import com.frobro.bcindex.web.service.TickerService;
+import com.frobro.bcindex.web.service.persistence.IndexRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +20,11 @@ import java.util.Collection;
 public class HomeController {
 
   private TickerService tickerService = new TickerService();
+
+  @Autowired
+  public void setIndexRepo(IndexRepo repo) {
+    tickerService.setIndexRepo(repo);
+  }
 
   @RequestMapping("/")
   public String index(Model model) throws IOException {
@@ -40,6 +47,8 @@ public class HomeController {
 
     double latestEven = tickerService.getEvenIndexValue();
     model.addAttribute("evenIndex", format(latestEven));
+
+    tickerService.saveIndex();
 
     return "home";
   }

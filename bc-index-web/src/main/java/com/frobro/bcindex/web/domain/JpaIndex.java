@@ -1,8 +1,6 @@
 package com.frobro.bcindex.web.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -12,89 +10,85 @@ import java.util.Date;
 public class JpaIndex {
 
   @Id
-  @GeneratedValue
-  private long id;
+  @GeneratedValue(strategy= GenerationType.AUTO)
+  private Long id;
 
-  private Date date;
+  private Date timeStamp;
   private double indexValueUsd;
-  private double usdPerBtc;
+  private double indexValueBtc;
   private double evenIndexValueUsd;
   private double evenIndexValueBtc;
+
+  public double getEvenIndexValueUsd() {
+    return evenIndexValueUsd;
+  }
+
+  public JpaIndex setEvenIndexValueUsd(double evenIndexValueUsd) {
+    this.evenIndexValueUsd = evenIndexValueUsd;
+    return this;
+  }
+
+  public double getEvenIndexValueBtc() {
+    return evenIndexValueBtc;
+  }
+
+  public JpaIndex setEvenIndexValueBtc(double evenIndexValueBtc) {
+    this.evenIndexValueBtc = evenIndexValueBtc;
+    return this;
+  }
 
   public double getIndexValueUsd() {
     return indexValueUsd;
   }
 
-  public double getUsdPerBtc() {
-    return usdPerBtc;
+  public double getIndexValueBtc() {
+    return indexValueBtc;
+  }
+
+  public static JpaIndex create() {
+    JpaIndex idx = new JpaIndex();
+    idx.setTimeStamp(new Date(System.currentTimeMillis()));
+    return idx;
   }
 
   /* needed for db serialization */
   public JpaIndex() {}
 
-  public JpaIndex(double indexValueUsd, double usdPerBtc) {
-    this.indexValueUsd = indexValueUsd;
-    this.usdPerBtc = usdPerBtc;
-    this.date = new Date(System.currentTimeMillis());
-  }
-
-  public long getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public JpaIndex setId(Long id) {
     this.id = id;
+    return this;
   }
 
-  public Date getDate() {
-    return date;
+  public Date getTimeStamp() {
+    return timeStamp;
   }
 
-  public void setDate(Date date) {
-    this.date = date;
+  public JpaIndex setTimeStamp(Date timeStamp) {
+    this.timeStamp = timeStamp;
+    return this;
   }
 
-  public void setIndexValueUsd(double indexValueUsd) {
+  public JpaIndex setIndexValueUsd(double indexValueUsd) {
     this.indexValueUsd = indexValueUsd;
+    return this;
   }
 
-  public void setUsdPerBtc(double usdPerBtc) {
-    this.usdPerBtc = usdPerBtc;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (!(o instanceof JpaIndex)) return false;
-
-    JpaIndex jpaIndex = (JpaIndex) o;
-
-    if (id != jpaIndex.id) return false;
-    if (Double.compare(jpaIndex.indexValueUsd, indexValueUsd) != 0) return false;
-    if (Double.compare(jpaIndex.usdPerBtc, usdPerBtc) != 0) return false;
-    return !(date != null ? !date.equals(jpaIndex.date) : jpaIndex.date != null);
-  }
-
-  @Override
-  public int hashCode() {
-    int result;
-    long temp;
-    result = (int) (id ^ (id >>> 32));
-    result = 31 * result + (date != null ? date.hashCode() : 0);
-    temp = Double.doubleToLongBits(indexValueUsd);
-    result = 31 * result + (int) (temp ^ (temp >>> 32));
-    temp = Double.doubleToLongBits(usdPerBtc);
-    result = 31 * result + (int) (temp ^ (temp >>> 32));
-    return result;
+  public JpaIndex setIndexValueBtc(double indexValueBtc) {
+    this.indexValueBtc = indexValueBtc;
+    return this;
   }
 
   @Override
   public String toString() {
     return "JpaIndex{" +
         "id=" + id +
-        ", date=" + date +
+        ", timeStamp=" + timeStamp +
         ", indexValueUsd=" + indexValueUsd +
-        ", usdPerBtc=" + usdPerBtc +
+        ", indexValueBtc=" + indexValueBtc +
         '}';
   }
 }

@@ -2,6 +2,7 @@ package com.frobro.bcindex.web.service;
 
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.domain.Index;
+import com.frobro.bcindex.web.domain.JpaIndex;
 import com.frobro.bcindex.web.model.BletchleyData;
 
 import java.util.*;
@@ -19,8 +20,7 @@ public class IndexCalculator {
   private final double constantEven;
 
   private Map<String,Index> lastIndexList;
-  private double lastIndexValue;
-  private double lastIndexValueEven;
+  private JpaIndex lastIndex;
 
   public IndexCalculator() {
     businessRules = new BusinessRules();
@@ -34,25 +34,54 @@ public class IndexCalculator {
     return constant;
   }
 
+  public JpaIndex getLastIndex() {
+    return lastIndex;
+  }
+
   public double getConstantEven() {
     return constantEven;
   }
 
   public double getLastIndexValue() {
-    return lastIndexValue;
+    if (lastIndex == null) {
+      throw new IllegalStateException("the index value has not "
+        + "been calculated yet.");
+    }
+    return lastIndex.getIndexValueUsd();
   }
 
   public double getLastIndexValueEven() {
-    return lastIndexValueEven;
+    return lastIndex.getEvenIndexValueUsd();
   }
 
   public void updateLast(BletchleyData newData) {
     lastIndexList = newData.getLastIndexes();
     calculateMarketCap();
-    lastIndexValue = calculateIndexValue();
-    lastIndexValueEven = calculateIndexValueEven();
+
+    double usdPerBtc = getUsdPerBtc();
+
+    // calculate odd
+    double btcValue = calculateIndexValueBtc();
+    double usdResult = btcValue*usdPerBtc;
+    logUsdCalc("", btcValue,usdPerBtc,usdResult);
+
+    // calculate even
+    double btcEvenValue = calculateIndexValueEven();
+    double usdEvenValue = btcEvenValue*usdPerBtc;
+    logUsdCalc("even",btcEvenValue, usdPerBtc, usdEvenValue);
+
+    this.lastIndex = JpaIndex.create()
+        .setIndexValueBtc(btcValue)
+        .setIndexValueUsd(usdResult)
+        .setEvenIndexValueBtc(btcEvenValue)
+        .setEvenIndexValueUsd(usdEvenValue);
   }
 
+  private void logUsdCalc(String idxName, double btcValue,
+                          double usdPerBtc, double result) {
+    log.debug("index in USD is btc=" + btcValue + " times "
+        + "last btc price=" + usdPerBtc + ". Which is " + result);
+  }
 
   private double getUsdPerBtc() {
     double numUsdPerBtc = -1;
@@ -80,7 +109,7 @@ public class IndexCalculator {
     return this;
   }
 
-  private double calculateIndexValue() {
+  private double calculateIndexValueBtc() {
     log.info("calculating index value");
 
     double lastSum = 0;
@@ -89,10 +118,11 @@ public class IndexCalculator {
         lastSum += ticker.getMktCap();
       }
     }
-    double btcResult = ((lastSum + getConstant())/divisor);
-    double usdResult = btcResult*getUsdPerBtc();
-    logCalculation(lastSum, usdResult, btcResult);
-    return usdResult;
+
+    double btcValue = ((lastSum + getConstant())/divisor);
+    logCalculation(lastSum, btcValue);
+
+    return btcValue;
   }
 
   private double calculateIndexValueEven() {
@@ -105,23 +135,22 @@ public class IndexCalculator {
       }
     }
     double btcResultEven = ((lastSum + getConstantEven())/divisorEven);
-    double usdResultEven = btcResultEven*getUsdPerBtc();
-    logCalculationEven(lastSum, usdResultEven, btcResultEven);
-    return usdResultEven;
+    logCalculationEven(lastSum, btcResultEven);
+    return btcResultEven;
   }
 
-  private void logCalculation(double lastSum, double UsdResult, double btcResult) {
+  private void logCalculation(double lastSum, double btcResult) {
     log.debug("last mkt cap sum: " + lastSum
         + " constant: " + getConstant() + " divsor: "
         + divisor + " usd-btc: " + getUsdPerBtc()
-        + " index value USD=" + UsdResult + ", BTC=" + btcResult);
+        + ", BTC=" + btcResult);
   }
 
-  private void logCalculationEven(double lastSum, double UsdResultEven, double btcResultEven) {
+  private void logCalculationEven(double lastSum, double btcResultEven) {
     log.debug("last even sum: " + lastSum
         + " even constant: " + getConstantEven() + " even divsor: "
         + divisorEven + " usd-btc: " + getUsdPerBtc()
-        + " even index value USD=" + UsdResultEven + ", even BTC=" + btcResultEven);
+        + ", even BTC=" + btcResultEven);
   }
 
   public void put(String name, double last, double mktCap) {

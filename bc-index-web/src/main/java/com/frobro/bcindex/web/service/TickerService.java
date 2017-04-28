@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.domain.Index;
+import com.frobro.bcindex.web.domain.JpaIndex;
+import com.frobro.bcindex.web.service.persistence.IndexRepo;
 import com.frobro.bcindex.web.model.BletchleyData;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -28,9 +30,18 @@ public class TickerService {
   private final static String POLONIEX_ENDPOINT = "https://poloniex.com/public?command=returnTicker";
 
   private IndexCalculator indexCalculator = new IndexCalculator();
+  private IndexRepo indexRepo;
   private BletchleyData lastData = emptyData();
 
   public TickerService() {
+  }
+
+  public void setIndexRepo(IndexRepo repo) {
+    this.indexRepo = repo;
+  }
+
+  public void saveIndex() {
+    indexRepo.save(indexCalculator.getLastIndex());
   }
 
   public void updateTickers() throws IOException {
