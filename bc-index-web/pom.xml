@@ -76,13 +76,12 @@
       <artifactId>postgresql</artifactId>
       <version>9.4-1206-jdbc42</version>
     </dependency>
-
-    <!-- Test deps -->
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
-      <scope>test</scope>
     </dependency>
+
+    <!-- Test deps -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
