@@ -34,6 +34,26 @@
     color: white;
     border-bottom: 1px solid #ddd;
 }
+
+#myBtn {
+  display: none;
+  position: fixed;
+  bottom: 8px;
+  right: 5px;
+  z-index: 99;
+  border: none;
+  outline: none;
+  background-color: white;
+  color: white;
+  cursor: pointer;
+  padding: 0px;
+  border-radius: 10px;
+}
+
+#myBtn:hover {
+  background-color: #756;
+}
+
 </style>
 
 </head>
@@ -64,9 +84,33 @@
 
 
 <div style="margin-left:10%">  
-<div style="margin-right:25%">  
+<div style="margin-right:10%"> 
+<div style="font-size: 14px"> 
 
-<!-- Sidebar -->
+
+<button onclick="topFunction()" id="myBtn" title="Go to top"><img th:src="@{/img/UpArrow.png}" src="../static/img/UpArrow.png" /></button>
+
+
+<script>
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        document.getElementById("myBtn").style.display = "block";
+    } else {
+        document.getElementById("myBtn").style.display = "none";
+    }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+}
+</script>
+
+<!-- Sidebar 
 <div class="w3-sidebar w3-bar-block w3-card-2" style="width:20%;right:0;">
   <h3>Contents</h3>
   <ul>
@@ -84,22 +128,27 @@
 </ul>
 <p>&nbsp;</p>
 </div>
-
+-->
     
     <div class="w3-container">
      
 
-
-        <!--Detailed Methodology Links:
-        <br/>
-        <br/>
-        <li><a href="Methodology.pdf">Methodology</a></li>
-        <p></p>
-        <li><a href="math_Methodology.pdf">Mathematical Methodology</a></li>
-        --><br/>
-
     <h1>Bletchley Indexes Methodology</h1>
-        <p></p><br/>
+        <p></p>
+  <ul>
+  <li><a href="#Introduction">Introduction</a>
+    <ul>
+  <li><a href="#10 Index">Bletchley 10 Index</a></li>
+  <li><a href="#20 Index">Bletchley 20 Index</a></li>
+    </ul>
+  </li>
+  <li><a href="#Eligibility Criteria">Eligibility Criteria</a></li>
+  <li><a href="#Index Calculation">Index Calculation</a></li>
+  <li><a href="#Index Rebalancing">Index Rebalancing</a></li>
+  <li><a href="#Index Weights">Index Weights</a></li>
+  <li><a href="#Base Values">Creation Dates and Values</a></li>
+</ul>
+        <br/>
         <a name="Introduction"></a>
         <b>Introduction</b>
         <br/><br/>
@@ -145,7 +194,6 @@
         <a name="Index Weights"></a>
         <b>Index Weights</b>
         <br/><br/>
-        <!--Bletchley 10 Index-->
 
 <table id="weights">
   <tr>
@@ -213,7 +261,7 @@
 
 
         <br/>
-        <!--Bletchley 10 Even Index -->
+        
         <table id="weights">
 
         <tr>
@@ -319,9 +367,9 @@
         </table>
         <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 
-
+            </div>
         </div>
-    </div> <!-- /container -->
+    </div> 
 </div>
 
 </body>
