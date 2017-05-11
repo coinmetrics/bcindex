@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.domain.Index;
 import com.frobro.bcindex.web.model.Ticker;
+import com.frobro.bcindex.web.service.persistence.EvenIdxRepo;
 import com.frobro.bcindex.web.service.persistence.IndexRepo;
 import com.frobro.bcindex.web.model.BletchleyData;
 import org.apache.http.HttpEntity;
@@ -31,23 +32,27 @@ public class TickerService {
 
   private IndexCalculator indexCalculator = new IndexCalculator();
   private IndexRepo indexRepo;
+  private EvenIdxRepo evenRepo;
   private BletchleyData lastData = emptyData();
 
   public TickerService() {
   }
 
-  public void setIndexRepo(IndexRepo repo) {
+  public void setIndexRepo(IndexRepo repo, EvenIdxRepo eRepo) {
     this.indexRepo = repo;
+    this.evenRepo = eRepo;
   }
 
   public void saveIndex() {
     indexRepo.save(indexCalculator.getLastIndex());
+    evenRepo.save(indexCalculator.getLastIndexEven());
   }
 
   public TickerService updateTickers() {
     try {
 
       Update();
+      saveIndex();
 
     } catch (IOException ioe) {
       log.error("could not successfully update. ", ioe);

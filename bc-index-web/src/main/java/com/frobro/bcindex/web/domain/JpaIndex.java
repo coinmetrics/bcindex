@@ -16,26 +16,6 @@ public class JpaIndex {
   private Date timeStamp;
   private double indexValueUsd;
   private double indexValueBtc;
-  private double evenIndexValueUsd;
-  private double evenIndexValueBtc;
-
-  public double getEvenIndexValueUsd() {
-    return evenIndexValueUsd;
-  }
-
-  public JpaIndex setEvenIndexValueUsd(double evenIndexValueUsd) {
-    this.evenIndexValueUsd = evenIndexValueUsd;
-    return this;
-  }
-
-  public double getEvenIndexValueBtc() {
-    return evenIndexValueBtc;
-  }
-
-  public JpaIndex setEvenIndexValueBtc(double evenIndexValueBtc) {
-    this.evenIndexValueBtc = evenIndexValueBtc;
-    return this;
-  }
 
   public double getIndexValueUsd() {
     return indexValueUsd;
@@ -47,8 +27,12 @@ public class JpaIndex {
 
   public static JpaIndex create() {
     JpaIndex idx = new JpaIndex();
-    idx.setTimeStamp(new Date(System.currentTimeMillis()));
+    setTime(idx);
     return idx;
+  }
+
+  protected static void setTime(JpaIndex idx) {
+    idx.setTimeStamp(new Date(System.currentTimeMillis()));
   }
 
   /* needed for db serialization */
