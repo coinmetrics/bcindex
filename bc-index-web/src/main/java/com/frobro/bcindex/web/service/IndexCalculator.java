@@ -2,6 +2,7 @@ package com.frobro.bcindex.web.service;
 
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.domain.Index;
+import com.frobro.bcindex.web.domain.JpaEvenIndex;
 import com.frobro.bcindex.web.domain.JpaIndex;
 import com.frobro.bcindex.web.model.BletchleyData;
 
@@ -21,6 +22,7 @@ public class IndexCalculator {
 
   private Map<String,Index> lastIndexList;
   private JpaIndex lastIndex;
+  private JpaEvenIndex lastEvenIndex;
 
   public IndexCalculator() {
     businessRules = new BusinessRules();
@@ -38,6 +40,10 @@ public class IndexCalculator {
     return lastIndex;
   }
 
+  public JpaEvenIndex getLastIndexEven() {
+    return lastEvenIndex;
+  }
+
   public double getConstantEven() {
     return constantEven;
   }
@@ -51,7 +57,7 @@ public class IndexCalculator {
   }
 
   public double getLastIndexValueEven() {
-    return lastIndex.getEvenIndexValueUsd();
+    return lastEvenIndex.getIndexValueUsd();
   }
 
   public void updateLast(BletchleyData newData) {
@@ -60,22 +66,30 @@ public class IndexCalculator {
 
     double usdPerBtc = getUsdPerBtc();
 
-    // calculate odd
+    calculateOddIndex(usdPerBtc);
+    calculateEvenIndex(usdPerBtc);
+  }
+
+  private void calculateOddIndex(double usdPerBtc) {
     double btcValue = calculateIndexValueBtc();
     double usdResult = btcValue*usdPerBtc;
-    logUsdCalc("", btcValue,usdPerBtc,usdResult);
+    logUsdCalc("", btcValue, usdPerBtc, usdResult);
 
-    // calculate even
+    this.lastIndex = JpaIndex.create()
+        .setIndexValueBtc(btcValue)
+        .setIndexValueUsd(usdResult);
+  }
+
+  private void calculateEvenIndex(double usdPerBtc) {
     double btcEvenValue = calculateIndexValueEven();
     double usdEvenValue = btcEvenValue*usdPerBtc;
     logUsdCalc("even",btcEvenValue, usdPerBtc, usdEvenValue);
 
-    this.lastIndex = JpaIndex.create()
-        .setIndexValueBtc(btcValue)
-        .setIndexValueUsd(usdResult)
-        .setEvenIndexValueBtc(btcEvenValue)
-        .setEvenIndexValueUsd(usdEvenValue);
+    this.lastEvenIndex = JpaEvenIndex.create();
+    this.lastEvenIndex.setIndexValueBtc(btcEvenValue)
+                      .setIndexValueUsd(usdEvenValue);
   }
+
 
   private void logUsdCalc(String idxName, double btcValue,
                           double usdPerBtc, double result) {
@@ -94,7 +108,7 @@ public class IndexCalculator {
     return numUsdPerBtc;
   }
 
-  private IndexCalculator calculateMarketCap() {
+  protected IndexCalculator calculateMarketCap() {
     log.info("calculating market cap");
 
     lastIndexList.keySet().stream().forEach(ticker -> {

@@ -1,6 +1,8 @@
 package com.frobro.bcindex.web.service.persistence;
 
 import static org.junit.Assert.assertEquals;
+
+import com.frobro.bcindex.web.domain.JpaEvenIndex;
 import com.frobro.bcindex.web.domain.JpaIndex;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,7 +28,7 @@ public class IndexRepoTest {
   public void testSave() {
     JpaIndex index = JpaIndex.create()
         .setIndexValueBtc(12)
-        .setEvenIndexValueUsd(34)
+        .setIndexValueUsd(34)
         .setId(1234567L);
 
     indexRepo.save(index);
