@@ -62,39 +62,43 @@ public class IndexCalculator {
 
   public void updateLast(BletchleyData newData) {
     lastIndexList = newData.getLastIndexes();
+    long timeStamp = newData.getTimeStamp();
+
     calculateMarketCap();
 
     double usdPerBtc = getUsdPerBtc();
 
-    calculateOddIndex(usdPerBtc);
-    calculateEvenIndex(usdPerBtc);
+    calculateOddIndex(usdPerBtc, timeStamp);
+    calculateEvenIndex(usdPerBtc, timeStamp);
   }
 
-  private void calculateOddIndex(double usdPerBtc) {
+  private void calculateOddIndex(double usdPerBtc, long timeStamp) {
     double btcValue = calculateIndexValueBtc();
     double usdResult = btcValue*usdPerBtc;
-    logUsdCalc("", btcValue, usdPerBtc, usdResult);
+    logUsdCalc("original", btcValue, usdPerBtc, usdResult, timeStamp);
 
     this.lastIndex = JpaIndex.create()
+        .setTimeStamp(timeStamp)
         .setIndexValueBtc(btcValue)
         .setIndexValueUsd(usdResult);
   }
 
-  private void calculateEvenIndex(double usdPerBtc) {
+  private void calculateEvenIndex(double usdPerBtc, long timeStamp) {
     double btcEvenValue = calculateIndexValueEven();
     double usdEvenValue = btcEvenValue*usdPerBtc;
-    logUsdCalc("even",btcEvenValue, usdPerBtc, usdEvenValue);
+    logUsdCalc("even",btcEvenValue, usdPerBtc, usdEvenValue, timeStamp);
 
     this.lastEvenIndex = JpaEvenIndex.create();
     this.lastEvenIndex.setIndexValueBtc(btcEvenValue)
+                      .setTimeStamp(timeStamp)
                       .setIndexValueUsd(usdEvenValue);
   }
 
 
   private void logUsdCalc(String idxName, double btcValue,
-                          double usdPerBtc, double result) {
-    log.debug("index in USD is btc=" + btcValue + " times "
-        + "last btc price=" + usdPerBtc + ". Which is " + result);
+                          double usdPerBtc, double result, long time) {
+    log.debug("INDEX: '" + idxName + "' at time: '" + new Date(time) + "' in BTC=" + btcValue + " times "
+        + "last btc price=" + usdPerBtc + ". Which makes the index in USD=" + result);
   }
 
   private double getUsdPerBtc() {

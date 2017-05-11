@@ -20,6 +20,10 @@ public class BletchleyData {
     this.lastUpdateTime = time;
   }
 
+  public long getTimeStamp() {
+    return lastUpdateTime;
+  }
+
   public static String getUsdBtcTicker() {
     return USD_BTC_KEY;
   }

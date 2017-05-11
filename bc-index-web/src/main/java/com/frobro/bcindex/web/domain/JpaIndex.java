@@ -27,16 +27,16 @@ public class JpaIndex {
 
   public static JpaIndex create() {
     JpaIndex idx = new JpaIndex();
-    setTime(idx);
     return idx;
-  }
-
-  protected static void setTime(JpaIndex idx) {
-    idx.setTimeStamp(new Date(System.currentTimeMillis()));
   }
 
   /* needed for db serialization */
   public JpaIndex() {}
+
+  public JpaIndex setTimeStamp(long time) {
+    timeStamp = new Date(time);
+    return this;
+  }
 
   public Long getId() {
     return id;

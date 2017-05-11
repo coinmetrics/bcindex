@@ -10,7 +10,6 @@ public class JpaEvenIndex extends JpaIndex {
 
   public static JpaEvenIndex create() {
     JpaEvenIndex idx = new JpaEvenIndex();
-    setTime(idx);
     return idx;
   }
 
