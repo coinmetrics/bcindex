@@ -12,8 +12,13 @@ public class BletchleyData {
   private static final String USD_BTC_KEY = "usd_btc";
   private static final double USD_BTC_MKT_CAP = 0;
 
+  private long lastUpdateTime = 0;
   private double lastUsdBtc;
   private Map<String,Index> lastIndexes = new HashMap<>();
+
+  public void setLastUpdate(long time) {
+    this.lastUpdateTime = time;
+  }
 
   public static String getUsdBtcTicker() {
     return USD_BTC_KEY;

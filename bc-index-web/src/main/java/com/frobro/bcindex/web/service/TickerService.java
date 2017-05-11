@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.domain.Index;
-import com.frobro.bcindex.web.domain.JpaIndex;
+import com.frobro.bcindex.web.model.Ticker;
 import com.frobro.bcindex.web.service.persistence.IndexRepo;
 import com.frobro.bcindex.web.model.BletchleyData;
 import org.apache.http.HttpEntity;
@@ -44,15 +44,29 @@ public class TickerService {
     indexRepo.save(indexCalculator.getLastIndex());
   }
 
-  public void updateTickers() throws IOException {
+  public TickerService updateTickers() {
+    try {
+
+      Update();
+
+    } catch (IOException ioe) {
+      log.error("could not successfully update. ", ioe);
+    }
+    return this;
+  }
+
+  private void Update() throws IOException {
+    log.info("updating latest data");
+
     lastData = new BletchleyData();
 
     String response = makeCallTenMembers();
-    updateTickers(response);
-    
+    update(response);
+
     String btcResponse = makeApiCallBtc();
     updateTickerBtc(btcResponse);
 
+    lastData.setLastUpdate(System.currentTimeMillis());
     indexCalculator.updateLast(lastData);
   }
 
@@ -62,11 +76,10 @@ public class TickerService {
     lastData.setLastUsdBtc(dto.getBtcPrice());
   }
 
-  public void updateTickers(String apiResponse)throws IOException {
+  private void update(String apiResponse)throws IOException {
     Map<String, Index> tickers = populateTickers(apiResponse);
     lastData.setMembers(tickers);
   }
-
 
   public String makeApiCallBtc() throws IOException {
     return makeApiCall(COIN_CAP_ENDPOINT);

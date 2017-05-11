@@ -31,6 +31,10 @@ public class BcLog {
     log(ERROR, msg);
   }
 
+  public void error(String msg, Throwable t) {
+    error(msg + "\n" + toString(t));
+  }
+
   public void error(Throwable t) {
     error(toString(t));
   }
