@@ -24,6 +24,7 @@ public class GetTickersTest {
     service.updateTickerBtc(res);
   }
 
+  @Ignore
   @Test
   public void testSum() throws IOException {
     // given

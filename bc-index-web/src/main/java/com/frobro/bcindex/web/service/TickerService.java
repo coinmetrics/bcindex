@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.domain.Index;
+import com.frobro.bcindex.web.domain.JpaEvenIndex;
+import com.frobro.bcindex.web.domain.JpaIndex;
 import com.frobro.bcindex.web.model.Ticker;
 import com.frobro.bcindex.web.service.persistence.EvenIdxRepo;
 import com.frobro.bcindex.web.service.persistence.IndexRepo;
@@ -34,6 +36,9 @@ public class TickerService {
   private IndexRepo indexRepo;
   private EvenIdxRepo evenRepo;
   private BletchleyData lastData = emptyData();
+  private JpaIndex lastIndex;
+  private JpaEvenIndex lastEvenIndex;
+
 
   public TickerService() {
   }
@@ -44,8 +49,8 @@ public class TickerService {
   }
 
   public void saveIndex() {
-    indexRepo.save(indexCalculator.getLastIndex());
-    evenRepo.save(indexCalculator.getLastIndexEven());
+    indexRepo.save(lastIndex);
+    evenRepo.save(lastEvenIndex);
   }
 
   public TickerService updateTickers() {
@@ -72,7 +77,14 @@ public class TickerService {
     updateTickerBtc(btcResponse);
 
     lastData.setLastUpdate(System.currentTimeMillis());
-    indexCalculator.updateLast(lastData);
+
+    calculateAndSetIndexes(lastData);
+  }
+
+  private void calculateAndSetIndexes(BletchleyData data) {
+    indexCalculator.updateLast(data);
+    lastIndex = indexCalculator.calcuateOddIndex();
+    lastEvenIndex = indexCalculator.calculateEvenIndex();
   }
 
   public void updateTickerBtc(String response) throws IOException {
@@ -167,11 +179,11 @@ public class TickerService {
   }
 
   public double getIndexValue() {
-    return indexCalculator.getLastIndexValue();
+    return lastIndex.getIndexValueUsd();
   }
 
   public double getEvenIndexValue() {
-    return indexCalculator.getLastIndexValueEven();
+    return lastEvenIndex.getIndexValueUsd();
   }
 
   public double getConstant() {

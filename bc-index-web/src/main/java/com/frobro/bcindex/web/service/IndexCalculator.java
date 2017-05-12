@@ -21,8 +21,8 @@ public class IndexCalculator {
   private final double constantEven;
 
   private Map<String,Index> lastIndexList;
-  private JpaIndex lastIndex;
-  private JpaEvenIndex lastEvenIndex;
+  private long lastTimeStamp;
+  private double lastUsdPerBtc;
 
   public IndexCalculator() {
     businessRules = new BusinessRules();
@@ -36,62 +36,49 @@ public class IndexCalculator {
     return constant;
   }
 
-  public JpaIndex getLastIndex() {
-    return lastIndex;
-  }
-
-  public JpaEvenIndex getLastIndexEven() {
-    return lastEvenIndex;
-  }
-
   public double getConstantEven() {
     return constantEven;
   }
 
-  public double getLastIndexValue() {
-    if (lastIndex == null) {
-      throw new IllegalStateException("the index value has not "
-        + "been calculated yet.");
-    }
-    return lastIndex.getIndexValueUsd();
-  }
-
-  public double getLastIndexValueEven() {
-    return lastEvenIndex.getIndexValueUsd();
-  }
-
   public void updateLast(BletchleyData newData) {
     lastIndexList = newData.getLastIndexes();
-    long timeStamp = newData.getTimeStamp();
+    lastTimeStamp = newData.getTimeStamp();
 
     calculateMarketCap();
 
-    double usdPerBtc = getUsdPerBtc();
-
-    calculateOddIndex(usdPerBtc, timeStamp);
-    calculateEvenIndex(usdPerBtc, timeStamp);
+    lastUsdPerBtc = getUsdPerBtc();
   }
 
-  private void calculateOddIndex(double usdPerBtc, long timeStamp) {
+  public JpaIndex calcuateOddIndex() {
+    return calculateOddIndex(lastUsdPerBtc, lastTimeStamp);
+  }
+
+  public JpaEvenIndex calculateEvenIndex() {
+    return calculateEvenIndex(lastUsdPerBtc, lastTimeStamp);
+  }
+
+  private JpaIndex calculateOddIndex(double usdPerBtc, long timeStamp) {
     double btcValue = calculateIndexValueBtc();
     double usdResult = btcValue*usdPerBtc;
     logUsdCalc("original", btcValue, usdPerBtc, usdResult, timeStamp);
 
-    this.lastIndex = JpaIndex.create()
+    return JpaIndex.create()
         .setTimeStamp(timeStamp)
         .setIndexValueBtc(btcValue)
         .setIndexValueUsd(usdResult);
   }
 
-  private void calculateEvenIndex(double usdPerBtc, long timeStamp) {
+  private JpaEvenIndex calculateEvenIndex(double usdPerBtc, long timeStamp) {
     double btcEvenValue = calculateIndexValueEven();
     double usdEvenValue = btcEvenValue*usdPerBtc;
     logUsdCalc("even",btcEvenValue, usdPerBtc, usdEvenValue, timeStamp);
 
-    this.lastEvenIndex = JpaEvenIndex.create();
-    this.lastEvenIndex.setIndexValueBtc(btcEvenValue)
+    JpaEvenIndex lastEvenIndex = JpaEvenIndex.create();
+    lastEvenIndex.setIndexValueBtc(btcEvenValue)
                       .setTimeStamp(timeStamp)
                       .setIndexValueUsd(usdEvenValue);
+
+    return lastEvenIndex;
   }
 
 
