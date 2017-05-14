@@ -5,34 +5,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Block Chain Index</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/> 
+    <link rel="stylesheet" href="style.css"/> 
+
+<div class="topnav">
+  <li><a th:href="@{/home}" href="home.html" class="homelink">Bletchley Indexes</a></li>
+  <li><a th:href="@{/home}" href="home.html">Home</a></li>
+  <li><a th:href="@{/methodology}" href="methodology.html">Methodology</a></li>
+  <li><a th:href="@{/about}" href="about.html">About</a></li>
+  <li><a class="active" th:href="@{/contact}" href="contact.html">Contact</a></li>
+</div>
 
 </head>
 <body>
-    <!-- Static navbar -->
-    <nav class="navbar navbar-default navbar-static-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="home.html">Bletchley Indices</a>
-            </div>
-            <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a th:href="@{/home}" href="home.html">Home</a></li>
-                    <li><a th:href="@{/methodology}" href="methodology.html">Methodology</a></li>
-                    <li><a th:href="@{/about}" href="about.html">About</a></li>
-                    <li class="active"><a th:href="@{/contact}" href="contact.html">Contact</a></li>
-                </ul>
-            </div><!--/.nav-collapse -->
-        </div>
-    </nav>
+  
 
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -45,11 +30,9 @@
 
 </script>
 
-<div style="margin-left:10%">  
-<div style="margin-right:10%">
 
 
-    <div class="w3-container">
+    <div class="containerbody">
 
         <p></p>
         Please contact us at BletchleyIndexes@gmail.com with any comments, questions, suggestions, or requests to subscribe to historical data.
@@ -64,8 +47,7 @@
         <p>Bitcoin address: 1E3fLBHfAwBsuRbytF3ZvWxeFHs6Km7dAs</p>
         <p>Ethereum address: 0xe38a3c0327063826727494d5436570265e17ab51</p>
 
-    </div> <!-- /container -->
-</div>
-</div>
+    </div> 
+
 </body>
 </html>
