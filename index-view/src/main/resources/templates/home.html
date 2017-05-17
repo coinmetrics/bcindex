@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Block Chain Index</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/> 
+
+</head>
+<body>
+    <!-- Static navbar -->
+    <nav class="navbar navbar-default navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="home.html">Bletchley Indices</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#Data">Home</a></li>
+                    <li><a th:href="@{/methodology}" href="methodology.html">Methodology</a></li>
+                    <li><a th:href="@{/about}" href="about.html">About</a></li>
+                    <li><a th:href="@{/contact}" href="contact.html">Contact</a></li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </nav>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-98341900-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+<div style="margin-left:10%">  
+<div style="margin-right:10%">
+
+
+    <div class="w3-container">
+
+        <!-- Main component for a primary marketing message or call to action -->
+            <h2 th:text="' Index Value: ' + ${indexValue}">Last: 0.0</h2>
+            <h2 th:text="' Even Value:  ' + ${evenIndex}">Even: 0.0</h2>
+            <p>High</p>
+            <p>Low</p>
+            <p>Change</p>
+            <p>Percent Change</p>
+            <p>Previous Close</p>
+            <p>
+            Graphs go under this tab. I would like a drop-down menu to select each index (launching with Bletchley 10 and Bletchley 10 Even) and then a tab button next to it to select each of the following currencies (units): USD, BTC, CNY, ETH
+            </p>
+            <p>
+            For each selected pair, I would then like to display a real-time updating last price, every minute is fine. A high and low value over the time period selected, and the previous close value, which will be the value of the index as of 4 PM EST. Also a net change, and a percent change from the opening of the time period selected.
+            </p>
+            <p>
+            The time periods would ideally be, hour, day, week, month, year, max. Obviously upon launch we won’t back out all of that data. Hopefully we can go back a month upon launch. I would also like this graph to be able to highlight and select certain timeframes.
+            </p>
+        <canvas id="myChart" width="700" height="300"></canvas>
+    </div> <!-- /container -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script>
+        var ctx = document.getElementById("myChart");
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ["2017-04-01", "2017-04-02", "2017-04-03", "2017-04-04", "2017-04-05", "2017-04-06"],
+                datasets: [{
+                    label: 'The Index',
+                    data: [12, 19, 3, 5, 2, 3],
+                    backgroundColor: [
+                        'rgba(255,153,0,0.4)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        },
+                        scaleLabel: {
+                            display: true
+                            }
+                    }],
+                    xAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Date'
+                        }
+                    }]
+                }
+            }
+        });
+</script>
+</div>
+</div>
+</body>
+</html>
