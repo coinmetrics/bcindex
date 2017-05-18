@@ -14,7 +14,7 @@ public class AppTest {
     @Test
     public void testApp() {
         RequestDto dto = new RequestDto();
-        assertFalse(dto.isValid());
+        assertFalse(dto.reqValid());
         assertTrue(true);
     }
 }

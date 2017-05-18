@@ -8,11 +8,12 @@ import java.util.List;
  */
 public class ApiResponse {
 
+  private static final double UNINITIALIZED = -1.0;
   public IndexType index;
   public Currency currency;
   public TimeFrame timeUnit;
 
-  public Double lastPrice;
+  public double lastPrice = UNINITIALIZED;
   public Double prevClose;
   public Double high;
   public Double low;
@@ -33,14 +34,13 @@ public class ApiResponse {
     return this;
   }
 
-  public double getLastPrice() {
-    if (lastPrice == null && data.size() > 0) {
+  public void setLastFromList() {
+    if (lastPrice == UNINITIALIZED && data.size() > 0) {
       lastPrice = data.get(data.size()-1);
     }
-    else {
-      throw new IllegalStateException("trying "
-          + " to access last price when no prices exist");
-    }
-    return lastPrice.doubleValue();
+  }
+
+  public double getLastPrice() {
+    return lastPrice;
   }
 }

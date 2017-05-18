@@ -64,7 +64,7 @@ public class ApiController {
     boolean hasErrors = true;
 
     if (dto != null) {
-      hasErrors = not(dto.isValid());
+      hasErrors = not(dto.reqValid());
     }
     return hasErrors;
   }

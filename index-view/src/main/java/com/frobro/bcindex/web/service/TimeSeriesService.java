@@ -78,6 +78,7 @@ public class TimeSeriesService {
                       .addTime(rs.getString("time_stamp"))
         );
 
+    response.setLastFromList();
     return response;
   }
 

@@ -8,7 +8,7 @@ public class RequestDto {
   public Currency currency;
   public TimeFrame timeFrame;
 
-  public boolean isValid() {
+  public boolean reqValid() {
     return this.currency != null && this.timeFrame != null
         && this.index != null;
   }
