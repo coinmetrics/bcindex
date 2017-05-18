@@ -5,127 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Bletchley Indexes</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/> 
-    <style>
-#weights {
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-    font-size: 12px;
-}
+    <link th:href="@{/css/style.css}" href="../static/css/style.css"  rel="stylesheet" type="text/css"  />
 
-#weights td, #weights th {
-    border-bottom: 1px solid #ddd;
-    padding: 8px;
-    
-}
-
-#weights tr:nth-child(even){background-color: #f2f2f2;}
-
-#weights tr:hover {background-color: #ddd;}
-
-#weights th {
-    padding-top: 6px;
-    padding-bottom: 6px;
-    text-align: left;
-    background-color: #4C80AF;
-    color: white;
-    border-bottom: 1px solid #ddd;
-}
-
-#myBtn {
-  display: none;
-  position: fixed;
-  bottom: 6px;
-  right: 1px;
-  z-index: 99;
-  border: none;
-  outline: none;
-  background-color: white;
-  color: white;
-  cursor: pointer;
-  padding: 0px;
-  border-radius: 10px;
-}
-
-#myBtn:hover {
-  background-color: #756;
-}
-
-
-@media screen and (max-width: 600px) {
-    body {
-        background-color: #edf2f7;
-        margin-left: 0%;
-        margin-right: 0%;
-        font-size: 10px;
-    }
-    #weights{
-        font-size: 8px;
-    }
-    .w3-sidebar{display:none;} 
-    h1{font-size:160%;}
-}
-
-@media screen and (max-width: 992px) and (min-width: 601px) {
-    body {
-        background-color: #edf2f7;
-        margin-left: 10%;
-        margin-right: 10%;
-        font-size: 11px;
-    }
-    #weights{
-        font-size: 9px;
-    }
-    .w3-sidebar{display:none;}
-    h1{font-size:180%;}
-}
-
-@media screen and (min-width: 993px) {
-    body {
-        background-color: #edf2f7;
-        margin-left: 25%;
-        margin-right: 25%;
-        font-size: 13px;
-    }
-    #myBtn{
-        bottom: -100px;
-        right: -100px;
-    }
-        h1{font-size:200%;}
-        h3{font-size:150%;}
-}
-
-
-</style>
+<div class="topnav">
+  <li><a th:href="@{/home}" href="home.html" class="homelink">Bletchley Indexes</a></li>
+  <li><a th:href="@{/home}" href="home.html">Home</a></li>
+  <li><a class="active" th:href="@{/methodology}" href="methodology.html">Methodology</a></li>
+  <li><a th:href="@{/about}" href="about.html">About</a></li>
+  <li><a th:href="@{/contact}" href="contact.html">Contact</a></li>
+</div>
 
 </head>
 <body>
-    <!-- Static navbar -->
-    <nav class="navbar navbar-default navbar-static-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="home.html">Bletchley Indices</a>
-            </div>
-            <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a th:href="@{/home}" href="home.html">Home</a></li>
-                    <li class="active"><a th:href="@{/methodology}" href="methodology.html">Methodology</a></li>
-                    <li><a th:href="@{/about}" href="about.html">About</a></li>
-                    <li><a th:href="@{/contact}" href="contact.html">Contact</a></li>
-
-                </ul>
-            </div><!--/.nav-collapse -->
-        </div>
-    </nav>
 
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -164,7 +55,7 @@ function topFunction() {
 </script>
 
 
-<div class="w3-sidebar w3-bar-block" style="width:15%;right:10%;background-color: #edf2f7;">
+<div class="rightsidebar" style="width:15%;right:10%;background-color: #edf2f7;line-height:1.5;">
   <h3 align="center">Contents</h3>
   <ul>
   <li><a href="#Introduction">Introduction</a>
@@ -188,7 +79,7 @@ function topFunction() {
 
     <h1 align = "center">Bletchley Indexes Methodology</h1>
         <p></p>
- <div class="w3-hide-large">
+ <div class="hide-large">
   <ul>
   <li><a href="#Introduction">Introduction</a>
     <ul>
@@ -204,7 +95,7 @@ function topFunction() {
 </ul>
 </div>
         <br/>
-        <div class="w3-container">
+        <div class="containerbody">
         <a name="Introduction"></a>
         <b>Introduction</b>
         <br/><br/>
