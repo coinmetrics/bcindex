@@ -11,10 +11,7 @@ import com.frobro.bcindex.web.service.persistence.EvenIdxRepo;
 import com.frobro.bcindex.web.service.persistence.IndexRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import javax.validation.Valid;
@@ -47,8 +44,8 @@ public class ApiController {
   }
 
   @RequestMapping(value = "api/index", method = RequestMethod.GET)
-  public String getIndex() {
-    return getIndex(null);
+  public String getIndex(@RequestParam(required = false) String timeUnit) {
+    return getIndex(getDefaultDto());
   }
 
   private String getIndex(RequestDto dto) {
@@ -74,11 +71,31 @@ public class ApiController {
   }
 
   private RequestDto getDefaultDto() {
+    return getDefaultDto(TimeFrame.HOURLY.name());
+  }
+
+  private RequestDto getDefaultDto(String timeUnit) {
     RequestDto dto = new RequestDto();
+    dto.timeFrame = parseTimeUnit(timeUnit);
     dto.currency = Currency.USD;
     dto.index = IndexType.ODD;
-    dto.timeFrame = TimeFrame.DAILY;
-
     return dto;
+  }
+
+  private TimeFrame parseTimeUnit(String unit) {
+    TimeFrame frame = TimeFrame.HOURLY;
+
+    if (unit == null) {
+      return frame;
+    }
+    switch (unit) {
+      case "all":
+        frame = TimeFrame.ALL;
+        break;
+      case "hourly":
+        frame = TimeFrame.HOURLY;
+        break;
+    }
+    return frame;
   }
 }
