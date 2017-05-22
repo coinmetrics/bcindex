@@ -4,9 +4,13 @@ import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.model.BletchleyData;
 import com.frobro.bcindex.web.model.Ticker;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
@@ -16,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created by rise on 3/23/17.
@@ -43,8 +48,8 @@ public class BusinessRules {
   private void populateMultipliers() {
     tickers = new HashMap<>();
 
-      URL url = Thread.currentThread().getContextClassLoader().getResource(MKT_CAP_FILE);
-      List<String> lines = readLines(url);
+      InputStream data = Thread.currentThread().getContextClassLoader().getResourceAsStream(MKT_CAP_FILE);
+      List<String> lines = readLines(data);
       lines.stream().forEach(line -> {
         String[] vals = line.split(DELIMINATOR);
 
@@ -75,14 +80,9 @@ public class BusinessRules {
     });
   }
 
-  private List<String> readLines(URL url) {
-    List<String> lines = new LinkedList<>();
-    try {
-      lines.addAll(Files.readAllLines(Paths.get(url.toURI())));
-    } catch (URISyntaxException | IOException e) {
-      throw new RuntimeException(e);
-    }
-    return lines;
+  private List<String> readLines(InputStream data) {
+    return new BufferedReader(new InputStreamReader(data,
+        StandardCharsets.UTF_8)).lines().collect(Collectors.toList());
   }
 
   private Ticker getBtcTicker() {

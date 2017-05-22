@@ -46,7 +46,7 @@
         <configuration>
           <appName>bc-index-data</appName>
           <processTypes>
-            <web>java -Dserver.port=$PORT -jar target/index-data-1.0-SNAPSHOT.jar</web>
+            <web>java -Dspring.profiles.active=prod -Dserver.port=$PORT -jar target/index-data-1.0-SNAPSHOT.jar</web>
           </processTypes>
         </configuration>
       </plugin>
