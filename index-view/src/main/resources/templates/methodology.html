@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Bletchley Indexes</title>
+    <link th:href="@{/css/style.css}" href="../static/css/style.css"  rel="stylesheet" type="text/css"  />
+
+<div class="topnav">
+  <li><a th:href="@{/home}" href="home.html" class="homelink">Bletchley Indexes</a></li>
+  <li><a th:href="@{/home}" href="home.html">Home</a></li>
+  <li><a class="active" th:href="@{/methodology}" href="methodology.html">Methodology</a></li>
+  <li><a th:href="@{/about}" href="about.html">About</a></li>
+  <li><a th:href="@{/contact}" href="contact.html">Contact</a></li>
+</div>
+
+</head>
+<body>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-98341900-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+<button onclick="topFunction()" id="myBtn" title="Go to top"><img th:src="@{/img/UpArrow.png}" src="../static/img/UpArrow.png" /></button>
+
+
+<script>
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20){
+        document.getElementById("myBtn").style.display = "block";
+    } 
+    else{
+        document.getElementById("myBtn").style.display = "none";
+    }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+}
+</script>
+
+
+<div class="rightsidebar" style="width:15%;right:10%;background-color: #edf2f7;line-height:1.5;">
+  <h3 align="center">Contents</h3>
+  <ul>
+  <li><a href="#Introduction">Introduction</a>
+    <ul>
+  <li><a href="#10 Index">Bletchley 10 Index</a></li>
+  <li><a href="#20 Index">Bletchley 20 Index</a></li>
+    </ul>
+  </li>
+  <li><a href="#Eligibility Criteria">Eligibility Criteria</a></li>
+  <li><a href="#Index Calculation">Index Calculation</a></li>
+  <li><a href="#Index Rebalancing">Index Rebalancing</a></li>
+  <li><a href="#Index Weights">Index Weights</a></li>
+  <li><a href="#Base Values">Creation Dates and Values</a></li>
+</ul>
+<p>&nbsp;</p>
+</div>
+
+    
+    
+     
+
+    <h1 align = "center">Bletchley Indexes Methodology</h1>
+        <p></p>
+ <div class="hide-large">
+  <ul>
+  <li><a href="#Introduction">Introduction</a>
+    <ul>
+  <li><a href="#10 Index">Bletchley 10 Index</a></li>
+  <li><a href="#20 Index">Bletchley 20 Index</a></li>
+    </ul>
+  </li>
+  <li><a href="#Eligibility Criteria">Eligibility Criteria</a></li>
+  <li><a href="#Index Calculation">Index Calculation</a></li>
+  <li><a href="#Index Rebalancing">Index Rebalancing</a></li>
+  <li><a href="#Index Weights">Index Weights</a></li>
+  <li><a href="#Base Values">Creation Dates and Values</a></li>
+</ul>
+</div>
+        <br/>
+        <div class="containerbody">
+        <a name="Introduction"></a>
+        <b>Introduction</b>
+        <br/><br/>
+        <p>It is the objective of the Bletchley Digital Asset Indexes to provide accurate benchmarks for the value of cryptocurrencies and other digital assets to investors through both market capitalization and equal weighted indexes.</p>
+        <p>The Bletchley family of indexes are intended to help facilitate communication between the cryptocurrency community and both the professional investment industry and individuals interested in exploring this new asset class</p>
+        <p>The indexes are reflective of the returns an investor would achieve by purchasing all of the assets at the corresponding weights for each index, and are rebalanced monthly to account for the inflation rate of each asset and changes in market pricing. Constructed in this way, the Bletchley indexes are a much more accurate benchmark for the growth of the industry to an investor than simple gross market capitalizations.</p>
+        <br/>
+        <a name="10 Index"></a>
+        <b>Bletchley 10 Indexes</b>
+        <br/><br/>
+        <p>The Bletchley 10 Index is a market capitalization weighted index composed of 10 of the most valuable digital assets. The market capitalization of each member is adjusted to reflect publicly available amounts of each asset, and there are no limits set on the weight of any individual constituent. The market capitalization of each asset spans from $70 million to $20 billion USD.</p>
+        <p>The Bletchley 10 Even Index is an equal weighted index composed of the same constituents as the Bletchley 10 Index. At each monthly rebalance, every asset will have a weighting of exactly 10% of the total index, and the constituent weighting will then fluctuate based on changes in market pricing until the next rebalance.</p>
+        <br/>
+        <a name="20 Index"></a>
+        <b>Bletchley 20 Indexes</b>
+        <br/><br/>
+        <p>The Bletchley 20 Index is a market cap weighted index composed of 20 smaller, less valuable digital assets. The market capitalization of each member is adjusted to reflect publicly available amounts of each asset and there are no limits set on the weight of any individual constituent. The market cap of each asset spans from $20 million to $90 million USD.</p>
+        <p>The Bletchley 20 Even Index is an equal weighted index composed of the same constituents as the Bletchley 20 Index. At each monthly rebalance, every asset will have a weighting of exactly 5% of the total index, and the constituent weighting will then fluctuate based on changes in market pricing until the next rebalance.</p>
+        <br/>
+        <a name="Eligibility Criteria"></a>
+        <b>Eligibility Criteria</b>
+        <br/><br/>
+        <p>Free floating prices are a requirement of inclusion in the Bletchley Indexes. Any digital asset that is pegged to the value of any other asset, digital or otherwise, is excluded from index membership.</p>
+        <p>Volume minimums are put in place to insure that any asset in the indexes has appropriate liquidity to be an investable asset. The ratio of the previous 30 days cumulative volume to the adjusted market capitalization of an asset must be greater than 0.1 to be considered for inclusion in the indexes. In addition, for membership in the Bletchley 10 Index, no single exchange can have larger than a 95% volume share of trading in an eligible asset.</p>
+        <br/>
+        <a name="Index Calculation"></a>
+        <b>Index Calculation</b>
+        <br/><br/>
+        <p>The index value is defined as the quotient of the sum of the adjusted market capitalization of each member by the divisor of the index. All of these calculations are done in units of bitcoin, and after arriving at an index value in bitcoin, the current exchange rates are then used to determine the US Dollar and ethereum denominated values.</p>
+        <p>Continuity of the index value is maintained by changing the divisor to keep the index value the same at the moment preceding any change, and then immediately following any change. The divisor is only regularly edited at the monthly rebalances, but is also updated due to any special changes in the indexes.</p>
+        <p>The market capitalization of an asset is adjusted to reflect only the currently circulating supply of that asset publicly available for purchase.</p>
+        <br/>
+        <a name="Index Rebalancing"></a>
+        <b>Index Rebalancing</b>
+        <br/><br/>
+        <p>All of the Bletchley indexes will be rebalanced at 4:00 PM EST on the third Wednesday of every month. The monthly rebalance will update both the amount of each asset publicly available and any adds and deletes from the indexes. The values used to determine eligibility for each rebalance will be prices, asset counts, and volume 24 hours prior to the rebalance. There will be no changes made to the weights and asset counts outside of the monthly rebalances.</p>
+        <p>A buffer rule is used when determining constituent selection at each rebalance to reduce turnover of the index. The rule is applied to the Bletchley 10 Indexes such that all companies ranked in the top 9 by total market capitalization are always included in the index. Then, if any current index member is ranked within the top 11, those members will be selected by rank until the index reaches its membership mandate of 10. If those steps fail to produce 10 members, the highest ranking non member will be added to the index.</p>
+        <p>Similarly, the Bletchley 20 Indexes use the same methodology with an automatic addition rank of 16 or higher, and automatic deletes for those members ranked 25 and below.</p>
+        <p>Initial coin offerings will be treated in the same manner as all other assets, with the only added criteria that the ICO asset is ineligible for the first rebalance following the launch of the asset.</p>
+        <p>In the event of a hardfork in the blockchain of any constituent asset, the fork will be treated as an asset split with both unique forks remaining in the index with the original asset counts up until the next rebalancing. At which point all normal eligibility and ranking rules will be enforced on the two unique assets. This will give the potential for an index to have more than its set number of constituents for a period of time. If the first rebalance after a fork occurs within seven days of the fork, any add or delete changes to the assets created by the fork will be delayed until the following rebalance. Asset counts will still be updated in this case.</p>
+        <p>Any other unique situations, extreme circumstances surrounding the already described events, or unobtainable asset counts or prices will be handled at the discretion of the Bletchley indexes.</p>
+        <br/>
+        <a name="Index Weights"></a>
+        <b>Index Weights</b>
+        <br/><br/>
+
+<table id="weights">
+  <tr>
+        <th>Bletchley 10 Index</th>
+        <th>Creation Weight</th>
+        <th>April 19th, 2017 Rebalance</th>
+        </tr>
+
+        <tr>
+        <td>Bitcoin</td>    
+        <td>75.60%</td>
+        <td>71.25%</td>
+        </tr>
+        <tr>
+        <td>Ethereum</td>
+        <td>15.46%</td>
+        <td>16.51%</td>
+        </tr>
+        <tr>
+        <td>Ripple</td>    
+        <td>1.18%</td>
+        <td>4.54%</td>
+        </tr>
+        <tr>
+        <td>Litecoin</td>
+        <td>0.92%</td>
+        <td>2.01%</td>
+        </tr>
+        <tr>
+        <td>Dash</td>
+        <td>3.59%</td>
+        <td>1.89%</td>
+        </tr>
+        <tr>
+        <td>Monero</td>
+        <td>1.34%</td>
+        <td>1.09%</td>
+        </tr>
+        <tr>
+        <td>Ethereum Classic</td>
+        <td>0.70%</td>
+        <td>0.97%</td>
+        </tr>
+        <tr>
+        <td>NEM</td>
+        <td>0.48%</td>
+        <td>0.90%</td>
+        </tr>
+        <tr>
+        <td>Augur</td>
+        <td>0.39%</td>
+        <td>0.50%</td>
+        </tr>
+        <tr>
+        <td>MaidSafeCoin</td>
+        <td>N/A</td>
+        <td>0.35%</td>
+        </tr>
+        <tr>
+        <td>Zcash</td>
+        <td>0.35%</td>
+        <td>N/A</td>
+        </tr>
+        </table>
+
+
+        <br/>
+        
+        <table id="weights">
+
+        <tr>
+        <th>Bletchley 10 Even Index</th>
+        <th>Creation Weight</th>
+        <th>April 19th, 2017 Rebalance</th>
+        </tr>
+
+        <tr>
+        <td>Bitcoin</td>    
+        <td>10.00%</td>
+        <td>10.00%</td>
+        </tr>
+        <tr>
+        <td>Ethereum</td>
+        <td>10.00%</td>
+        <td>10.00%</td>
+        </tr>
+        <tr>
+        <td>Ripple</td>    
+        <td>10.00%</td>
+        <td>10.00%</td>
+        </tr>
+        <tr>
+        <td>Litecoin</td>
+        <td>10.00%</td>
+        <td>10.00%</td>
+        </tr>
+        <tr>
+        <td>Dash</td>
+        <td>10.00%</td>
+        <td>10.00%</td>
+        </tr>
+        <tr>
+        <td>Monero</td>
+        <td>10.00%</td>
+        <td>10.00%</td>
+        </tr>
+        <tr>
+        <td>Ethereum Classic</td>
+        <td>10.00%</td>
+        <td>10.00%</td>
+        </tr>
+        <tr>
+        <td>NEM</td>
+        <td>10.00%</td>
+        <td>10.00%</td>
+        </tr>
+        <tr>
+        <td>Augur</td>
+        <td>10.00%</td>
+        <td>10.00%</td>
+        </tr>
+        <tr>
+        <td>MaidSafeCoin</td>
+        <td>N/A</td>
+        <td>10.00%</td>
+        </tr>
+        <tr>
+        <td>Zcash</td>
+        <td>10.00%</td>
+        <td>N/A</td>
+        </tr>
+        </table>
+        <br/>
+        <a name="Base Values"></a>
+        <b>Creation Dates and Values</b>
+        <br/><br/>
+        <!--Bletchley 10 Index-->
+        <table id="weights">
+
+        <tr>
+        <th>Index</th>
+        <th>Creation Date</th>
+        <th>Base Value USD</th>
+        <th>Base Value BTC</th>
+        </tr>
+
+        <tr>
+        <td>Bletchley 10</td>    
+        <td>3/18/2017</td>
+        <td>1000</td>
+        <td>1</td>
+        </tr>
+        <tr>
+        <td>Bletchley 10 Even</td>
+        <td>3/18/2017</td>
+        <td>1000</td>
+        <td>1</td>
+        </tr>
+        <tr>
+        <td>Bletchley 20</td>    
+        <td>4/19/2017</td>
+        <td>100</td>
+        <td>0.1</td>
+        </tr>
+        <tr>
+        <td>Bletchley 20 Even</td>
+        <td>4/19/2017</td>
+        <td>100</td>
+        <td>0.1</td>
+        </tr>
+        </table>
+        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+            </div>       
+
+</body>
+</html>
