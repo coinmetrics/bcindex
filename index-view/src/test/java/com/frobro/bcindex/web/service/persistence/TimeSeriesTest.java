@@ -8,6 +8,8 @@ import com.frobro.bcindex.web.domain.JpaEvenIndex;
 import com.frobro.bcindex.web.domain.JpaIndex;
 import com.frobro.bcindex.web.model.api.*;
 import com.frobro.bcindex.web.service.DbTickerService;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,6 +42,11 @@ public class TimeSeriesTest {
     this.evenRepo = eRepo;
   }
 
+  @Before @After
+  public void clearDb() {
+    oddRepo.deleteAll();
+    evenRepo.deleteAll();
+  }
 
   @Test @Ignore("summary is not yet implemented")
   public void testSummary() {
@@ -96,7 +103,7 @@ public class TimeSeriesTest {
     assertEquals(percentChg, response.percentChange, 0.001);
   }
 
-  @Test
+  @Test @Ignore
   public void testOddRepoHourly() {
     // given
     int numEntries = 300;
@@ -117,6 +124,7 @@ public class TimeSeriesTest {
 
     // and
     assertEquals(numEntries, oddRepo.count());
+
     // and
     DbTickerService ser = new DbTickerService();
     ser.setJdbc(jdbc);

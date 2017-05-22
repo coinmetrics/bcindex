@@ -69,7 +69,7 @@ public class TimeSeriesService {
       + lastIdOfInterest(oldestRecOfInterest, table)
       + " and "
       + "(MOD(id," + timeUnit + ") = 0) "
-      + ";";
+      + "order by id;";
 
     ApiResponse response = createResponse(req);
 

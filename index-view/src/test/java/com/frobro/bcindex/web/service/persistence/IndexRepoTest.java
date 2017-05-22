@@ -4,6 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 import com.frobro.bcindex.web.domain.JpaIndex;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +27,12 @@ public class IndexRepoTest {
   @Autowired
   public void setIndexRepo(IndexRepo repo) {
     this.indexRepo = repo;
+  }
+
+  @Before
+  @After
+  public void clearDb() {
+    indexRepo.deleteAll();
   }
 
   @Test
