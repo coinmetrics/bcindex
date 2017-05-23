@@ -24,7 +24,7 @@ public class TimeSeriesService {
   private static final int UNIT_WEEKLY = UNIT_DAILY * 7;
   private static final int UNIT_MONTHLY = UNIT_DAILY * 30;
 
-  private int numPoints = 3;
+  private int numPoints = 10;
   private JdbcTemplate jdbc;
 
   public void setJdbc(JdbcTemplate jdbc) {
