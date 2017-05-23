@@ -33,19 +33,6 @@ public class HomeController {
   }
 
   private String renderHome(Model model) throws IOException {
-
-//    double latestSum = dbTickerService.getIndexValue();
-//    model.addAttribute("indexValue", format(latestSum));
-//
-//    double latestEven = dbTickerService.getEvenIndexValue();
-//    model.addAttribute("evenIndex", format(latestEven));
-
     return "home";
-  }
-
-  private String format(double val) {
-    DecimalFormat df = new DecimalFormat("#.####");
-    df.setRoundingMode(RoundingMode.CEILING);
-    return df.format(val);
   }
 }
