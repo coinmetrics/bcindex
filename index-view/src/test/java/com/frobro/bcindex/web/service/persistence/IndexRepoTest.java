@@ -6,7 +6,6 @@ import static org.junit.Assert.assertNotEquals;
 import com.frobro.bcindex.web.domain.JpaIndex;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,20 +19,7 @@ import java.util.Date;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class IndexRepoTest {
-
-  private IndexRepo indexRepo;
-
-  @Autowired
-  public void setIndexRepo(IndexRepo repo) {
-    this.indexRepo = repo;
-  }
-
-  @Before
-  @After
-  public void clearDb() {
-    indexRepo.deleteAll();
-  }
+public class IndexRepoTest extends DbBaseTest {
 
   @Test
   public void testSave() {
@@ -43,8 +29,8 @@ public class IndexRepoTest {
         .setIndexValueUsd(34)
         .setId(1234567L);
 
-    indexRepo.save(index);
-    JpaIndex retreived = indexRepo.findByTimeStamp(index.getTimeStamp()).get(0);
+    oddRepo.save(index);
+    JpaIndex retreived = oddRepo.findByTimeStamp(index.getTimeStamp()).get(0);
 
     assertEquals(index.getIndexValueBtc(), retreived.getIndexValueBtc(), 0.01);
     assertEquals(index.getIndexValueUsd(), retreived.getIndexValueUsd(), 0.01);
@@ -59,11 +45,11 @@ public class IndexRepoTest {
     // and
     JpaIndex second = IndexFactory.getNewOdd().setId(2L);
     // and
-    indexRepo.save(first);
-    indexRepo.save(second);
+    oddRepo.save(first);
+    oddRepo.save(second);
 
     // when
-    JpaIndex latest = indexRepo.findFirst1ByOrderByTimeStampDesc().get(0);
+    JpaIndex latest = oddRepo.findFirst1ByOrderByTimeStampDesc().get(0);
 
     // then
     assertEquals(second.getId(), latest.getId());

@@ -25,28 +25,7 @@ import java.util.concurrent.TimeUnit;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class TimeSeriesTest {
-
-  private IndexRepo oddRepo;
-  private EvenIdxRepo evenRepo;
-  private JdbcTemplate jdbc;
-
-  @Autowired
-  public void setJdb(JdbcTemplate jdbc) {
-    this.jdbc = jdbc;
-  }
-
-  @Autowired
-  public void setIndexRepo(IndexRepo repo, EvenIdxRepo eRepo) {
-    this.oddRepo = repo;
-    this.evenRepo = eRepo;
-  }
-
-  @Before @After
-  public void clearDb() {
-    oddRepo.deleteAll();
-    evenRepo.deleteAll();
-  }
+public class TimeSeriesTest extends DbBaseTest {
 
   @Test @Ignore("summary is not yet implemented")
   public void testSummary() {
@@ -103,7 +82,7 @@ public class TimeSeriesTest {
     assertEquals(percentChg, response.percentChange, 0.001);
   }
 
-  @Test @Ignore
+  @Test
   public void testOddRepoHourly() {
     // given
     int numEntries = 300;
