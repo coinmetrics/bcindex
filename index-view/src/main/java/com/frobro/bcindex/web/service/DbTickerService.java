@@ -31,11 +31,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 public class DbTickerService {
 
   private static final BcLog log = BcLog.getLogger(DbTickerService.class);
-  private static final String EMPTY_RESPONSE = "noop";
-  private final static String COIN_CAP_ENDPOINT = "http://www.coincap.io/global";
-  private final static String POLONIEX_ENDPOINT = "https://poloniex.com/public?command=returnTicker";
 
-  private IndexCalculator indexCalculator = new IndexCalculator();
   private BletchleyData lastData = emptyData();
   private IndexRepo oddRepo;
   private EvenIdxRepo evenRepo;
@@ -125,103 +121,6 @@ public class DbTickerService {
     }
   }
 
-  private void calculateAndSetIndexes(BletchleyData data) {
-    indexCalculator.updateLast(data);
-    lastIndex = indexCalculator.calcuateOddIndex();
-    lastEvenIndex = indexCalculator.calculateEvenIndex();
-  }
-
-  public void updateTickerBtc(String response) throws IOException {
-    ObjectMapper mapper = new ObjectMapper();
-    CoinCapDto dto = mapper.readValue(response, CoinCapDto.class);
-    lastData.setLastUsdBtc(dto.getBtcPrice());
-  }
-
-  private void update(String apiResponse)throws IOException {
-    Map<String, Index> tickers = populateTickers(apiResponse);
-    lastData.setMembers(tickers);
-  }
-
-  public String makeApiCallBtc() throws IOException {
-    return makeApiCall(COIN_CAP_ENDPOINT);
-  }
-  
-  private String makeCallTenMembers() throws IOException {
-    return makeApiCall(POLONIEX_ENDPOINT);
-  }
-
-  private String makeApiCall(String endpoint) throws IOException {
-    String response = EMPTY_RESPONSE;
-    CloseableHttpClient httpClient = HttpClients.createDefault();
-    try {
-
-      HttpGet getRequest = new HttpGet(
-          endpoint);
-      getRequest.addHeader("accept", "application/json");
-      response = httpClient.execute(getRequest, createResponseHandler());
-
-    } finally {
-      httpClient.close();
-    }
-    return response;
-  }
-  private ResponseHandler<String> createResponseHandler() {
-    return new ResponseHandler<String>() {
-
-      @Override
-      public String handleResponse(
-          final HttpResponse response) throws ClientProtocolException, IOException {
-
-        int status = response.getStatusLine().getStatusCode();
-        if (status >= 200 && status < 300) {
-          HttpEntity entity = response.getEntity();
-          return entity != null ? EntityUtils.toString(entity) : null;
-        } else {
-          throw new ClientProtocolException("Unexpected response status: " + status);
-        }
-      }
-    };
-  }
-
-  private Map<String,Index> populateTickers(String json) throws IOException {
-    Map<String, Index> tickers = new TreeMap<>();
-    JsonNode root = getRoot(json);
-
-    Set<String> indexes = new BusinessRules().getIndexes();
-
-    root.fields().forEachRemaining(node -> {
-
-      String indexName = node.getKey();
-      if (indexes.contains(indexName)) {
-        addTicker(tickers, indexName, node.getValue());
-      }
-    });
-    return tickers;
-  }
-
-  private JsonNode getRoot(String json) throws IOException {
-    ObjectMapper mapper = new ObjectMapper();
-    return mapper.readTree(json);
-  }
-
-  private void addTicker(Map<String,Index> tickerMap, String name, JsonNode node) {
-    Index currPair = newIndex(name, getVal(node));
-    tickerMap.put(currPair.getName(), currPair);
-  }
-
-  private Index newIndex(String indexName, String priceStr) {
-    Index currPair = new Index().setName(indexName);
-    return currPair.setLast(Double.parseDouble(priceStr));
-  }
-
-  private String getVal(JsonNode node) {
-    return node.get(CurrPairJson.LAST_KEY).textValue();
-  }
-
-  public Collection<Index> getLatestCap() {
-    return indexCalculator.getSortedValues();
-  }
-
   public double getIndexValue() {
     return lastIndex.getIndexValueUsd();
   }
@@ -230,21 +129,8 @@ public class DbTickerService {
     return lastEvenIndex.getIndexValueUsd();
   }
 
-  public double getConstant() {
-    return indexCalculator.getConstant();
-  }
-
-  void init() {
-    indexCalculator.updateLast(emptyData());
-  }
-
   private BletchleyData emptyData() {
     return new BletchleyData();
-  }
-
-  DbTickerService put(String name, double cap) {
-    indexCalculator.put(name, 0, cap);
-    return this;
   }
 }
 
