@@ -85,13 +85,13 @@ public class TimeSeriesTest extends DbBaseTest {
   @Test
   public void testOddRepoHourly() {
     // given
-    int numEntries = 300;
+    int numEntries = 600; // 10* 60 (data pts * min/hour)
     long now = System.currentTimeMillis();
     double price = 100.0;
     // and
     for (int i=1; i<=numEntries; i++) {
       JpaIndex idx = IndexFactory.getNewOdd();
-      if (i == 300) {
+      if (i == numEntries) {
         idx.setIndexValueUsd(price);
       }
       // add a minute, since that is the resolution
