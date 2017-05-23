@@ -5,7 +5,7 @@
   <artifactId>index-view</artifactId>
   <packaging>jar</packaging>
   <version>1.0-SNAPSHOT</version>
-  <name>bc-index-web</name>
+  <name>bc-index-view</name>
   <url>http://maven.apache.org</url>
 
   <parent>
@@ -44,9 +44,9 @@
         <artifactId>heroku-maven-plugin</artifactId>
         <version>0.5.4</version>
         <configuration>
-          <appName>phonetest-720</appName>
+          <appName>bc-index-view</appName>
           <processTypes>
-            <web>java -Dspring.profiles.active=prod -Dserver.port=$PORT -jar target/bc-index-web-1.0-SNAPSHOT.jar</web>
+            <web>java -Dspring.profiles.active=prod -Dserver.port=$PORT -jar target/index-view-1.0-SNAPSHOT.jar</web>
           </processTypes>
         </configuration>
       </plugin>
