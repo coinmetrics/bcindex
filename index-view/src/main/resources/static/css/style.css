@@ -20,62 +20,59 @@ a:active,a:hover{outline-width:0}abbr[title]{border-bottom:none;text-decoration:
 /* custom drop down menu style */
 .index-usd-drop-down {
     display: flex;
+    margin: 20px 0px;
 }
-
-.select {
-    width: 350px;
-    padding:5px 10px;
-    position: absolute;    
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #fff !important;    
 }
-
-.select::before {
-    content: "select an option";
-    display: inline-block;
-    font-size: 1.5em;
-    padding:5px 10px;              
-}
-
-.select::after {
-    content: "▼";
-    display: block;
-    float: right;
-    font-size: 1.5em;    
-    padding:5px 10px;              
-}
-
-.option {
-    display: none;
-}
-
-.select {
-    cursor: pointer;
-    background: #424949;    
-    color: #fff;
-    -webkit-padding-start: 0px;
+.select2-container .select2-selection--single .select2-selection__rendered {
+    background: #424949;       
+    color: #fff;    
     text-transform: uppercase;
-    position: relative;
+
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow {    
+    background: #3b4141;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+   border-color: #fff transparent transparent transparent;
+}
+.select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
+    border-color: transparent transparent #fff transparent;
 }
 
-.option {
-    z-index: 30px;
-    list-style: none;
-    padding: 8px 18px;
-    font-size: 1.5em;
-    border: 1px solid #eee;
-    width: 349px;
-}
-
-.option:hover {
+.select2-results__option {
     background: #229954;
-    width: 349px;
+    text-transform: uppercase;
+}
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background: #176b3a;
 }
 
-.select:hover .option {
-    display: inline-block;
-    width: 323px;
+.select2-container--default .select2-results__option[aria-selected=true] {
+    background-color: #145b32;
+    color: #fff
 }
-
 /* custom drop down menu style end */
+
+.btn-timeframe {
+    padding:10px 20px;
+    background: #424949;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.25em;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-timeframe:hover {
+    background: #229954;
+    color: #424949;
+}
+
+.btn-timeframe.selected {
+    background: #229954;
+}
 
 #weights {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;

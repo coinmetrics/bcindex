@@ -6,7 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Block Chain Index</title>
     <link th:href="@{/css/style.css}" href="../static/css/style.css"  rel="stylesheet" type="text/css"  />
-
+    <script
+  src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+  integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
+  crossorigin="anonymous"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <div class="topnav">
   <li><a th:href="@{/home}" href="home.html" class="homelink">Bletchley Indexes</a></li>
   <li><a class="active" th:href="@{/home}" href="home.html">Home</a></li>
@@ -28,28 +33,18 @@
 </script>
     <div class="containerbody">
         <div class="index-usd-drop-down">
-           <div class="index">
-               <span class="placeholder">select a index</span>
-                <ul class="select">
-                    <li class="option">odd</li>
-                    <li class="option">even</li>
-                </ul>
-            </div>
-            <div class="currency">
-                <span class="placeholder">select a currency</span>
-                <ul class="select">
-                    <li class="option">bit coin</li>
-                    <li class="option">usd</li>
-                </ul>
-            </div>
+           <select class="index">
+           </select> 
+           <select class="currency">
+           </select>                       
         </div>
         <div class="timeframe">
-            <button>Hourly</button>
-            <button>Daily</button>
-            <button>Weekly</button>
-            <button>Monthly</button>
-            <button>Yearly</button>
-            <button>All</button>
+            <button class="btn-timeframe selected">Hourly</button>
+            <button class="btn-timeframe">Daily</button>
+            <button class="btn-timeframe">Weekly</button>
+            <button class="btn-timeframe">Monthly</button>
+            <button class="btn-timeframe">Yearly</button>
+            <button class="btn-timeframe">All</button>
         </div>
         <canvas id="myChart" width="700" height="300"></canvas>
     </div> <!-- /container -->
