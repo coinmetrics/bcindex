@@ -15,6 +15,7 @@
   <li><a class="active" th:href="@{/contact}" href="contact.html">Contact</a></li>
 </div>
 
+<script src='https://www.google.com/recaptcha/api.js'></script>
 
 </head>
 <body>
@@ -311,7 +312,7 @@
 
     <label for="subject">Message</label>
     <textarea id="subject" name="subject" placeholder="Write something.." style="height:150px"></textarea>
-
+    <div class="g-recaptcha" data-sitekey="6LfasSIUAAAAAEVfa2m1v887LoFpiupoVO0OYAjX"></div>
     <input type="submit" value="Submit"/>
   </form>
 </div>
