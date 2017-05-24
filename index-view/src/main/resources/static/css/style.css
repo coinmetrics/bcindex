@@ -227,7 +227,7 @@ input[type=submit]:hover {
 @media screen and (max-width: 600px) {
     .containerbody{margin-left:2.5%;margin-right:2.5%;}
     .topnav{padding-left:2.5%;}
-    .hide-large{margin-left:2.5%;}
+    .hide-large{margin-left:0%;}
     body {
         font-size: 75%;
     }
@@ -250,7 +250,7 @@ input[type=submit]:hover {
 @media screen and (max-width: 992px) and (min-width: 601px) {
     .containerbody{margin-left:10%;margin-right:10%;}
     .topnav{padding-left: 10%}
-    .hide-large{margin-left:10%;}
+    .hide-large{margin-left:6%;}
     body {
         font-size: 90%;
     }
