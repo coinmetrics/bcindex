@@ -101,6 +101,8 @@ public class TimeSeriesTest extends DbBaseTest {
       oddRepo.save(idx);
     }
 
+    System.out.println("size: " + oddRepo.count());
+
     // and
     assertEquals(numEntries, oddRepo.count());
 
@@ -126,7 +128,7 @@ public class TimeSeriesTest extends DbBaseTest {
     assertEquals(price, response.getLastPrice(), 0.001);
 
     // and verify time series
-    long entries = ser.getNumDataPointsOnGraph();
+    int entries = TimeFrame.HOURLY.getNumDataPoints();
     assertEquals(entries, response.data.size());
     assertEquals(entries, response.times.size());
   }

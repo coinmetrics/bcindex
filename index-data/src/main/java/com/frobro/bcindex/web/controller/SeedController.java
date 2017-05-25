@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -31,12 +33,17 @@ public class SeedController {
 
   @RequestMapping("/seed")
   public String seed() {
-    int numHours = 20;
+    int numHours = 200;
     int numIterations = (int) TimeUnit.HOURS.toMinutes(numHours);
+
+    List<JpaEvenIndex> evenList = new ArrayList<>(numIterations);
+    List<JpaIndex> oddList = new ArrayList<>(numIterations);
     for (int i=0; i<numIterations; i++) {
-      evenRepo.save(newEven());
-      oddRepo.save(newOdd());
+      evenList.add(newEven());
+      oddList.add(newOdd());
     }
+    evenRepo.save(evenList);
+    oddRepo.save(oddList);
     return "done";
   }
 

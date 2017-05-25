@@ -1,17 +1,15 @@
 package com.frobro.bcindex.web.service;
 
-import com.frobro.bcindex.web.bclog.BcLog;
-import com.frobro.bcindex.web.domain.JpaIndex;
-import com.frobro.bcindex.web.model.api.ApiResponse;
-import com.frobro.bcindex.web.model.api.Currency;
-import com.frobro.bcindex.web.model.api.IndexType;
-import com.frobro.bcindex.web.model.api.RequestDto;
+import static com.frobro.bcindex.web.model.api.TimeFrame.HOURLY;
+import static com.frobro.bcindex.web.model.api.TimeFrame.DAILY;
+import static com.frobro.bcindex.web.model.api.TimeFrame.WEEKLY;
+import static com.frobro.bcindex.web.model.api.TimeFrame.MONTHLY;
 
+import com.frobro.bcindex.web.bclog.BcLog;
+import com.frobro.bcindex.web.model.api.*;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.time.Instant;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Created by rise on 5/12/17.
@@ -24,7 +22,7 @@ public class TimeSeriesService {
   private static final int UNIT_WEEKLY = UNIT_DAILY * 7;
   private static final int UNIT_MONTHLY = UNIT_DAILY * 30;
 
-  private int numPoints = 10;
+  private int numPoints = 200;
   private JdbcTemplate jdbc;
 
   public void setJdbc(JdbcTemplate jdbc) {
@@ -41,26 +39,44 @@ public class TimeSeriesService {
 
     switch(req.timeFrame) {
       case HOURLY:
-        response = getResponse(req, now, UNIT_HOURLY);
+        response = getResponse(req,
+            HOURLY.getNumDataPoints(), HOURLY.getModNum());
         break;
       case DAILY:
-        response = getResponse(req, now, UNIT_DAILY);
+        response = getResponse(req,
+            DAILY.getNumDataPoints(), DAILY.getModNum());
         break;
       case WEEKLY:
-        response = getResponse(req, now, UNIT_WEEKLY);
+        response = getResponse(req,
+            WEEKLY.getNumDataPoints(), WEEKLY.getModNum());
         break;
       case MONTHLY:
-        response = getResponse(req, now, UNIT_MONTHLY);
+        response = getResponse(req,
+            MONTHLY.getNumDataPoints(), MONTHLY.getModNum());
         break;
+      case ALL:
+        response = getresponseForAll(req);
       default:
-        response = getResponse(req, now, UNIT_DAILY);
+        response = getResponse(req,
+            HOURLY.getNumDataPoints(), HOURLY.getModNum());
         break;
     }
     return response;
   }
 
-  private ApiResponse getResponse(RequestDto req, long now, int timeUnit) {
-    int oldestRecOfInterest = numPoints * timeUnit;
+  private ApiResponse getresponseForAll(RequestDto req) {
+    String table = getIdxColName(req.index);
+    String currency = getCurrColName(req.currency);
+    String query = "";
+    ApiResponse response = createResponse(req);
+    response.addPrice(100.0)
+        .addTime("2017-05-17 23:53:31.16");
+
+    return response;
+  }
+
+  private ApiResponse getResponse(RequestDto req, int numOfPoints, int numBack) {
+    int oldestRecOfInterest = numOfPoints;
 
     String table = getIdxColName(req.index);
     String currency = getCurrColName(req.currency);
@@ -68,10 +84,12 @@ public class TimeSeriesService {
       + ", time_stamp from " + table + " where id > "
       + lastIdOfInterest(oldestRecOfInterest, table)
       + " and "
-      + "(MOD(id," + timeUnit + ") = 0) "
+      + "(MOD(id," + numBack + ") = 0) "
       + "order by id;";
 
     ApiResponse response = createResponse(req);
+
+    System.out.println("QUERY: " + query);
 
         jdbc.query(query, (rs, rowNum) ->
               response.addPrice(rs.getDouble("index_value_usd"))
