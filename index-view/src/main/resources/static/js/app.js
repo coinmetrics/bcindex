@@ -21,10 +21,11 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: true,
+                elements: { point: { radius: 1, hitRadius: 1, hoverRadius: 4 } },
                 scales: {
                     yAxes: [{
                         ticks: {
-                            beginAtZero: true
+                            beginAtZero: false
                         },
                         scaleLabel: {
                             display: true,
