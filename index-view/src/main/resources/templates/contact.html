@@ -34,7 +34,7 @@
 
 
 <div id="onboard">
-<img th:src="@{/img/field.jpeg}" src="../static/img/field.jpeg" width="100%" height="300" alt="" />
+<img th:src="@{/img/Field.jpeg}" src="../static/img/Field.jpeg" width="100%" height="300" alt="" />
 </div>
 
 
@@ -44,12 +44,12 @@
   <div class="containertextbox">
   <p>Please contact us with any feedback, questions, suggested features, or requests to subscribe to historical data.</p>
   <div class="containerform">
-  <form action="/action_page.php">
+  <form action="../static/php/contact_form.php">
     <label for="fname">First Name</label>
     <input type="text" id="fname" name="firstname" placeholder="Your name.."/>
 
     <label for="lname">Email</label>
-    <input type="text" id="lname" name="lastname" placeholder="Your Email.."/>
+    <input type="text" id="lname" name="email" placeholder="Your Email.."/>
 
     <label for="country">Country</label>
     <select id="country" name="country" style="height:30px;background-color: #FBFCFC" placeholder="Your country...">
@@ -313,7 +313,7 @@
     <label for="subject">Message</label>
     <textarea id="subject" name="subject" placeholder="Write something.." style="height:150px"></textarea>
     <div class="g-recaptcha" data-sitekey="6LfasSIUAAAAAEVfa2m1v887LoFpiupoVO0OYAjX"></div>
-    <input type="submit" value="Submit"/>
+    <input type="submit" value="Submit"/> 
   </form>
 </div>
 </div>
@@ -333,7 +333,9 @@
 </div>
 </div>
 
-
+<div class='container'>
+<a href="https://twitter.com/intent/tweet?screen_name=Bletchley_Index" class="twitter-mention-button" data-size="large" data-show-count="false">Tweet to @Bletchley_Index</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
     
 </body>
 </html>
