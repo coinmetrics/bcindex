@@ -207,6 +207,7 @@ input[type=submit]:hover {
 }
 
 .container{width:100%;background-color:#F7F9F9;}
+.container-twitter{width:100%;background-color:#ECF0F1;padding-top:200px;}
 .containertextbox{padding-left:15px;padding-right:15px;color:#707B7C;}
 .containertextbox-half{padding-left:40px;padding-right:40px;color:#707B7C;}
 .third{width:33.333%;background-color:#F7F9F9;float:left;text-align:center;height:150px;line-height: 14px;

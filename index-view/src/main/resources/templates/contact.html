@@ -312,13 +312,14 @@
 
     <label for="subject">Message</label>
     <textarea id="subject" name="subject" placeholder="Write something.." style="height:150px"></textarea>
-    <div class="g-recaptcha" data-sitekey="6LfasSIUAAAAAEVfa2m1v887LoFpiupoVO0OYAjX"></div>
+    <!--<div class="g-recaptcha" data-sitekey="6LfasSIUAAAAAEVfa2m1v887LoFpiupoVO0OYAjX"></div>-->
     <input type="submit" value="Submit"/> 
   </form>
 </div>
 </div>
 </div>
 </div>
+
 <div class="container">
 <div class="halfcontact">
   <h2>Donate</h2>
@@ -333,9 +334,35 @@
 </div>
 </div>
 
-<div class='container'>
-<a href="https://twitter.com/intent/tweet?screen_name=Bletchley_Index" class="twitter-mention-button" data-size="large" data-show-count="false">Tweet to @Bletchley_Index</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+<script>window.twttr = (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  fjs.parentNode.insertBefore(js, fjs);
+
+  t._e = [];
+  t.ready = function(f) {
+    t._e.push(f);
+  };
+
+  return t;
+}(document, "script", "twitter-wjs"));</script>
+
+
+
+<div class="container-twitter" style='text-align: center;'>
+<p>You can also interact with us on twitter!</p>
+<a th:href="@{https://twitter.com/intent/tweet?screen_name=Bletchley_Index}" href="https://twitter.com/intent/tweet?screen_name=Bletchley_Index" class="twitter-mention-button" data-size="large" data-show-count="false">@Bletchley_Index</a>
 </div>
-    
+
+<br/><br/><br/><br/>
+<br/><br/><br/><br/>
+
 </body>
 </html>
