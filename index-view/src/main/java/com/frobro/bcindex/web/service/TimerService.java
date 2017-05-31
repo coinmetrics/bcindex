@@ -38,7 +38,8 @@ public class TimerService {
    }
 
   public void run() {
-    run(20);
+    // DONT RUN, AS WE CALL THE DB
+    //run(20);
   }
 
   public void updateIfInDevMode() {
