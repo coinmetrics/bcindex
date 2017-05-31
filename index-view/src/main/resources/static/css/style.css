@@ -8,7 +8,7 @@ h6{
    top: 140px; 
    left: 0; 
    width: 100%; 
-   color:#424949;
+   color:#000000;
    font-family: "Comic Sans MS", cursive, sans-serif;
 }
 h1,h2,h3,h4,h5,h6{font-family:"Segoe UI",Arial,sans-serif;font-weight:400;margin:10px 0}
@@ -206,6 +206,17 @@ input[type=submit]:hover {
     resize: vertical;
 }
 
+ul.top{
+    list-style-type: disc;
+    padding-left:10px;
+    margin:2.5%;
+}
+
+ul.side{
+    list-style-type: disc;
+    padding-left:50px;
+}
+
 .container{width:100%;background-color:#F7F9F9;}
 .container-twitter{width:100%;background-color:#ECF0F1;padding-top:200px;}
 .containertextbox{padding-left:15px;padding-right:15px;color:#707B7C;}
@@ -217,7 +228,8 @@ input[type=submit]:hover {
 .half{width:50%;background-color:#ECF0F1;float:left;text-align:center;height:150px;padding:20px 0;}
 .half-mobile{width:50%;background-color:#ECF0F1;float:left;text-align:center;height:170px;padding:80px 0;}
 .half-mobile-image{width:50%;background-color:#ECF0F1;float:left;text-align:center;height:170px;padding:80px 0;}
-.halfcontact{width:50%;background-color:#F7F9F9;float:left;text-align:center;height:600px;padding:40px 0;}
+.halfcontact{width:50%;background-color:#F7F9F9;float:left;text-align:center;height:325px;padding:40px 0;}
+.halfcontact{width:50%;background-color:#F7F9F9;float:left;text-align:center;height:325px;padding:40px 0;}
 .half-two{width:50%;background-color:#F7F9F9;float:left;text-align:center;height:150px;padding:80px 0;}
 .half-two-image{width:50%;background-color:#F7F9F9;float:left;text-align:center;height:150px;padding:80px 0;}
 .imgcontainer{width:100%;height:150px;}
@@ -248,7 +260,7 @@ input[type=submit]:hover {
 @media screen and (max-width: 992px) and (min-width: 601px) {
     .containerbody{margin-left:10%;margin-right:10%;}
     .topnav{padding-left: 10%}
-    .hide-large{margin-left:6%;}
+    .hide-large{margin-left:8%;}
     body {
         font-size: 90%;
     }
