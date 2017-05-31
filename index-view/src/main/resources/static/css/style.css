@@ -53,6 +53,15 @@ a:active,a:hover{outline-width:0}abbr[title]{border-bottom:none;text-decoration:
     background-color: #145b32;
     color: #fff
 }
+
+
+.last-price {
+    float: right;
+    background: #ddd;
+    padding: 10px;
+    font-weight: bolder;    
+}
+ 
 /* custom drop down menu style end */
 
 .btn-timeframe {

@@ -17,3 +17,4 @@ target-eclipse/
 build_profiles/
 lib/
 info/
+**/node_modules/**
