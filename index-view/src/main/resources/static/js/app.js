@@ -13,8 +13,8 @@
                 datasets: [{
                     label: 'The Index',
                     data: result.data,
-                    backgroundColor: 'rgba(255,153,0,0.4)' ,
-                    borderColor: 'rgba(255, 159, 64, 1)',
+                    backgroundColor: 'rgba(204, 226, 159, 0.4)' ,
+                    borderColor: 'rgba(104, 140, 33, 0.4)',
                     borderWidth: 1
                 }]
             },
