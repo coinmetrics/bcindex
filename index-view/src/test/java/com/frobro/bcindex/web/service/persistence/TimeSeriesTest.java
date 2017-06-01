@@ -85,6 +85,7 @@ public class TimeSeriesTest extends DbBaseTest {
   @Test
   public void testOddRepoHourly() {
     // given
+    TimeFrame timeFrame = TimeFrame.HOURLY;
     int numEntries = 600; // 10* 60 (data pts * min/hour)
     long now = System.currentTimeMillis();
     double price = 100.0;
@@ -113,7 +114,7 @@ public class TimeSeriesTest extends DbBaseTest {
     RequestDto req = new RequestDto();
     req.currency = Currency.USD;
     req.index = IndexType.ODD;
-    req.timeFrame = TimeFrame.HOURLY;
+    req.timeFrame = timeFrame;
 
     // when
     ApiResponse response = ser.respond(req);
@@ -128,7 +129,13 @@ public class TimeSeriesTest extends DbBaseTest {
     assertEquals(price, response.getLastPrice(), 0.001);
 
     // and verify time series
-    int entries = TimeFrame.HOURLY.getNumDataPoints();
+    int entries = timeFrame.getModNum();
+    // if we didn't populate an entire time frame
+    // i.e. 600 minutes is no enough minutes to fill
+    // a day (1440), just use the num entries
+    if (numEntries < timeFrame.getNumDataPoints()) {
+      entries = numEntries/timeFrame.getTimeStep();
+    }
     assertEquals(entries, response.data.size());
     assertEquals(entries, response.times.size());
   }

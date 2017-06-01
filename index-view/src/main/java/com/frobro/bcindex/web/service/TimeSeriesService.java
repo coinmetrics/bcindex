@@ -40,25 +40,25 @@ public class TimeSeriesService {
     switch(req.timeFrame) {
       case HOURLY:
         response = getResponse(req,
-            HOURLY.getNumDataPoints(), HOURLY.getModNum());
+            HOURLY.getNumDataPoints(), HOURLY.getTimeStep());
         break;
       case DAILY:
         response = getResponse(req,
-            DAILY.getNumDataPoints(), DAILY.getModNum());
+            DAILY.getNumDataPoints(), DAILY.getTimeStep());
         break;
       case WEEKLY:
         response = getResponse(req,
-            WEEKLY.getNumDataPoints(), WEEKLY.getModNum());
+            WEEKLY.getNumDataPoints(), WEEKLY.getTimeStep());
         break;
       case MONTHLY:
         response = getResponse(req,
-            MONTHLY.getNumDataPoints(), MONTHLY.getModNum());
+            MONTHLY.getNumDataPoints(), MONTHLY.getTimeStep());
         break;
       case ALL:
         response = getresponseForAll(req);
       default:
         response = getResponse(req,
-            HOURLY.getNumDataPoints(), HOURLY.getModNum());
+            HOURLY.getNumDataPoints(), HOURLY.getTimeStep());
         break;
     }
     return response;

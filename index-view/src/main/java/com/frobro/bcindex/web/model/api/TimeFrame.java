@@ -10,45 +10,44 @@ public enum TimeFrame {
       return 60; // 1 per minute
     }
 
-    @Override
-    public int getModNum() {
-      return 1; // one hour back = 60 / min/per = 60
+    public int getTimeStep() {
+      return 1;
     }
   },
 
   DAILY {
     @Override
     public int getNumDataPoints() {
-      return 1440; // 1440 min/day / 20 min/point
+      return 1440; // 1440 min/day
     }
 
     @Override
-    public int getModNum() {
-      return 20; // 1440/60 one day back (assuming minute data)
+    public int getTimeStep() {
+      return 20; // every 20 minutes
     }
   },
 
   WEEKLY {
     @Override
     public int getNumDataPoints() {
-      return 10080; // 10080 min/week / 2 hrs/point
+      return 10080; // 10080 min/week
     }
 
     @Override
-    public int getModNum() {
-      return 120; // one week back
+    public int getTimeStep() {
+      return 120; // 2 hrs in min
     }
   },
 
   MONTHLY {
     @Override
     public int getNumDataPoints() {
-      return 44640; // 44640 min/month / 6 hrs/point
+      return 44640; // 44640 min/month
     }
 
     @Override
-    public int getModNum() {
-      return 360; // one week back = num min in 6 hours
+    public int getTimeStep() {
+      return 360; // num min in 6 hours
     }
   },
 
@@ -59,11 +58,14 @@ public enum TimeFrame {
     }
 
     @Override
-    public int getModNum() {
+    public int getTimeStep() {
       return 1440;
     }
   };
 
+  abstract public int getTimeStep();
   abstract public int getNumDataPoints();
-  abstract public int getModNum();
+  public int getModNum() {
+    return getNumDataPoints()/getTimeStep();
+  }
 }
