@@ -9,9 +9,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -23,7 +21,6 @@ public class SeedController {
 
   private EvenIdxRepo evenRepo;
   private IndexRepo oddRepo;
-  private long start = System.currentTimeMillis();
 
   @Autowired
   public void setRepos(EvenIdxRepo eRepo, IndexRepo oRepo) {
@@ -38,29 +35,32 @@ public class SeedController {
 
     List<JpaEvenIndex> evenList = new ArrayList<>(numIterations);
     List<JpaIndex> oddList = new ArrayList<>(numIterations);
+    long time = System.currentTimeMillis();
     for (int i=0; i<numIterations; i++) {
-      evenList.add(newEven());
-      oddList.add(newOdd());
+      time  += nextMinute();
+      evenList.add(newEven(time));
+      oddList.add(newOdd(time));
     }
     evenRepo.save(evenList);
     oddRepo.save(oddList);
+
     return "done";
   }
 
-  private JpaIndex newOdd() {
+  private JpaIndex newOdd(long now) {
     double nextDouble = nextDouble();
     return new JpaIndex()
-        .setTimeStamp(nextMinute())
+        .setTimeStamp(now)
         .setIndexValueUsd(nextDouble)
-        .setIndexValueBtc(nextDouble/10.0);
+        .setIndexValueBtc(nextDouble / 10.0);
   }
 
-  private JpaEvenIndex newEven() {
+  private JpaEvenIndex newEven(long now) {
     double nextDouble = nextDouble();
     return new JpaEvenIndex()
-        .setTimeStamp(nextMinute())
+        .setTimeStamp(now)
         .setIndexValueUsd(nextDouble)
-        .setIndexValueBtc(nextDouble/10.0);
+        .setIndexValueBtc(nextDouble / 10.0);
   }
 
   private double nextDouble() {
@@ -69,6 +69,6 @@ public class SeedController {
     return value;
   }
   private long nextMinute() {
-    return start + TimeUnit.MINUTES.toMillis(1);
+    return TimeUnit.MINUTES.toMillis(1);
   }
 }
