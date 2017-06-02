@@ -78,14 +78,8 @@ public class TimeSeriesTest extends DbBaseTest {
     assertEquals(percentChg, response.percentChange, 0.001);
   }
 
-  @Test
-  public void testOddRepoHourly() {
-    // given
-    TimeFrame timeFrame = TimeFrame.HOURLY;
-    int numEntries = 600; // 10* 60 (data pts * min/hour)
+  private void populateDb(int numEntries, double price) {
     long now = System.currentTimeMillis();
-    double price = 100.0;
-    // and
     for (int i=1; i<=numEntries; i++) {
       JpaIndex idx = IndexFactory.getNewOdd();
       if (i == numEntries) {
@@ -97,7 +91,37 @@ public class TimeSeriesTest extends DbBaseTest {
       idx.setTimeStamp(now);
       oddRepo.save(idx);
     }
+  }
 
+  @Test
+  public void testClose() {
+    // given
+    double price = 100.0;
+    TimeFrame timeFrame = TimeFrame.HOURLY;
+    int numEntries = 60; // 10* 60 (data pts * min/hour)
+    populateDb(numEntries, price);
+
+    DbTickerService ser = new DbTickerService();
+    ser.setJdbc(jdbc);
+    // and
+    RequestDto req = new RequestDto();
+    req.currency = Currency.USD;
+    req.index = IndexType.ODD;
+    req.timeFrame = timeFrame;
+
+    // when
+    ApiResponse response = ser.respond(req);
+    double close = oddRepo.findOne(1L).getIndexValueUsd();
+    assertEquals(close, response.prevClose, 0.00);
+  }
+
+  @Test
+  public void testOddRepoHourly() {
+    // given
+    double price = 100.0;
+    TimeFrame timeFrame = TimeFrame.HOURLY;
+    int numEntries = 600; // 10* 60 (data pts * min/hour)
+    populateDb(numEntries, price);
     System.out.println("size: " + oddRepo.count());
 
     // and

@@ -16,8 +16,8 @@ public class ApiResponse {
 
   public double lastPrice = UNINITIALIZED;
   public Double prevClose;
-  public Double high;
-  public Double low;
+  public Double high = 0.0;
+  public Double low = Double.MAX_VALUE;
   public Double change;
   public Double percentChange;
 
@@ -27,7 +27,21 @@ public class ApiResponse {
 
   public ApiResponse addPrice(double px) {
     data.add(px);
+    checkHigh(px);
+    checkLow(px);
     return this;
+  }
+
+  private void checkHigh(double px) {
+    if (px > high) {
+      high = px;
+    }
+  }
+
+  private void checkLow(double px) {
+    if (px < low) {
+      low = px;
+    }
   }
 
   public ApiResponse addTime(String time) {
@@ -35,9 +49,22 @@ public class ApiResponse {
     return this;
   }
 
-  public void setLastFromList() {
+  public void calculateDerivedData() {
+    setLastFromList();
+    setPrevClose();
+    change = lastPrice - prevClose;
+    percentChange = (change/prevClose)*100.0;
+  }
+
+  private void setLastFromList() {
     if (lastPrice == UNINITIALIZED && data.size() > 0) {
       lastPrice = data.get(data.size()-1);
+    }
+  }
+
+  private void setPrevClose() {
+    if (prevClose == null && data.size() > 0) {
+      prevClose = data.get(0);
     }
   }
 
