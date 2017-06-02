@@ -104,7 +104,8 @@ public class TimeSeriesService {
     ApiResponse response = new ApiResponse();
     response.currency = req.currency;
     response.index = req.index;
-    response.timeUnit = req.timeFrame;
+    response.timeFrame = req.timeFrame;
+    response.timeUnit = req.timeFrame.getTimeStepUnit();
     return response;
   }
 

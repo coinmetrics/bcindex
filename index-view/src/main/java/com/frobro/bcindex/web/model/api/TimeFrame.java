@@ -10,8 +10,14 @@ public enum TimeFrame {
       return 60; // 1 per minute
     }
 
+    @Override
     public int getTimeStep() {
-      return 1;
+      return 1; // every minute
+    }
+
+    @Override
+    public String getTimeStepUnit() {
+      return UNIT_MINUTE;
     }
   },
 
@@ -25,6 +31,11 @@ public enum TimeFrame {
     public int getTimeStep() {
       return 20; // every 20 minutes
     }
+
+    @Override
+    public String getTimeStepUnit() {
+      return UNIT_MINUTE;
+    }
   },
 
   WEEKLY {
@@ -36,6 +47,11 @@ public enum TimeFrame {
     @Override
     public int getTimeStep() {
       return 120; // 2 hrs in min
+    }
+
+    @Override
+    public String getTimeStepUnit() {
+      return UNIT_HOUR;
     }
   },
 
@@ -49,6 +65,11 @@ public enum TimeFrame {
     public int getTimeStep() {
       return 360; // num min in 6 hours
     }
+
+    @Override
+    public String getTimeStepUnit() {
+      return UNIT_HOUR;
+    }
   },
 
   ALL {
@@ -61,10 +82,18 @@ public enum TimeFrame {
     public int getTimeStep() {
       return 1440;
     }
+
+    public String getTimeStepUnit() {
+      throw new UnsupportedOperationException("implement me");
+    }
   };
+
+  protected static final String UNIT_MINUTE = "minute";
+  protected static final String UNIT_HOUR = "hour";
 
   abstract public int getTimeStep();
   abstract public int getNumDataPoints();
+  abstract public String getTimeStepUnit();
   public int getModNum() {
     return getNumDataPoints()/getTimeStep();
   }

@@ -11,7 +11,8 @@ public class ApiResponse {
   private static final double UNINITIALIZED = -1.0;
   public IndexType index;
   public Currency currency;
-  public TimeFrame timeUnit;
+  public TimeFrame timeFrame;
+  public String timeUnit;
 
   public double lastPrice = UNINITIALIZED;
   public Double prevClose;

@@ -8,14 +8,10 @@ import com.frobro.bcindex.web.domain.JpaEvenIndex;
 import com.frobro.bcindex.web.domain.JpaIndex;
 import com.frobro.bcindex.web.model.api.*;
 import com.frobro.bcindex.web.service.DbTickerService;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.concurrent.TimeUnit;
@@ -123,7 +119,9 @@ public class TimeSeriesTest extends DbBaseTest {
     assertNotNull(response);
     assertEquals(req.currency, response.currency);
     assertEquals(req.index, response.index);
-    assertEquals(req.timeFrame, response.timeUnit);
+    assertEquals(req.timeFrame, response.timeFrame);
+    assertEquals(req.timeFrame.getTimeStepUnit(),
+        response.timeUnit);
 
     // and verify last price
     assertEquals(price, response.getLastPrice(), 0.001);
