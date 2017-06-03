@@ -38,19 +38,24 @@ public class TimerService {
    }
 
   public void run() {
-    run(20);
-  }
-
-  public void updateIfInDevMode() {
-    if (inDevMode) {
-      tickerService.updateTickers();
+    if (not(inDevMode)) {
+      startScheduleThread();
     }
   }
 
-  private void run(long initialDelay) {
+  private boolean not(boolean b) {
+    return !b;
+  }
+
+  private void startScheduleThread() {
     Runnable task = getTask();
 
+    long initialDelay = 0;
     int period = REFRESH_PERIOD_SECONDS;
+
+    log.info("starting scheduler to make rest calls every "
+        + period + " seconds");
+
     executor.scheduleAtFixedRate(task, initialDelay, period, TimeUnit.SECONDS);
   }
 

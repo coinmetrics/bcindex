@@ -1,5 +1,6 @@
 package com.frobro.bcindex.web.controller;
 
+import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.domain.JpaEvenIndex;
 import com.frobro.bcindex.web.domain.JpaIndex;
 import com.frobro.bcindex.web.service.persistence.EvenIdxRepo;
@@ -9,6 +10,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.PostConstruct;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -19,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 @Profile({"dev","pgres"})
 public class SeedController {
 
+  private static final BcLog log = BcLog.getLogger(SeedController.class);
   private EvenIdxRepo evenRepo;
   private IndexRepo oddRepo;
 
@@ -26,6 +29,12 @@ public class SeedController {
   public void setRepos(EvenIdxRepo eRepo, IndexRepo oRepo) {
     this.evenRepo = eRepo;
     this.oddRepo = oRepo;
+  }
+
+  @PostConstruct
+  public void start(){
+    log.info("populating the database with mock data ...");
+    seed();
   }
 
   @RequestMapping("/seed")

@@ -29,12 +29,10 @@ public class HomeController {
   public void init(IndexRepo repo, EvenIdxRepo eRepo) {
     tickerService.setIndexRepo(repo, eRepo);
     timerService = new TimerService(tickerService);
-    timerService.run();
   }
 
   @PostConstruct
-  public void init(){
-    timerService.updateIfInDevMode();
+  public void start(){
+    timerService.run();
   }
-
 }
