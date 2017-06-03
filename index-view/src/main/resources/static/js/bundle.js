@@ -11,16 +11,23 @@ var _config = require('./config.js');
 
 var _config2 = _interopRequireDefault(_config);
 
+var _StockInfoService = require('./StockInfoService.js');
+
+var _StockInfoService2 = _interopRequireDefault(_StockInfoService);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var GraphService = function () {
-    function GraphService(ctxElem, chartConfig) {
+    function GraphService(ctxElem) {
+        var chartConfig = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
         _classCallCheck(this, GraphService);
 
         this.ctx = document.getElementById(ctxElem);
         this.options = Object.assign({}, _config2.default.chart.defaultOptions, chartConfig);
+        this.stockInfoService = new _StockInfoService2.default();
     }
 
     _createClass(GraphService, [{
@@ -33,8 +40,9 @@ var GraphService = function () {
             }).then(function (d) {
                 return JSON.parse(d);
             }).then(function (result) {
+                _this.options.scales.xAxes[0].time.unit = result.timeUnit;
                 _this.renderLineChart(result.times, result.data);
-                $('.last-price').html($('<h1>', { text: "Last Price: " + result.lastPrice })); // TODO: move this out to its own class or function
+                _this.stockInfoService.draw(result);
             });
         }
     }, {
@@ -54,8 +62,10 @@ var GraphService = function () {
             }).then(function (d) {
                 return JSON.parse(d);
             }).then(function (result) {
+                _this2.options.scales.xAxes[0].time.unit = result.timeUnit;
+                _this2.chart.destroy();
                 _this2.renderLineChart(result.times, result.data);
-                $('.last-price').html($('<h1>', { text: "Last Price: " + result.lastPrice })); // TODO: move this out to its own class or function
+                _this2.stockInfoService.draw(result);
             });
         }
     }, {
@@ -68,8 +78,8 @@ var GraphService = function () {
                     datasets: [{
                         label: 'The Index',
                         data: data,
-                        backgroundColor: 'rgba(255,153,0,0.4)',
-                        borderColor: 'rgba(255, 159, 64, 1)',
+                        backgroundColor: 'rgba(204, 226, 159, 0.4)',
+                        borderColor: 'rgba(104, 140, 33, 0.4)',
                         borderWidth: 1
                     }]
                 },
@@ -83,7 +93,46 @@ var GraphService = function () {
 
 exports.default = GraphService;
 
-},{"./config.js":3}],2:[function(require,module,exports){
+},{"./StockInfoService.js":2,"./config.js":4}],2:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _config = require('./config.js');
+
+var _config2 = _interopRequireDefault(_config);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/*
+    Responsible for draw stock information about the class.
+*/
+var StockInfoService = function () {
+    function StockInfoService() {
+        _classCallCheck(this, StockInfoService);
+    }
+
+    _createClass(StockInfoService, [{
+        key: 'draw',
+        value: function draw(model) {
+            var template = '<div class="ticker-info-box">\n    <ul>\n        <li>\n            <dt>Previous Close: </dt>\n            <dd>' + model.prevClose + '</dd>\n        </li>                            \n        <li>\n            <dt>High: </dt>\n            <dd>' + model.high + '</dd>\n        </li>\n        <li>\n            <dt>Low: </dt>\n            <dd>' + model.low + '</dd>\n        </li>\n        <li>\n            <dt>Change: </dt>\n            <dd>' + model.change + '</dd>\n        </li>\n        <li>\n            <dt>Precent Change: </dt>\n            <dd>' + model.percentChange + '</dd>                            \n        </li>\n    </ul>\n</div>';
+            $('.last-price').html($('<h1>', { text: "Last Price: " + model.lastPrice })); // TODO: move this out to its own class or function
+            $("#stock-info").html(template);
+        }
+    }]);
+
+    return StockInfoService;
+}();
+
+exports.default = StockInfoService;
+
+},{"./config.js":4}],3:[function(require,module,exports){
 'use strict';
 
 var _GraphService = require('./GraphService.js');
@@ -133,7 +182,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     });
 })();
 
-},{"./GraphService.js":1,"./config.js":3}],3:[function(require,module,exports){
+},{"./GraphService.js":1,"./config.js":4}],4:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -160,6 +209,9 @@ var Config = {
             text: 'bit coin'
         }]
     },
+    stock: {
+        template: ""
+    },
     chart: {
         defaultOptions: {
             responsive: true,
@@ -167,7 +219,7 @@ var Config = {
             scales: {
                 yAxes: [{
                     ticks: {
-                        beginAtZero: true
+                        beginAtZero: false
                     },
                     scaleLabel: {
                         display: true,
@@ -175,6 +227,16 @@ var Config = {
                     }
                 }],
                 xAxes: [{
+                    type: 'time',
+                    ticks: {
+                        maxRotation: 0,
+                        autoSkipPadding: 10,
+                        padding: 20
+                    },
+                    time: {
+                        unit: 'minute',
+                        unitStepSize: 10
+                    },
                     scaleLabel: {
                         display: true,
                         labelString: 'Time'
@@ -187,4 +249,4 @@ var Config = {
 
 exports.default = Config;
 
-},{}]},{},[2]);
+},{}]},{},[3]);

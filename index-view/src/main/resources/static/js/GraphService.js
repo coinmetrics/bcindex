@@ -1,9 +1,11 @@
 import config from './config.js';
- 
+import StockInfoService from './StockInfoService.js';
+
 export default class GraphService {
-    constructor(ctxElem, chartConfig) {        
+    constructor(ctxElem, chartConfig={}) {        
         this.ctx = document.getElementById(ctxElem);
         this.options = Object.assign({}, config.chart.defaultOptions, chartConfig);
+        this.stockInfoService = new StockInfoService();
     }
     
     init() {
@@ -11,8 +13,9 @@ export default class GraphService {
         .then(r => r.text())
         .then(d => JSON.parse(d))
         .then((result) => {            
+            this.options.scales.xAxes[0].time.unit=result.timeUnit;
             this.renderLineChart(result.times, result.data);
-            $('.last-price').html($('<h1>', {text: "Last Price: " + result.lastPrice})); // TODO: move this out to its own class or function
+            this.stockInfoService.draw(result);
         });
     }
 
@@ -27,8 +30,10 @@ export default class GraphService {
         }).then(r => r.text())
         .then(d => JSON.parse(d))
         .then((result) => {
+            this.options.scales.xAxes[0].time.unit=result.timeUnit;
+            this.chart.destroy();
             this.renderLineChart(result.times, result.data);
-            $('.last-price').html($('<h1>', {text: "Last Price: " + result.lastPrice})); // TODO: move this out to its own class or function
+            this.stockInfoService.draw(result);
         });
     }
 

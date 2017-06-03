@@ -83,6 +83,41 @@ a:active,a:hover{outline-width:0}abbr[title]{border-bottom:none;text-decoration:
     background: #229954;
 }
 
+ul, dd {
+    -webkit-margin-start: 0px;
+    -webkit-padding-start: 0px;
+}
+
+.ticker-info-box ul {
+    display: flex;    
+    background: #ddd;
+}
+
+.ticker-info-box ul li {
+    list-style: none;       
+    padding: 20px;    
+}
+
+
+@media screen and (min-width: 0px) and (max-width: 1600px)  {
+    .timeframe {                   
+        display: flex;
+    }
+    .last-price {
+        display: block;
+        float: none;
+        margin-bottom: 20px;
+    }
+
+    .ticker-info-box ul {
+        flex-direction: column;
+    }
+
+    .ticker-info-box ul li {
+        border-bottom: 1px solid #eee;
+    }
+}
+
 #weights {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;

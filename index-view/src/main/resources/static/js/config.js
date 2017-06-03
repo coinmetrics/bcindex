@@ -25,6 +25,9 @@ let Config = {
             }
         ]
     },
+    stock: {
+        template: ""
+    },
     chart: {
         defaultOptions: {
             responsive: true,
@@ -40,6 +43,16 @@ let Config = {
                     }
                 }],
                 xAxes: [{
+                    type: 'time',
+                    ticks: {
+                        maxRotation: 0,
+                        autoSkipPadding: 10,
+                        padding: 20
+                    },
+                    time: {
+                        unit: 'minute',
+                        unitStepSize: 10,
+                    },
                     scaleLabel: {
                         display: true,
                         labelString: 'Time'
