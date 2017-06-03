@@ -88,9 +88,7 @@ public class TimeSeriesService {
       + "order by id;";
 
     ApiResponse response = createResponse(req);
-
-    System.out.println("QUERY: " + query);
-
+    
         jdbc.query(query, (rs, rowNum) ->
               response.addPrice(rs.getDouble("index_value_usd"))
                       .addTime(rs.getString("time_stamp"))
