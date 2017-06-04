@@ -1,20 +1,17 @@
 package com.frobro.bcindex.web.service.persistence;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
-
-import com.frobro.bcindex.web.domain.JpaEvenIndex;
 import com.frobro.bcindex.web.domain.JpaIndex;
 import com.frobro.bcindex.web.model.api.*;
 import com.frobro.bcindex.web.service.DbTickerService;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.concurrent.TimeUnit;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by rise on 5/13/17.
@@ -23,59 +20,29 @@ import java.util.concurrent.TimeUnit;
 @SpringBootTest
 public class TimeSeriesTest extends DbBaseTest {
 
-  @Test @Ignore("summary is not yet implemented")
-  public void testSummary() {
+  @Test
+  public void testClose() {
     // given
-    int numEntries = 300;
-    long now = System.currentTimeMillis();
-    double firstPrice = 92.0;
     double price = 100.0;
-    double prevPrice = 90.0;
-    double high = 110.0;
-    double low = 85.0;
-    // and
-    for (int i=1; i<=numEntries; i++) {
-      JpaEvenIndex idx = new JpaEvenIndex();
-      if (i == 1) {
-        idx.setIndexValueUsd(firstPrice);
-      } else if (i == 60) {
-        idx.setIndexValueUsd(low);
-      } else if (i == 120) {
-        idx.setIndexValueUsd(high);
-      } else if (i == 240) {
-        idx.setIndexValueUsd(prevPrice);
-      } else if (i == 300) {
-        idx.setIndexValueUsd(price);
-      }
-      // add a minute, since that is the resolution
-      // we will save things in prod
-      now += TimeUnit.MINUTES.toMillis(1);
-      idx.setTimeStamp(now);
-      evenRepo.save(idx);
-    }
-    // and
-    assertEquals(numEntries, evenRepo.count());
-    // and
+    TimeFrame timeFrame = TimeFrame.HOURLY;
+    int numEntries = 60; // 10* 60 (data pts * min/hour)
+    populateDb(numEntries, price);
+
     DbTickerService ser = new DbTickerService();
     ser.setJdbc(jdbc);
     // and
     RequestDto req = new RequestDto();
-    req.currency = Currency.USD;
-    req.index = IndexType.EVEN;
-    req.timeFrame = TimeFrame.HOURLY;
+    req.currency = Currency.BIT_COIN;
+    req.index = IndexType.ODD;
+    req.timeFrame = timeFrame;
+
 
     // when
     ApiResponse response = ser.respond(req);
 
-    // and verify summary
-    double change = price - firstPrice;
-    double percentChg = change / firstPrice;
-    assertEquals(price, response.lastPrice, 0.001);
-    assertEquals(prevPrice, response.prevClose, 0.001);
-    assertEquals(high, response.high, 0.001);
-    assertEquals(low, response.low, 0.001);
-    assertEquals(change, response.change, 0.001);
-    assertEquals(percentChg, response.percentChange, 0.001);
+    double btcClose = oddRepo.findOne(1L).getIndexValueBtc();
+    assertEquals(btcClose, response.prevClose, 0.00);
+    assertEquals(req.currency, response.currency);
   }
 
   private void populateDb(int numEntries, double price) {
@@ -91,28 +58,6 @@ public class TimeSeriesTest extends DbBaseTest {
       idx.setTimeStamp(now);
       oddRepo.save(idx);
     }
-  }
-
-  @Test
-  public void testClose() {
-    // given
-    double price = 100.0;
-    TimeFrame timeFrame = TimeFrame.HOURLY;
-    int numEntries = 60; // 10* 60 (data pts * min/hour)
-    populateDb(numEntries, price);
-
-    DbTickerService ser = new DbTickerService();
-    ser.setJdbc(jdbc);
-    // and
-    RequestDto req = new RequestDto();
-    req.currency = Currency.USD;
-    req.index = IndexType.ODD;
-    req.timeFrame = timeFrame;
-
-    // when
-    ApiResponse response = ser.respond(req);
-    double close = oddRepo.findOne(1L).getIndexValueUsd();
-    assertEquals(close, response.prevClose, 0.00);
   }
 
   @Test

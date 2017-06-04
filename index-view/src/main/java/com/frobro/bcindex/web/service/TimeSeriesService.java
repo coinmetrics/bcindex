@@ -90,7 +90,7 @@ public class TimeSeriesService {
     ApiResponse response = createResponse(req);
     
         jdbc.query(query, (rs, rowNum) ->
-              response.addPrice(rs.getDouble("index_value_usd"))
+              response.addPrice(rs.getDouble(currency))
                       .addTime(rs.getString("time_stamp"))
         );
 
