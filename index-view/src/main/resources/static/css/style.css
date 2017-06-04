@@ -91,11 +91,12 @@ ul, dd {
 .ticker-info-box ul {
     display: flex;    
     background: #ddd;
+    align-content: space-between;
+    justify-content: space-around;
 }
 
 .ticker-info-box ul li {
     list-style: none;       
-    padding: 20px;    
 }
 
 
