@@ -27,6 +27,6 @@ There you can update any of the settings, i will move stuff there such as color 
 ## To update the config.js file
 - change what every settings you want
 - from the root directory (bcindex) run the following command:
-```npm install --save-dev i```
-- then run this command: (for now, started working on the gulp file that should do this for us)
-```./node_modules/browserify/bin/cmd.js ./index-view/src/main/resources/static/js/app.js -o ./index-view/src/main/resources/static/js/bundle.js -t [ babelify --presets [ es2 015 ] ]```
+```npm --save-dev install ```
+- then run this command:
+`gulp`
