@@ -47,7 +47,9 @@ let Config = {
                     ticks: {
                         maxRotation: 0,
                         autoSkipPadding: 10,
-                        padding: 20
+                        padding: 20,
+                        autoSkip: true,
+                        maxTicksLimit: 5
                     },
                     time: {
                         unit: 'minute',
