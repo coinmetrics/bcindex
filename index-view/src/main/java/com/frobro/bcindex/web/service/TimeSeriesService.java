@@ -120,7 +120,7 @@ public class TimeSeriesService {
   }
 
   private String getCurrColName(Currency currency) {
-    if (currency == Currency.BIT_COIN) {
+    if (currency == Currency.BTC) {
       return "index_value_btc";
     }
     else if (currency == Currency.USD) {

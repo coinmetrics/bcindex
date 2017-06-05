@@ -32,7 +32,7 @@ public class TimeSeriesTest extends DbBaseTest {
     ser.setJdbc(jdbc);
     // and
     RequestDto req = new RequestDto();
-    req.currency = Currency.BIT_COIN;
+    req.currency = Currency.BTC;
     req.index = IndexType.ODD;
     req.timeFrame = timeFrame;
 
