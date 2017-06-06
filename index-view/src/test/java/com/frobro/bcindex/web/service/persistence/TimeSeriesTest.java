@@ -36,12 +36,11 @@ public class TimeSeriesTest extends DbBaseTest {
     req.index = IndexType.ODD;
     req.timeFrame = timeFrame;
 
-
     // when
     ApiResponse response = ser.respond(req);
 
     double btcClose = oddRepo.findOne(1L).getIndexValueBtc();
-    assertEquals(btcClose, response.prevClose, 0.00);
+    assertEquals(btcClose, response.prevClose, 0.01);
     assertEquals(req.currency, response.currency);
   }
 

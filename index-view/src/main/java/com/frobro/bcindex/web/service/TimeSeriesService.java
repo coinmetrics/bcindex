@@ -22,6 +22,7 @@ public class TimeSeriesService {
   private static final int UNIT_WEEKLY = UNIT_DAILY * 7;
   private static final int UNIT_MONTHLY = UNIT_DAILY * 30;
 
+  private final DoubleFormatter formatter = new DoubleFormatter();
   private int numPoints = 200;
   private JdbcTemplate jdbc;
 
@@ -34,7 +35,6 @@ public class TimeSeriesService {
   }
 
   public ApiResponse getData(RequestDto req) {
-    long now = Instant.now().toEpochMilli();
     ApiResponse response;
 
     switch(req.timeFrame) {
@@ -90,7 +90,7 @@ public class TimeSeriesService {
     ApiResponse response = createResponse(req);
     
         jdbc.query(query, (rs, rowNum) ->
-              response.addPrice(rs.getDouble(currency))
+              response.addPrice(formatter.format(rs.getDouble(currency)))
                       .addTime(rs.getString("time_stamp"))
         );
 
