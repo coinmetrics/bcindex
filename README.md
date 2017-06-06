@@ -13,11 +13,8 @@ and JDBC URL = jdbc:h2:tcp://localhost:9123/~/testdb
 user name = sa
 leave password blank
 
-To seed the database with data go to localhost:8080/seed
-to see example REST data go to localhost:8090/api/index
-
-Note localhost:8090 is the home page, but currently does
-not load any data
+Note localhost:8090 is the home page. Dummy data is 
+pre populated on startup
 
 
 # frontend
