@@ -11,6 +11,9 @@ h6{
    color:#000000;
    font-family: "Comic Sans MS", cursive, sans-serif;
 }
+h5{
+    font-size:10px;
+}
 h1,h2,h3,h4,h5,h6{font-family:"Segoe UI",Arial,sans-serif;font-weight:400;margin:10px 0}
 hr{border:0;border-top:1px solid #eee;margin:20px 0}
 body {margin: 0;}
@@ -19,8 +22,15 @@ a:active,a:hover{outline-width:0}abbr[title]{border-bottom:none;text-decoration:
 
 /* custom drop down menu style */
 .index-usd-drop-down {
-    display: flex;
     margin: 20px 0px;
+    display:flex;
+}
+.index{
+    width: 75%;
+}
+.currency{
+    float: right;
+    width: 25%;
 }
 .select2-container--default .select2-selection--single .select2-selection__rendered {
     color: #fff !important;    
@@ -56,22 +66,29 @@ a:active,a:hover{outline-width:0}abbr[title]{border-bottom:none;text-decoration:
 
 
 .last-price {
+    padding:4px 10px;
+    background: #0119A4;
+    color: #fff;
+    font-weight: bold;
+    font-size: 12px;
+    border: none;
+    cursor: pointer;
+    height: 35px;
     float: right;
-    background: #ddd;
-    padding: 10px;
-    font-weight: bolder;    
+    width: 21.5%;
 }
  
 /* custom drop down menu style end */
 
 .btn-timeframe {
-    padding:10px 20px;
+    padding:4px 10px;
     background: #424949;
     color: #fff;
     font-weight: bold;
     font-size: 1.25em;
     border: none;
     cursor: pointer;
+    height: 40px;
 }
 
 .btn-timeframe:hover {
@@ -83,16 +100,43 @@ a:active,a:hover{outline-width:0}abbr[title]{border-bottom:none;text-decoration:
     background: #229954;
 }
 
+.btn-timeframe-mobile {
+    padding:8px 10px;
+    background: #424949;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.25em;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-timeframe-mobile:hover {
+    background: #229954;
+    color: #424949;
+}
+
+.btn-timeframe-mobile.selected {
+    background: #229954;
+}
+
 ul, dd {
     -webkit-margin-start: 0px;
     -webkit-padding-start: 0px;
 }
 
-.ticker-info-box ul {
-    display: flex;    
+.ticker-info-box ul {    
     background: #ddd;
-    align-content: space-between;
-    justify-content: space-around;
+    align-content: center;
+    justify-content: center;
+    padding:4px 10px;
+    background: #0119A4;
+    color: #fff;
+    font-weight: bold;
+    font-size: 10px;
+    border: none;
+    cursor: pointer;
+    height: 160px;
+    width: 20%;
 }
 
 .ticker-info-box ul li {
@@ -101,14 +145,7 @@ ul, dd {
 
 
 @media screen and (min-width: 0px) and (max-width: 1600px)  {
-    .timeframe {                   
-        display: flex;
-    }
-    .last-price {
-        display: block;
-        float: none;
-        margin-bottom: 20px;
-    }
+    
 
     .ticker-info-box ul {
         flex-direction: column;
@@ -257,9 +294,19 @@ ul.top{
     margin:2.5%;
 }
 
+ul.second{
+    list-style-type: disc;
+    padding-left:30px;
+}
+
 ul.side{
     list-style-type: disc;
     padding-left:50px;
+}
+
+ul.side-second{
+    list-style-type: disc;
+    padding-left:30px;
 }
 
 .container{width:100%;background-color:#F7F9F9;}
@@ -290,6 +337,7 @@ ul.side{
         font-size: 75%;
     }
     .rightsidebar{display:none;} 
+    .btn-timeframe{display:none;}
     .topnav li a.homelink{display:none;}
     h1{font-size:160%;}
     .third{width:100%;padding-bottom:0px;}
@@ -305,6 +353,7 @@ ul.side{
 @media screen and (max-width: 992px) and (min-width: 601px) {
     .containerbody{margin-left:10%;margin-right:10%;}
     .topnav{padding-left: 10%}
+    .btn-timeframe{display:none;}
     .hide-large{margin-left:8%;}
     body {
         font-size: 90%;
@@ -320,6 +369,7 @@ ul.side{
     .hide-large{display:none!important}
     .containerbody{margin-left:25%;margin-right:25%;}
     .topnav{padding-left:25%;}
+    .btn-timeframe-mobile{display:none;}
     
     #myBtn{
         bottom: -100px;
