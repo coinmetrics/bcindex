@@ -12,4 +12,13 @@ public class RequestDto {
     return this.currency != null && this.timeFrame != null
         && this.index != null;
   }
+
+  @Override
+  public String toString() {
+    return "RequestDto{" +
+        "index=" + index +
+        ", currency=" + currency +
+        ", timeFrame=" + timeFrame +
+        '}';
+  }
 }

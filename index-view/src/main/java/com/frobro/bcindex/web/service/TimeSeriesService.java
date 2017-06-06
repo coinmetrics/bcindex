@@ -1,15 +1,12 @@
 package com.frobro.bcindex.web.service;
 
-import static com.frobro.bcindex.web.model.api.TimeFrame.HOURLY;
-import static com.frobro.bcindex.web.model.api.TimeFrame.DAILY;
-import static com.frobro.bcindex.web.model.api.TimeFrame.WEEKLY;
-import static com.frobro.bcindex.web.model.api.TimeFrame.MONTHLY;
-
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.model.api.*;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.time.Instant;
+
+import static com.frobro.bcindex.web.model.api.TimeFrame.*;
 
 /**
  * Created by rise on 5/12/17.
@@ -35,32 +32,7 @@ public class TimeSeriesService {
   }
 
   public ApiResponse getData(RequestDto req) {
-    ApiResponse response;
-
-    switch(req.timeFrame) {
-      case HOURLY:
-        response = getResponse(req,
-            HOURLY.getNumDataPoints(), HOURLY.getTimeStep());
-        break;
-      case DAILY:
-        response = getResponse(req,
-            DAILY.getNumDataPoints(), DAILY.getTimeStep());
-        break;
-      case WEEKLY:
-        response = getResponse(req,
-            WEEKLY.getNumDataPoints(), WEEKLY.getTimeStep());
-        break;
-      case MONTHLY:
-        response = getResponse(req,
-            MONTHLY.getNumDataPoints(), MONTHLY.getTimeStep());
-        break;
-      case ALL:
-        response = getresponseForAll(req);
-      default:
-        response = getResponse(req,
-            HOURLY.getNumDataPoints(), HOURLY.getTimeStep());
-        break;
-    }
+    ApiResponse response = getResponse(req);
     return response;
   }
 
@@ -75,7 +47,10 @@ public class TimeSeriesService {
     return response;
   }
 
-  private ApiResponse getResponse(RequestDto req, int numOfPoints, int numBack) {
+  private ApiResponse getResponse(RequestDto req) {
+    int numOfPoints = req.timeFrame.getNumDataPoints();
+    int numBack = req.timeFrame.getTimeStep();
+
     int oldestRecOfInterest = numOfPoints;
 
     String table = getIdxColName(req.index);

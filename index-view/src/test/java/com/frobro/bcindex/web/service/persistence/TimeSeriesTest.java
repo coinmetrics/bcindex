@@ -92,7 +92,7 @@ public class TimeSeriesTest extends DbBaseTest {
         response.timeUnit);
 
     // and verify last price
-    assertEquals(price, response.getLastPrice(), 0.001);
+    assertEquals(price, response.getLastPrice(), 0.01);
 
     // and verify time series
     int entries = timeFrame.getModNum();
