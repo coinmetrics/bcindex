@@ -43,6 +43,7 @@ export default class GraphService {
             data: {
                 labels: labels,
                 datasets: [{
+                    label: 'The Index',
                     data: data,
                     backgroundColor: 'rgba(204, 226, 159, 0.4)' ,
                     borderColor: 'rgba(104, 140, 33, 0.4)',

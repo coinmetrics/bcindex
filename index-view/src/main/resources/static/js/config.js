@@ -5,23 +5,23 @@ let Config = {
         index: [
             {
                 id: 'ODD',
-                text: 'Bletchley 10 Index',
+                text: 'odd',
                 selected: true
             },
             {
                 id: 'EVEN',
-                text: 'Bletchley 10 Even Index'
+                text: 'even'
             }
         ],
         currency:  [
             {
                 id: 'USD',
-                text: 'USD',
+                text: 'usd',
                 selected: true
             },
             {
                 id: 'BTC',
-                text: 'BTC'
+                text: 'bit coin'
             }
         ]
     },
