@@ -72,6 +72,22 @@ public enum TimeFrame {
     }
   },
 
+  YEARLY {
+    @Override
+    public int getNumDataPoints() {
+      return 524160; // 525600 min/year
+    }
+
+    @Override
+    public int getTimeStep() {
+      return 10080; // num min in a week
+    }
+
+    @Override
+    public String getTimeStepUnit() {
+      return UNIT_WEEK;
+    }
+  },
   ALL {
     @Override
     public int getNumDataPoints() {
@@ -90,6 +106,8 @@ public enum TimeFrame {
 
   protected static final String UNIT_MINUTE = "minute";
   protected static final String UNIT_HOUR = "hour";
+  protected static final String UNIT_WEEK = "week";
+
 
   abstract public int getTimeStep();
   abstract public int getNumDataPoints();

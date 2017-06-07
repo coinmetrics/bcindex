@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.PostConstruct;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by rise on 5/20/17.
@@ -73,9 +74,9 @@ public class SeedController {
   }
 
   private double nextDouble() {
-    Random random = new Random();
-    double value = 50.0 + (150.0 - 50.0) * random.nextDouble();
-    return value;
+    int min = 10;
+    int max = 1000;
+    return ThreadLocalRandom.current().nextInt(min, max + 1);
   }
   private long nextMinute() {
     return TimeUnit.MINUTES.toMillis(1);

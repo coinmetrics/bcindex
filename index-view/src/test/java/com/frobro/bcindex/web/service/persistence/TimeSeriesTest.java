@@ -36,12 +36,11 @@ public class TimeSeriesTest extends DbBaseTest {
     req.index = IndexType.ODD;
     req.timeFrame = timeFrame;
 
-
     // when
     ApiResponse response = ser.respond(req);
 
     double btcClose = oddRepo.findOne(1L).getIndexValueBtc();
-    assertEquals(btcClose, response.prevClose, 0.00);
+    assertEquals(btcClose, response.prevClose, 0.01);
     assertEquals(req.currency, response.currency);
   }
 
@@ -93,7 +92,7 @@ public class TimeSeriesTest extends DbBaseTest {
         response.timeUnit);
 
     // and verify last price
-    assertEquals(price, response.getLastPrice(), 0.001);
+    assertEquals(price, response.getLastPrice(), 0.01);
 
     // and verify time series
     int entries = timeFrame.getModNum();

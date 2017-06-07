@@ -65,7 +65,7 @@ a:active,a:hover{outline-width:0}abbr[title]{border-bottom:none;text-decoration:
 /* custom drop down menu style end */
 
 .btn-timeframe {
-    padding:10px 20px;
+    padding:10px 15px;
     background: #424949;
     color: #fff;
     font-weight: bold;
@@ -80,6 +80,25 @@ a:active,a:hover{outline-width:0}abbr[title]{border-bottom:none;text-decoration:
 }
 
 .btn-timeframe.selected {
+    background: #229954;
+}
+
+.btn-timeframe-mobile {
+    padding:10px 20px;
+    background: #424949;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.25em;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-timeframe-mobile:hover {
+    background: #229954;
+    color: #424949;
+}
+
+.btn-timeframe-mobile.selected {
     background: #229954;
 }
 
@@ -100,9 +119,17 @@ ul, dd {
 }
 
 
+.index{
+    width: 75%;
+}
+.currency{
+    float: right;
+    width: 25%;
+}
+
 @media screen and (min-width: 0px) and (max-width: 1600px)  {
     .timeframe {                   
-        display: flex;
+        
     }
     .last-price {
         display: block;
@@ -111,7 +138,8 @@ ul, dd {
     }
 
     .ticker-info-box ul {
-        flex-direction: column;
+        flex-direction: row;
+        text-align: center;
     }
 
     .ticker-info-box ul li {
@@ -257,9 +285,19 @@ ul.top{
     margin:2.5%;
 }
 
+ul.second{
+    list-style-type: disc;
+    padding-left:30px;
+}
+
 ul.side{
     list-style-type: disc;
     padding-left:50px;
+}
+
+ul.side-second{
+    list-style-type: disc;
+    padding-left:30px;
 }
 
 .container{width:100%;background-color:#F7F9F9;}
@@ -283,6 +321,7 @@ ul.side{
     .containerbody{margin-left:2.5%;margin-right:2.5%;}
     .topnav{padding-left:2.5%;}
     .hide-large{margin-left:0%;}
+    .btn-timeframe{display:none;}
     body {
         font-size: 75%;
     }
@@ -306,6 +345,7 @@ ul.side{
     .containerbody{margin-left:10%;margin-right:10%;}
     .topnav{padding-left: 10%}
     .hide-large{margin-left:8%;}
+    .btn-timeframe{display:none;}
     body {
         font-size: 90%;
     }
@@ -320,7 +360,7 @@ ul.side{
     .hide-large{display:none!important}
     .containerbody{margin-left:25%;margin-right:25%;}
     .topnav{padding-left:25%;}
-    
+    .btn-timeframe-mobile{display:none;}
     #myBtn{
         bottom: -100px;
         right: -100px;

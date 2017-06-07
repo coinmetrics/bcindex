@@ -5,17 +5,23 @@ import com.frobro.bcindex.web.domain.JpaIndex;
 
 import java.util.Date;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by rise on 5/13/17.
  */
 public class IndexFactory {
   public static JpaIndex getNewOdd() {
-    Random generator = new Random();
     return JpaIndex.create()
         .setTimeStamp(new Date())
-        .setIndexValueBtc(generator.nextDouble())
-        .setIndexValueUsd(generator.nextDouble());
+        .setIndexValueBtc(nextDouble())
+        .setIndexValueUsd(nextDouble());
+  }
+
+  private static double nextDouble() {
+    int min = 10;
+    int max = 1000;
+    return ThreadLocalRandom.current().nextInt(min, max + 1);
   }
 
   public static JpaEvenIndex getNewEven() {

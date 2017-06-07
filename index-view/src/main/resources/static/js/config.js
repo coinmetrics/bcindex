@@ -5,23 +5,23 @@ let Config = {
         index: [
             {
                 id: 'ODD',
-                text: 'odd',
+                text: '10 Index',
                 selected: true
             },
             {
                 id: 'EVEN',
-                text: 'even'
+                text: '10 Even Index'
             }
         ],
         currency:  [
             {
                 id: 'USD',
-                text: 'usd',
+                text: 'US Dollar',
                 selected: true
             },
             {
                 id: 'BTC',
-                text: 'bit coin'
+                text: 'Bitcoin'
             }
         ]
     },
@@ -39,7 +39,6 @@ let Config = {
                     },
                     scaleLabel: {
                         display: true,
-                        labelString: 'Price'
                     }
                 }],
                 xAxes: [{
@@ -57,7 +56,6 @@ let Config = {
                     },
                     scaleLabel: {
                         display: true,
-                        labelString: 'Time'
                     }
                 }]
             }
