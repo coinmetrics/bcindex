@@ -119,6 +119,14 @@ ul, dd {
 }
 
 
+.index{
+    width: 75%;
+}
+.currency{
+    float: right;
+    width: 25%;
+}
+
 @media screen and (min-width: 0px) and (max-width: 1600px)  {
     .timeframe {                   
         
@@ -130,7 +138,8 @@ ul, dd {
     }
 
     .ticker-info-box ul {
-        flex-direction: column;
+        flex-direction: row;
+        text-align: center;
     }
 
     .ticker-info-box ul li {

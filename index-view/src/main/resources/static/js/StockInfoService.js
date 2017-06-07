@@ -9,23 +9,23 @@ export default class StockInfoService {
 `<div class="ticker-info-box">
     <ul>
         <li>
-            <dt>Previous Close: </dt>
+            <dt>Previous Close </dt>
             <dd>${model.prevClose}</dd>
         </li>                            
         <li>
-            <dt>High: </dt>
+            <dt>High </dt>
             <dd>${model.high}</dd>
         </li>
         <li>
-            <dt>Low: </dt>
+            <dt>Low </dt>
             <dd>${model.low}</dd>
         </li>
         <li>
-            <dt>Change: </dt>
+            <dt>Change </dt>
             <dd>${model.change}</dd>
         </li>
         <li>
-            <dt>Precent Change: </dt>
+            <dt>Precent Change </dt>
             <dd>${model.percentChange}</dd>                            
         </li>
     </ul>
