@@ -76,7 +76,9 @@ var GraphService = function () {
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: 'The Index',
+                        label: {
+                            display: false
+                        },
                         data: data,
                         backgroundColor: 'rgba(204, 226, 159, 0.4)',
                         borderColor: 'rgba(104, 140, 33, 0.4)',
@@ -194,11 +196,11 @@ var Config = {
     dropdown: {
         index: [{
             id: 'ODD',
-            text: '10 Index',
+            text: 'Bletchley 10 Index',
             selected: true
         }, {
             id: 'EVEN',
-            text: '10 Even Index'
+            text: 'Bletchley 10 Even Index'
         }],
         currency: [{
             id: 'USD',
@@ -222,7 +224,7 @@ var Config = {
                         beginAtZero: false
                     },
                     scaleLabel: {
-                        display: true
+                        display: false
                     }
                 }],
                 xAxes: [{
@@ -239,7 +241,7 @@ var Config = {
                         unitStepSize: 10
                     },
                     scaleLabel: {
-                        display: true
+                        display: false
                     }
                 }]
             }

@@ -5,12 +5,12 @@ let Config = {
         index: [
             {
                 id: 'ODD',
-                text: '10 Index',
+                text: 'Bletchley 10 Index',
                 selected: true
             },
             {
                 id: 'EVEN',
-                text: '10 Even Index'
+                text: 'Bletchley 10 Even Index'
             }
         ],
         currency:  [
@@ -38,7 +38,7 @@ let Config = {
                         beginAtZero: false
                     },
                     scaleLabel: {
-                        display: true,
+                        display: false,
                     }
                 }],
                 xAxes: [{
@@ -55,7 +55,7 @@ let Config = {
                         unitStepSize: 10,
                     },
                     scaleLabel: {
-                        display: true,
+                        display: false,
                     }
                 }]
             }
