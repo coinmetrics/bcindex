@@ -1,5 +1,7 @@
 package com.frobro.bcindex.web.model.api;
 
+import static com.frobro.bcindex.web.service.DoubleFormatter.format;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -52,8 +54,8 @@ public class ApiResponse {
   public void calculateDerivedData() {
     setLastFromList();
     setPrevClose();
-    change = lastPrice - prevClose;
-    percentChange = (change/prevClose)*100.0;
+    change = format(lastPrice - prevClose);
+    percentChange = format((change/prevClose)*100.0);
   }
 
   private void setLastFromList() {

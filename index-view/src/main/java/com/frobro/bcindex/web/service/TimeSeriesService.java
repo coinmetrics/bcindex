@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.time.Instant;
 
+import static com.frobro.bcindex.web.service.DoubleFormatter.format;
 import static com.frobro.bcindex.web.model.api.TimeFrame.*;
 
 /**
@@ -19,7 +20,6 @@ public class TimeSeriesService {
   private static final int UNIT_WEEKLY = UNIT_DAILY * 7;
   private static final int UNIT_MONTHLY = UNIT_DAILY * 30;
 
-  private final DoubleFormatter formatter = new DoubleFormatter();
   private int numPoints = 200;
   private JdbcTemplate jdbc;
 
@@ -65,7 +65,7 @@ public class TimeSeriesService {
     ApiResponse response = createResponse(req);
     
         jdbc.query(query, (rs, rowNum) ->
-              response.addPrice(formatter.format(rs.getDouble(currency)))
+              response.addPrice(format(rs.getDouble(currency)))
                       .addTime(rs.getString("time_stamp"))
         );
 

@@ -8,8 +8,10 @@ import java.text.DecimalFormat;
 public class DoubleFormatter {
   private final static DecimalFormat FORMATTER = new DecimalFormat("#.##");
 
-  public double format(double raw) {
+  public static double format(double raw) {
     String formatted = FORMATTER.format(raw);
     return Double.parseDouble(formatted);
   }
+
+  private DoubleFormatter() {}
 }
