@@ -76,6 +76,7 @@ var GraphService = function () {
                 data: {
                     labels: labels,
                     datasets: [{
+                        label: 'The Index',
                         data: data,
                         backgroundColor: 'rgba(204, 226, 159, 0.4)',
                         borderColor: 'rgba(104, 140, 33, 0.4)',
@@ -120,7 +121,7 @@ var StockInfoService = function () {
     _createClass(StockInfoService, [{
         key: 'draw',
         value: function draw(model) {
-            var template = '<div class="ticker-info-box">\n    <ul>\n        <li>\n            <dt>Previous Close: </dt>\n            <dd>' + model.prevClose + '</dd>\n        </li>                            \n        <li>\n            <dt>High: </dt>\n            <dd>' + model.high + '</dd>\n        </li>\n        <li>\n            <dt>Low: </dt>\n            <dd>' + model.low + '</dd>\n        </li>\n        <li>\n            <dt>Change: </dt>\n            <dd>' + model.change + '</dd>\n        </li>\n        <li>\n            <dt>Precent Change: </dt>\n            <dd>' + model.percentChange + '</dd>                            \n        </li>\n    </ul>\n</div>';
+            var template = '<div class="ticker-info-box">\n    <ul>\n        <li>\n            <dt>Previous Close </dt>\n            <dd>' + model.prevClose + '</dd>\n        </li>                            \n        <li>\n            <dt>High </dt>\n            <dd>' + model.high + '</dd>\n        </li>\n        <li>\n            <dt>Low </dt>\n            <dd>' + model.low + '</dd>\n        </li>\n        <li>\n            <dt>Change </dt>\n            <dd>' + model.change + '</dd>\n        </li>\n        <li>\n            <dt>Precent Change </dt>\n            <dd>' + model.percentChange + '</dd>                            \n        </li>\n    </ul>\n</div>';
             $('.last-price').html($('<h1>', { text: "Last Price: " + model.lastPrice })); // TODO: move this out to its own class or function
             $("#stock-info").html(template);
         }
@@ -193,19 +194,19 @@ var Config = {
     dropdown: {
         index: [{
             id: 'ODD',
-            text: 'odd',
+            text: '10 Index',
             selected: true
         }, {
             id: 'EVEN',
-            text: 'even'
+            text: '10 Even Index'
         }],
         currency: [{
             id: 'USD',
-            text: 'usd',
+            text: 'US Dollar',
             selected: true
         }, {
             id: 'BTC',
-            text: 'bit coin'
+            text: 'Bitcoin'
         }]
     },
     stock: {
@@ -221,8 +222,7 @@ var Config = {
                         beginAtZero: false
                     },
                     scaleLabel: {
-                        display: true,
-                        labelString: 'Price'
+                        display: true
                     }
                 }],
                 xAxes: [{
@@ -239,8 +239,7 @@ var Config = {
                         unitStepSize: 10
                     },
                     scaleLabel: {
-                        display: true,
-                        labelString: 'Time'
+                        display: true
                     }
                 }]
             }
