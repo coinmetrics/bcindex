@@ -76,9 +76,7 @@ var GraphService = function () {
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: {
-                            display: false
-                        },
+                        label: 'The Index',
                         data: data,
                         backgroundColor: 'rgba(204, 226, 159, 0.4)',
                         borderColor: 'rgba(104, 140, 33, 0.4)',
@@ -218,6 +216,9 @@ var Config = {
         defaultOptions: {
             responsive: true,
             maintainAspectRatio: true,
+            legend: {
+                display: false
+            },
             scales: {
                 yAxes: [{
                     ticks: {

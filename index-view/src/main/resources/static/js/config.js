@@ -32,6 +32,9 @@ let Config = {
         defaultOptions: {
             responsive: true,
             maintainAspectRatio: true,
+            legend: {
+                display: false
+            },
             scales: {
                 yAxes: [{
                     ticks: {
