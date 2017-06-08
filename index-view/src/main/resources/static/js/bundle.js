@@ -122,7 +122,7 @@ var StockInfoService = function () {
         key: 'draw',
         value: function draw(model) {
             var template = '<div class="ticker-info-box">\n    <ul>\n        <li>\n            <dt>Previous Close </dt>\n            <dd>' + model.prevClose + '</dd>\n        </li>                            \n        <li>\n            <dt>High </dt>\n            <dd>' + model.high + '</dd>\n        </li>\n        <li>\n            <dt>Low </dt>\n            <dd>' + model.low + '</dd>\n        </li>\n        <li>\n            <dt>Change </dt>\n            <dd>' + model.change + '</dd>\n        </li>\n        <li>\n            <dt>Precent Change </dt>\n            <dd>' + model.percentChange + '</dd>                            \n        </li>\n    </ul>\n</div>';
-            $('.last-price').html($('<h1>', { text: "Last Price: " + model.lastPrice })); // TODO: move this out to its own class or function
+            $('.last-price').html($('<h3>', { text: "Last Price: " + model.lastPrice })); // TODO: move this out to its own class or function
             $("#stock-info").html(template);
         }
     }]);
