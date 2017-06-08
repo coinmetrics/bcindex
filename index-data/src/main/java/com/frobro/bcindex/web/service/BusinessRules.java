@@ -27,11 +27,11 @@ import java.util.stream.Collectors;
  */
 public class BusinessRules {
   private static final BcLog log = BcLog.getLogger(BusinessRules.class);
-  private static final double DIVISOR = 21595511.5291677;
-  private static final double DIVISOR_EVEN = 14794508.5006863;
-  private static final double CONSTANT = 16280750;
-  private static final double CONSTANT_EVEN = 2285053.56118387;
-  private static final String MKT_CAP_FILE = "business_rules/april_csv.csv";
+  private static final double DIVISOR = 21901918.35;
+  private static final double DIVISOR_EVEN = 10964215.29;
+  private static final double CONSTANT = 16333862;
+  private static final double CONSTANT_EVEN = 3022990.404;
+  private static final String MKT_CAP_FILE = "business_rules/May_rebal.csv";
   private static final String DELIMINATOR = ",";
   private static final int NAME_POS = 0;
   private static final int MULT_POS = 1;
