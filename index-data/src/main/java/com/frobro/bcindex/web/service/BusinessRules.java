@@ -31,7 +31,10 @@ public class BusinessRules {
   private static final double DIVISOR_EVEN = 10964215.29;
   private static final double CONSTANT = 16333862;
   private static final double CONSTANT_EVEN = 3022990.404;
+  private static final double DIVISOR_20 = 8269507.429;
+  private static final double DIVISOR_EVEN_20 = 6990359.243;
   private static final String MKT_CAP_FILE = "business_rules/May_rebal.csv";
+  private static final String MKT_CAP_FILE_20 = "business_rules/20_may_rebal.csv";
   private static final String DELIMINATOR = ",";
   private static final int NAME_POS = 0;
   private static final int MULT_POS = 1;
@@ -105,6 +108,14 @@ public class BusinessRules {
 
   public double getDivisorEven() {
     return DIVISOR_EVEN;
+  }
+
+  public double getDivisor20() {
+    return DIVISOR_20;
+  }
+
+  public double getDivisorEven20() {
+    return DIVISOR_EVEN_20;
   }
 
   public Set<String> getIndexes() {
