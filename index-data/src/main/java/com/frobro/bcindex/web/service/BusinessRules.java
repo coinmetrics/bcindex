@@ -31,8 +31,8 @@ public class BusinessRules {
   private static final double DIVISOR_EVEN = 10964215.29;
   private static final double CONSTANT = 16333862;
   private static final double CONSTANT_EVEN = 3022990.404;
-  private static final double DIVISOR_20 = 8150768.024;
-  private static final double DIVISOR_EVEN_20 = 6889986.748;
+  private static final double DIVISOR_20 = 8286853.874;
+  private static final double DIVISOR_EVEN_20 = 7275609.532;
   private static final String MKT_CAP_FILE = "business_rules/May_rebal.csv";
   private static final String MKT_CAP_FILE_20 = "business_rules/20_may_rebal.csv";
   private static final String DELIMINATOR = ",";
