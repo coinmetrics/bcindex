@@ -110,9 +110,9 @@ public class TickerService {
     lastDataTwenty.setLastUpdate(System.currentTimeMillis());
     calculateAndSetIndexesTwenty(lastDataTwenty);
 
-    System.out.println("***************************");
-    System.out.println("20 index data: " + lastDataTwenty);
-    System.out.println("10 index data: " + lastDataTen);
+//    System.out.println("***************************");
+//    System.out.println("20 index data: " + lastDataTwenty);
+//    System.out.println("10 index data: " + lastDataTen);
   }
 
   private void calculateAndSetIndexesTwenty(BletchleyData data) {
