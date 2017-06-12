@@ -3,6 +3,7 @@ package com.frobro.bcindex.web.controller;
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.domain.JpaEvenIndex;
 import com.frobro.bcindex.web.domain.JpaIndex;
+import com.frobro.bcindex.web.service.TickerService;
 import com.frobro.bcindex.web.service.persistence.EvenIdxRepo;
 import com.frobro.bcindex.web.service.persistence.IndexRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +18,14 @@ import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by rise on 5/20/17.
+ * Only use in dev modes
  */
 @RestController
 @Profile({"dev","pgres"})
 public class SeedController {
 
   private static final BcLog log = BcLog.getLogger(SeedController.class);
+  private TickerService tickerService = new TickerService();
   private EvenIdxRepo evenRepo;
   private IndexRepo oddRepo;
 
@@ -30,12 +33,19 @@ public class SeedController {
   public void setRepos(EvenIdxRepo eRepo, IndexRepo oRepo) {
     this.evenRepo = eRepo;
     this.oddRepo = oRepo;
+    tickerService.setIndexRepo(oRepo, eRepo);
   }
 
   @PostConstruct
   public void start(){
     log.info("populating the database with mock data ...");
     seed();
+  }
+
+  @RequestMapping("/newdata")
+  public String newData() {
+    tickerService.updateTickers();
+    return "done getting new data";
   }
 
   @RequestMapping("/seed")
@@ -54,7 +64,7 @@ public class SeedController {
     evenRepo.save(evenList);
     oddRepo.save(oddList);
 
-    return "done";
+    return "done seeding";
   }
 
   private JpaIndex newOdd(long now) {

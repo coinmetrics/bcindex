@@ -5,7 +5,7 @@ package com.frobro.bcindex.web.model;
  */
 public class Ticker {
   private final String name;
-  private Double marketCap;
+  private Double multiplier;
   private Double evenMultiplier;
 
   public Ticker(String name) {
@@ -16,12 +16,12 @@ public class Ticker {
     return name;
   }
 
-  public Double getMarketCap() {
-    return marketCap;
+  public Double getMultiplier() {
+    return multiplier;
   }
 
-  public Ticker setMarketCap(double marketCap) {
-    this.marketCap = marketCap;
+  public Ticker setMultiplier(double multiplier) {
+    this.multiplier = multiplier;
     return this;
   }
 

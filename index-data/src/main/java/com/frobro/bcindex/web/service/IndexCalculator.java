@@ -5,32 +5,38 @@ import com.frobro.bcindex.web.domain.Index;
 import com.frobro.bcindex.web.domain.JpaEvenIndex;
 import com.frobro.bcindex.web.domain.JpaIndex;
 import com.frobro.bcindex.web.model.BletchleyData;
+import com.frobro.bcindex.web.service.persistence.IndexDbDto;
 
 import java.util.*;
 
 /**
  * Created by rise on 4/8/17.
  */
-public class IndexCalculator {
+public abstract class IndexCalculator {
 
   private static final BcLog log = BcLog.getLogger(IndexCalculator.class);
+  // for 10 idx
   private final BusinessRules businessRules;
-  private final double divisor;
-  private final double constant;
-  private final double divisorEven;
-  private final double constantEven;
-
-  private Map<String,Index> lastIndexList;
-  private long lastTimeStamp;
+  protected double constantEven;
+  protected double constant;
   private double lastUsdPerBtc;
 
+  protected double divisor;
+  protected double divisorEven;
+  protected long lastTimeStamp;
+  protected Map<String,Index> lastIndexList;
+
   public IndexCalculator() {
-    businessRules = new BusinessRules();
+    businessRules = newBusinessRules();
     divisor = businessRules.getDivisor();
-    constant = businessRules.getConstant();
     divisorEven = businessRules.getDivisorEven();
-    constantEven = businessRules.getConstantEven();
   }
+
+  abstract protected BusinessRules newBusinessRules();
+  abstract protected String indexName();
+  abstract protected double buildFromSum(double lastSum,
+                                         double constant,
+                                         double divisor);
 
   public double getConstant() {
     return constant;
@@ -49,42 +55,46 @@ public class IndexCalculator {
     lastUsdPerBtc = getUsdPerBtc();
   }
 
-  public JpaIndex calcuateOddIndex() {
+  public IndexDbDto calcuateOddIndex() {
     return calculateOddIndex(lastUsdPerBtc, lastTimeStamp);
   }
 
-  public JpaEvenIndex calculateEvenIndex() {
+  public IndexDbDto calculateEvenIndex() {
     return calculateEvenIndex(lastUsdPerBtc, lastTimeStamp);
   }
 
-  private JpaIndex calculateOddIndex(double usdPerBtc, long timeStamp) {
+  private IndexDbDto calculateOddIndex(double usdPerBtc, long timeStamp) {
     double btcValue = calculateIndexValueBtc();
-    double usdResult = btcValue*usdPerBtc;
-    logUsdCalc("original", btcValue, usdPerBtc, usdResult, timeStamp);
+    double usdValue = btcValue*usdPerBtc;
+    logUsdCalc("original", btcValue, usdPerBtc, usdValue, timeStamp);
 
-    return JpaIndex.create()
-        .setTimeStamp(timeStamp)
-        .setIndexValueBtc(btcValue)
-        .setIndexValueUsd(usdResult);
+    return newDbDto(btcValue, usdValue, timeStamp);
   }
 
-  private JpaEvenIndex calculateEvenIndex(double usdPerBtc, long timeStamp) {
+  private IndexDbDto newDbDto(double priceBtc, double priceUsd, long time) {
+    IndexDbDto dto = new IndexDbDto();
+    dto.indexValueBtc = priceBtc;
+    dto.indexValueUsd = priceUsd;
+    dto.timeStamp = time;
+    return dto;
+  }
+
+  private IndexDbDto calculateEvenIndex(double usdPerBtc, long timeStamp) {
     double btcEvenValue = calculateIndexValueEven();
     double usdEvenValue = btcEvenValue*usdPerBtc;
     logUsdCalc("even",btcEvenValue, usdPerBtc, usdEvenValue, timeStamp);
 
-    JpaEvenIndex lastEvenIndex = JpaEvenIndex.create();
-    lastEvenIndex.setIndexValueBtc(btcEvenValue)
-                      .setTimeStamp(timeStamp)
-                      .setIndexValueUsd(usdEvenValue);
-
-    return lastEvenIndex;
+//    JpaEvenIndex lastEvenIndex = JpaEvenIndex.create();
+//    lastEvenIndex.setIndexValueBtc(btcEvenValue)
+//                      .setTimeStamp(timeStamp)
+//                      .setIndexValueUsd(usdEvenValue);
+    return newDbDto(btcEvenValue, usdEvenValue, timeStamp);
   }
-
 
   private void logUsdCalc(String idxName, double btcValue,
                           double usdPerBtc, double result, long time) {
-    log.debug("INDEX: '" + idxName + "' at time: '" + new Date(time) + "' in BTC=" + btcValue + " times "
+    log.debug(indexName() + ": '" + idxName + "' at time: '" + new Date(time)
+        + "' in BTC=" + btcValue + " times "
         + "last btc price=" + usdPerBtc + ". Which makes the index in USD=" + result);
   }
 
@@ -108,7 +118,7 @@ public class IndexCalculator {
       MultiplierService multService = new MultiplierService(lastIndexList)
           .updateMarketCapIfValid(multiplier, ticker);
 
-      Optional<Double> evenMultipler = businessRules.getEvenMultipler(ticker);
+      Optional<Double> evenMultipler = businessRules.getMultiplierEven(ticker);
       multService.updateEvenMktCapIfValid(evenMultipler, ticker);
     });
     return this;
@@ -124,7 +134,7 @@ public class IndexCalculator {
       }
     }
 
-    double btcValue = ((lastSum + getConstant())/divisor);
+    double btcValue = buildFromSum(lastSum,constant,divisor);
     logCalculation(lastSum, btcValue);
 
     return btcValue;
@@ -139,14 +149,14 @@ public class IndexCalculator {
         lastSum += ticker.getEvenMult();
       }
     }
-    double btcResultEven = ((lastSum + getConstantEven())/divisorEven);
+    double btcResultEven = buildFromSum(lastSum,constantEven,divisorEven);
     logCalculationEven(lastSum, btcResultEven);
     return btcResultEven;
   }
 
   private void logCalculation(double lastSum, double btcResult) {
     log.debug("last mkt cap sum: " + lastSum
-        + " constant: " + getConstant() + " divsor: "
+        + " constant: " + constant + " divsor: "
         + divisor + " usd-btc: " + getUsdPerBtc()
         + ", BTC=" + btcResult);
   }
@@ -170,17 +180,5 @@ public class IndexCalculator {
     List<Index> sorted = new ArrayList<>(lastIndexList.values());
     Collections.reverse(sorted);
     return sorted;
-  }
-
-  public List<String> mktCapAsStrings() {
-    List<String> idxDisplay = new ArrayList<>(lastIndexList.size());
-    lastIndexList.values().stream().forEach(val -> {
-      double mktCap = val.getMktCap();
-
-      idxDisplay.add(val.getName()
-          + " [mkt cap: " + mktCap
-          + ", last price: " + val.getLast() + "]");
-    });
-    return idxDisplay;
   }
 }

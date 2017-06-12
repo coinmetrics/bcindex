@@ -13,7 +13,6 @@ public class BletchleyData {
   private static final double USD_BTC_MKT_CAP = 0;
 
   private long lastUpdateTime = 0;
-  private double lastUsdBtc;
   private Map<String,Index> lastIndexes = new HashMap<>();
 
   public void setLastUpdate(long time) {
@@ -44,5 +43,12 @@ public class BletchleyData {
 
   public Map<String,Index> getLastIndexes() {
     return lastIndexes;
+  }
+  @Override
+  public String toString() {
+    return "BletchleyData{" +
+        "lastUpdateTime=" + lastUpdateTime +
+        ", lastIndexes=" + lastIndexes +
+        '}';
   }
 }

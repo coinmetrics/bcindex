@@ -5,12 +5,13 @@ import java.util.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.domain.Index;
 import com.frobro.bcindex.web.domain.JpaEvenIndex;
 import com.frobro.bcindex.web.domain.JpaIndex;
-import com.frobro.bcindex.web.model.Ticker;
 import com.frobro.bcindex.web.service.persistence.EvenIdxRepo;
+import com.frobro.bcindex.web.service.persistence.IndexDbDto;
 import com.frobro.bcindex.web.service.persistence.IndexRepo;
 import com.frobro.bcindex.web.model.BletchleyData;
 import org.apache.http.HttpEntity;
@@ -31,13 +32,16 @@ public class TickerService {
   private static final String EMPTY_RESPONSE = "noop";
   private final static String COIN_CAP_ENDPOINT = "http://www.coincap.io/global";
   private final static String POLONIEX_ENDPOINT = "https://poloniex.com/public?command=returnTicker";
+  private static final String COIN_CAP_ENDPOINT_20 = "http://www.coincap.io/front";
 
-  private IndexCalculator indexCalculator = new IndexCalculator();
+  private IndexCalculator indexCalculatorTen = new IndexCalculatorTen();
+  private IndexCalculator indexCalculatorTwenty = new IndexCalculatorTwenty();
   private IndexRepo indexRepo;
   private EvenIdxRepo evenRepo;
-  private BletchleyData lastData = emptyData();
-  private JpaIndex lastIndex;
-  private JpaEvenIndex lastEvenIndex;
+  private BletchleyData lastDataTen = emptyData();
+  private BletchleyData lastDataTwenty = emptyData();
+  private IndexDbDto lastIndex;
+  private IndexDbDto lastEvenIndex;
 
 
   public TickerService() {
@@ -48,16 +52,35 @@ public class TickerService {
     this.evenRepo = eRepo;
   }
 
-  public void saveIndex() {
-    indexRepo.save(lastIndex);
-    evenRepo.save(lastEvenIndex);
+  public void saveIndices() {
+    saveIndexTen();
+    saveIndexTwenty();
   }
+
+  private void saveIndexTen() {
+    JpaIndex idx = new JpaIndex()
+      .setIndexValueBtc(lastIndex.indexValueBtc)
+      .setIndexValueUsd(lastIndex.indexValueUsd)
+      .setTimeStamp(lastIndex.timeStamp);
+    indexRepo.save(idx);
+
+    JpaEvenIndex eIdx = new JpaEvenIndex()
+        .setIndexValueBtc(lastEvenIndex.indexValueBtc)
+        .setIndexValueUsd(lastEvenIndex.indexValueUsd)
+        .setTimeStamp(lastEvenIndex.timeStamp);
+    evenRepo.save(eIdx);
+  }
+
+  private void saveIndexTwenty() {
+    throw new UnsupportedOperationException();
+  }
+
 
   public TickerService updateTickers() {
     try {
 
       Update();
-      saveIndex();
+//      saveIndices();
 
     } catch (IOException ioe) {
       log.error("could not successfully update. ", ioe);
@@ -68,34 +91,82 @@ public class TickerService {
   private void Update() throws IOException {
     log.debug("updating latest data");
 
-    lastData = new BletchleyData();
-
-    String response = makeCallTenMembers();
-    update(response);
-
+    // init new
+    lastDataTen = new BletchleyData();
+    lastDataTwenty = new BletchleyData();
+    // get bit coin latest
     String btcResponse = makeApiCallBtc();
     updateTickerBtc(btcResponse);
 
-    lastData.setLastUpdate(System.currentTimeMillis());
+    // update 10 idx
+    String response = makeCallTenMembers();
+    updateTenIdx(response);
+    lastDataTen.setLastUpdate(System.currentTimeMillis());
+    calculateAndSetIndexesTen(lastDataTen);
 
-    calculateAndSetIndexes(lastData);
+    // update 20 idx
+    String response20 = makeApiCallTwenty();
+    updateTwentyIdx(response20);
+    lastDataTwenty.setLastUpdate(System.currentTimeMillis());
+    calculateAndSetIndexesTwenty(lastDataTwenty);
+
+    System.out.println("***************************");
+    System.out.println("20 index data: " + lastDataTwenty);
+    System.out.println("10 index data: " + lastDataTen);
   }
 
-  private void calculateAndSetIndexes(BletchleyData data) {
-    indexCalculator.updateLast(data);
-    lastIndex = indexCalculator.calcuateOddIndex();
-    lastEvenIndex = indexCalculator.calculateEvenIndex();
+  private void calculateAndSetIndexesTwenty(BletchleyData data) {
+    indexCalculatorTwenty.updateLast(data);
+    lastIndex = indexCalculatorTwenty.calcuateOddIndex();
+    lastEvenIndex = indexCalculatorTwenty.calculateEvenIndex();
+  }
+  private String makeApiCallTwenty() throws IOException {
+    return makeApiCall(COIN_CAP_ENDPOINT_20);
+  }
+
+  private void calculateAndSetIndexesTen(BletchleyData data) {
+    indexCalculatorTen.updateLast(data);
+    lastIndex = indexCalculatorTen.calcuateOddIndex();
+    lastEvenIndex = indexCalculatorTen.calculateEvenIndex();
   }
 
   public void updateTickerBtc(String response) throws IOException {
     ObjectMapper mapper = new ObjectMapper();
     CoinCapDto dto = mapper.readValue(response, CoinCapDto.class);
-    lastData.setLastUsdBtc(dto.getBtcPrice());
+    double btcPrice = dto.getBtcPrice();
+    lastDataTen.setLastUsdBtc(btcPrice);
+    lastDataTwenty.setLastUsdBtc(btcPrice);
   }
 
-  private void update(String apiResponse)throws IOException {
-    Map<String, Index> tickers = populateTickers(apiResponse);
-    lastData.setMembers(tickers);
+  private void updateTwentyIdx(String apiResponse) throws IOException {
+    Set<String> indexes = new BusRulesTwenty().getIndexes();
+    Map<String, Index> tickers = populate20(apiResponse, indexes);
+    lastDataTwenty.setMembers(tickers);
+  }
+
+  private Map<String,Index> populate20(String json,
+                                       Set<String> indexes) throws IOException {
+    Map<String, Index> tickers = new TreeMap<>();
+    ArrayNode root = (ArrayNode) getRoot(json);
+
+    root.elements().forEachRemaining(node -> {
+      JsonNode pxNd = node.get(CurrPairJson.PRICE_KEY_20);
+      double price = pxNd.asDouble();
+
+      JsonNode symbolNd = node.get(CurrPairJson.NAME_KEY_20);
+      String symbol = symbolNd.asText();
+
+      if (indexes.contains(symbol)) {
+        addTicker(tickers, symbol, price);
+      }
+    });
+    return tickers;
+  }
+
+  private void updateTenIdx(String apiResponse) throws IOException {
+    Set<String> indexes = new BusRulesTen().getIndexes();
+    Map<String, Index> tickers = populateTickers(apiResponse, indexes);
+    lastDataTen.setMembers(tickers);
   }
 
   public String makeApiCallBtc() throws IOException {
@@ -139,11 +210,9 @@ public class TickerService {
     };
   }
 
-  private Map<String,Index> populateTickers(String json) throws IOException {
+  private Map<String,Index> populateTickers(String json, Set<String> indexes) throws IOException {
     Map<String, Index> tickers = new TreeMap<>();
     JsonNode root = getRoot(json);
-
-    Set<String> indexes = new BusinessRules().getIndexes();
 
     root.fields().forEachRemaining(node -> {
 
@@ -161,37 +230,29 @@ public class TickerService {
   }
 
   private void addTicker(Map<String,Index> tickerMap, String name, JsonNode node) {
-    Index currPair = newIndex(name, getVal(node));
+    addTicker(tickerMap, name, getVal(node));
+  }
+
+  private void addTicker(Map<String,Index> tickerMap, String name, double price) {
+    Index currPair = newIndex(name, price);
     tickerMap.put(currPair.getName(), currPair);
   }
 
-  private Index newIndex(String indexName, String priceStr) {
+    private Index newIndex(String indexName, double price) {
     Index currPair = new Index().setName(indexName);
-    return currPair.setLast(Double.parseDouble(priceStr));
+    return currPair.setLast(price);
   }
 
-  private String getVal(JsonNode node) {
-    return node.get(CurrPairJson.LAST_KEY).textValue();
+  private double getVal(JsonNode node) {
+    return node.get(CurrPairJson.LAST_KEY).asDouble();
   }
 
   public Collection<Index> getLatestCap() {
-    return indexCalculator.getSortedValues();
-  }
-
-  public double getIndexValue() {
-    return lastIndex.getIndexValueUsd();
-  }
-
-  public double getEvenIndexValue() {
-    return lastEvenIndex.getIndexValueUsd();
-  }
-
-  public double getConstant() {
-    return indexCalculator.getConstant();
+    return indexCalculatorTen.getSortedValues();
   }
 
   void init() {
-    indexCalculator.updateLast(emptyData());
+    indexCalculatorTen.updateLast(emptyData());
   }
 
   private BletchleyData emptyData() {
@@ -199,7 +260,7 @@ public class TickerService {
   }
 
   TickerService put(String name, double cap) {
-    indexCalculator.put(name, 0, cap);
+    indexCalculatorTen.put(name, 0, cap);
     return this;
   }
 }
