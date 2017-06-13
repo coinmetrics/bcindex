@@ -86,7 +86,7 @@ a:active,a:hover{outline-width:0}abbr[title]{border-bottom:none;text-decoration:
 }
 
 .btn-timeframe-mobile {
-    padding:10px 15px;
+    padding:8px 8px;
     background: #424949;
     color: #fff;
     font-weight: bold;
@@ -334,6 +334,9 @@ ul.side-second{
     .halfcontact{width:100%}
     .half-mobile{width:100%;padding-top:100px;padding-bottom:10px;}
     .half-mobile-image{width:100%;padding-top:10px;padding-bottom:100px;}
+    .last-price{padding-right:4px;}
+    .chart-element{padding-left:10px;padding-right:10px;}
+    h4{font-size:18px;}
 }
 
 @media screen and (max-width: 992px) and (min-width: 601px) {
@@ -349,6 +352,8 @@ ul.side-second{
     }
     .rightsidebar{display:none;}
     h1{font-size:180%;}
+    h4{font-size:26px;}
+    .last-price{padding-right:8px;}
 }
 
 @media screen and (min-width: 993px) {
