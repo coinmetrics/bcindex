@@ -78,9 +78,11 @@ var GraphService = function () {
                     datasets: [{
                         label: 'The Index',
                         data: data,
-                        backgroundColor: 'rgba(204, 226, 159, 0.4)',
-                        borderColor: 'rgba(104, 140, 33, 0.4)',
-                        borderWidth: 1
+                        backgroundColor: 'rgba(0, 0, 0, 0.0)',
+                        borderColor: 'rgba(104, 140, 33, 1)',
+                        borderWidth: 3,
+                        scaleShowVerticalLines: false,
+                        pointRadius: 0
                     }]
                 },
                 options: this.options
@@ -122,7 +124,7 @@ var StockInfoService = function () {
         key: 'draw',
         value: function draw(model) {
             var template = '<div class="ticker-info-box">\n    <ul>\n        <li>\n            <dt>Previous Close </dt>\n            <dd>' + model.prevClose + '</dd>\n        </li>                            \n        <li>\n            <dt>High </dt>\n            <dd>' + model.high + '</dd>\n        </li>\n        <li>\n            <dt>Low </dt>\n            <dd>' + model.low + '</dd>\n        </li>\n        <li>\n            <dt>Change </dt>\n            <dd>' + model.change + '</dd>\n        </li>\n        <li>\n            <dt>Precent Change </dt>\n            <dd>' + model.percentChange + '</dd>                            \n        </li>\n    </ul>\n</div>';
-            $('.last-price').html($('<h3>', { text: "Last Price: " + model.lastPrice })); // TODO: move this out to its own class or function
+            $('.last-price').html($('<h4>', { text: "Last Price: " + model.lastPrice })); // TODO: move this out to its own class or function
             $("#stock-info").html(template);
         }
     }]);
@@ -216,6 +218,9 @@ var Config = {
         defaultOptions: {
             responsive: true,
             maintainAspectRatio: true,
+            scaleShowVerticalLines: false,
+            pointRadius: 0,
+            borderWidth: 10,
             legend: {
                 display: false
             },

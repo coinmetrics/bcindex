@@ -30,7 +30,7 @@ export default class StockInfoService {
         </li>
     </ul>
 </div>`;
-        $('.last-price').html($('<h3>', {text: "Last Price: " + model.lastPrice})); // TODO: move this out to its own class or function
+        $('.last-price').html($('<h4>', {text: "Last Price: " + model.lastPrice})); // TODO: move this out to its own class or function
         $("#stock-info").html(template);
     }
 }

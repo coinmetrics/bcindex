@@ -45,9 +45,11 @@ export default class GraphService {
                 datasets: [{
                     label: 'The Index',
                     data: data,
-                    backgroundColor: 'rgba(204, 226, 159, 0.4)' ,
-                    borderColor: 'rgba(104, 140, 33, 0.4)',
-                    borderWidth: 1
+                    backgroundColor: 'rgba(0, 0, 0, 0.0)' ,
+                    borderColor: 'rgba(104, 140, 33, 1)',
+                    borderWidth: 3,
+                    scaleShowVerticalLines: false,
+                    pointRadius: 0,
                 }]
             },
             options: this.options

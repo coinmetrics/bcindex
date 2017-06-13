@@ -32,6 +32,9 @@ let Config = {
         defaultOptions: {
             responsive: true,
             maintainAspectRatio: true,
+            scaleShowVerticalLines: false,
+            pointRadius: 0,
+            borderWidth: 10,
             legend: {
                 display: false
             },
@@ -42,7 +45,7 @@ let Config = {
                     },
                     scaleLabel: {
                         display: false,
-                    }
+                    }  
                 }],
                 xAxes: [{
                     type: 'time',
