@@ -37,6 +37,9 @@ public abstract class IndexCalculator {
   abstract protected double buildFromSum(double lastSum,
                                          double constant,
                                          double divisor);
+  abstract protected IndexDbDto newDbDto(double priceBtc,
+                                         double lastUsdPerBtc,
+                                         long time);
 
   public double getConstant() {
     return constant;
@@ -64,31 +67,27 @@ public abstract class IndexCalculator {
   }
 
   private IndexDbDto calculateOddIndex(double usdPerBtc, long timeStamp) {
-    double btcValue = calculateIndexValueBtc();
-    double usdValue = btcValue*usdPerBtc;
-    logUsdCalc("original", btcValue, usdPerBtc, usdValue, timeStamp);
+    double indexPrice = calculateIndexValueBtc();
 
-    return newDbDto(btcValue, usdValue, timeStamp);
-  }
+    IndexDbDto dto = newDbDto(indexPrice, usdPerBtc, timeStamp);
+    logUsdCalc("original", dto.indexValueBtc, usdPerBtc,
+        dto.indexValueUsd, dto.timeStamp);
 
-  private IndexDbDto newDbDto(double priceBtc, double priceUsd, long time) {
-    IndexDbDto dto = new IndexDbDto();
-    dto.indexValueBtc = priceBtc;
-    dto.indexValueUsd = priceUsd;
-    dto.timeStamp = time;
     return dto;
   }
 
   private IndexDbDto calculateEvenIndex(double usdPerBtc, long timeStamp) {
-    double btcEvenValue = calculateIndexValueEven();
-    double usdEvenValue = btcEvenValue*usdPerBtc;
-    logUsdCalc("even",btcEvenValue, usdPerBtc, usdEvenValue, timeStamp);
+    double indexPrice = calculateIndexValueEven();
+
+    IndexDbDto dto = newDbDto(indexPrice, usdPerBtc, timeStamp);
+    logUsdCalc("even",dto.indexValueBtc, usdPerBtc,
+        dto.indexValueUsd, timeStamp);
 
 //    JpaEvenIndex lastEvenIndex = JpaEvenIndex.create();
 //    lastEvenIndex.setIndexValueBtc(btcEvenValue)
 //                      .setTimeStamp(timeStamp)
 //                      .setIndexValueUsd(usdEvenValue);
-    return newDbDto(btcEvenValue, usdEvenValue, timeStamp);
+    return dto;
   }
 
   private void logUsdCalc(String idxName, double btcValue,
