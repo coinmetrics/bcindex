@@ -163,7 +163,7 @@ public abstract class IndexCalculator {
 
   private void logCalculationEven(double lastSum, double btcResultEven) {
     log.debug("last even sum: " + lastSum
-        + " even constant: " + getConstantEven() + " even divsor: "
+        + " even constant: " + constantEven + " even divsor: "
         + divisorEven + " usd-btc: " + getUsdPerBtc()
         + ", even BTC=" + btcResultEven);
   }

@@ -40,13 +40,16 @@ public class MultiplierService {
     double last = indexForTicker.getLast();
     double mktCap = last*multiplier;
 
-    log.debug("updating ticker: " + indexForTicker.getName()
-        + " last: " + last + " mkt cap: " + mktCap);
-
+    String type;
     if (isEven) {
+      type = "even    ";
       indexForTicker.setEvenMult(mktCap);
     } else {
+      type = "original";
       indexForTicker.setMktCap(mktCap);
     }
+    log.debug("updating ticker for " + type + ": " + indexForTicker.getName()
+        + " last: " + last + " times mult: " + multiplier
+        + " --> mkt cap: " + mktCap);
   }
 }
