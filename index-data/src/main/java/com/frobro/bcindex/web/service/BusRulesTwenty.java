@@ -53,7 +53,7 @@ public class BusRulesTwenty extends BusinessRules {
 
   @Override
   public Optional<Double> getMultiplierEven(String tickerName) {
-    return extractMultiplier(getTicker(tickerName, tickersTwenty));
+    return extractMultiplierEven(getTicker(tickerName, tickersTwenty));
   }
 
 }
