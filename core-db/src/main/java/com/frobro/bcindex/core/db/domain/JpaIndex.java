@@ -1,4 +1,4 @@
-package com.frobro.bcindex.web.domain;
+package com.frobro.bcindex.core.db.domain;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -6,8 +6,7 @@ import java.util.Date;
 /**
  * Created by rise on 4/9/17.
  */
-@Entity
-@Table(name = "odd_index")
+@MappedSuperclass
 public class JpaIndex {
 
   @Id
@@ -27,7 +26,7 @@ public class JpaIndex {
   }
 
   public static JpaIndex create() {
-    JpaIndex idx = new JpaIndex();
+    JpaIndex idx = new JpaIndexTen();
     return idx;
   }
 

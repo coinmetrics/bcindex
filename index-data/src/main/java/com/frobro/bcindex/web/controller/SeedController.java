@@ -1,11 +1,12 @@
 package com.frobro.bcindex.web.controller;
 
+import com.frobro.bcindex.core.db.domain.*;
+import com.frobro.bcindex.core.db.service.EvenIdxRepo;
+import com.frobro.bcindex.core.db.service.IndexRepo;
+import com.frobro.bcindex.core.db.service.TwentyEvenRepo;
+import com.frobro.bcindex.core.db.service.TwentyRepo;
 import com.frobro.bcindex.web.bclog.BcLog;
-import com.frobro.bcindex.web.domain.JpaEvenIndex;
-import com.frobro.bcindex.web.domain.JpaIndex;
 import com.frobro.bcindex.web.service.TickerService;
-import com.frobro.bcindex.web.service.persistence.EvenIdxRepo;
-import com.frobro.bcindex.web.service.persistence.IndexRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,11 +29,16 @@ public class SeedController {
   private TickerService tickerService = new TickerService();
   private EvenIdxRepo evenRepo;
   private IndexRepo oddRepo;
+  private TwentyRepo twentyRepo;
+  private TwentyEvenRepo twentyEvenRepo;
 
   @Autowired
-  public void setRepos(EvenIdxRepo eRepo, IndexRepo oRepo) {
+  public void setRepos(EvenIdxRepo eRepo, IndexRepo oRepo,
+                       TwentyRepo twRepo, TwentyEvenRepo teRepo) {
     this.evenRepo = eRepo;
     this.oddRepo = oRepo;
+    this.twentyRepo = twRepo;
+    this.twentyEvenRepo = teRepo;
     tickerService.setIndexRepo(oRepo, eRepo);
   }
 
@@ -50,35 +56,56 @@ public class SeedController {
 
   @RequestMapping("/seed")
   public String seed() {
-    int numHours = 200;
+    int numHours = 26;
     int numIterations = (int) TimeUnit.HOURS.toMinutes(numHours);
 
     List<JpaEvenIndex> evenList = new ArrayList<>(numIterations);
-    List<JpaIndex> oddList = new ArrayList<>(numIterations);
+    List<JpaIndexTen> oddList = new ArrayList<>(numIterations);
+    List<JpaIdxTwenty> list20 = new ArrayList<>(numIterations);
+    List<JpaTwentyEven> listEven20 = new ArrayList<>(numIterations);
     long time = System.currentTimeMillis();
     for (int i=0; i<numIterations; i++) {
       time  += nextMinute();
       evenList.add(newEven(time));
       oddList.add(newOdd(time));
+      list20.add(newTwenty(time));
+      listEven20.add(new20Even(time));
     }
     evenRepo.save(evenList);
     oddRepo.save(oddList);
+    twentyRepo.save(list20);
+    twentyEvenRepo.save(listEven20);
 
     return "done seeding";
   }
 
-  private JpaIndex newOdd(long now) {
-    double nextDouble = nextDouble();
-    return new JpaIndex()
-        .setTimeStamp(now)
-        .setIndexValueUsd(nextDouble)
-        .setIndexValueBtc(nextDouble / 10.0);
+  private JpaIndexTen newOdd(long now) {
+    JpaIndexTen idx = new JpaIndexTen();
+    populate(idx, now);
+    return idx;
   }
 
   private JpaEvenIndex newEven(long now) {
+    JpaEvenIndex idx = new JpaEvenIndex();
+    populate(idx, now);
+    return idx;
+  }
+
+  private JpaIdxTwenty newTwenty(long now) {
+    JpaIdxTwenty idx = new JpaIdxTwenty();
+    populate(idx, now);
+    return idx;
+  }
+
+  private JpaTwentyEven new20Even(long now) {
+    JpaTwentyEven idx = new JpaTwentyEven();
+    populate(idx, now);
+    return idx;
+  }
+
+  private void populate(JpaIndex idx, long time) {
     double nextDouble = nextDouble();
-    return new JpaEvenIndex()
-        .setTimeStamp(now)
+    idx.setTimeStamp(time)
         .setIndexValueUsd(nextDouble)
         .setIndexValueBtc(nextDouble / 10.0);
   }

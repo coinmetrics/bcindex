@@ -2,8 +2,6 @@ package com.frobro.bcindex.web.service;
 
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.domain.Index;
-import com.frobro.bcindex.web.domain.JpaEvenIndex;
-import com.frobro.bcindex.web.domain.JpaIndex;
 import com.frobro.bcindex.web.model.BletchleyData;
 import com.frobro.bcindex.web.service.persistence.IndexDbDto;
 

@@ -1,7 +1,6 @@
-package com.frobro.bcindex.web.service.persistence;
+package com.frobro.bcindex.core.db.service;
 
-import com.frobro.bcindex.web.domain.JpaEvenIndex;
-import com.frobro.bcindex.web.domain.JpaIndex;
+import com.frobro.bcindex.core.db.domain.JpaEvenIndex;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Date;

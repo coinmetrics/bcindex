@@ -6,13 +6,13 @@ import java.util.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.frobro.bcindex.core.db.domain.JpaEvenIndex;
+import com.frobro.bcindex.core.db.domain.JpaIndexTen;
+import com.frobro.bcindex.core.db.service.EvenIdxRepo;
+import com.frobro.bcindex.core.db.service.IndexRepo;
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.domain.Index;
-import com.frobro.bcindex.web.domain.JpaEvenIndex;
-import com.frobro.bcindex.web.domain.JpaIndex;
-import com.frobro.bcindex.web.service.persistence.EvenIdxRepo;
 import com.frobro.bcindex.web.service.persistence.IndexDbDto;
-import com.frobro.bcindex.web.service.persistence.IndexRepo;
 import com.frobro.bcindex.web.model.BletchleyData;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -58,14 +58,14 @@ public class TickerService {
   }
 
   private void saveIndexTen() {
-    JpaIndex idx = new JpaIndex()
-      .setIndexValueBtc(lastIndex.indexValueBtc)
+    JpaIndexTen idx = new JpaIndexTen();
+      idx.setIndexValueBtc(lastIndex.indexValueBtc)
       .setIndexValueUsd(lastIndex.indexValueUsd)
       .setTimeStamp(lastIndex.timeStamp);
     indexRepo.save(idx);
 
-    JpaEvenIndex eIdx = new JpaEvenIndex()
-        .setIndexValueBtc(lastEvenIndex.indexValueBtc)
+    JpaEvenIndex eIdx = new JpaEvenIndex();
+    eIdx.setIndexValueBtc(lastEvenIndex.indexValueBtc)
         .setIndexValueUsd(lastEvenIndex.indexValueUsd)
         .setTimeStamp(lastEvenIndex.timeStamp);
     evenRepo.save(eIdx);
