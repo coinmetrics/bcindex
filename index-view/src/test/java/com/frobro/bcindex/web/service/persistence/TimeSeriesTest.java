@@ -1,6 +1,6 @@
 package com.frobro.bcindex.web.service.persistence;
 
-import com.frobro.bcindex.web.domain.JpaIndex;
+import com.frobro.bcindex.core.db.domain.JpaIndexTen;
 import com.frobro.bcindex.web.model.api.*;
 import com.frobro.bcindex.web.service.DbTickerService;
 import org.junit.Test;
@@ -33,7 +33,7 @@ public class TimeSeriesTest extends DbBaseTest {
     // and
     RequestDto req = new RequestDto();
     req.currency = Currency.BTC;
-    req.index = IndexType.ODD;
+    req.index = IndexType.TEN_IDX;
     req.timeFrame = timeFrame;
 
     // when
@@ -47,7 +47,7 @@ public class TimeSeriesTest extends DbBaseTest {
   private void populateDb(int numEntries, double price) {
     long now = System.currentTimeMillis();
     for (int i=1; i<=numEntries; i++) {
-      JpaIndex idx = IndexFactory.getNewOdd();
+      JpaIndexTen idx = IndexFactory.getNewOdd();
       if (i == numEntries) {
         idx.setIndexValueUsd(price);
       }
@@ -77,7 +77,7 @@ public class TimeSeriesTest extends DbBaseTest {
     // and
     RequestDto req = new RequestDto();
     req.currency = Currency.USD;
-    req.index = IndexType.ODD;
+    req.index = IndexType.TEN_IDX;
     req.timeFrame = timeFrame;
 
     // when

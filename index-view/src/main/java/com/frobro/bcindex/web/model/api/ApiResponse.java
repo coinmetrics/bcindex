@@ -51,6 +51,11 @@ public class ApiResponse {
     return this;
   }
 
+  public ApiResponse updateLast(double lastPx) {
+    this.lastPrice = lastPx;
+    return this;
+  }
+
   public void calculateDerivedData() {
     setLastFromList();
     setPrevClose();

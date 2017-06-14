@@ -7,8 +7,6 @@ import com.frobro.bcindex.web.model.api.RequestDto;
 import com.frobro.bcindex.web.model.api.TimeFrame;
 import com.frobro.bcindex.web.service.DbTickerService;
 import com.frobro.bcindex.web.service.TimerService;
-import com.frobro.bcindex.web.service.persistence.EvenIdxRepo;
-import com.frobro.bcindex.web.service.persistence.IndexRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -27,8 +25,8 @@ public class ApiController {
   private TimerService timerService;
 
   @Autowired
-  public void init(JdbcTemplate jdbc, IndexRepo odd, EvenIdxRepo even) {
-    dbTickerService.setJdbc(jdbc).setOddRepo(odd).setEvenRepo(even);
+  public void init(JdbcTemplate jdbc) {
+    dbTickerService.setJdbc(jdbc);
     timerService = new TimerService(dbTickerService);
     timerService.run();
   }
@@ -78,7 +76,7 @@ public class ApiController {
     RequestDto dto = new RequestDto();
     dto.timeFrame = parseTimeUnit(timeUnit);
     dto.currency = Currency.USD;
-    dto.index = IndexType.ODD;
+    dto.index = IndexType.TEN_IDX;
     return dto;
   }
 

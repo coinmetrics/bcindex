@@ -4,10 +4,7 @@ import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.model.api.*;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import java.time.Instant;
-
 import static com.frobro.bcindex.web.service.DoubleFormatter.format;
-import static com.frobro.bcindex.web.model.api.TimeFrame.*;
 
 /**
  * Created by rise on 5/12/17.
@@ -55,18 +52,24 @@ public class TimeSeriesService {
 
     String table = getIdxColName(req.index);
     String currency = getCurrColName(req.currency);
-    String query = "select " + currency
+    String query = "select last." + currency + " as lastpx, b." + currency
+      + ", b.time_stamp" + " from "
+      + "(select " + currency + " from " + table
+      + " where id = (select count(*) from " + table + ")) as last,"
+      + "(select " + currency
       + ", time_stamp from " + table + " where id > "
       + lastIdOfInterest(oldestRecOfInterest, table)
       + " and "
       + "(MOD(id," + numBack + ") = 0) "
-      + "order by id;";
+      + "order by id) as b;";
 
+    System.out.println(query);
     ApiResponse response = createResponse(req);
     
         jdbc.query(query, (rs, rowNum) ->
               response.addPrice(format(rs.getDouble(currency)))
                       .addTime(rs.getString("time_stamp"))
+                      .updateLast(rs.getDouble("lastpx"))
         );
 
     response.calculateDerivedData();
@@ -83,10 +86,10 @@ public class TimeSeriesService {
   }
 
   private String getIdxColName(IndexType type) {
-    if (type == IndexType.EVEN) {
+    if (type == IndexType.TEN_EVEN) {
       return "even_index";
     }
-    else if (type == IndexType.ODD) {
+    else if (type == IndexType.TEN_IDX) {
       return "odd_index";
     }
     else {

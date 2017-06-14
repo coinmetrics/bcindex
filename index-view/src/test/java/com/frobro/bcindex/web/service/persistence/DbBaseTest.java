@@ -1,5 +1,7 @@
 package com.frobro.bcindex.web.service.persistence;
 
+import com.frobro.bcindex.core.db.service.EvenIdxRepo;
+import com.frobro.bcindex.core.db.service.IndexRepo;
 import org.junit.After;
 import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -3,7 +3,8 @@ package com.frobro.bcindex.web.service.persistence;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
-import com.frobro.bcindex.web.domain.JpaIndex;
+import com.frobro.bcindex.core.db.domain.JpaIndex;
+import com.frobro.bcindex.core.db.domain.JpaIndexTen;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,14 +24,14 @@ public class IndexRepoTest extends DbBaseTest {
 
   @Test
   public void testSave() {
-    JpaIndex index = JpaIndex.create()
-        .setTimeStamp(new Date())
+    JpaIndexTen index = new JpaIndexTen();
+        index.setTimeStamp(new Date())
         .setIndexValueBtc(12)
         .setIndexValueUsd(34)
         .setId(1234567L);
 
     oddRepo.save(index);
-    JpaIndex retreived = oddRepo.findByTimeStamp(index.getTimeStamp()).get(0);
+    JpaIndexTen retreived = oddRepo.findByTimeStamp(index.getTimeStamp()).get(0);
 
     assertEquals(index.getIndexValueBtc(), retreived.getIndexValueBtc(), 0.01);
     assertEquals(index.getIndexValueUsd(), retreived.getIndexValueUsd(), 0.01);
@@ -39,17 +40,19 @@ public class IndexRepoTest extends DbBaseTest {
   @Test
   public void testGetLatest() {
     // given
-    JpaIndex first = IndexFactory.getNewOdd().setId(1L);
+    JpaIndexTen first = IndexFactory.getNewOdd();
+    first.setId(1L);
     // and
     sleep(1);
     // and
-    JpaIndex second = IndexFactory.getNewOdd().setId(2L);
+    JpaIndexTen second = IndexFactory.getNewOdd();
+    second.setId(2L);
     // and
     oddRepo.save(first);
     oddRepo.save(second);
 
     // when
-    JpaIndex latest = oddRepo.findFirst1ByOrderByTimeStampDesc().get(0);
+    JpaIndex latest = oddRepo.findOne(second.getId());
 
     // then
     assertEquals(second.getId(), latest.getId());

@@ -1,7 +1,7 @@
 package com.frobro.bcindex.web.service.persistence;
 
-import com.frobro.bcindex.web.domain.JpaEvenIndex;
-import com.frobro.bcindex.web.domain.JpaIndex;
+import com.frobro.bcindex.core.db.domain.JpaEvenIndex;
+import com.frobro.bcindex.core.db.domain.JpaIndexTen;
 
 import java.util.Date;
 import java.util.Random;
@@ -11,8 +11,8 @@ import java.util.concurrent.ThreadLocalRandom;
  * Created by rise on 5/13/17.
  */
 public class IndexFactory {
-  public static JpaIndex getNewOdd() {
-    return JpaIndex.create()
+  public static JpaIndexTen getNewOdd() {
+    return (JpaIndexTen) new JpaIndexTen()
         .setTimeStamp(new Date())
         .setIndexValueBtc(nextDouble())
         .setIndexValueUsd(nextDouble());
@@ -30,7 +30,7 @@ public class IndexFactory {
 
   public static JpaEvenIndex getNewEven(long nowInMillis) {
     Random generator = new Random();
-    return JpaEvenIndex.create()
+    return (JpaEvenIndex) new JpaEvenIndex()
         .setTimeStamp(new Date(nowInMillis))
         .setIndexValueBtc(generator.nextDouble())
         .setIndexValueUsd(generator.nextDouble());
