@@ -40,6 +40,7 @@ let Config = {
             },
             tooltips: {
                 mode: 'index',
+                displayColors: false,
                 intersect: false
             },
             scales: {
