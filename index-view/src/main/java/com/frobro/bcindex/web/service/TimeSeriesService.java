@@ -86,10 +86,10 @@ public class TimeSeriesService {
   }
 
   private String getIdxColName(IndexType type) {
-    if (type == IndexType.TEN_EVEN) {
+    if (type == IndexType.EVEN) {
       return "even_index";
     }
-    else if (type == IndexType.TEN_IDX) {
+    else if (type == IndexType.ODD) {
       return "odd_index";
     }
     else {

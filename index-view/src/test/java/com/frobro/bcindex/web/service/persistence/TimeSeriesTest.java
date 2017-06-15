@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
@@ -33,12 +34,13 @@ public class TimeSeriesTest extends DbBaseTest {
     // and
     RequestDto req = new RequestDto();
     req.currency = Currency.BTC;
-    req.index = IndexType.TEN_IDX;
+    req.index = IndexType.ODD;
     req.timeFrame = timeFrame;
 
     // when
     ApiResponse response = ser.respond(req);
 
+    verifyPassThroughFields(req, response);
     double btcClose = oddRepo.findOne(1L).getIndexValueBtc();
     assertEquals(btcClose, response.prevClose, 0.01);
     assertEquals(req.currency, response.currency);
@@ -77,19 +79,13 @@ public class TimeSeriesTest extends DbBaseTest {
     // and
     RequestDto req = new RequestDto();
     req.currency = Currency.USD;
-    req.index = IndexType.TEN_IDX;
+    req.index = IndexType.ODD;
     req.timeFrame = timeFrame;
 
     // when
     ApiResponse response = ser.respond(req);
 
-    // then verify pass throughs
-    assertNotNull(response);
-    assertEquals(req.currency, response.currency);
-    assertEquals(req.index, response.index);
-    assertEquals(req.timeFrame, response.timeFrame);
-    assertEquals(req.timeFrame.getTimeStepUnit(),
-        response.timeUnit);
+    verifyPassThroughFields(req, response);
 
     // and verify last price
     assertEquals(price, response.getLastPrice(), 0.01);
@@ -104,5 +100,14 @@ public class TimeSeriesTest extends DbBaseTest {
     }
     assertEquals(entries, response.data.size());
     assertEquals(entries, response.times.size());
+  }
+
+  private void verifyPassThroughFields(RequestDto req, ApiResponse response) {
+    assertNotNull(response);
+    assertEquals(req.currency, response.currency);
+    assertEquals(req.index, response.index);
+    assertEquals(req.timeFrame, response.timeFrame);
+    assertEquals(req.timeFrame.getTimeStepUnit(),
+        response.timeUnit);
   }
 }

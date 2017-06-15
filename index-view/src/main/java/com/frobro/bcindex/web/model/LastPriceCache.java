@@ -1,6 +1,5 @@
 package com.frobro.bcindex.web.model;
 
-import static com.frobro.bcindex.web.model.api.IndexType.*;
 import com.frobro.bcindex.web.model.api.Currency;
 import com.frobro.bcindex.web.model.api.IndexType;
 
@@ -33,14 +32,14 @@ public class LastPriceCache {
   public double getLast(IndexType index, Currency currency) {
     double price = 0.0;
     switch (index) {
-      case TEN_IDX:
+      case ODD:
         if (isUsd(currency)) {
           price = tenPxUsd;
         } else if (isBtc(currency)) {
           price = tenPxBtc;
         }
         break;
-      case TEN_EVEN:
+      case EVEN:
         if (isUsd(currency)) {
           price = tenEvenPxUsd;
         } else if (isBtc(currency)) {
