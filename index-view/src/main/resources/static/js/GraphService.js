@@ -43,12 +43,11 @@ export default class GraphService {
             data: {
                 labels: labels,
                 datasets: [{
-                    label: 'The Index',
+                    label: 'Price',
                     data: data,
                     backgroundColor: 'rgba(0, 0, 0, 0.0)' ,
                     borderColor: 'rgba(104, 140, 33, 1)',
-                    borderWidth: 3,
-                    scaleShowVerticalLines: false,
+                    borderWidth: 2,
                     pointRadius: 0,
                 }]
             },

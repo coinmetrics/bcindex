@@ -26,11 +26,11 @@ export default class StockInfoService {
         </li>
         <li>
             <dt>Precent Change </dt>
-            <dd>${model.percentChange}</dd>                            
+            <dd>${model.percentChange}%</dd>                            
         </li>
     </ul>
 </div>`;
-        $('.last-price').html($('<h4>', {text: "Last Price: " + model.lastPrice})); // TODO: move this out to its own class or function
+        $('.last-price').html($('<h4>', {text: "Last: " + model.lastPrice})); // TODO: move this out to its own class or function
         $("#stock-info").html(template);
     }
 }

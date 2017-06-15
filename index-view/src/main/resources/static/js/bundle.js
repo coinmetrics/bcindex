@@ -76,12 +76,11 @@ var GraphService = function () {
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: 'The Index',
+                        label: 'Price',
                         data: data,
                         backgroundColor: 'rgba(0, 0, 0, 0.0)',
                         borderColor: 'rgba(104, 140, 33, 1)',
-                        borderWidth: 3,
-                        scaleShowVerticalLines: false,
+                        borderWidth: 2,
                         pointRadius: 0
                     }]
                 },
@@ -123,8 +122,8 @@ var StockInfoService = function () {
     _createClass(StockInfoService, [{
         key: 'draw',
         value: function draw(model) {
-            var template = '<div class="ticker-info-box">\n    <ul>\n        <li>\n            <dt>Previous Close </dt>\n            <dd>' + model.prevClose + '</dd>\n        </li>                            \n        <li>\n            <dt>High </dt>\n            <dd>' + model.high + '</dd>\n        </li>\n        <li>\n            <dt>Low </dt>\n            <dd>' + model.low + '</dd>\n        </li>\n        <li>\n            <dt>Change </dt>\n            <dd>' + model.change + '</dd>\n        </li>\n        <li>\n            <dt>Precent Change </dt>\n            <dd>' + model.percentChange + '</dd>                            \n        </li>\n    </ul>\n</div>';
-            $('.last-price').html($('<h4>', { text: "Last Price: " + model.lastPrice })); // TODO: move this out to its own class or function
+            var template = '<div class="ticker-info-box">\n    <ul>\n        <li>\n            <dt>Previous Close </dt>\n            <dd>' + model.prevClose + '</dd>\n        </li>                            \n        <li>\n            <dt>High </dt>\n            <dd>' + model.high + '</dd>\n        </li>\n        <li>\n            <dt>Low </dt>\n            <dd>' + model.low + '</dd>\n        </li>\n        <li>\n            <dt>Change </dt>\n            <dd>' + model.change + '</dd>\n        </li>\n        <li>\n            <dt>Precent Change </dt>\n            <dd>' + model.percentChange + '%</dd>                            \n        </li>\n    </ul>\n</div>';
+            $('.last-price').html($('<h4>', { text: "Last: " + model.lastPrice })); // TODO: move this out to its own class or function
             $("#stock-info").html(template);
         }
     }]);
@@ -224,23 +223,35 @@ var Config = {
             legend: {
                 display: false
             },
+            tooltips: {
+                mode: 'index',
+                intersect: false
+            },
             scales: {
                 yAxes: [{
+                    gridLines: {
+                        color: "rgba(0, 100, 100, 0.3)"
+                    },
                     ticks: {
-                        beginAtZero: false
+                        beginAtZero: false,
+                        maxTicksLimit: 4
                     },
                     scaleLabel: {
                         display: false
                     }
                 }],
+
                 xAxes: [{
                     type: 'time',
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0)"
+                    },
                     ticks: {
                         maxRotation: 0,
                         autoSkipPadding: 10,
                         padding: 20,
                         autoSkip: true,
-                        maxTicksLimit: 5
+                        maxTicksLimit: 4
                     },
                     time: {
                         unit: 'minute',

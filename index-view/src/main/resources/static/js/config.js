@@ -38,23 +38,36 @@ let Config = {
             legend: {
                 display: false
             },
+            tooltips: {
+                mode: 'index',
+                intersect: false
+            },
             scales: {
                 yAxes: [{
+                    gridLines: {
+                        color: "rgba(0, 100, 100, 0.3)"
+                    },
                     ticks: {
-                        beginAtZero: false
+                        beginAtZero: false,
+                        maxTicksLimit: 4
                     },
                     scaleLabel: {
                         display: false,
                     }  
                 }],
+
+
                 xAxes: [{
                     type: 'time',
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0)"
+                    },
                     ticks: {
                         maxRotation: 0,
                         autoSkipPadding: 10,
                         padding: 20,
                         autoSkip: true,
-                        maxTicksLimit: 5
+                        maxTicksLimit: 4
                     },
                     time: {
                         unit: 'minute',
