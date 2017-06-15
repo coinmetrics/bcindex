@@ -93,7 +93,7 @@ public class TimeSeriesService {
       return "odd_index";
     }
     else {
-      throw new IllegalStateException("no table name exists for index type: " + type);
+      return type.name();
     }
   }
 

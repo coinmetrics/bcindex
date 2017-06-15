@@ -46,14 +46,14 @@ public class LastPriceCache {
           price = tenEvenPxBtc;
         }
       break;
-      case TWENTY_IDX:
+      case INDEX_TWENTY:
         if (isUsd(currency)) {
           price = twentyPxUsd;
         } else if (isBtc(currency)) {
           price = twentyPxBtc;
         }
         break;
-      case TWENTY_EVEN:
+      case EVEN_TWENTY:
         if (isUsd(currency)) {
           price = twentyEvenPxUsd;
         } else if (isBtc(currency)) {

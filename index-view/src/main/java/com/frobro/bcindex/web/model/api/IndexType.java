@@ -6,6 +6,6 @@ package com.frobro.bcindex.web.model.api;
 public enum IndexType {
   ODD,
   EVEN,
-  TWENTY_IDX,
-  TWENTY_EVEN
+  INDEX_TWENTY,
+  EVEN_TWENTY
 }
