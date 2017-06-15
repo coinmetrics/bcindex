@@ -25,7 +25,7 @@ export default class StockInfoService {
             <dd>${model.change}</dd>
         </li>
         <li>
-            <dt>Precent Change </dt>
+            <dt>Percent Change </dt>
             <dd>${model.percentChange}%</dd>                            
         </li>
     </ul>

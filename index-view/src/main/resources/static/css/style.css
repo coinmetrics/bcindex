@@ -23,6 +23,8 @@ a:active,a:hover{outline-width:0}abbr[title]{border-bottom:none;text-decoration:
 .index-usd-drop-down {
     display: flex;
     margin: 20px 0px;
+    font-family: Verdana,sans-serif;
+    letter-spacing: 0.05em;
 }
 .select2-container--default .select2-selection--single .select2-selection__rendered {
     color: #fff !important;    
@@ -62,7 +64,7 @@ a:active,a:hover{outline-width:0}abbr[title]{border-bottom:none;text-decoration:
     font-size: 24px;
     background: #000C4D;
     padding-top: 0px;
-    padding-right: 20px;
+    padding-right: 40px;
     font-weight: bolder; 
     color:#DADBDD;   
 }
@@ -76,6 +78,7 @@ a:active,a:hover{outline-width:0}abbr[title]{border-bottom:none;text-decoration:
     font-weight: bold;
     font-size: 1.25em;
     border: none;
+    outline: none;
     cursor: pointer;
     border-radius: 15px;
 }
@@ -88,6 +91,7 @@ a:active,a:hover{outline-width:0}abbr[title]{border-bottom:none;text-decoration:
 .btn-timeframe.selected {
     background: #229954;
     border: none;
+    outline: none;
 }
 
 .btn-timeframe-mobile {
@@ -99,6 +103,7 @@ a:active,a:hover{outline-width:0}abbr[title]{border-bottom:none;text-decoration:
     border: none;
     cursor: pointer;
     border-radius: 8px;
+    outline: none;
 }
 
 .btn-timeframe-mobile:hover {
@@ -109,6 +114,7 @@ a:active,a:hover{outline-width:0}abbr[title]{border-bottom:none;text-decoration:
 .btn-timeframe-mobile.selected {
     background: #229954;
     border: none;
+    outline: none;
 }
 
 ul, dd {
@@ -135,20 +141,26 @@ ul, dd {
     text-transform: uppercase;  
     color: #808082; 
     padding-top: 10px; 
+    letter-spacing: 0.1em;
 }
 
 .ticker-info-box ul dd {
     font-size: 18px;  
     color: #000419;
     padding-top:5px;
+    letter-spacing: 0.05em;
 }
 
 .index{
     width: 75%;
+    font-family: Verdana,sans-serif;
+    letter-spacing: 0.05em;
 }
 .currency{
     float: right;
     width: 25%;
+    font-family: Verdana,sans-serif;
+    letter-spacing: 0.05em;
 }
 
 #weights {
@@ -315,8 +327,8 @@ ul.side-second{
 .half{width:50%;background-color:#ECF0F1;float:left;text-align:center;height:150px;padding:20px 0;}
 .half-mobile{width:50%;background-color:#ECF0F1;float:left;text-align:center;height:170px;padding:80px 0;}
 .half-mobile-image{width:50%;background-color:#ECF0F1;float:left;text-align:center;height:170px;padding:80px 0;}
-.halfcontact{width:50%;background-color:#F7F9F9;float:left;text-align:center;height:325px;padding:40px 0;}
-.halfcontact{width:50%;background-color:#F7F9F9;float:left;text-align:center;height:325px;padding:40px 0;}
+.halfcontact{width:50%;background-color:#F7F9F9;float:left;text-align:center;height:375px;padding:40px 0;}
+.halfcontact{width:50%;background-color:#F7F9F9;float:left;text-align:center;height:375px;padding:40px 0;}
 .half-two{width:50%;background-color:#F7F9F9;float:left;text-align:center;height:150px;padding:80px 0;}
 .half-two-image{width:50%;background-color:#F7F9F9;float:left;text-align:center;height:150px;padding:80px 0;}
 .imgcontainer{width:100%;height:150px;}
@@ -349,6 +361,8 @@ ul.side-second{
     .last-price{padding-right:10px;padding-top: 0px;}
     .chart-element{padding-left:10px;padding-right:10px;}
     .main-chart-element{padding-left:15px;padding-right:15px;}
+    .ticker-info-box ul li dt {font-size:9px;}
+    .ticker-info-box ul li dd {font-size:14px;}
     h4{font-size:18px;}
 }
 
@@ -356,7 +370,9 @@ ul.side-second{
     .containerbody{margin-left:10%;margin-right:10%;}
     .topnav{padding-left: 10%}
     .hide-large{margin-left:8%;}
-    .btn-timeframe{display:none;}
+    .btn-timeframe-mobile{display:none;}
+    .ticker-info-box ul li dt {font-size:1px;}
+    .ticker-info-box ul li dd {font-size:16px;}
     body {
         font-size: 90%;
     }
