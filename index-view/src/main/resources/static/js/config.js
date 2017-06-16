@@ -62,7 +62,13 @@ let Config = {
                     },
                     ticks: {
                         beginAtZero: false,
-                        maxTicksLimit: 4
+                        maxTicksLimit: 4,
+                        userCallback: function(value, index, values) {
+                            value = value.toString();
+                            value = value.split(/(?=(?:...)*$)/);
+                            value = value.join(',');
+                            return value;
+                        },
                     },
                     scaleLabel: {
                         display: false,
