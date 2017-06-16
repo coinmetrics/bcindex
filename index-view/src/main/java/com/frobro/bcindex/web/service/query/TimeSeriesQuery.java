@@ -1,8 +1,12 @@
 package com.frobro.bcindex.web.service.query;
 
+import com.frobro.bcindex.web.model.api.ApiResponse;
 import com.frobro.bcindex.web.model.api.Currency;
 import com.frobro.bcindex.web.model.api.IndexType;
 import com.frobro.bcindex.web.model.api.RequestDto;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+import static com.frobro.bcindex.web.service.DoubleFormatter.format;
 
 /**
  * Created by rise on 6/15/17.
@@ -26,18 +30,26 @@ public class TimeSeriesQuery {
     return currency;
   }
 
-  public String asString() {
+  public ApiResponse execute(JdbcTemplate jdbc, ApiResponse response) {
+    jdbc.query(queryString(), (rs, rowNum) ->
+            response.addPrice(format(rs.getDouble(getCurrency())))
+                .addTime(rs.getString(TimeSeriesQuery.TIME_COL))
+                .updateLast(rs.getDouble(TimeSeriesQuery.LAST_PX_COL))
+    );
+    return response;
+  }
+
+  public String queryString() {
     int numOfPoints = req.timeFrame.getNumDataPoints();
     int numBack = req.timeFrame.getTimeStep();
 
     String table = getIdxColName(req.index);
     int oldestRecOfInterest = numOfPoints;
 
-    String query = "select " + COUNT_COL + " last." + currency + " as "
+    String query = "select last." + currency + " as "
         + LAST_PX_COL + ", b." + currency
         + ", b." + TIME_COL
         + " from "
-        + "select count(*) from " + table + " as " + COUNT_COL + ", "
         + "(select " + currency + " from " + table
         + " where id = (select count(*) from " + table + ")) as last,"
         + "(select " + currency

@@ -5,8 +5,6 @@ import com.frobro.bcindex.web.model.api.*;
 import com.frobro.bcindex.web.service.query.TimeSeriesQuery;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import static com.frobro.bcindex.web.service.DoubleFormatter.format;
-
 /**
  * Created by rise on 5/12/17.
  */
@@ -39,18 +37,8 @@ public class TimeSeriesService {
     TimeSeriesQuery query = timeFrame.getQuery(req);
 
     ApiResponse response = createResponse(req);
-    String str = query.asString();
-    System.out.println("**************************");
-    System.out.println("**************************");
-    System.out.println("**************************");
-    System.out.println("**************************");
-    System.out.println("**************************");
-    System.out.println(str);
-        jdbc.query(str, (rs, rowNum) ->
-              response.addPrice(format(rs.getDouble(query.getCurrency())))
-                      .addTime(rs.getString(TimeSeriesQuery.TIME_COL))
-                      .updateLast(rs.getDouble(TimeSeriesQuery.LAST_PX_COL))
-        );
+
+    query.execute(jdbc, response);
 
     response.calculateDerivedData();
     return response;
