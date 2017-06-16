@@ -1,9 +1,9 @@
-package com.frobro.bcindex.web.service;
+package com.frobro.bcindex.web.service.query;
 
 /**
  * Created by rise on 6/13/17.
  */
-public class QueryService {
+public class QueryLatest {
   public static final String TEN_IDX_BTC = "ten_btc";
   public static final String TEN_IDX_USD = "ten_usd";
   public static final String TEN_IDX_EVEN_BTC = "ten_ev_btc";
@@ -13,7 +13,7 @@ public class QueryService {
   public static final String TWENTY_IDX_EVEN_BTC = "twe_ev_btc";
   public static final String TWENTY_IDX_EVEN_USD = "twe_ev_usd";
 
-  public static final String QUERY_LATEST = "select " +
+  public static final String QUERY = "select " +
       "  tn.index_value_btc as " + TEN_IDX_BTC + ", " +
       "  tn.index_value_usd  as " + TEN_IDX_USD + ", " +
       "  tne.index_value_btc as " + TEN_IDX_EVEN_BTC + "," +

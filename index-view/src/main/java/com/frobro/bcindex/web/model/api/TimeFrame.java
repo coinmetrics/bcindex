@@ -1,5 +1,8 @@
 package com.frobro.bcindex.web.model.api;
 
+import com.frobro.bcindex.web.service.query.MaxTimeQuery;
+import com.frobro.bcindex.web.service.query.TimeSeriesQuery;
+
 /**
  * Created by rise on 5/12/17.
  */
@@ -71,36 +74,24 @@ public enum TimeFrame {
       return UNIT_HOUR;
     }
   },
-
-  YEARLY {
+  MAX {
     @Override
     public int getNumDataPoints() {
-      return 524160; // 525600 min/year
+      throw new IllegalStateException("Not a valid call for max");
     }
 
     @Override
     public int getTimeStep() {
-      return 10080; // num min in a week
-    }
-
-    @Override
-    public String getTimeStepUnit() {
-      return UNIT_WEEK;
-    }
-  },
-  ALL {
-    @Override
-    public int getNumDataPoints() {
-      return 0; // min/day
-    }
-
-    @Override
-    public int getTimeStep() {
-      return 1440;
+      throw new IllegalStateException("Not a valid call for max");
     }
 
     public String getTimeStepUnit() {
       throw new UnsupportedOperationException("implement me");
+    }
+
+    @Override
+    public TimeSeriesQuery getQuery(RequestDto req) {
+      return new MaxTimeQuery(req);
     }
   };
 
@@ -108,11 +99,14 @@ public enum TimeFrame {
   protected static final String UNIT_HOUR = "hour";
   protected static final String UNIT_WEEK = "week";
 
-
   abstract public int getTimeStep();
   abstract public int getNumDataPoints();
   abstract public String getTimeStepUnit();
   public int getModNum() {
     return getNumDataPoints()/getTimeStep();
+  }
+
+  public TimeSeriesQuery getQuery(RequestDto req) {
+    return new TimeSeriesQuery(req);
   }
 }

@@ -7,7 +7,7 @@ import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.model.LastPriceCache;
 import com.frobro.bcindex.web.model.api.ApiResponse;
 import com.frobro.bcindex.web.model.api.RequestDto;
-import com.frobro.bcindex.web.model.api.TimeFrame;
+import com.frobro.bcindex.web.service.query.QueryLatest;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
@@ -75,17 +75,17 @@ public class DbTickerService {
 
   private void getDataFromDb() {
   // replace with mult table query to populate last prices
-    String query = QueryService.QUERY_LATEST;
+    String query = QueryLatest.QUERY;
 
     jdbc.query(query, (rs, rowNum) -> priceCache
-            .setTenPxBtc(rs.getDouble(QueryService.TEN_IDX_BTC))
-            .setTenPxUsd(rs.getDouble(QueryService.TEN_IDX_USD))
-            .setTenEvenPxBtc(rs.getDouble(QueryService.TEN_IDX_EVEN_BTC))
-            .setTenEvenPxUsd(rs.getDouble(QueryService.TEN_IDX_EVEN_USD))
-            .setTwentyPxBtc(rs.getDouble(QueryService.TWENTY_IDX_BTC))
-            .setTwentyPxUsd(rs.getDouble(QueryService.TWENTY_IDX_USD))
-            .setTwentyEvenPxBtc(rs.getDouble(QueryService.TWENTY_IDX_EVEN_BTC))
-            .setTwentyEvenPxUsd(rs.getDouble(QueryService.TWENTY_IDX_EVEN_USD))
+            .setTenPxBtc(rs.getDouble(QueryLatest.TEN_IDX_BTC))
+            .setTenPxUsd(rs.getDouble(QueryLatest.TEN_IDX_USD))
+            .setTenEvenPxBtc(rs.getDouble(QueryLatest.TEN_IDX_EVEN_BTC))
+            .setTenEvenPxUsd(rs.getDouble(QueryLatest.TEN_IDX_EVEN_USD))
+            .setTwentyPxBtc(rs.getDouble(QueryLatest.TWENTY_IDX_BTC))
+            .setTwentyPxUsd(rs.getDouble(QueryLatest.TWENTY_IDX_USD))
+            .setTwentyEvenPxBtc(rs.getDouble(QueryLatest.TWENTY_IDX_EVEN_BTC))
+            .setTwentyEvenPxUsd(rs.getDouble(QueryLatest.TWENTY_IDX_EVEN_USD))
     );
     priceCache.setTimeStamp(System.currentTimeMillis());
   }

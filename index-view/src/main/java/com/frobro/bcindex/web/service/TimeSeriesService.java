@@ -2,6 +2,7 @@ package com.frobro.bcindex.web.service;
 
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.model.api.*;
+import com.frobro.bcindex.web.service.query.TimeSeriesQuery;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import static com.frobro.bcindex.web.service.DoubleFormatter.format;
@@ -33,43 +34,22 @@ public class TimeSeriesService {
     return response;
   }
 
-  private ApiResponse getresponseForAll(RequestDto req) {
-    String table = getIdxColName(req.index);
-    String currency = getCurrColName(req.currency);
-    String query = "";
-    ApiResponse response = createResponse(req);
-    response.addPrice(100.0)
-        .addTime("2017-05-17 23:53:31.16");
-
-    return response;
-  }
-
   private ApiResponse getResponse(RequestDto req) {
-    int numOfPoints = req.timeFrame.getNumDataPoints();
-    int numBack = req.timeFrame.getTimeStep();
+    TimeFrame timeFrame = req.timeFrame;
+    TimeSeriesQuery query = timeFrame.getQuery(req);
 
-    int oldestRecOfInterest = numOfPoints;
-
-    String table = getIdxColName(req.index);
-    String currency = getCurrColName(req.currency);
-    String query = "select last." + currency + " as lastpx, b." + currency
-      + ", b.time_stamp" + " from "
-      + "(select " + currency + " from " + table
-      + " where id = (select count(*) from " + table + ")) as last,"
-      + "(select " + currency
-      + ", time_stamp from " + table + " where id > "
-      + lastIdOfInterest(oldestRecOfInterest, table)
-      + " and "
-      + "(MOD(id," + numBack + ") = 0) "
-      + "order by id) as b;";
-
-    System.out.println(query);
     ApiResponse response = createResponse(req);
-    
-        jdbc.query(query, (rs, rowNum) ->
-              response.addPrice(format(rs.getDouble(currency)))
-                      .addTime(rs.getString("time_stamp"))
-                      .updateLast(rs.getDouble("lastpx"))
+    String str = query.asString();
+    System.out.println("**************************");
+    System.out.println("**************************");
+    System.out.println("**************************");
+    System.out.println("**************************");
+    System.out.println("**************************");
+    System.out.println(str);
+        jdbc.query(str, (rs, rowNum) ->
+              response.addPrice(format(rs.getDouble(query.getCurrency())))
+                      .addTime(rs.getString(TimeSeriesQuery.TIME_COL))
+                      .updateLast(rs.getDouble(TimeSeriesQuery.LAST_PX_COL))
         );
 
     response.calculateDerivedData();
@@ -83,33 +63,5 @@ public class TimeSeriesService {
     response.timeFrame = req.timeFrame;
     response.timeUnit = req.timeFrame.getTimeStepUnit();
     return response;
-  }
-
-  private String getIdxColName(IndexType type) {
-    if (type == IndexType.EVEN) {
-      return "even_index";
-    }
-    else if (type == IndexType.ODD) {
-      return "odd_index";
-    }
-    else {
-      return type.name();
-    }
-  }
-
-  private String getCurrColName(Currency currency) {
-    if (currency == Currency.BTC) {
-      return "index_value_btc";
-    }
-    else if (currency == Currency.USD) {
-      return "index_value_usd";
-    }
-    else {
-      throw new IllegalStateException("no column name exists for currency: " + currency);
-    }
-  }
-
-  private String lastIdOfInterest(int numRecords, String table) {
-    return " (select count(*) from " + table + ") - " + numRecords;
   }
 }
