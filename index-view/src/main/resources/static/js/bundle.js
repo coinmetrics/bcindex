@@ -78,10 +78,13 @@ var GraphService = function () {
                     datasets: [{
                         label: 'Price',
                         data: data,
-                        backgroundColor: 'rgba(0, 0, 0, 0.0)',
+                        backgroundColor: 'rgba(104, 140, 33, 0.0)',
                         borderColor: 'rgba(104, 140, 33, 1)',
                         borderWidth: 2,
-                        pointRadius: 0
+                        pointRadius: 0,
+                        pointHoverRadius: 4,
+                        pointHoverBorderWidth: 4,
+                        pointBackgroundColor: 'rgba(104, 140, 33, 1)'
                     }]
                 },
                 options: this.options
@@ -213,20 +216,31 @@ var Config = {
     stock: {
         template: ""
     },
+
     chart: {
         defaultOptions: {
             responsive: true,
             maintainAspectRatio: true,
             scaleShowVerticalLines: false,
-            pointRadius: 0,
-            borderWidth: 10,
+            hover: {
+                mode: "x-axis"
+            },
             legend: {
                 display: false
             },
             tooltips: {
                 mode: 'index',
                 displayColors: false,
-                intersect: false
+                intersect: false,
+                backgroundColor: 'rgba(66, 73, 73, 0.6)',
+                bodyFontSize: 12,
+                callbacks: {
+                    label: function label(tooltipItem, data) {
+                        return tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    }
+                },
+                cornerRadius: 6,
+                position: 'nearest'
             },
             scales: {
                 yAxes: [{
@@ -239,7 +253,8 @@ var Config = {
                     },
                     scaleLabel: {
                         display: false
-                    }
+                    },
+                    tooltipFormat: '$'
                 }],
 
                 xAxes: [{
@@ -256,7 +271,8 @@ var Config = {
                     },
                     time: {
                         unit: 'minute',
-                        unitStepSize: 10
+                        unitStepSize: 10,
+                        tooltipFormat: 'MMM DD HH:MM'
                     },
                     scaleLabel: {
                         display: false

@@ -28,20 +28,32 @@ let Config = {
     stock: {
         template: ""
     },
+    
+
     chart: {
         defaultOptions: {
             responsive: true,
             maintainAspectRatio: true,
             scaleShowVerticalLines: false,
-            pointRadius: 0,
-            borderWidth: 10,
+            hover: {
+                mode: "x-axis"
+            },
             legend: {
                 display: false
             },
             tooltips: {
                 mode: 'index',
                 displayColors: false,
-                intersect: false
+                intersect: false,
+                backgroundColor: 'rgba(66, 73, 73, 0.6)',
+                bodyFontSize: 12,
+                callbacks: {
+                    label: function(tooltipItem, data) {
+                        return tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    },
+                },
+                cornerRadius: 6,
+                position: 'nearest',
             },
             scales: {
                 yAxes: [{
@@ -54,7 +66,8 @@ let Config = {
                     },
                     scaleLabel: {
                         display: false,
-                    }  
+                    },
+                    tooltipFormat: '$' 
                 }],
 
 
@@ -73,6 +86,7 @@ let Config = {
                     time: {
                         unit: 'minute',
                         unitStepSize: 10,
+                        tooltipFormat: 'MMM DD HH:MM',
                     },
                     scaleLabel: {
                         display: false,

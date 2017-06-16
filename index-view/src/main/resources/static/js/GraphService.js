@@ -45,10 +45,13 @@ export default class GraphService {
                 datasets: [{
                     label: 'Price',
                     data: data,
-                    backgroundColor: 'rgba(0, 0, 0, 0.0)' ,
+                    backgroundColor: 'rgba(104, 140, 33, 0.0)' ,
                     borderColor: 'rgba(104, 140, 33, 1)',
                     borderWidth: 2,
                     pointRadius: 0,
+                    pointHoverRadius: 4,
+                    pointHoverBorderWidth: 4,
+                    pointBackgroundColor: 'rgba(104, 140, 33, 1)',
                 }]
             },
             options: this.options
