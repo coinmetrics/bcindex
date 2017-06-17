@@ -8,6 +8,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
  * Created by rise on 6/15/17.
  */
 public class MaxTimeQuery extends TimeSeriesQuery {
+  private static final String ENTRIES = "entries";
+  private static final String NUM = "num";
+
   public MaxTimeQuery(RequestDto req) {
     super(req);
   }
@@ -25,11 +28,12 @@ public class MaxTimeQuery extends TimeSeriesQuery {
 
   @Override
   public String queryString() {
-    String query = "select " + COUNT_COL + ", last." + currency + " as "
+    String query = "select " + ENTRIES + "." + NUM +
+        " as " + COUNT_COL + ", last." + currency + " as "
         + LAST_PX_COL + ", b." + currency
         + ", b." + TIME_COL
         + " from "
-        + "select count(*) from " + table + " as " + COUNT_COL + ", "
+        + "(select count(*) as "  + NUM + " from " + table + ") as " + ENTRIES + ", "
         + "(select " + currency + " from " + table
         + " where id = (select count(*) from " + table + ")) as last,"
         + "(select " + currency

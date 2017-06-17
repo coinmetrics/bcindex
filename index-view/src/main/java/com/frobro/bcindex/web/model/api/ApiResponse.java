@@ -1,7 +1,10 @@
 package com.frobro.bcindex.web.model.api;
 
+import com.frobro.bcindex.core.db.service.BletchDate;
+
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by rise on 5/12/17.
@@ -69,6 +72,40 @@ public class ApiResponse {
     setPrevClose();
     change = lastPrice - prevClose;
     percentChange = (change/prevClose)*100.0;
+    timeUnit = calculateTimeUnit();
+  }
+
+  private String calculateTimeUnit() {
+    String firstDate = times.get(0);
+    String lastDate = times.get(times.size()-1);
+    long fTime = BletchDate.toDate(firstDate).getTime();
+    long lTime = BletchDate.toDate(lastDate).getTime();
+
+    long diff = Math.abs(fTime - lTime);
+
+    String unit;
+    if (diff <= TimeUnit.HOURS.toMillis(2)) {
+      unit = "minute";
+    }
+    else if (diff <= TimeUnit.DAYS.toMillis(2)) {
+      unit = "hour";
+    }
+    else if (diff <= BletchDate.weeksToMillis(1)) {
+      unit = "day";
+    }
+    else if (diff <= BletchDate.monthsToMillis(1)) {
+      unit = "week";
+    }
+    else if (diff <= BletchDate.monthsToMillis(4)) {
+      unit = "month";
+    }
+    else if (diff <= BletchDate.yearsToMillis(2)) {
+      unit = "quarter";
+    }
+    else {
+      unit = "year";
+    }
+    return unit;
   }
 
   private void setLastFromList() {

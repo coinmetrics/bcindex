@@ -37,7 +37,7 @@ public enum TimeFrame {
 
     @Override
     public String getTimeStepUnit() {
-      return UNIT_MINUTE;
+      return UNIT_HOUR;
     }
   },
 
@@ -74,7 +74,7 @@ public enum TimeFrame {
       return UNIT_HOUR;
     }
   },
-  MAX {
+  YEARLY {
     @Override
     public int getNumDataPoints() {
       throw new IllegalStateException("Not a valid call for max");
@@ -86,7 +86,7 @@ public enum TimeFrame {
     }
 
     public String getTimeStepUnit() {
-      throw new UnsupportedOperationException("implement me");
+      return UNIT_WEEK;
     }
 
     @Override
@@ -97,6 +97,7 @@ public enum TimeFrame {
 
   protected static final String UNIT_MINUTE = "minute";
   protected static final String UNIT_HOUR = "hour";
+  protected static final String UNIT_DAY = "day";
   protected static final String UNIT_WEEK = "week";
 
   abstract public int getTimeStep();
@@ -104,6 +105,10 @@ public enum TimeFrame {
   abstract public String getTimeStepUnit();
   public int getModNum() {
     return getNumDataPoints()/getTimeStep();
+  }
+
+  public static String getTimeUnitForMax(long size) {
+    return null;
   }
 
   public TimeSeriesQuery getQuery(RequestDto req) {

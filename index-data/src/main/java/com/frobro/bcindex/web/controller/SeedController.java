@@ -1,13 +1,9 @@
 package com.frobro.bcindex.web.controller;
 
 import com.frobro.bcindex.core.db.domain.*;
-import com.frobro.bcindex.core.db.service.EvenIdxRepo;
-import com.frobro.bcindex.core.db.service.IndexRepo;
-import com.frobro.bcindex.core.db.service.TwentyEvenRepo;
-import com.frobro.bcindex.core.db.service.TwentyRepo;
+import com.frobro.bcindex.core.db.service.*;
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.service.TickerService;
-import com.frobro.bcindex.web.service.persistence.IndexDbDto;
 import com.frobro.bcindex.web.service.util.BletchFiles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -85,6 +81,10 @@ public class SeedController {
     return "done seeding";
   }
 
+  private boolean tooManyLines(int size, int maxSize) {
+    return size > maxSize;
+  }
+
   private List<JpaIndexTen> populateDataTen(String fileName) {
     final String delim = ",";
     final int btcPos = 1, usdPos = 2, datePos = 3;
@@ -92,7 +92,7 @@ public class SeedController {
     int numHours = 26;
     int numIterations = (int) TimeUnit.HOURS.toMinutes(numHours);
 
-    int size = lines.size() > numIterations ? numIterations : lines.size();
+    int size = tooManyLines(lines.size(), numIterations) ? numIterations : lines.size();
 
     List<JpaIndexTen> idxList = new ArrayList<>(size);
 
@@ -103,18 +103,10 @@ public class SeedController {
       idx.setId(Long.valueOf(i));
       idx.setIndexValueBtc(Double.parseDouble(vals[btcPos]));
       idx.setIndexValueUsd(Double.parseDouble(vals[usdPos]));
-      idx.setTimeStamp(toDate(vals[datePos]));
+      idx.setTimeStamp(BletchDate.toDate(vals[datePos]));
       idxList.add(idx);
     }
     return idxList;
-  }
-
-  private Date toDate(String str) {
-    try {
-       return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").parse(str);
-    } catch (ParseException pe) {
-      throw new RuntimeException(pe);
-    }
   }
 
   private JpaIndexTen newOdd(long now) {

@@ -88,7 +88,7 @@ public class ApiController {
     }
     switch (unit) {
       case "all":
-        frame = TimeFrame.MAX;
+        frame = TimeFrame.YEARLY;
         break;
       case "hourly":
         frame = TimeFrame.HOURLY;
