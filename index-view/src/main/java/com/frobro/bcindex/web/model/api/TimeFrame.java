@@ -74,7 +74,7 @@ public enum TimeFrame {
       return UNIT_HOUR;
     }
   },
-  YEARLY {
+  MAX {
     @Override
     public int getNumDataPoints() {
       throw new IllegalStateException("Not a valid call for max");
