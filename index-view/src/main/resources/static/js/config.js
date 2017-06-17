@@ -64,16 +64,14 @@ let Config = {
                         beginAtZero: false,
                         maxTicksLimit: 4,
                         userCallback: function(value, index, values) {
-                            value = value.toString();
-                            value = value.split(/(?=(?:...)*$)/);
-                            value = value.join(',');
+                            value = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                             return value;
                         },
                     },
                     scaleLabel: {
                         display: false,
                     },
-                    tooltipFormat: '$' 
+                    tooltipFormat: '#,###.#0' 
                 }],
 
 
@@ -92,7 +90,7 @@ let Config = {
                     time: {
                         unit: 'minute',
                         unitStepSize: 10,
-                        tooltipFormat: 'MMM DD HH:MM',
+                        tooltipFormat: 'MMM DD HH:mm',
                     },
                     scaleLabel: {
                         display: false,
