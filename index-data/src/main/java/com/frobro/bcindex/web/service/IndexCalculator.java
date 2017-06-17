@@ -81,10 +81,6 @@ public abstract class IndexCalculator {
     logUsdCalc("even",dto.indexValueBtc, usdPerBtc,
         dto.indexValueUsd, timeStamp);
 
-//    JpaEvenIndex lastEvenIndex = JpaEvenIndex.create();
-//    lastEvenIndex.setIndexValueBtc(btcEvenValue)
-//                      .setTimeStamp(timeStamp)
-//                      .setIndexValueUsd(usdEvenValue);
     return dto;
   }
 

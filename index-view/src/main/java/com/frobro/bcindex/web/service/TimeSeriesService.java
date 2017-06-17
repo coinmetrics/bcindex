@@ -36,20 +36,12 @@ public class TimeSeriesService {
     TimeFrame timeFrame = req.timeFrame;
     TimeSeriesQuery query = timeFrame.getQuery(req);
 
-    ApiResponse response = createResponse(req);
+    ApiResponse response = ApiResponse.newResponse(req);
 
     query.execute(jdbc, response);
 
     response.calculateDerivedData();
-    return response;
-  }
-
-  private ApiResponse createResponse(RequestDto req) {
-    ApiResponse response = new ApiResponse();
-    response.currency = req.currency;
-    response.index = req.index;
-    response.timeFrame = req.timeFrame;
-    response.timeUnit = req.timeFrame.getTimeStepUnit();
+    response.formatData();
     return response;
   }
 }

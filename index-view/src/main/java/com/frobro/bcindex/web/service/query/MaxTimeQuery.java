@@ -4,8 +4,6 @@ import com.frobro.bcindex.web.model.api.ApiResponse;
 import com.frobro.bcindex.web.model.api.RequestDto;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import static com.frobro.bcindex.web.service.DoubleFormatter.format;
-
 /**
  * Created by rise on 6/15/17.
  */
@@ -18,7 +16,7 @@ public class MaxTimeQuery extends TimeSeriesQuery {
   public ApiResponse execute(JdbcTemplate jdbc, ApiResponse response) {
     // ADD TOTAL CNT COLUMN
     jdbc.query(queryString(), (rs, rowNum) ->
-            response.addPrice(format(rs.getDouble(getCurrency())))
+            response.addPrice((rs.getDouble(getCurrency())))
                 .addTime(rs.getString(TimeSeriesQuery.TIME_COL))
                 .updateLast(rs.getDouble(TimeSeriesQuery.LAST_PX_COL))
     );
