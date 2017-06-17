@@ -2,6 +2,8 @@ package com.frobro.bcindex.web.controller;
 
 import com.frobro.bcindex.core.db.service.EvenIdxRepo;
 import com.frobro.bcindex.core.db.service.IndexRepo;
+import com.frobro.bcindex.core.db.service.TwentyEvenRepo;
+import com.frobro.bcindex.core.db.service.TwentyRepo;
 import com.frobro.bcindex.web.service.TickerService;
 import com.frobro.bcindex.web.service.TimerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +22,9 @@ public class HomeController {
 
   //TODO: add 20 repos
   @Autowired
-  public void init(IndexRepo repo, EvenIdxRepo eRepo) {
-    tickerService.setIndexRepo(repo, eRepo);
+  public void init(IndexRepo repo, EvenIdxRepo eRepo,
+                   TwentyRepo tRepo, TwentyEvenRepo teRepo) {
+    tickerService.setIndexRepo(repo, eRepo, tRepo, teRepo);
     timerService = new TimerService(tickerService);
   }
 

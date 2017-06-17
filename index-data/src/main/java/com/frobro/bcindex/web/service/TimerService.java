@@ -50,7 +50,7 @@ public class TimerService {
   private void startScheduleThread() {
     Runnable task = getTask();
 
-    long initialDelay = 0;
+    long initialDelay = 15;
     int period = REFRESH_PERIOD_SECONDS;
 
     log.info("starting scheduler to make rest calls every "
@@ -60,7 +60,19 @@ public class TimerService {
   }
 
   private Runnable getTask() {
-    return () -> tickerService.updateTickers();
+    return () -> {
+      try {
+
+        tickerService.updateTickers();
+
+      // this catch is important and MUST
+      // catch EVERYTHING if an exception is
+      // thrown in the executor thread it will
+      // just SILENTLY STOP executing!
+      } catch (Throwable err) {
+        log.error("caught error in executor thread ", err);
+      }
+    };
   }
 
   public void shutdown() {

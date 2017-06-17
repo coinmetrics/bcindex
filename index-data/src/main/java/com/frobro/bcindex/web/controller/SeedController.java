@@ -7,12 +7,16 @@ import com.frobro.bcindex.core.db.service.TwentyEvenRepo;
 import com.frobro.bcindex.core.db.service.TwentyRepo;
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.service.TickerService;
+import com.frobro.bcindex.web.service.persistence.IndexDbDto;
+import com.frobro.bcindex.web.service.util.BletchFiles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.ThreadLocalRandom;
@@ -39,7 +43,7 @@ public class SeedController {
     this.oddRepo = oRepo;
     this.twentyRepo = twRepo;
     this.twentyEvenRepo = teRepo;
-    tickerService.setIndexRepo(oRepo, eRepo);
+    tickerService.setIndexRepo(oRepo, eRepo, twRepo, teRepo);
   }
 
   @PostConstruct
@@ -56,27 +60,61 @@ public class SeedController {
 
   @RequestMapping("/seed")
   public String seed() {
-    int numHours = 26;
-    int numIterations = (int) TimeUnit.HOURS.toMinutes(numHours);
+    // pop with real data
+    List<JpaIndexTen> oddList = populateDataTen("odd_data.csv");
+    int numIterations = oddList.size();
 
+    // pop with fake data
     List<JpaEvenIndex> evenList = new ArrayList<>(numIterations);
-    List<JpaIndexTen> oddList = new ArrayList<>(numIterations);
     List<JpaIdxTwenty> list20 = new ArrayList<>(numIterations);
     List<JpaTwentyEven> listEven20 = new ArrayList<>(numIterations);
     long time = System.currentTimeMillis();
     for (int i=0; i<numIterations; i++) {
       time  += nextMinute();
       evenList.add(newEven(time));
-      oddList.add(newOdd(time));
       list20.add(newTwenty(time));
       listEven20.add(new20Even(time));
     }
+
+    // save data
     evenRepo.save(evenList);
     oddRepo.save(oddList);
     twentyRepo.save(list20);
     twentyEvenRepo.save(listEven20);
 
     return "done seeding";
+  }
+
+  private List<JpaIndexTen> populateDataTen(String fileName) {
+    final String delim = ",";
+    final int btcPos = 1, usdPos = 2, datePos = 3;
+    List<String> lines = BletchFiles.linesToList(fileName);
+    int numHours = 26;
+    int numIterations = (int) TimeUnit.HOURS.toMinutes(numHours);
+
+    int size = lines.size() > numIterations ? numIterations : lines.size();
+
+    List<JpaIndexTen> idxList = new ArrayList<>(size);
+
+    for (int i=1; i<size; i++) {
+      String line = lines.get(i);
+      String[] vals = line.split(delim);
+      JpaIndexTen idx = new JpaIndexTen();
+      idx.setId(Long.valueOf(i));
+      idx.setIndexValueBtc(Double.parseDouble(vals[btcPos]));
+      idx.setIndexValueUsd(Double.parseDouble(vals[usdPos]));
+      idx.setTimeStamp(toDate(vals[datePos]));
+      idxList.add(idx);
+    }
+    return idxList;
+  }
+
+  private Date toDate(String str) {
+    try {
+       return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").parse(str);
+    } catch (ParseException pe) {
+      throw new RuntimeException(pe);
+    }
   }
 
   private JpaIndexTen newOdd(long now) {

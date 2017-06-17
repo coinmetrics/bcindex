@@ -2,6 +2,7 @@ package com.frobro.bcindex.web.service;
 
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.model.Ticker;
+import com.frobro.bcindex.web.service.util.BletchFiles;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -26,8 +27,7 @@ abstract class BusinessRules {
   }
 
   protected void populateValuesFromFile(Map<String,Ticker> map, String fileName) {
-    InputStream data = Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName);
-    List<String> lines = readLines(data);
+    List<String> lines = BletchFiles.linesToList(fileName);
     lines.stream().forEach(line -> {
       String[] vals = line.split(DELIMINATOR);
 
@@ -53,11 +53,6 @@ abstract class BusinessRules {
           + " with multiplier: " + entry.getValue().getMultiplier()
           + " with even mult:  " + entry.getValue().getEvenMultiplier());
     });
-  }
-
-  private List<String> readLines(InputStream data) {
-    return new BufferedReader(new InputStreamReader(data,
-        StandardCharsets.UTF_8)).lines().collect(Collectors.toList());
   }
 
   protected Optional<Double> extractMultiplier(Ticker ticker) {
