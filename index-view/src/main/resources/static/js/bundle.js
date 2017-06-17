@@ -203,6 +203,12 @@ var Config = {
         }, {
             id: 'EVEN',
             text: 'Bletchley 10 Even Index'
+        }, {
+            id: 'INDEX_TWENTY',
+            text: 'Bletchley 20 Index'
+        }, {
+            id: 'EVEN_TWENTY',
+            text: 'Bletchley 20 Even Index'
         }],
         currency: [{
             id: 'USD',
