@@ -6,7 +6,7 @@
   <artifactId>bc-system</artifactId>
   <name>Bletchley System</name>
   <packaging>pom</packaging>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
   <modules>
     <module>core-db</module>
     <module>index-data</module>
