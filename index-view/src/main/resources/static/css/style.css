@@ -214,6 +214,12 @@ width:100%;
 height:100%;
 }
 
+#onboard-mobile{
+position:relative;
+width:100%;
+height:100%;
+}
+
 .rightsidebar{height:100%;width:200px;background-color:#fff;position:fixed!important;z-index:1;overflow:auto}
 
 
@@ -371,6 +377,7 @@ ul.side-second{
     .ticker-info-box ul li dd {font-size:10px;}
     .disclaimer{display:none;}
     .onboard{height:150px;}
+    #onboard{display:none;}
     h4{font-size:18px;}
 }
 
@@ -384,6 +391,7 @@ ul.side-second{
     .chart-element{padding-left:10px;padding-right:10px;}
     .main-chart-element{padding-left:20px;padding-right:20px;}
     .disclaimer{display:none;}
+    #onboard-mobile{display:none;}
     body {
         font-size: 90%;
     }
@@ -402,6 +410,7 @@ ul.side-second{
     .topnav{padding-left:25%;}
     .btn-timeframe-mobile{display:none;}
     .disclaimer-mobile{display:none;}
+    #onboard-mobile{display:none;}
     #myBtn{
         bottom: -100px;
         right: -100px;
