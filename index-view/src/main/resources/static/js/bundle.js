@@ -279,17 +279,17 @@ var Config = {
                         autoSkip: true,
                         maxTicksLimit: 4
                     },
-                    displayFormats: {
-                        'minute': 'HH:mm',
-                        'hour': 'HH:mm',
-                        'day': 'MMM DD HH',
-                        'week': 'MMM DD',
-                        'month': 'MMM DD',
-                        'year': 'MMM DD'
-                    },
                     time: {
-                        unit: 'minute',
+                        unit: 'timeFrame',
                         unitStepSize: 10,
+                        displayFormats: {
+                            'minute': 'HH:mm',
+                            'hour': 'HH:mm',
+                            'day': 'MMM DD HH',
+                            'week': 'MMM DD',
+                            'month': 'MMM DD',
+                            'year': 'MMM DD'
+                        },
                         tooltipFormat: 'MMM DD HH:mm'
                     },
                     scaleLabel: {

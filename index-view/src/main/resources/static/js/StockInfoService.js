@@ -20,6 +20,7 @@ export default class StockInfoService {
             <dt>Low </dt>
             <dd>${model.low}</dd>
         </li>
+
         <li>
             <dt>Change </dt>
             <dd>${model.change}</dd>
