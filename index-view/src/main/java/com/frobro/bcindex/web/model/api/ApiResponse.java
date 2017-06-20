@@ -57,6 +57,9 @@ public class ApiResponse {
     }
   }
 
+  public ApiResponse addTime(long time) {
+
+  }
   public ApiResponse addTime(String time) {
     times.add(time);
     return this;

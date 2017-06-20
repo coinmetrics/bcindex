@@ -2,6 +2,7 @@ package com.frobro.bcindex.core.db.service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -10,6 +11,11 @@ import java.util.concurrent.TimeUnit;
  */
 public class BletchDate {
   private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss.SSS";
+  private static final String TIME_ZONE = "America/Chicago";
+
+  public static String toDate(long time) {
+    LocalDateTime date = LocalDateTime.
+  }
 
   public static Date toDate(String dateStr) {
     try {
