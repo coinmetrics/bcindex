@@ -37,8 +37,29 @@ let Config = {
     stock: {
         template: ""
     },
-    
-
+    formatter: {
+        default: {
+            toolTip: function (text) {
+                text = text.toFixed(2);
+                var parts = text.toString().split(".");
+                parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");                                
+                return text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            },
+            yAxes: function (text) {
+                var parts = text.toString().split(".");
+                parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                return parts.join(".");                
+            }
+        },
+        BTC: {
+            toolTip: function(text) {                
+                return text.toFixed(5);
+            },
+            yAxes: function (text) {                
+                return text.toFixed(3);
+            }
+        }
+    },
     chart: {
         defaultOptions: {
             responsive: true,
@@ -58,6 +79,11 @@ let Config = {
                 bodyFontSize: 12,
                 callbacks: {
                     label: function(tooltipItem, data) {
+                        debugger;
+                         let formatter = Config.formatter[state.currency] ? 
+                                    Config.formatter[state.currency] : 
+                                    Config.formatter.default;    
+                        return formatter.toolTip(tooltipItem.yLabel);
                         return tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     },
                 },
@@ -73,8 +99,10 @@ let Config = {
                         beginAtZero: false,
                         maxTicksLimit: 4,
                         userCallback: function(value, index, values) {
-                            value = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                            return value;
+                            let formatter = Config.formatter[state.currency] ? 
+                                    Config.formatter[state.currency] : 
+                                    Config.formatter.default;    
+                            return formatter.yAxes(value);
                         },
                     },
                     scaleLabel: {
@@ -95,8 +123,12 @@ let Config = {
                         padding: 20,
                         autoSkip: true,
                         maxTicksLimit: 4
-                    },
-                    displayFormats: {
+                    },                    
+                    time: {
+                        unit: 'minute',
+                        unitStepSize: 10,
+                        tooltipFormat: 'MMM DD HH:mm',
+                        displayFormats: {
                             'minute': 'HH:mm', 
                             'hour': 'HH:mm',
                             'day' : 'MMM DD HH',
@@ -104,10 +136,6 @@ let Config = {
                             'month' : 'MMM DD',
                             'year' : 'MMM DD'
                         },
-                    time: {
-                        unit: 'minute',
-                        unitStepSize: 10,
-                        tooltipFormat: 'MMM DD HH:mm',
                     },
                     scaleLabel: {
                         display: false,

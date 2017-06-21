@@ -2,7 +2,7 @@ import GraphService from './GraphService.js';
 import Config from './config.js';
 
 (function () {
-    let state = Config.initalState;
+    window.state = Config.initalState;
 
     let graphService = new GraphService("myChart");
     let result = graphService.init();

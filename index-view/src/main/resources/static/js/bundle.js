@@ -125,7 +125,7 @@ var StockInfoService = function () {
     _createClass(StockInfoService, [{
         key: 'draw',
         value: function draw(model) {
-            var template = '<div class="ticker-info-box">\n    <ul>\n        <li>\n            <dt>Previous Close </dt>\n            <dd>' + model.prevClose + '</dd>\n        </li>                            \n        <li>\n            <dt>High </dt>\n            <dd>' + model.high + '</dd>\n        </li>\n        <li>\n            <dt>Low </dt>\n            <dd>' + model.low + '</dd>\n        </li>\n        <li>\n            <dt>Change </dt>\n            <dd>' + model.change + '</dd>\n        </li>\n        <li>\n            <dt>Percent Change </dt>\n            <dd>' + model.percentChange + '%</dd>                            \n        </li>\n    </ul>\n</div>';
+            var template = '<div class="ticker-info-box">\n    <ul>\n        <li>\n            <dt>Previous Close </dt>\n            <dd>' + model.prevClose + '</dd>\n        </li>                            \n        <li>\n            <dt>High </dt>\n            <dd>' + model.high + '</dd>\n        </li>\n        <li>\n            <dt>Low </dt>\n            <dd>' + model.low + '</dd>\n        </li>\n\n        <li>\n            <dt>Change </dt>\n            <dd>' + model.change + '</dd>\n        </li>\n        <li>\n            <dt>Percent Change </dt>\n            <dd>' + model.percentChange + '%</dd>                            \n        </li>\n    </ul>\n</div>';
             $('.last-price').html($('<h4>', { text: "Last: " + model.lastPrice })); // TODO: move this out to its own class or function
             $("#stock-info").html(template);
         }
@@ -152,7 +152,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 (function () {
-    var state = _config2.default.initalState;
+    window.state = _config2.default.initalState;
 
     var graphService = new _GraphService2.default("myChart");
     var result = graphService.init();
@@ -222,7 +222,29 @@ var Config = {
     stock: {
         template: ""
     },
-
+    formatter: {
+        default: {
+            toolTip: function toolTip(text) {
+                text = text.toFixed(2);
+                var parts = text.toString().split(".");
+                parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                return text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            },
+            yAxes: function yAxes(text) {
+                var parts = text.toString().split(".");
+                parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                return parts.join(".");
+            }
+        },
+        BTC: {
+            toolTip: function toolTip(text) {
+                return text.toFixed(5);
+            },
+            yAxes: function yAxes(text) {
+                return text.toFixed(3);
+            }
+        }
+    },
     chart: {
         defaultOptions: {
             responsive: true,
@@ -242,6 +264,9 @@ var Config = {
                 bodyFontSize: 12,
                 callbacks: {
                     label: function label(tooltipItem, data) {
+                        debugger;
+                        var formatter = Config.formatter[state.currency] ? Config.formatter[state.currency] : Config.formatter.default;
+                        return formatter.toolTip(tooltipItem.yLabel);
                         return tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     }
                 },
@@ -257,8 +282,8 @@ var Config = {
                         beginAtZero: false,
                         maxTicksLimit: 4,
                         userCallback: function userCallback(value, index, values) {
-                            value = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                            return value;
+                            var formatter = Config.formatter[state.currency] ? Config.formatter[state.currency] : Config.formatter.default;
+                            return formatter.yAxes(value);
                         }
                     },
                     scaleLabel: {
@@ -280,8 +305,9 @@ var Config = {
                         maxTicksLimit: 4
                     },
                     time: {
-                        unit: 'timeFrame',
+                        unit: 'minute',
                         unitStepSize: 10,
+                        tooltipFormat: 'MMM DD HH:mm',
                         displayFormats: {
                             'minute': 'HH:mm',
                             'hour': 'HH:mm',
@@ -289,8 +315,7 @@ var Config = {
                             'week': 'MMM DD',
                             'month': 'MMM DD',
                             'year': 'MMM DD'
-                        },
-                        tooltipFormat: 'MMM DD HH:mm'
+                        }
                     },
                     scaleLabel: {
                         display: false
