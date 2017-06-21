@@ -15,7 +15,7 @@ public class BusRulesTen extends BusinessRules {
   private static final double DIVISOR_EVEN = 9938260.33786684;
   private static final double CONSTANT = 16399912;
   private static final double CONSTANT_EVEN = 3575708.58522349;
-  private static final String MKT_CAP_FILE = "business_rules/May_rebal.csv";
+  private static final String MKT_CAP_FILE = "business_rules/jun_rebal.csv";
   private static Map<String,Ticker> tickersTen;
 
   public BusRulesTen() {
