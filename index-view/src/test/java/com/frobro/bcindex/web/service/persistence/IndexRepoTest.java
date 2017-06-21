@@ -30,8 +30,8 @@ public class IndexRepoTest extends DbBaseTest {
         .setIndexValueUsd(34)
         .setId(1234567L);
 
-    oddRepo.save(index);
-    JpaIndexTen retreived = oddRepo.findByTimeStamp(index.getTimeStamp()).get(0);
+    repo.saveTen(index);
+    JpaIndexTen retreived = oddRepo.findByTimeStamp(index.getTimeStamp().getTime()).get(0);
 
     assertEquals(index.getIndexValueBtc(), retreived.getIndexValueBtc(), 0.01);
     assertEquals(index.getIndexValueUsd(), retreived.getIndexValueUsd(), 0.01);
@@ -48,8 +48,8 @@ public class IndexRepoTest extends DbBaseTest {
     JpaIndexTen second = IndexFactory.getNewOdd();
     second.setId(2L);
     // and
-    oddRepo.save(first);
-    oddRepo.save(second);
+    repo.saveTen(first);
+    repo.saveTen(second);
 
     // when
     JpaIndex latest = oddRepo.findOne(second.getId());

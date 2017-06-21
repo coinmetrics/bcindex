@@ -2,7 +2,10 @@ package com.frobro.bcindex.core.db.service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -14,7 +17,11 @@ public class BletchDate {
   private static final String TIME_ZONE = "America/Chicago";
 
   public static String toDate(long time) {
-    LocalDateTime date = LocalDateTime.
+    DateTimeFormatter frmt = DateTimeFormatter.ofPattern(DATE_FORMAT);
+    LocalDateTime date = LocalDateTime.ofInstant(Instant.ofEpochMilli(time),
+        ZoneId.of(TIME_ZONE));
+
+    return date.format(frmt);
   }
 
   public static Date toDate(String dateStr) {

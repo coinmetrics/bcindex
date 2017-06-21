@@ -20,7 +20,7 @@ public class MaxTimeQuery extends TimeSeriesQuery {
     // ADD TOTAL CNT COLUMN
     jdbc.query(queryString(), (rs, rowNum) ->
             response.addPrice((rs.getDouble(getCurrency())))
-                .addTime(rs.getString(TimeSeriesQuery.TIME_COL))
+                .addTime(rs.getLong(TimeSeriesQuery.TIME_COL))
                 .updateLast(rs.getDouble(TimeSeriesQuery.LAST_PX_COL))
     );
     return response;
@@ -35,11 +35,11 @@ public class MaxTimeQuery extends TimeSeriesQuery {
         + " from "
         + "(select count(*) as "  + NUM + " from " + table + ") as " + ENTRIES + ", "
         + "(select " + currency + " from " + table
-        + " where id = (select count(*) from " + table + ")) as last,"
+        + " where bletch_id = (select count(*) from " + table + ")) as last,"
         + "(select " + currency
         + ", " + TIME_COL + " from " + table + " where "
-        + "(MOD(id," + getModNum() + ") = 0) "
-        + "order by id) as b;";
+        + "(MOD(bletch_id," + getModNum() + ") = 0) "
+        + "order by bletch_id) as b;";
 
     return query;
   }

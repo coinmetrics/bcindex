@@ -11,5 +11,5 @@ import java.util.List;
  */
 
 public interface IndexRepo extends CrudRepository<JpaIndexTen, Long> {
-  List<JpaIndexTen> findByTimeStamp(Date timeStamp);
+  List<JpaIndexTen> findByTimeStamp(long timeStamp);
 }

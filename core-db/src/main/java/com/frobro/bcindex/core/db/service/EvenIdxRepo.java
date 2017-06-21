@@ -10,6 +10,6 @@ import java.util.List;
  * Created by rise on 5/10/17.
  */
 public interface EvenIdxRepo extends CrudRepository<JpaEvenIndex, Long> {
-  List<JpaEvenIndex> findByTimeStamp(Date timeStamp);
+  List<JpaEvenIndex> findByTimeStamp(long timeStamp);
 }
 

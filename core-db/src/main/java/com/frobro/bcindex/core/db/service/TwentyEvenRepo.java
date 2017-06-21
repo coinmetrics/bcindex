@@ -11,5 +11,5 @@ import java.util.List;
  * Created by rise on 6/13/17.
  */
 public interface TwentyEvenRepo extends CrudRepository<JpaTwentyEven, Long> {
-  List<JpaTwentyEven> findByTimeStamp(Date timeStamp);
+  List<JpaTwentyEven> findByTimeStamp(long timeStamp);
 }

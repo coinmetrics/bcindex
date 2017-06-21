@@ -7,10 +7,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.frobro.bcindex.core.db.domain.*;
-import com.frobro.bcindex.core.db.service.EvenIdxRepo;
-import com.frobro.bcindex.core.db.service.IndexRepo;
-import com.frobro.bcindex.core.db.service.TwentyEvenRepo;
-import com.frobro.bcindex.core.db.service.TwentyRepo;
+import com.frobro.bcindex.core.db.service.*;
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.domain.Index;
 import com.frobro.bcindex.web.service.persistence.IndexDbDto;
@@ -38,10 +35,7 @@ public class TickerService {
   private IndexCalculator indexCalculatorTen = new IndexCalculatorTen();
   private IndexCalculator indexCalculatorTwenty = new IndexCalculatorTwenty();
   // repos
-  private IndexRepo indexRepo;
-  private EvenIdxRepo evenRepo;
-  private TwentyRepo twentyRepo;
-  private TwentyEvenRepo twentyEvenRepo;
+  PrimeRepo repo;
   // db data
   private IndexDbDto lastIndex;
   private IndexDbDto lastEvenIndex;
@@ -54,10 +48,8 @@ public class TickerService {
 
   public void setIndexRepo(IndexRepo repo, EvenIdxRepo eRepo,
                            TwentyRepo tRepo, TwentyEvenRepo teRepo) {
-    this.indexRepo = repo;
-    this.evenRepo = eRepo;
-    this.twentyRepo = tRepo;
-    this.twentyEvenRepo = teRepo;
+
+    this.repo = PrimeRepo.getRepo(repo,eRepo,tRepo,teRepo);
   }
 
   public void saveIndices() {
@@ -68,27 +60,27 @@ public class TickerService {
   private void saveIndexTen() {
     JpaIndexTen idx = new JpaIndexTen();
     populateJpa(idx, lastIndex);
-    indexRepo.save(idx);
+    repo.saveTen(idx);
 
     JpaEvenIndex eIdx = new JpaEvenIndex();
     populateJpa(eIdx, lastEvenIndex);
-    evenRepo.save(eIdx);
+    repo.saveTenEven(eIdx);
   }
 
   private void saveIndexTwenty() {
     JpaIdxTwenty idx = new JpaIdxTwenty();
     populateJpa(idx, lastTwentyIdx);
-    twentyRepo.save(idx);
+    repo.saveTwenty(idx);
 
     JpaTwentyEven evenIdx = new JpaTwentyEven();
     populateJpa(evenIdx, lastEvenTwentyIdx);
-    twentyEvenRepo.save(evenIdx);
+    repo.saveEvenTwenty(evenIdx);
   }
 
   private void populateJpa(JpaIndex idx, IndexDbDto dto) {
-    idx.setIndexValueBtc(lastIndex.indexValueBtc)
-        .setIndexValueUsd(lastIndex.indexValueUsd)
-        .setTimeStamp(lastIndex.timeStamp);
+    idx.setIndexValueBtc(dto.indexValueBtc)
+        .setIndexValueUsd(dto.indexValueUsd)
+        .setTimeStamp(dto.timeStamp);
   }
 
   public TickerService updateTickers() {
