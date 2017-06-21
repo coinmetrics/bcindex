@@ -11,10 +11,10 @@ import java.util.*;
  */
 public class BusRulesTen extends BusinessRules {
   private static final BcLog log = BcLog.getLogger(BusRulesTen.class);
-  private static final double DIVISOR = 21901918.35;
-  private static final double DIVISOR_EVEN = 10964215.29;
-  private static final double CONSTANT = 16333862;
-  private static final double CONSTANT_EVEN = 3022990.404;
+  private static final double DIVISOR = 22231031.0380042;
+  private static final double DIVISOR_EVEN = 9938260.33786684;
+  private static final double CONSTANT = 16399912;
+  private static final double CONSTANT_EVEN = 3575708.58522349;
   private static final String MKT_CAP_FILE = "business_rules/May_rebal.csv";
   private static Map<String,Ticker> tickersTen;
 
