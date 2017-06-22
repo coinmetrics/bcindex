@@ -57,6 +57,10 @@ public class ApiResponse {
     }
   }
 
+  public ApiResponse addTime(long time) {
+    return addTime(BletchDate.toDate(time));
+  }
+
   public ApiResponse addTime(String time) {
     times.add(time);
     return this;

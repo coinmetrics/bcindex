@@ -10,9 +10,9 @@ import java.util.*;
  */
 public class BusRulesTwenty extends BusinessRules {
   private static final BcLog log = BcLog.getLogger(BusRulesTwenty.class);
-  private static final double DIVISOR_20 = 8286853.874;
-  private static final double DIVISOR_EVEN_20 = 7275609.532;
-  private static final String MKT_CAP_FILE_20 = "business_rules/20_may_rebal.csv";
+  private static final double DIVISOR_20 = 7765566.46746127;
+  private static final double DIVISOR_EVEN_20 = 6445938.49783582;
+  private static final String MKT_CAP_FILE_20 = "business_rules/20_jun_rebal.csv";
   private static Map<String,Ticker> tickersTwenty;
 
   public BusRulesTwenty() {

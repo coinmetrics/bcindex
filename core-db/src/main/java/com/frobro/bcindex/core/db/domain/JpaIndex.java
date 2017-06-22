@@ -12,8 +12,9 @@ public class JpaIndex {
   @Id
   @GeneratedValue(strategy=GenerationType.IDENTITY)
   private Long id;
+  private long bletchId;
 
-  private Date timeStamp;
+  private long timeStamp;
   private double indexValueUsd;
   private double indexValueBtc;
 
@@ -34,7 +35,16 @@ public class JpaIndex {
   public JpaIndex() {}
 
   public JpaIndex setTimeStamp(long time) {
-    timeStamp = new Date(time);
+    timeStamp = time;
+    return this;
+  }
+
+  public long getBletchId() {
+    return bletchId;
+  }
+
+  public JpaIndex setBletchId(long id) {
+    this.bletchId = id;
     return this;
   }
 
@@ -48,11 +58,11 @@ public class JpaIndex {
   }
 
   public Date getTimeStamp() {
-    return timeStamp;
+    return new Date(timeStamp);
   }
 
   public JpaIndex setTimeStamp(Date timeStamp) {
-    this.timeStamp = timeStamp;
+    this.timeStamp = timeStamp.getTime();
     return this;
   }
 

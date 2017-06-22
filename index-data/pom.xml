@@ -53,6 +53,37 @@
     </plugins>
   </build>
 
+  <profiles>
+    <profile>
+      <id>stage</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.heroku.sdk</groupId>
+            <artifactId>heroku-maven-plugin</artifactId>
+            <configuration>
+              <appName>stage-index-data</appName>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>prod</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.heroku.sdk</groupId>
+            <artifactId>heroku-maven-plugin</artifactId>
+            <configuration>
+              <appName>bc-index-data</appName>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
   <dependencies>
     <dependency>
       <groupId>com.frobro.bcindex.core.db</groupId>

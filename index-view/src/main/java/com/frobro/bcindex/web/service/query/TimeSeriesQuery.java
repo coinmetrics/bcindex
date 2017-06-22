@@ -31,7 +31,7 @@ public class TimeSeriesQuery {
   public ApiResponse execute(JdbcTemplate jdbc, ApiResponse response) {
     jdbc.query(queryString(), (rs, rowNum) ->
             response.addPrice(rs.getDouble(getCurrency()))
-                .addTime(rs.getString(TimeSeriesQuery.TIME_COL))
+                .addTime(rs.getLong(TimeSeriesQuery.TIME_COL))
                 .updateLast(rs.getDouble(TimeSeriesQuery.LAST_PX_COL))
     );
     return response;
@@ -49,13 +49,13 @@ public class TimeSeriesQuery {
         + ", b." + TIME_COL
         + " from "
         + "(select " + currency + " from " + table
-        + " where id = (select count(*) from " + table + ")) as last,"
+        + " where bletch_id = (select count(*) from " + table + ")) as last,"
         + "(select " + currency
         + ", " + TIME_COL + " from " + table + " where id > "
         + lastIdOfInterest(oldestRecOfInterest, table)
         + " and "
-        + "(MOD(id," + numBack + ") = 0) "
-        + "order by id) as b;";
+        + "(MOD(bletch_id," + numBack + ") = 0) "
+        + "order by bletch_id) as b;";
 
     return query;
   }

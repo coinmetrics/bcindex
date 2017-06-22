@@ -1,2 +1,2 @@
 #!/bin/bash
-mvn clean heroku:deploy -DappName=bc-index-data
+mvn clean heroku:deploy -P prod

@@ -3,10 +3,7 @@ package com.frobro.bcindex.web.service.persistence;
 import static org.junit.Assert.assertEquals;
 
 import com.frobro.bcindex.core.db.domain.*;
-import com.frobro.bcindex.core.db.service.EvenIdxRepo;
-import com.frobro.bcindex.core.db.service.IndexRepo;
-import com.frobro.bcindex.core.db.service.TwentyEvenRepo;
-import com.frobro.bcindex.core.db.service.TwentyRepo;
+import com.frobro.bcindex.core.db.service.*;
 import com.frobro.bcindex.web.domain.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,16 +22,20 @@ public class IndexRepoTest {
   private EvenIdxRepo evenRepo;
   private TwentyRepo twentyRepo;
   private TwentyEvenRepo twentyEvenRepo;
+  private PrimeRepo primeRepo;
 
   @Autowired
   public void setIndexRepo(IndexRepo repo,
-                           EvenIdxRepo evenRepo,
+                           EvenIdxRepo eRepo,
                            TwentyRepo trepo,
                            TwentyEvenRepo terepo) {
     this.indexRepo = repo;
-    this.evenRepo = evenRepo;
+    this.evenRepo = eRepo;
     this.twentyRepo = trepo;
     this.twentyEvenRepo = terepo;
+
+    primeRepo = PrimeRepo.getRepo(indexRepo,evenRepo,
+                              twentyRepo,twentyEvenRepo);
   }
 
   @Test
@@ -42,8 +43,8 @@ public class IndexRepoTest {
     JpaIndexTen index = new JpaIndexTen();
     populate(index);
 
-    indexRepo.save(index);
-    JpaIndexTen retreived = indexRepo.findByTimeStamp(index.getTimeStamp()).get(0);
+    primeRepo.saveTen(index);
+    JpaIndexTen retreived = indexRepo.findByTimeStamp(index.getTimeStamp().getTime()).get(0);
 
     validate(index, retreived);
   }
@@ -53,8 +54,8 @@ public class IndexRepoTest {
     JpaEvenIndex index = new JpaEvenIndex();
     populate(index);
 
-    evenRepo.save(index);
-    JpaEvenIndex retreived = evenRepo.findByTimeStamp(index.getTimeStamp()).get(0);
+    primeRepo.saveTenEven(index);
+    JpaEvenIndex retreived = evenRepo.findByTimeStamp(index.getTimeStamp().getTime()).get(0);
 
     validate(index, retreived);
   }
@@ -64,8 +65,8 @@ public class IndexRepoTest {
     JpaIdxTwenty index = new JpaIdxTwenty();
     populate(index);
 
-    twentyRepo.save(index);
-    JpaIdxTwenty retreived = twentyRepo.findByTimeStamp(index.getTimeStamp()).get(0);
+    primeRepo.saveTwenty(index);
+    JpaIdxTwenty retreived = twentyRepo.findByTimeStamp(index.getTimeStamp().getTime()).get(0);
 
     validate(index, retreived);
   }
@@ -75,8 +76,8 @@ public class IndexRepoTest {
     JpaTwentyEven index = new JpaTwentyEven();
     populate(index);
 
-    twentyEvenRepo.save(index);
-    JpaTwentyEven retreived = twentyEvenRepo.findByTimeStamp(index.getTimeStamp()).get(0);
+    primeRepo.saveEvenTwenty(index);
+    JpaTwentyEven retreived = twentyEvenRepo.findByTimeStamp(index.getTimeStamp().getTime()).get(0);
 
     validate(index, retreived);
   }

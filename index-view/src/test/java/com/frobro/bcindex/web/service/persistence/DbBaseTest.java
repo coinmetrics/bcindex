@@ -1,7 +1,6 @@
 package com.frobro.bcindex.web.service.persistence;
 
-import com.frobro.bcindex.core.db.service.EvenIdxRepo;
-import com.frobro.bcindex.core.db.service.IndexRepo;
+import com.frobro.bcindex.core.db.service.*;
 import org.junit.After;
 import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +11,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
  */
 public abstract class DbBaseTest {
 
+  protected PrimeRepo repo;
   protected IndexRepo oddRepo;
-  protected EvenIdxRepo evenRepo;
   protected JdbcTemplate jdbc;
 
   @Autowired
@@ -22,16 +21,18 @@ public abstract class DbBaseTest {
   }
 
   @Autowired
-  public void setIndexRepo(IndexRepo repo, EvenIdxRepo eRepo) {
-    this.oddRepo = repo;
-    this.evenRepo = eRepo;
+  public void setIndexRepo(IndexRepo oRepo, EvenIdxRepo eRepo,
+                           TwentyRepo tRepo, TwentyEvenRepo teRepo) {
+
+    this.oddRepo = oRepo;
+    this.repo = PrimeRepo.getRepo(oRepo, eRepo,tRepo,teRepo);
   }
 
   @Before
   @After
   public void clearDb() {
     oddRepo.deleteAll();
-    evenRepo.deleteAll();
+    repo.deleteAll();
     resetRowIds();
   }
 

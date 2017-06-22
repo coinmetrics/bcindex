@@ -26,14 +26,6 @@
       </resource>
     </resources>
     <plugins>
-      <!--
-                <plugin>
-                  <artifactId>maven-war-plugin</artifactId>
-                  <configuration>
-                    <failOnMissingWebXml>false</failOnMissingWebXml>
-                  </configuration>
-                </plugin>
-      -->
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
@@ -44,7 +36,6 @@
         <artifactId>heroku-maven-plugin</artifactId>
         <version>0.5.4</version>
         <configuration>
-          <appName>bc-index-view</appName>
           <processTypes>
             <web>java -Dspring.profiles.active=prod -Dserver.port=$PORT -jar target/index-view-1.0.jar</web>
           </processTypes>
@@ -52,6 +43,37 @@
       </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <id>stage</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.heroku.sdk</groupId>
+            <artifactId>heroku-maven-plugin</artifactId>
+            <configuration>
+              <appName>stage-index-view</appName>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>prod</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.heroku.sdk</groupId>
+            <artifactId>heroku-maven-plugin</artifactId>
+            <configuration>
+              <appName>bc-index-view</appName>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
   <dependencies>
     <dependency>

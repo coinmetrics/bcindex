@@ -27,18 +27,13 @@ public class SeedController {
 
   private static final BcLog log = BcLog.getLogger(SeedController.class);
   private TickerService tickerService = new TickerService();
-  private EvenIdxRepo evenRepo;
-  private IndexRepo oddRepo;
-  private TwentyRepo twentyRepo;
-  private TwentyEvenRepo twentyEvenRepo;
+  PrimeRepo repo;
 
   @Autowired
   public void setRepos(EvenIdxRepo eRepo, IndexRepo oRepo,
                        TwentyRepo twRepo, TwentyEvenRepo teRepo) {
-    this.evenRepo = eRepo;
-    this.oddRepo = oRepo;
-    this.twentyRepo = twRepo;
-    this.twentyEvenRepo = teRepo;
+
+    repo = PrimeRepo.getRepo(oRepo,eRepo,twRepo,teRepo);
     tickerService.setIndexRepo(oRepo, eRepo, twRepo, teRepo);
   }
 
@@ -61,23 +56,13 @@ public class SeedController {
     int numIterations = oddList.size();
 
     // pop with fake data
-    List<JpaEvenIndex> evenList = new ArrayList<>(numIterations);
-    List<JpaIdxTwenty> list20 = new ArrayList<>(numIterations);
-    List<JpaTwentyEven> listEven20 = new ArrayList<>(numIterations);
     long time = System.currentTimeMillis();
     for (int i=0; i<numIterations; i++) {
       time  += nextMinute();
-      evenList.add(newEven(time));
-      list20.add(newTwenty(time));
-      listEven20.add(new20Even(time));
+      repo.saveTenEven(newEven(time));
+      repo.saveTwenty(newTwenty(time));
+      repo.saveEvenTwenty(new20Even(time));
     }
-
-    // save data
-    evenRepo.save(evenList);
-    oddRepo.save(oddList);
-    twentyRepo.save(list20);
-    twentyEvenRepo.save(listEven20);
-
     return "done seeding";
   }
 
@@ -105,6 +90,7 @@ public class SeedController {
       idx.setIndexValueUsd(Double.parseDouble(vals[usdPos]));
       idx.setTimeStamp(BletchDate.toDate(vals[datePos]));
       idxList.add(idx);
+      repo.saveTen(idx);
     }
     return idxList;
   }
