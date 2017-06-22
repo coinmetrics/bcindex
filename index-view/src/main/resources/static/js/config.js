@@ -79,7 +79,6 @@ let Config = {
                 bodyFontSize: 12,
                 callbacks: {
                     label: function(tooltipItem, data) {
-                        debugger;
                          let formatter = Config.formatter[state.currency] ? 
                                     Config.formatter[state.currency] : 
                                     Config.formatter.default;    
