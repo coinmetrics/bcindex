@@ -60,7 +60,7 @@ public class GetTickersTest {
     BletchleyData input = new BletchleyData();
     input.setLastUpdate(System.currentTimeMillis());
     input.setLastUsdBtc(btcPrice);
-    input.setMembers(populateIndices(btcPrice));
+    input.setMembers(populateIndices());
     // and expects are calculated
     double expectOddIdxBtc = calcOdd(input, btcPrice);
     double expectOddIdxUsd = expectOddIdxBtc * btcPrice;
@@ -84,33 +84,54 @@ public class GetTickersTest {
   }
 
   private double calcEven(BletchleyData input, double btcPrice) {
+//    System.out.println("CALC 10 EVEN:");
+
     double sum = 0;
     double constant = 3575708.58522349;
     double divisor = 9938260.33786684;
 
     for (Index idx : input.getLastIndexes().values()) {
-      double mktCap = idx.getEvenMult() * btcPrice;
-      sum += idx.getEvenMult();
+      double mktCap = idx.getEvenMult() * idx.getLast();
+      sum += mktCap;
+
+//      System.out.println(idx.getName() + ": "
+//          + idx.getEvenMult() + " * " + idx.getLast()
+//          + " = " + mktCap);
+
     }
 
     double result = (sum + constant) / divisor;
+
+//    System.out.println("(" + sum + " + " + constant
+//        + ") / " + divisor + " = " + result);
+
     return result;
   }
 
   private double calcOdd(BletchleyData input, double btcPrice) {
+//    System.out.println("CALC 10:");
     double sum = 0;
     double constant = 16399912;
     double divisor = 22231031.0380042;
 
     for (Index idx : input.getLastIndexes().values()) {
-      double mult = idx.getMktCap();
+      double mult = idx.getMktCap() * idx.getLast();
+
+//      System.out.println(idx.getName() + ": " +
+//          idx.getMktCap() + " * " + idx.getLast()
+//        + " = " + mult);
+
       sum += mult;
     }
     double result = (sum + constant) / divisor;
+
+//    System.out.println("(" + sum + " + " + constant
+//      + ") / " + divisor + " = " + result);
+
     return result;
   }
 
-  private Map<String, Index> populateIndices(double btcPrice) {
+  private Map<String, Index> populateIndices() {
     String rebalance = getJuneRebalance();
     Map<String,Double> prices = getLastPxMap();
 

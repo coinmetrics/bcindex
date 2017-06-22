@@ -31,6 +31,7 @@ public class BletchleyData {
     Index newEntry = new Index()
         .setName(USD_BTC_KEY)
         .setMktCap(USD_BTC_MKT_CAP)
+        .setEvenMult(USD_BTC_MKT_CAP)
         .setLast(last);
     lastIndexes.put(USD_BTC_KEY, newEntry);
     return this;
