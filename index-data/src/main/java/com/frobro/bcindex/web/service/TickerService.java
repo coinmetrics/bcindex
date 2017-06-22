@@ -42,14 +42,14 @@ public class TickerService {
   private IndexDbDto lastTwentyIdx;
   private IndexDbDto lastEvenTwentyIdx;
   // input data
-  private BletchleyData lastDataTen = emptyData();
-  private BletchleyData lastDataTwenty = emptyData();
+  private BletchleyData inputDataTen = emptyData();
+  private BletchleyData inputDataTwenty = emptyData();
 
 
   public void setIndexRepo(IndexRepo repo, EvenIdxRepo eRepo,
                            TwentyRepo tRepo, TwentyEvenRepo teRepo) {
 
-    this.repo = PrimeRepo.getRepo(repo,eRepo,tRepo,teRepo);
+    this.repo = PrimeRepo.getRepo(repo, eRepo, tRepo, teRepo);
   }
 
   public void saveIndices() {
@@ -99,8 +99,8 @@ public class TickerService {
     log.debug("updating latest data");
 
     // init new
-    lastDataTen = new BletchleyData();
-    lastDataTwenty = new BletchleyData();
+    inputDataTen = new BletchleyData();
+    inputDataTwenty = new BletchleyData();
     // get bit coin latest
     String btcResponse = makeApiCallBtc();
     updateTickerBtc(btcResponse);
@@ -108,14 +108,14 @@ public class TickerService {
     // update 10 idx
     String response = makeCallTenMembers();
     updateTenIdx(response);
-    lastDataTen.setLastUpdate(System.currentTimeMillis());
-    calculateAndSetIndexesTen(lastDataTen);
+    inputDataTen.setLastUpdate(System.currentTimeMillis());
+    calculateAndSetIndexesTen(inputDataTen);
 
     // update 20 idx
     String response20 = makeApiCallTwenty();
     updateTwentyIdx(response20);
-    lastDataTwenty.setLastUpdate(System.currentTimeMillis());
-    calculateAndSetIndexesTwenty(lastDataTwenty);
+    inputDataTwenty.setLastUpdate(System.currentTimeMillis());
+    calculateAndSetIndexesTwenty(inputDataTwenty);
   }
 
   private void calculateAndSetIndexesTwenty(BletchleyData data) {
@@ -138,14 +138,14 @@ public class TickerService {
     ObjectMapper mapper = new ObjectMapper();
     CoinCapDto dto = mapper.readValue(response, CoinCapDto.class);
     double btcPrice = dto.getBtcPrice();
-    lastDataTen.setLastUsdBtc(btcPrice);
-    lastDataTwenty.setLastUsdBtc(btcPrice);
+    inputDataTen.setLastUsdBtc(btcPrice);
+    inputDataTwenty.setLastUsdBtc(btcPrice);
   }
 
   private void updateTwentyIdx(String apiResponse) throws IOException {
     Set<String> indexes = new BusRulesTwenty().getIndexes();
     Map<String, Index> tickers = populate20(apiResponse, indexes);
-    lastDataTwenty.setMembers(tickers);
+    inputDataTwenty.setMembers(tickers);
   }
 
   private Map<String,Index> populate20(String json,
@@ -170,7 +170,7 @@ public class TickerService {
   private void updateTenIdx(String apiResponse) throws IOException {
     Set<String> indexes = new BusRulesTen().getIndexes();
     Map<String, Index> tickers = populateTickers(apiResponse, indexes);
-    lastDataTen.setMembers(tickers);
+    inputDataTen.setMembers(tickers);
   }
 
   public String makeApiCallBtc() throws IOException {

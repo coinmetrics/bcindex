@@ -11,6 +11,7 @@ import java.io.StringWriter;
  */
 public class BcLog {
 
+  private static final String LOG_KEY = "bclog.console";
   private Logger log;
   private boolean useConsole;
   private final String className;
@@ -19,10 +20,14 @@ public class BcLog {
     return new BcLog(clz);
   }
 
+  public static String getLogKey() {
+    return LOG_KEY;
+  }
+
   private BcLog(Class clz) {
     this.className = createClassString(clz);
     log =  LoggerFactory.getLogger(clz);
-    useConsole = System.getProperties().containsKey("bclog.console");
+    useConsole = System.getProperties().containsKey(LOG_KEY);
   }
 
   public void info(String msg) {
