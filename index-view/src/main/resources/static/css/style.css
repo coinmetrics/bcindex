@@ -144,6 +144,14 @@ ul, dd {
     letter-spacing: 0.1em;
 }
 
+.ticker-info-box ul li dt-a {
+    font-size: 11px; 
+    text-transform: uppercase;  
+    color: #777779; 
+    padding-top: 10px; 
+    letter-spacing: 0.1em;
+}
+
 .ticker-info-box ul dd {
     font-size: 18px;  
     color: #000419;
@@ -326,6 +334,10 @@ ul.side-second{
 .container-slogan{width:100%;background-color:#edf2f7;font-size:20px;color:#424949;text-align:center;font-weight:500;}
 .disclaimer{width:90%;background-color:#edf2f7;font-size:9px;text-align:center;justify-content:center;
     padding-left:5%;padding-right:5%;color:#000419;}
+.timezone{width:90%;background-color:#edf2f7;font-size:9px;text-align:center;justify-content:center;
+    padding-left:5%;padding-right:5%;color:#000419;}
+.weights-link{width:90%;background-color:#edf2f7;font-size:12px;text-align:center;justify-content:center;
+    padding-left:5%;padding-right:5%;color:#000419;}
 .disclaimer-mobile{width:100%;background-color:#edf2f7;font-size:7px;text-align:center;justify-content:center;
     padding-left:1%;padding-right:1%;color:#000419;}
 .row{width:100%;background-color:#edf2f7;height:50px;}
@@ -373,9 +385,12 @@ ul.side-second{
     .last-price{padding-right:10px;padding-top: 0px;}
     .chart-element{padding-left:10px;padding-right:10px;}
     .main-chart-element{padding-left:15px;padding-right:15px;}
-    .ticker-info-box ul li dt {font-size:7px;}
+    .ticker-info-box ul li dt {font-size:7px;display:none;}
+    .ticker-info-box ul li dt-a {font-size:7px;}
     .ticker-info-box ul li dd {font-size:10px;}
     .disclaimer{display:none;}
+    .timezone{font-size:7px;}
+    .weights-link{font-size:9px;}
     .onboard{height:150px;}
     #onboard{display:none;}
     h4{font-size:18px;}
@@ -387,6 +402,7 @@ ul.side-second{
     .hide-large{margin-left:8%;}
     .btn-timeframe-mobile{display:none;}
     .ticker-info-box ul li dt {font-size:10px;}
+    .ticker-info-box ul li dt-a {font-size:10px;display:none;}
     .ticker-info-box ul li dd {font-size:16px;}
     .chart-element{padding-left:10px;padding-right:10px;}
     .main-chart-element{padding-left:20px;padding-right:20px;}
@@ -410,10 +426,11 @@ ul.side-second{
     .topnav{padding-left:25%;}
     .btn-timeframe-mobile{display:none;}
     .disclaimer-mobile{display:none;}
+    .ticker-info-box ul li dt-a {font-size:10px;display:none;}
     #onboard-mobile{display:none;}
     #myBtn{
-        bottom: -100px;
-        right: -100px;
+        bottom: -4px;
+        right: 15%;
     }
         h1{font-size:200%;}
         h3{font-size:150%;}

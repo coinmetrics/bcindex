@@ -9,23 +9,28 @@ export default class StockInfoService {
 `<div class="ticker-info-box">
     <ul>
         <li>
+            <dt-a>Previous<br/>Close</dt-a>
             <dt>Previous Close </dt>
             <dd>${model.prevClose}</dd>
         </li>                            
         <li>
+            <dt-a>&nbsp;<br/>High</dt-a>
             <dt>High </dt>
             <dd>${model.high}</dd>
         </li>
         <li>
+            <dt-a>&nbsp;<br/>Low</dt-a>
             <dt>Low </dt>
             <dd>${model.low}</dd>
         </li>
 
         <li>
+            <dt-a>&nbsp;<br/>Change</dt-a>
             <dt>Change </dt>
             <dd>${model.change}</dd>
         </li>
         <li>
+            <dt-a>Percent<br/>Change</dt-a>
             <dt>Percent Change </dt>
             <dd>${model.percentChange}%</dd>                            
         </li>
