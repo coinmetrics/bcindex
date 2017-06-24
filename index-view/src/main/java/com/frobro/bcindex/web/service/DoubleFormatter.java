@@ -7,7 +7,7 @@ import java.text.DecimalFormat;
  */
 public class DoubleFormatter {
   private final static DecimalFormat USD_FORMAT = new DecimalFormat("#.##");
-  private final static DecimalFormat BTC_FORMAT = new DecimalFormat("#.####");
+  private final static DecimalFormat BTC_FORMAT = new DecimalFormat("#.#####");
 
   public static double formatUsd(double raw) {
     return format(raw, USD_FORMAT);

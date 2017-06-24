@@ -60,7 +60,8 @@ let Config = {
                 data.high = formatPrice(data.high.toFixed(2));
                 data.lastPrice = formatPrice(data.lastPrice.toFixed(2));
                 data.low = formatPrice(data.low.toFixed(2));
-                data.percentChange = data.percentChange.toFixed(2);
+                data.change = formatPrice(data.change.toFixed(2));
+                data.percentChange = formatPrice(data.percentChange.toFixed(2));
             }
         },
         BTC: {
@@ -80,7 +81,8 @@ let Config = {
                 data.high = formatPrice(data.high.toFixed(5));
                 data.lastPrice = formatPrice(data.lastPrice.toFixed(5));
                 data.low = formatPrice(data.low.toFixed(5));
-                data.percentChange = data.percentChange.toFixed(2);
+                data.change = formatPrice(data.change.toFixed(2));
+                data.percentChange = formatPrice(data.percentChange.toFixed(2));
             }
         }
     },
