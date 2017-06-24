@@ -81,7 +81,7 @@ let Config = {
                 data.high = formatPrice(data.high.toFixed(5));
                 data.lastPrice = formatPrice(data.lastPrice.toFixed(5));
                 data.low = formatPrice(data.low.toFixed(5));
-                data.change = formatPrice(data.change.toFixed(2));
+                data.change = formatPrice(data.change.toFixed(5));
                 data.percentChange = formatPrice(data.percentChange.toFixed(2));
             }
         }
