@@ -80,7 +80,7 @@ let Config = {
                 data.high = formatPrice(data.high.toFixed(5));
                 data.lastPrice = formatPrice(data.lastPrice.toFixed(5));
                 data.low = formatPrice(data.low.toFixed(5));
-                data.percentChange = data.percentChange.toFixed(5);
+                data.percentChange = data.percentChange.toFixed(2);
             }
         }
     },
@@ -154,7 +154,7 @@ let Config = {
                         displayFormats: {
                             'minute': 'HH:mm', 
                             'hour': 'HH:mm',
-                            'day' : 'MMM DD HH',
+                            'day' : 'HH:mm',
                             'week' : 'MMM DD',
                             'month' : 'MMM DD',
                             'year' : 'MMM DD'
