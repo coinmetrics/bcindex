@@ -56,7 +56,6 @@ let Config = {
                     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");                                
                     return text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 }                
-                debugger;
                 data.prevClose = formatPrice(data.prevClose.toFixed(2));
                 data.high = formatPrice(data.high.toFixed(2));
                 data.lastPrice = formatPrice(data.lastPrice.toFixed(2));
@@ -72,13 +71,11 @@ let Config = {
                 return text.toFixed(3);
             },
             tickerInfoLastPrice: function (data) {
-                debugger;
                 function formatPrice(text) {
                     var parts = text.toString().split(".");
                     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");                                
                     return text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 }                
-                debugger;
                 data.prevClose = formatPrice(data.prevClose.toFixed(5));
                 data.high = formatPrice(data.high.toFixed(5));
                 data.lastPrice = formatPrice(data.lastPrice.toFixed(5));
