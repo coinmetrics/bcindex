@@ -244,7 +244,6 @@ var Config = {
                     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     return text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 }
-                debugger;
                 data.prevClose = formatPrice(data.prevClose.toFixed(2));
                 data.high = formatPrice(data.high.toFixed(2));
                 data.lastPrice = formatPrice(data.lastPrice.toFixed(2));
@@ -260,13 +259,11 @@ var Config = {
                 return text.toFixed(3);
             },
             tickerInfoLastPrice: function tickerInfoLastPrice(data) {
-                debugger;
                 function formatPrice(text) {
                     var parts = text.toString().split(".");
                     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     return text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 }
-                debugger;
                 data.prevClose = formatPrice(data.prevClose.toFixed(5));
                 data.high = formatPrice(data.high.toFixed(5));
                 data.lastPrice = formatPrice(data.lastPrice.toFixed(5));
@@ -338,7 +335,7 @@ var Config = {
                         unitStepSize: 10,
                         tooltipFormat: 'MMM DD HH:mm',
                         displayFormats: {
-                            'minute': 'MMM DD',
+                            'minute': 'HH:mm',
                             'hour': 'HH:mm',
                             'day': 'MMM DD HH',
                             'week': 'MMM DD',
