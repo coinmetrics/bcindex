@@ -37,7 +37,7 @@ let Config = {
     stock: {
         template: ""
     },
-    formatter: {
+    formatter: {        
         default: {
             toolTip: function (text) {
                 text = text.toFixed(2);
@@ -49,6 +49,19 @@ let Config = {
                 var parts = text.toString().split(".");
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 return parts.join(".");                
+            },
+            tickerInfoLastPrice: function (data) {
+                function formatPrice(text) {
+                    var parts = text.toString().split(".");
+                    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");                                
+                    return text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                }                
+                debugger;
+                data.prevClose = formatPrice(data.prevClose.toFixed(2));
+                data.high = formatPrice(data.high.toFixed(2));
+                data.lastPrice = formatPrice(data.lastPrice.toFixed(2));
+                data.low = formatPrice(data.low.toFixed(2));
+                data.percentChange = data.percentChange.toFixed(2);
             }
         },
         BTC: {
@@ -57,6 +70,20 @@ let Config = {
             },
             yAxes: function (text) {                
                 return text.toFixed(3);
+            },
+            tickerInfoLastPrice: function (data) {
+                debugger;
+                function formatPrice(text) {
+                    var parts = text.toString().split(".");
+                    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");                                
+                    return text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                }                
+                debugger;
+                data.prevClose = formatPrice(data.prevClose.toFixed(5));
+                data.high = formatPrice(data.high.toFixed(5));
+                data.lastPrice = formatPrice(data.lastPrice.toFixed(5));
+                data.low = formatPrice(data.low.toFixed(5));
+                data.percentChange = data.percentChange.toFixed(5);
             }
         }
     },
@@ -128,9 +155,9 @@ let Config = {
                         unitStepSize: 10,
                         tooltipFormat: 'MMM DD HH:mm',
                         displayFormats: {
-                            'minute': 'HH:mm', 
+                            'minute': 'MMM DD', 
                             'hour': 'HH:mm',
-                            'day' : 'HH:mm',
+                            'day' : 'MMM DD HH',
                             'week' : 'MMM DD',
                             'month' : 'MMM DD',
                             'year' : 'MMM DD'

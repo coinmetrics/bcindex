@@ -12,7 +12,12 @@ export default class GraphService {
         fetch(config.data)
         .then(r => r.text())
         .then(d => JSON.parse(d))
-        .then((result) => {            
+        .then((result) => {         
+            debugger;            
+            let formatter = config.formatter[result.currency] ? 
+                    config.formatter[result.currency] : 
+                    config.formatter.default;    
+            formatter.tickerInfoLastPrice(result);
             this.options.scales.xAxes[0].time.unit=result.timeUnit;
             this.renderLineChart(result.times, result.data);
             this.stockInfoService.draw(result);

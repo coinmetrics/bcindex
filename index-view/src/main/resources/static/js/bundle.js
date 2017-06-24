@@ -40,6 +40,9 @@ var GraphService = function () {
             }).then(function (d) {
                 return JSON.parse(d);
             }).then(function (result) {
+                debugger;
+                var formatter = _config2.default.formatter[result.currency] ? _config2.default.formatter[result.currency] : _config2.default.formatter.default;
+                formatter.tickerInfoLastPrice(result);
                 _this.options.scales.xAxes[0].time.unit = result.timeUnit;
                 _this.renderLineChart(result.times, result.data);
                 _this.stockInfoService.draw(result);
@@ -125,7 +128,7 @@ var StockInfoService = function () {
     _createClass(StockInfoService, [{
         key: 'draw',
         value: function draw(model) {
-            var template = '<div class="ticker-info-box">\n    <ul>\n        <li>\n            <dt-a>Open</dt-a>\n            <dt>Open </dt>\n            <dd>' + model.prevClose + '</dd>\n        </li>                            \n        <li>\n            <dt-a>High</dt-a>\n            <dt>High </dt>\n            <dd>' + model.high + '</dd>\n        </li>\n        <li>\n            <dt-a>Low</dt-a>\n            <dt>Low </dt>\n            <dd>' + model.low + '</dd>\n        </li>\n\n        <li>\n            <dt-a>Change</dt-a>\n            <dt>Change </dt>\n            <dd>' + model.change + '</dd>\n        </li>\n        <li>\n            <dt-a>% Change</dt-a>\n            <dt>Percent Change </dt>\n            <dd>' + model.percentChange + '%</dd>                            \n        </li>\n    </ul>\n</div>';
+            var template = '<div class="ticker-info-box">\n    <ul>\n        <li>\n            <dt>Open </dt>\n            <dd>' + model.prevClose + '</dd>\n        </li>                            \n        <li>\n            <dt>High </dt>\n            <dd>' + model.high + '</dd>\n        </li>\n        <li>\n            <dt>Low </dt>\n            <dd>' + model.low + '</dd>\n        </li>\n\n        <li>\n            <dt>Change </dt>\n            <dd>' + model.change + '</dd>\n        </li>\n        <li>\n            <dt-a>% Change</dt-a>\n            <dt>Percent Change </dt>\n            <dd>' + model.percentChange + '%</dd>                            \n        </li>\n    </ul>\n</div>';
             $('.last-price').html($('<h4>', { text: "Last: " + model.lastPrice })); // TODO: move this out to its own class or function
             $("#stock-info").html(template);
         }
@@ -234,6 +237,19 @@ var Config = {
                 var parts = text.toString().split(".");
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 return parts.join(".");
+            },
+            tickerInfoLastPrice: function tickerInfoLastPrice(data) {
+                function formatPrice(text) {
+                    var parts = text.toString().split(".");
+                    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    return text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                }
+                debugger;
+                data.prevClose = formatPrice(data.prevClose.toFixed(2));
+                data.high = formatPrice(data.high.toFixed(2));
+                data.lastPrice = formatPrice(data.lastPrice.toFixed(2));
+                data.low = formatPrice(data.low.toFixed(2));
+                data.percentChange = data.percentChange.toFixed(2);
             }
         },
         BTC: {
@@ -242,6 +258,20 @@ var Config = {
             },
             yAxes: function yAxes(text) {
                 return text.toFixed(3);
+            },
+            tickerInfoLastPrice: function tickerInfoLastPrice(data) {
+                debugger;
+                function formatPrice(text) {
+                    var parts = text.toString().split(".");
+                    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    return text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                }
+                debugger;
+                data.prevClose = formatPrice(data.prevClose.toFixed(5));
+                data.high = formatPrice(data.high.toFixed(5));
+                data.lastPrice = formatPrice(data.lastPrice.toFixed(5));
+                data.low = formatPrice(data.low.toFixed(5));
+                data.percentChange = data.percentChange.toFixed(5);
             }
         }
     },
@@ -308,9 +338,9 @@ var Config = {
                         unitStepSize: 10,
                         tooltipFormat: 'MMM DD HH:mm',
                         displayFormats: {
-                            'minute': 'HH:mm',
+                            'minute': 'MMM DD',
                             'hour': 'HH:mm',
-                            'day': 'HH:mm',
+                            'day': 'MMM DD HH',
                             'week': 'MMM DD',
                             'month': 'MMM DD',
                             'year': 'MMM DD'
