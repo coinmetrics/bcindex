@@ -11,8 +11,8 @@ import java.util.*;
  */
 public class BusRulesTen extends BusinessRules {
   private static final BcLog log = BcLog.getLogger(BusRulesTen.class);
-  private static final double DIVISOR = 22231031.0380042;
-  private static final double DIVISOR_EVEN = 9938260.33786684;
+  private static final double DIVISOR = 222310310.380042;
+  private static final double DIVISOR_EVEN = 99382603.3786684;
   private static final double CONSTANT = 16399912;
   private static final double CONSTANT_EVEN = 3575708.58522349;
   private static final String MKT_CAP_FILE = "business_rules/jun_rebal.csv";
