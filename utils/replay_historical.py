@@ -58,11 +58,16 @@ api = {}
 multData = {}
 numPrices = 0
 cnt = 1
+# populate data
 with open('May_rebal.csv','rb') as csvfile:
 	creader = csv.reader(csvfile, delimiter=',')
 	for row in creader:
 		coin = row[0]
-		# api[coin] = get_historical(coin)
+
+		## px is ordered from oldest[0] -> newest[len] 
+		px = get_historical(coin)
+
+		api[coin] = px
 
 		# if numPrices == 0:
 		# 	numPrices = len(api[coin])
@@ -76,7 +81,40 @@ with open('May_rebal.csv','rb') as csvfile:
 		tenMult.even = float(row[2])
 		multData[coin] = tenMult
 
-		print coin 
-		cnt = cnt + 1
+		pxLen = len(px)
+		if pxLen < numPrices:
+			numPrices = pxLen
+
+#		print coin + " px num: " + str(len(px))
 #      	create_file(row[0], float(row[1]), float(row[2]))
- 
+
+i = 0
+constTen = 16333862.0
+divTen   = 21901918.35
+
+consEven = 3022990.404
+divEven  = 10964215.29
+# for each price entry
+#for i in numPrices:
+# calculate the index
+sumTen = 0
+sumEven = 0;
+btcPrice = -1.0
+# build sums
+for coin in multData:
+	px = api[coin][i][1]
+	tenMult = multData[coin].val
+	evenMult = multData[coin].even
+	print coin + " px=" + str(px) + " mult=" + str(tenMult) + " eve=" + str(evenMult)
+
+	sumTen = sumTen + (px * tenMult)
+	sumEven = sumEven + (px * evenMult)
+
+	if (coin == 'BTC'):
+		btcPrice = px
+
+idxTenBtc = (sumTen + constTen) / divTen
+idxTenUsd = idxTenBtc * btcPrice
+
+idxEvenBtc = (sumEven + consEven) / divEven
+idxEvenUsd = idxEvenBtc * btcPrice
