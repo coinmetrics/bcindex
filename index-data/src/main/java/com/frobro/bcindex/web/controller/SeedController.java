@@ -4,6 +4,7 @@ import com.frobro.bcindex.core.db.domain.*;
 import com.frobro.bcindex.core.db.service.*;
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.service.TickerService;
+import com.frobro.bcindex.web.service.persistence.FileDataSaver;
 import com.frobro.bcindex.web.service.util.BletchFiles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -27,6 +28,7 @@ public class SeedController {
 
   private static final BcLog log = BcLog.getLogger(SeedController.class);
   private TickerService tickerService = new TickerService();
+  private FileDataSaver fileDataSaver;
   PrimeRepo repo;
 
   @Autowired
@@ -35,12 +37,19 @@ public class SeedController {
 
     repo = PrimeRepo.getRepo(oRepo,eRepo,twRepo,teRepo);
     tickerService.setIndexRepo(oRepo, eRepo, twRepo, teRepo);
+    fileDataSaver = new FileDataSaver(oRepo, eRepo, twRepo, teRepo);
   }
 
   @PostConstruct
   public void start(){
     log.info("populating the database with mock data ...");
-    seed();
+//    seed();
+  }
+
+  @RequestMapping("/filedata")
+  public String seedFromFiles() {
+    fileDataSaver.saveData();
+    return "done populating data from files";
   }
 
   @RequestMapping("/newdata")
