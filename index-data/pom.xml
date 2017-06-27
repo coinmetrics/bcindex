@@ -5,7 +5,7 @@
   <artifactId>index-data</artifactId>
   <packaging>jar</packaging>
   <version>1.0</version>
-  <name>bc-index-web</name>
+  <name>index-data</name>
   <url>http://maven.apache.org</url>
 
   <parent>
