@@ -51,7 +51,7 @@ public class GetTickersTest {
   }
 
   @Test
-  public void testCalcOdd() {
+  public void testCalcTenIdx() {
     // given
     turnOnConsoleLogging();
     // and
@@ -87,8 +87,8 @@ public class GetTickersTest {
 //    System.out.println("CALC 10 EVEN:");
 
     double sum = 0;
-    double constant = 3575708.58522349;
-    double divisor = 9938260.33786684;
+    double constant =3575708.58522349;
+    double divisor = 99382603.3786684;
 
     for (Index idx : input.getLastIndexes().values()) {
       double mktCap = idx.getEvenMult() * idx.getLast();
@@ -112,7 +112,7 @@ public class GetTickersTest {
 //    System.out.println("CALC 10:");
     double sum = 0;
     double constant = 16399912;
-    double divisor = 22231031.0380042;
+    double divisor =  222310310.380042;
 
     for (Index idx : input.getLastIndexes().values()) {
       double mult = idx.getMktCap() * idx.getLast();
