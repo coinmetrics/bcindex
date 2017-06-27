@@ -40,9 +40,7 @@ let Config = {
     formatter: {        
         default: {
             toolTip: function (text) {
-                text = text.toFixed(2);
-                var parts = text.toString().split(".");
-                parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");                                
+                text = text.toFixed(2);                           
                 return text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             },
             yAxes: function (text) {
@@ -54,7 +52,7 @@ let Config = {
                 function formatPrice(text) {
                     var parts = text.toString().split(".");
                     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");                                
-                    return text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    return parts.join(".");    
                 }
                 data.prevClose = formatPrice(data.prevClose.toFixed(2));
                 data.high = formatPrice(data.high.toFixed(2));
@@ -75,7 +73,7 @@ let Config = {
                 function formatPrice(text) {
                     var parts = text.toString().split(".");
                     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");                                
-                    return text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    return parts.join(".");   
                 }
                 data.prevClose = formatPrice(data.prevClose.toFixed(5));
                 data.high = formatPrice(data.high.toFixed(5));
