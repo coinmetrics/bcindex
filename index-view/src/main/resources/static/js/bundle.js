@@ -65,6 +65,8 @@ var GraphService = function () {
             }).then(function (d) {
                 return JSON.parse(d);
             }).then(function (result) {
+                var formatter = _config2.default.formatter[result.currency] ? _config2.default.formatter[result.currency] : _config2.default.formatter.default;
+                formatter.tickerInfoLastPrice(result);
                 _this2.options.scales.xAxes[0].time.unit = result.timeUnit;
                 _this2.chart.destroy();
                 _this2.renderLineChart(result.times, result.data);
@@ -244,11 +246,11 @@ var Config = {
                     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     return text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 }
-                data.change = formatPrice(data.change.toFixed(2));
                 data.prevClose = formatPrice(data.prevClose.toFixed(2));
                 data.high = formatPrice(data.high.toFixed(2));
                 data.lastPrice = formatPrice(data.lastPrice.toFixed(2));
                 data.low = formatPrice(data.low.toFixed(2));
+                data.change = formatPrice(data.change.toFixed(2));
                 data.percentChange = formatPrice(data.percentChange.toFixed(2));
             }
         },
@@ -265,12 +267,12 @@ var Config = {
                     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     return text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 }
-                data.change = formatPrice(data.change.toFixed(5));
                 data.prevClose = formatPrice(data.prevClose.toFixed(5));
                 data.high = formatPrice(data.high.toFixed(5));
                 data.lastPrice = formatPrice(data.lastPrice.toFixed(5));
                 data.low = formatPrice(data.low.toFixed(5));
-                data.percentChange = formatPrice(data.percentChange.toFixed(2));
+                data.change = formatPrice(data.change.toFixed(5));
+                data.percentChange = formatPrice(data.percentChange.toFixed(5));
             }
         }
     },

@@ -56,7 +56,6 @@ let Config = {
                     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");                                
                     return text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 }
-                data.change = formatPrice(data.change.toFixed(2));
                 data.prevClose = formatPrice(data.prevClose.toFixed(2));
                 data.high = formatPrice(data.high.toFixed(2));
                 data.lastPrice = formatPrice(data.lastPrice.toFixed(2));
@@ -78,7 +77,6 @@ let Config = {
                     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");                                
                     return text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 }
-                data.change = formatPrice(data.change.toFixed(5));    
                 data.prevClose = formatPrice(data.prevClose.toFixed(5));
                 data.high = formatPrice(data.high.toFixed(5));
                 data.lastPrice = formatPrice(data.lastPrice.toFixed(5));
