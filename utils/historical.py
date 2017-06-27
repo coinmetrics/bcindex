@@ -16,7 +16,7 @@ def create_file(coin):
 		prices = data['price']
 
 		# populate file
-		filename = coin + ".csv"
+		filename = "historical_prices/" + coin + ".csv"
 		outfile = open(filename, 'w')
 		for price in prices:
 			outfile.write(create_line(price[0],price[1]))	
