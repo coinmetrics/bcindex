@@ -43,13 +43,11 @@ api = {}
 multData = {}
 numPrices = 9999999
 cnt = 1
-tenIndex = []
-tenEven = []
 tweIndex = []
-tweEvemIndex = []
+tweEvenIndex = []
 
-# populate data 10 index
-with open('May_rebal.csv','rb') as csvfile:
+# populate data 
+with open('20_alter.csv','rb') as csvfile:
 	creader = csv.reader(csvfile, delimiter=',')
 	for row in creader:
 		coin = row[0]
@@ -79,11 +77,8 @@ with open('May_rebal.csv','rb') as csvfile:
 #numPrices = 4
 
 # init more data
-constTen = 16333862.0
-divTen   = 21901918.35
-
-consEven = 3022990.404
-divEven  = 10964215.29
+divTen   = 8286853.874
+divEven  = 7275609.532
 PRICE_POS = 1
 TIME_POS = 0
 OFF_SET = 0 # if there is already data in the db
@@ -91,10 +86,6 @@ RID_OFF_SET = 64
 MIN_PER_HOUR = 60
 
 # init output files
-header = "id,bletch_id,index_value_btc,index_value_usd,time_stamp\n"
-tenFile = open("target/tenIndex.csv", 'w')
-tenEvenFile = open("target/tenEven.csv", 'w')
-
 twentyFile = open("target/twentyIndex.csv", 'w')
 tweEvenFile = open("target/tweEvenIndex.csv", 'w')
 
@@ -126,43 +117,18 @@ for i in range(0,numPrices,12):
 	currRid = RID_OFF_SET + i + 1
 
 	currTen = Bindex()
-	currTen.usd = (sumTen + constTen) / divTen
+	currTen.usd = sumTen / divTen
 	currTen.btc = currTen.usd / btcPrice
 	currTen.time = time
 	currTen.bid = currbId
 	currTen.rid = currRid
-	tenFile.write(create_line(currTen))
+	twentyFile.write(create_line(currTen))
 
 
 	currTenEven = Bindex()
-	currTenEven.usd = (sumEven + consEven) / divEven
+	currTenEven.usd = sumEven / divEven
 	currTenEven.btc = currTenEven.usd / btcPrice
 	currTenEven.time = time
 	currTenEven.bid = currbId
 	currTenEven.rid = currRid
-	tenEvenFile.write(create_line(currTenEven))
-
-
-#	print "--------------------------------------------"
-# for coin in multData:
-# 	px = api[coin][i][PRICE_POS]
-# 	tenMult = multData[coin].val
-# 	evenMult = multData[coin].even
-
-# #	time =  datetime.datetime.fromtimestamp(api[coin][i][TIME_POS]).strftime('%Y-%m-%d %H:%M:%S')
-# 	time = api[coin][i][TIME_POS]
-# 	time = time / 1000
-# 	print "time=" + str(datetime.datetime.fromtimestamp(time).strftime('%Y-%m-%d %H:%M:%S'))
-# #	print coin + " px=" + str(px) + " mult=" + str(tenMult) + " eve=" + str(evenMult) + ", time=" + str(time)
-
-# 	sumTen = sumTen + (px * tenMult)
-# 	sumEven = sumEven + (px * evenMult)
-
-# 	if (coin == 'BTC'):
-# 		btcPrice = px
-
-# idxTenBtc = (sumTen + constTen) / divTen
-# idxTenUsd = idxTenBtc * btcPrice
-
-# idxEvenBtc = (sumEven + consEven) / divEven
-# idxEvenUsd = idxEvenBtc * btcPrice
+	tweEvenFile.write(create_line(currTenEven))
