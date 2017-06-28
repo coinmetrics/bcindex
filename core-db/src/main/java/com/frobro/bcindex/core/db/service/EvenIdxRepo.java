@@ -11,5 +11,6 @@ import java.util.List;
  */
 public interface EvenIdxRepo extends CrudRepository<JpaEvenIndex, Long> {
   List<JpaEvenIndex> findByTimeStamp(long timeStamp);
+  JpaEvenIndex findFirstByOrderByIdDesc();
 }
 

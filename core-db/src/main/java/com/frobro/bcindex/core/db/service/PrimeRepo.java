@@ -37,10 +37,47 @@ public class PrimeRepo {
   }
 
   private void initCounts() {
-    idxTenCnt = indexRepo.count();
-    idxEvenTenCnt = evenIdxRepo.count();
-    idxTwentyCnt = twentyRepo.count();
-    idxTwentyEvenCnt = twentyEvenRepo.count();
+    idxTenCnt = initTen();
+    idxEvenTenCnt = initEvenTen();
+    idxTwentyCnt = initTwenty();
+    idxTwentyEvenCnt = initTwentyEven();
+  }
+
+  private long initTen() {
+    long cnt = indexRepo.count();
+
+    if (cnt != 0) {
+      JpaIndexTen idx = indexRepo.findFirstByOrderByIdDesc();
+      cnt = idx.getBletchId();
+    }
+    return cnt;
+  }
+
+  private long initEvenTen() {
+    long cnt = evenIdxRepo.count();
+    if (cnt != 0) {
+      JpaEvenIndex idx = evenIdxRepo.findFirstByOrderByIdDesc();
+      cnt = idx.getBletchId();
+    }
+    return cnt;
+  }
+
+  private long initTwenty() {
+    long cnt = twentyRepo.count();
+    if (cnt != 0) {
+      JpaIdxTwenty idx = twentyRepo.findFirstByOrderByIdDesc();
+      cnt = idx.getBletchId();
+    }
+    return cnt;
+  }
+
+  private long initTwentyEven() {
+    long cnt = twentyEvenRepo.count();
+    if (cnt != 0) {
+      JpaTwentyEven idx = twentyEvenRepo.findFirstByOrderByIdDesc();
+      cnt = idx.getBletchId();
+    }
+    return cnt;
   }
 
   public void saveTen(JpaIndexTen idx) {

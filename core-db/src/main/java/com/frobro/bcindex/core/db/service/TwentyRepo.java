@@ -12,4 +12,5 @@ import java.util.List;
  */
 public interface TwentyRepo extends CrudRepository<JpaIdxTwenty, Long> {
   List<JpaIdxTwenty> findByTimeStamp(long timeStamp);
+  JpaIdxTwenty findFirstByOrderByIdDesc();
 }
