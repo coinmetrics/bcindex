@@ -49,14 +49,16 @@ public class TimeSeriesQuery {
         + ", b." + TIME_COL
         + " from "
         + "(select " + currency + " from " + table
-        + " where bletch_id = (select count(*) from " + table + ")) as last,"
+        + " where bletch_id = (select max(bletch_id) from " + table + ")) as last,"
         + "(select " + currency
-        + ", " + TIME_COL + " from " + table + " where id > "
+        + ", " + TIME_COL + " from " + table + " where bletch_id > "
         + lastIdOfInterest(oldestRecOfInterest, table)
         + " and "
         + "(MOD(bletch_id," + numBack + ") = 0) "
         + "order by bletch_id) as b;";
 
+    System.out.println();
+    System.out.println(query);
     return query;
   }
 
@@ -85,6 +87,6 @@ public class TimeSeriesQuery {
   }
 
   private String lastIdOfInterest(int numRecords, String table) {
-    return " (select count(*) from " + table + ") - " + numRecords;
+    return " (select max(bletch_id) from " + table + ") - " + numRecords;
   }
 }

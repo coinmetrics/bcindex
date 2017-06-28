@@ -35,17 +35,19 @@ public class MaxTimeQuery extends TimeSeriesQuery {
         + " from "
         + "(select count(*) as "  + NUM + " from " + table + ") as " + ENTRIES + ", "
         + "(select " + currency + " from " + table
-        + " where bletch_id = (select count(*) from " + table + ")) as last,"
+        + " where bletch_id = (select max(bletch_id) from " + table + ")) as last,"
         + "(select " + currency
         + ", " + TIME_COL + " from " + table + " where "
         + "(MOD(bletch_id," + getModNum() + ") = 0) "
         + "order by bletch_id) as b;";
 
+    System.out.println("max");
+    System.out.println(query);
     return query;
   }
 
   private String getModNum() {
-    return "(select count(*) from "
+    return "(select max(bletch_id) from "
         + table + ") / 60";
   }
 }
