@@ -43,7 +43,7 @@ public class SeedController {
   @PostConstruct
   public void start(){
     log.info("populating the database with mock data ...");
-//    seed();
+    seed();
   }
 
   @RequestMapping("/filedata")

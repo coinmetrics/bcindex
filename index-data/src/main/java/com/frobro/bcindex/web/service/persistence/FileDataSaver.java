@@ -15,13 +15,13 @@ import java.util.List;
  * Created by rise on 6/27/17.
  */
 public class FileDataSaver {
-  private static final List<String> filesTen = Arrays.asList("db_files/10_index.csv");
-  private static final List<String> filesTwenty = new ArrayList<>(8);
+  private static final List<String> filesTen = Arrays.asList("db_files/10_index_full_history.csv");
+  private static final List<String> filesTwenty = Arrays.asList("db_files/20_index_full_history.csv");
 
   private static final String DELIM = ",";
   private static final String FORMAT = "MM/dd/yy HH:mm";
 
-  private static final long TIME_INC = 1440; // days (1440 min/day)
+  private static final long TIME_INC = 120; // 2 hours
   private static final int BTC_POS = 1;
   private static final int USD_POS = 2;
   private static final int EVEN_BTC_POS = 3;
