@@ -41,8 +41,6 @@ public class MaxTimeQuery extends TimeSeriesQuery {
         + "(MOD(bletch_id," + getModNum() + ") = 0) "
         + "order by bletch_id) as b;";
 
-    System.out.println("max");
-    System.out.println(query);
     return query;
   }
 

@@ -57,8 +57,6 @@ public class TimeSeriesQuery {
         + "(MOD(bletch_id," + numBack + ") = 0) "
         + "order by bletch_id) as b;";
 
-    System.out.println();
-    System.out.println(query);
     return query;
   }
 
