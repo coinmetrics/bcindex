@@ -337,12 +337,12 @@ var Config = {
                         unitStepSize: 2,
                         tooltipFormat: 'MMM DD HH:mm',
                         displayFormats: {
-                            'minute': 'MMM DD HH:mm',
-                            'hour': 'MMM DD HH:mm',
-                            'day': 'MMM DD HH:mm',
-                            'week': 'MMM DD HH:mm',
-                            'month': 'MMM DD HH:mm',
-                            'year': 'MMM DD HH:mm'
+                            'minute': 'HH:mm',
+                            'hour': 'MMM DD',
+                            'day': 'MMM',
+                            'week': 'MMM DD HH',
+                            'month': 'MMM DD HH',
+                            'year': 'MMM DD HH'
                         }
                     },
                     scaleLabel: {
