@@ -152,7 +152,7 @@ let Config = {
                         unitStepSize: 2,
                         tooltipFormat: 'MMM DD HH:mm',
                         displayFormats: {
-                            'minute': 'HH:mm', 
+                            'minute': 'H:mm', 
                             'hour': 'MMM DD',
                             'day' : 'MMM',
                             'week' : 'MMM DD HH',
