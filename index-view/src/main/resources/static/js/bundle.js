@@ -270,7 +270,7 @@ var Config = {
                 data.lastPrice = formatPrice(data.lastPrice.toFixed(5));
                 data.low = formatPrice(data.low.toFixed(5));
                 data.change = formatPrice(data.change.toFixed(5));
-                data.percentChange = formatPrice(data.percentChange.toFixed(5));
+                data.percentChange = formatPrice(data.percentChange.toFixed(2));
             }
         }
     },
@@ -334,7 +334,7 @@ var Config = {
                     },
                     time: {
                         unit: 'minute',
-                        unitStepSize: 10,
+                        unitStepSize: 2,
                         tooltipFormat: 'MMM DD HH:mm',
                         displayFormats: {
                             'minute': 'MMM DD HH:mm',
