@@ -154,6 +154,8 @@ let Config = {
                         displayFormats: {
                             'minute': 'H:mm', 
                             'hour': 'MMM DD',
+                            'Daily' : 'H:mm',
+                            'Max' : 'MMM',
                             'day' : 'MMM',
                             'week' : 'MMM DD HH',
                             'month' : 'MMM DD HH',

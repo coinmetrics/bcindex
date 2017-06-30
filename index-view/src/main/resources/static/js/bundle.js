@@ -337,8 +337,10 @@ var Config = {
                         unitStepSize: 2,
                         tooltipFormat: 'MMM DD HH:mm',
                         displayFormats: {
-                            'minute': 'HH:mm',
+                            'minute': 'H:mm',
                             'hour': 'MMM DD',
+                            'Daily': 'H:mm',
+                            'Max': 'MMM',
                             'day': 'MMM',
                             'week': 'MMM DD HH',
                             'month': 'MMM DD HH',
