@@ -20,7 +20,6 @@ public class HomeController {
   private TickerService tickerService = new TickerService();
   private TimerService timerService;
 
-  //TODO: add 20 repos
   @Autowired
   public void init(IndexRepo repo, EvenIdxRepo eRepo,
                    TwentyRepo tRepo, TwentyEvenRepo teRepo) {
