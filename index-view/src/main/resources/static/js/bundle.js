@@ -330,21 +330,22 @@ var Config = {
                         autoSkipPadding: 10,
                         padding: 20,
                         autoSkip: true,
-                        maxTicksLimit: 4
+                        maxTicksLimit: 4,
+                        bodyFontSize: 12
                     },
                     time: {
                         unit: 'minute',
-                        unitStepSize: 2,
+
                         tooltipFormat: 'MMM DD HH:mm',
                         displayFormats: {
                             'minute': 'H:mm',
-                            'hour': 'MMM DD',
+                            'hour': 'H:mm',
                             'Daily': 'H:mm',
                             'Max': 'MMM',
                             'day': 'MMM',
-                            'week': 'MMM DD HH',
-                            'month': 'MMM DD HH',
-                            'year': 'MMM DD HH'
+                            'week': 'MMM DD',
+                            'month': 'MMM DD',
+                            'year': 'MMM DD'
                         }
                     },
                     scaleLabel: {
