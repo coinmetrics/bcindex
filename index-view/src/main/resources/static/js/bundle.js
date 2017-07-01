@@ -336,7 +336,6 @@ var Config = {
                     },
                     time: {
                         unit: 'minute',
-                        unitStepSize: 0.01,
                         tooltipFormat: 'MMM DD HH:mm',
                         displayFormats: {
                             'minute': 'H:mm',
@@ -346,7 +345,7 @@ var Config = {
                             'day': 'MMM',
                             'week': 'MMM D',
                             'month': 'MMM D',
-                            'year': 'MMM D'
+                            'year': 'MMM'
                         }
                     },
                     scaleLabel: {
