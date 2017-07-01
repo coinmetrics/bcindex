@@ -308,6 +308,7 @@ var Config = {
                     },
                     ticks: {
                         beginAtZero: false,
+                        bodyFontSize: 12,
                         maxTicksLimit: 4,
                         userCallback: function userCallback(value, index, values) {
                             var formatter = Config.formatter[state.currency] ? Config.formatter[state.currency] : Config.formatter.default;
@@ -335,7 +336,7 @@ var Config = {
                     },
                     time: {
                         unit: 'minute',
-
+                        unitStepSize: 0.01,
                         tooltipFormat: 'MMM DD HH:mm',
                         displayFormats: {
                             'minute': 'H:mm',
@@ -343,9 +344,9 @@ var Config = {
                             'Daily': 'H:mm',
                             'Max': 'MMM',
                             'day': 'MMM',
-                            'week': 'MMM DD',
-                            'month': 'MMM DD',
-                            'year': 'MMM DD'
+                            'week': 'MMM D',
+                            'month': 'MMM D',
+                            'year': 'MMM D'
                         }
                     },
                     scaleLabel: {

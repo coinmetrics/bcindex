@@ -120,6 +120,7 @@ let Config = {
                     },
                     ticks: {
                         beginAtZero: false,
+                        bodyFontSize: 12,
                         maxTicksLimit: 4,
                         userCallback: function(value, index, values) {
                             let formatter = Config.formatter[state.currency] ? 
@@ -150,7 +151,7 @@ let Config = {
                     },                    
                     time: {
                         unit: 'minute',
-                        
+                        unitStepSize: 0.01,
                         tooltipFormat: 'MMM DD HH:mm',
                         displayFormats: {
                             'minute': 'H:mm', 
@@ -158,9 +159,9 @@ let Config = {
                             'Daily' : 'H:mm',
                             'Max' : 'MMM',
                             'day' : 'MMM',
-                            'week' : 'MMM DD',
-                            'month' : 'MMM DD',
-                            'year' : 'MMM DD'
+                            'week' : 'MMM D',
+                            'month' : 'MMM D',
+                            'year' : 'MMM D'
                         },
                     },
                     scaleLabel: {
