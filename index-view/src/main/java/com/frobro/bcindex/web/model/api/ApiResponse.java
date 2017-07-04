@@ -135,11 +135,6 @@ public class ApiResponse {
   }
 
   public void calculateDerivedData() {
-    setLastFromList();
-    setPrevClose();
-    change = lastPrice - prevClose;
-    percentChange = (change/prevClose)*100.0;
-
     if (notNull(firstPx)
         && notNull(firstTime)
         && notNull(lastPrice)
@@ -160,6 +155,11 @@ public class ApiResponse {
       data.add(idx, lastPrice);
       times.add(idx, lastTime);
     }
+
+    setLastFromList();
+    setPrevClose();
+    change = lastPrice - prevClose;
+    percentChange = (change/prevClose)*100.0;
   }
 
   private boolean notNull(Object obj) {

@@ -36,17 +36,17 @@ public enum TimeFrame {
 
     @Override
     public int getTimeStep() {
-      return (int) BletchDate.MIN_IN_HOUR; // every hour
+      return 24; // every 24 minutes ~ 60 data points in a day
     }
 
     @Override
     public String getTimeStepUnit() {
-      return UNIT_HOUR;
+      return UNIT_MINUTE;
     }
 
     @Override
     public long round(long raw) {
-      return BletchDate.roundHour(raw);
+      return BletchDate.roundMinute(raw);
     }
   },
   WEEKLY {

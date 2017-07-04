@@ -60,6 +60,11 @@ public class BletchDate {
     return daysToMillis(yrs * 365);
   }
 
+  public static long roundMinute(long raw) {
+    long timeMin = TimeUnit.MILLISECONDS.toMinutes(raw);
+    return TimeUnit.MINUTES.toMillis(timeMin);
+  }
+
   public static long roundHour(long raw) {
     long hourTime = TimeUnit.MILLISECONDS.toHours(raw);
     return TimeUnit.HOURS.toMillis(hourTime);
