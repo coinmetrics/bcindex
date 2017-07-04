@@ -339,12 +339,10 @@ var Config = {
                         tooltipFormat: 'MMM DD HH:mm',
                         displayFormats: {
                             'minute': 'H:mm',
-                            'hour': 'H:mm',
-                            'Daily': 'H:mm',
-                            'Max': 'MMM',
-                            'day': 'MMM',
-                            'week': 'MMM D',
-                            'month': 'MMM D',
+                            'hour': 'MMM D',
+                            'day': 'MMM D',
+                            'week': 'MMM',
+                            'month': 'MMM',
                             'year': 'MMM'
                         }
                     },
