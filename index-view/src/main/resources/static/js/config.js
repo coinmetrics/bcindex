@@ -146,7 +146,7 @@ let Config = {
                         autoSkipPadding: 10,
                         padding: 20,
                         autoSkip: true,
-                        maxTicksLimit: 4,
+                        maxTicksLimit: 5,
                         bodyFontSize: 12
                     },                    
                     time: {
@@ -155,7 +155,7 @@ let Config = {
                         displayFormats: {
                             'minute': 'H:mm', 
                             'hour': 'MMM D',
-                            'day' : 'MMM D',
+                            'day' : 'MMM',
                             'week' : 'MMM',
                             'month' : 'MMM',
                             'year' : 'MMM'
