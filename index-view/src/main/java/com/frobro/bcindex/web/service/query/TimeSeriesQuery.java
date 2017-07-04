@@ -13,6 +13,9 @@ public class TimeSeriesQuery {
   public static String LAST_PX_COL = "lastpx";
   public static String TIME_COL = "time_stamp";
   public static String COUNT_COL = "cnt";
+  protected static final String LAST_TIME_COL = "lasttime";
+  protected static final String FIRST_TIME_COL = "firsttime";
+  protected static final String FIRST_PX_COL = "firstpx";
 
   private final RequestDto req;
   protected final String currency;
@@ -30,9 +33,9 @@ public class TimeSeriesQuery {
 
   public ApiResponse execute(JdbcTemplate jdbc, ApiResponse response) {
     jdbc.query(queryString(), (rs, rowNum) ->
-            response.addPrice(rs.getDouble(getCurrency()))
-                .addTime(rs.getLong(TimeSeriesQuery.TIME_COL))
-                .updateLast(rs.getDouble(TimeSeriesQuery.LAST_PX_COL))
+            response.addData(rs.getDouble(getCurrency()), rs.getLong(TimeSeriesQuery.TIME_COL))
+                    .updateLast(rs.getDouble(LAST_PX_COL), rs.getLong(LAST_TIME_COL))
+                    .updateFirst(rs.getDouble(FIRST_PX_COL), rs.getLong(FIRST_TIME_COL))
     );
     return response;
   }
@@ -42,20 +45,28 @@ public class TimeSeriesQuery {
     int numBack = req.timeFrame.getTimeStep();
 
     String table = getIdxColName(req.index);
-    int oldestRecOfInterest = numOfPoints;
+    String idForTimeFrame = lastIdOfInterest(numOfPoints, table);
 
     String query = "select last." + currency + " as "
-        + LAST_PX_COL + ", b." + currency
+        + LAST_PX_COL
+        + ", last." + TIME_COL + " as " + LAST_TIME_COL
+        + ", first." + currency + " as " + FIRST_PX_COL
+        + ", first." + TIME_COL + " as " + FIRST_TIME_COL + ", b." + currency
         + ", b." + TIME_COL
         + " from "
-        + "(select " + currency + " from " + table
+        + "(select " + currency + ", " + TIME_COL + " from " + table
         + " where bletch_id = (select max(bletch_id) from " + table + ")) as last,"
+        + "(select " + currency + ", " + TIME_COL + " from " + table
+        + " where bletch_id = (select min(bletch_id) from " + table + " where bletch_id > "
+        + idForTimeFrame + ")) as first,"
         + "(select " + currency
         + ", " + TIME_COL + " from " + table + " where bletch_id > "
-        + lastIdOfInterest(oldestRecOfInterest, table)
+        + idForTimeFrame
         + " and "
         + "(MOD(bletch_id," + numBack + ") = 0) "
         + "order by bletch_id) as b;";
+
+    System.out.println("norm: \n" + query);
 
     return query;
   }

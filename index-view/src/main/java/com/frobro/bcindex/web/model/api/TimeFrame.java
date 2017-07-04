@@ -1,7 +1,11 @@
 package com.frobro.bcindex.web.model.api;
 
+import com.frobro.bcindex.core.db.service.BletchDate;
 import com.frobro.bcindex.web.service.query.MaxTimeQuery;
 import com.frobro.bcindex.web.service.query.TimeSeriesQuery;
+
+import java.time.Instant;
+import java.time.LocalDateTime;
 
 /**
  * Created by rise on 5/12/17.
@@ -10,7 +14,7 @@ public enum TimeFrame {
   HOURLY {
     @Override
     public int getNumDataPoints() {
-      return 60; // 1 per minute
+      return (int) BletchDate.MIN_IN_HOUR; // 1 per minute
     }
 
     @Override
@@ -27,51 +31,104 @@ public enum TimeFrame {
   DAILY {
     @Override
     public int getNumDataPoints() {
-      return 1440; // 1440 min/day
+      return (int) BletchDate.MIN_IN_DAY; // 1440 min/day
     }
 
     @Override
     public int getTimeStep() {
-      return 20; // every 20 minutes
+      return (int) BletchDate.MIN_IN_HOUR; // every hour
     }
 
     @Override
     public String getTimeStepUnit() {
       return UNIT_HOUR;
     }
-  },
 
+    @Override
+    public long round(long raw) {
+      return BletchDate.roundHour(raw);
+    }
+  },
   WEEKLY {
     @Override
     public int getNumDataPoints() {
-      return 10080; // 10080 min/week
+      return (int) BletchDate.MIN_IN_WEEK; // 10080 min/week
     }
 
     @Override
     public int getTimeStep() {
-      return 120; // 2 hrs in min
+      return (int) BletchDate.MIN_IN_HOUR; // every hour
     }
 
     @Override
     public String getTimeStepUnit() {
       return UNIT_HOUR;
     }
-  },
 
+    @Override
+    public long round(long raw) {
+      return BletchDate.roundHour(raw);
+    }
+  },
   MONTHLY {
     @Override
     public int getNumDataPoints() {
-      return 44640; // 44640 min/month
+      return (int) BletchDate.MIN_IN_MONTH; // 44640 min/month (assuming 31 days)
     }
 
     @Override
     public int getTimeStep() {
-      return 360; // num min in 6 hours
+      return (int) BletchDate.MIN_IN_DAY; // num min day
     }
 
     @Override
     public String getTimeStepUnit() {
-      return UNIT_HOUR;
+      return UNIT_DAY;
+    }
+
+    @Override
+    public long round(long raw) {
+      return BletchDate.roundDay(raw);
+    }
+  },
+  QUARTERLY {
+    @Override
+    public int getNumDataPoints() {
+      return (int) BletchDate.MIN_IN_QUARTER;
+    }
+
+    @Override
+    public int getTimeStep() {
+      return (int) BletchDate.MIN_IN_DAY; // min in day
+    }
+
+    public String getTimeStepUnit() {
+      return UNIT_DAY;
+    }
+
+    @Override
+    public long round(long raw) {
+      return BletchDate.roundDay(raw);
+    }
+  },
+  YEARLY {
+    @Override
+    public int getNumDataPoints() {
+      return (int) BletchDate.MIN_IN_YEAR;
+    }
+
+    @Override
+    public int getTimeStep() {
+      return (int) BletchDate.MIN_IN_WEEK; // min in week
+    }
+
+    public String getTimeStepUnit() {
+      return UNIT_WEEK;
+    }
+
+    @Override
+    public long round(long raw) {
+      return BletchDate.roundWeek(raw);
     }
   },
   MAX {
@@ -86,12 +143,17 @@ public enum TimeFrame {
     }
 
     public String getTimeStepUnit() {
-      return UNIT_WEEK;
+      throw new IllegalStateException("Not a valid call for max");
     }
 
     @Override
     public TimeSeriesQuery getQuery(RequestDto req) {
       return new MaxTimeQuery(req);
+    }
+
+    @Override
+    public long round(long raw) {
+      throw new IllegalStateException("Not a valid call for max");
     }
   };
 
@@ -99,10 +161,12 @@ public enum TimeFrame {
   protected static final String UNIT_HOUR = "hour";
   protected static final String UNIT_DAY = "day";
   protected static final String UNIT_WEEK = "week";
+  protected static final String UNIT_QUARTER = "quarter";
 
   abstract public int getTimeStep();
   abstract public int getNumDataPoints();
   abstract public String getTimeStepUnit();
+  public long round(long raw) { return raw; }
   public int getModNum() {
     return getNumDataPoints()/getTimeStep();
   }
