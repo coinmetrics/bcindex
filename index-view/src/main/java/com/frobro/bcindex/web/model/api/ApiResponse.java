@@ -158,8 +158,16 @@ public class ApiResponse {
 
     setLastFromList();
     setPrevClose();
+    checkHighAndLow(lastPrice, prevClose);
     change = lastPrice - prevClose;
     percentChange = (change/prevClose)*100.0;
+  }
+
+  private void checkHighAndLow(double lastPrice, double prevClose) {
+    checkHigh(lastPrice);
+    checkHigh(prevClose);
+    checkLow(lastPrice);
+    checkLow(prevClose);
   }
 
   private boolean notNull(Object obj) {
