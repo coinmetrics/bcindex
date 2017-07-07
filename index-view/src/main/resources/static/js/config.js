@@ -1,6 +1,6 @@
 let Config = {
     data: '/api/index',
-    initalState: {"index":"ODD","currency":"USD","timeFrame":"HOURLY"} ,
+    initalState: {"index":"ODD","currency":"USD","timeFrame":"DAILY"} ,
     dropdown: {
         index: [
             {
