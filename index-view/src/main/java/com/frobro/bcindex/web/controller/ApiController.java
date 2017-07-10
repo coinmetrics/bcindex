@@ -42,7 +42,7 @@ public class ApiController {
   }
 
   @RequestMapping(value = "api/index", method = RequestMethod.GET)
-  public String getIndex(@RequestParam(required = false) String timeUnit) {
+  public String getIndex() {
     return getIndex(getDefaultDto());
   }
 
@@ -69,31 +69,14 @@ public class ApiController {
   }
 
   private RequestDto getDefaultDto() {
-    return getDefaultDto(TimeFrame.HOURLY.name());
+    return getDefaultDto(TimeFrame.DAILY);
   }
 
-  private RequestDto getDefaultDto(String timeUnit) {
+  private RequestDto getDefaultDto(TimeFrame timeFrame) {
     RequestDto dto = new RequestDto();
-    dto.timeFrame = parseTimeUnit(timeUnit);
+    dto.timeFrame = timeFrame;
     dto.currency = Currency.USD;
     dto.index = IndexType.ODD;
     return dto;
-  }
-
-  private TimeFrame parseTimeUnit(String unit) {
-    TimeFrame frame = TimeFrame.HOURLY;
-
-    if (unit == null) {
-      return frame;
-    }
-    switch (unit) {
-      case "all":
-        frame = TimeFrame.MAX;
-        break;
-      case "hourly":
-        frame = TimeFrame.HOURLY;
-        break;
-    }
-    return frame;
   }
 }
