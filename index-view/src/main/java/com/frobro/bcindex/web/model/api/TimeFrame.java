@@ -78,17 +78,17 @@ public enum TimeFrame {
 
     @Override
     public int getTimeStep() {
-      return (int) BletchDate.MIN_IN_DAY; // num min day
+      return (int) BletchDate.MIN_IN_12_HOURS;
     }
 
     @Override
     public String getTimeStepUnit() {
-      return UNIT_DAY;
+      return UNIT_HOUR;
     }
 
     @Override
     public long round(long raw) {
-      return BletchDate.roundDay(raw);
+      return BletchDate.roundHour(raw);
     }
   },
   QUARTERLY {
