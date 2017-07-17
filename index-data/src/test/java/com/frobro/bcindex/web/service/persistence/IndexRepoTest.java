@@ -22,20 +22,27 @@ public class IndexRepoTest {
   private EvenIdxRepo evenRepo;
   private TwentyRepo twentyRepo;
   private TwentyEvenRepo twentyEvenRepo;
+  private EthRepo ethRepo;
+  private EthEvenRepo ethEvenRepo;
   private PrimeRepo primeRepo;
 
   @Autowired
   public void setIndexRepo(IndexRepo repo,
                            EvenIdxRepo eRepo,
                            TwentyRepo trepo,
-                           TwentyEvenRepo terepo) {
+                           TwentyEvenRepo terepo,
+                           EthRepo etRepo,
+                           EthEvenRepo eteRepo) {
     this.indexRepo = repo;
     this.evenRepo = eRepo;
     this.twentyRepo = trepo;
     this.twentyEvenRepo = terepo;
+    this.ethRepo = etRepo;
+    this.ethEvenRepo = eteRepo;
 
     primeRepo = PrimeRepo.getRepo(indexRepo,evenRepo,
-                              twentyRepo,twentyEvenRepo);
+                              twentyRepo,twentyEvenRepo,
+                              ethRepo, ethEvenRepo);
   }
 
   @Test
@@ -58,6 +65,17 @@ public class IndexRepoTest {
     JpaEvenIndex retreived = evenRepo.findByTimeStamp(index.getTimeStamp().getTime()).get(0);
 
     validate(index, retreived);
+  }
+
+  @Test
+  public void testSaveEth() {
+    JpaIdxEth idx = new JpaIdxEth();
+    populate(idx);
+
+    primeRepo.saveEth(idx);
+    JpaIdxEth retreived = ethRepo.findFirstByOrderByIdDesc();
+
+    validate(idx, retreived);
   }
 
   @Test

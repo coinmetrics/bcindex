@@ -1,6 +1,7 @@
 package com.frobro.bcindex.web.service;
 
 import com.frobro.bcindex.web.bclog.BcLog;
+import com.frobro.bcindex.web.constants.StaticValues;
 import com.frobro.bcindex.web.model.BletchleyData;
 import com.frobro.bcindex.web.model.Ticker;
 
@@ -11,25 +12,20 @@ import java.util.*;
  */
 public class BusRulesTen extends BusinessRules {
   private static final BcLog log = BcLog.getLogger(BusRulesTen.class);
-  private static final double DIVISOR = 222310310.380042;
-  private static final double DIVISOR_EVEN = 99382603.3786684;
-  private static final double CONSTANT = 16399912;
-  private static final double CONSTANT_EVEN = 3575708.58522349;
-  private static final String MKT_CAP_FILE = "business_rules/jun_rebal.csv";
-  private static Map<String,Ticker> tickersTen;
+  protected static Map<String,Ticker> tickers;
 
   public BusRulesTen() {
-    if (shouldPopulate(tickersTen)) {
+    if (shouldPopulate(tickers)) {
       populate();
       logMultipliers();
     }
   }
 
   private void populate() {
-    tickersTen = new HashMap<>();
-    populateValuesFromFile(tickersTen, MKT_CAP_FILE);
+    tickers = new HashMap<>();
+    populateValuesFromFile(tickers, StaticValues.MKT_CAP_FILE);
     Ticker btcTicker = getBtcTicker();
-    tickersTen.put(btcTicker.getName(), btcTicker);
+    tickers.put(btcTicker.getName(), btcTicker);
   }
 
   private Ticker getBtcTicker() {
@@ -41,38 +37,29 @@ public class BusRulesTen extends BusinessRules {
 
   private void logMultipliers() {
     log.debug("10 index multipliers");
-    logValues(tickersTen);
-  }
-
-  public Set<String> getIndexes() {
-    return new HashSet<>(tickersTen.keySet());
-  }
-
-  @Override
-  public Optional<Double> getMultipler(String tickerName) {
-    return extractMultiplier(getTicker(tickerName, tickersTen));
-  }
-
-  @Override
-  public Optional<Double> getMultiplierEven(String tickerName) {
-    return extractMultiplierEven(getTicker(tickerName, tickersTen));
+    logValues(tickers);
   }
 
   public double getConstant() {
-    return CONSTANT;
+    return StaticValues.CONSTANT_TEN;
   }
 
   public double getConstantEven() {
-    return CONSTANT_EVEN;
+    return StaticValues.CONSTANT_EVEN_TEN;
+  }
+
+  @Override
+  protected Map<String,Ticker> getTickers() {
+    return tickers;
   }
 
   @Override
   public double getDivisor() {
-    return DIVISOR;
+    return StaticValues.DIVISOR_TEN;
   }
 
   @Override
   public double getDivisorEven() {
-    return DIVISOR_EVEN;
+    return StaticValues.DIVISOR_EVEN_TEN;
   }
 }

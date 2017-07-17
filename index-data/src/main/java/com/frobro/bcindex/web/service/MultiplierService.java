@@ -17,6 +17,7 @@ public class MultiplierService {
   public MultiplierService(Map<String,Index> indexes) {
     this.lastIndexList = indexes;
   }
+
   public MultiplierService updateEvenMktCapIfValid(Optional<Double> multiplier, String ticker) {
     updateMultiplier(multiplier, ticker, Boolean.TRUE);
     return this;

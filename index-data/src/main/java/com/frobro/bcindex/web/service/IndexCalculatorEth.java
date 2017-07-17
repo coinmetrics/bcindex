@@ -1,15 +1,15 @@
 package com.frobro.bcindex.web.service;
 
 import com.frobro.bcindex.web.bclog.BcLog;
-import com.frobro.bcindex.web.model.BletchInTen;
+import com.frobro.bcindex.web.constants.StaticValues;
 import com.frobro.bcindex.web.model.BletchInTwenty;
 import com.frobro.bcindex.web.service.persistence.IndexDbDto;
 
 /**
- * Created by rise on 6/11/17.
+ * Created by rise on 7/16/17.
  */
-public class IndexCalculatorTwenty extends IndexCalculator {
-  private static final BcLog log = BcLog.getLogger(IndexCalculatorTwenty.class);
+public class IndexCalculatorEth extends IndexCalculator {
+  private static final BcLog log = BcLog.getLogger(IndexCalculatorEth.class);
 
   @Override
   protected double buildFromSum(double lastSum, double constant, double divisor) {
@@ -18,22 +18,22 @@ public class IndexCalculatorTwenty extends IndexCalculator {
 
   @Override
   protected BusinessRules newBusRules() {
-    return new BusRulesTwenty();
+    return new BusRulesEth();
   }
 
   @Override
   protected String indexName() {
-    return "20 INDEX";
+    return "ETHEREUM INDEX";
   }
 
   @Override
   protected double getDivisor() {
-    return BletchInTwenty.getDivisor();
+    return StaticValues.DIVISOR_ETHER;
   }
 
   @Override
   protected double getDivisorEven() {
-    return BletchInTwenty.getDivisorEven();
+    return StaticValues.DIVISOR_EVEN_ETHER;
   }
 
   @Override

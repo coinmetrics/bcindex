@@ -14,13 +14,12 @@ import java.util.stream.Collectors;
 /**
  * Created by rise on 3/23/17.
  */
-abstract class BusinessRules {
+abstract public class BusinessRules {
   private static final BcLog log = BcLog.getLogger(BusinessRules.class);
   private static final String DELIMINATOR = ",";
   private static final int NAME_POS = 0;
   private static final int MULT_POS = 1;
   private static final int EVEN_MULT_POS = 2;
-
 
   protected boolean shouldPopulate(Map<String, Ticker> map) {
     return map == null;
@@ -86,9 +85,19 @@ abstract class BusinessRules {
     return val == null ? Optional.empty() : Optional.of(val);
   }
 
-  abstract public Optional<Double> getMultipler(String ticker);
-  abstract public Optional<Double> getMultiplierEven(String ticker);
+  public Optional<Double> getMultipler(String tickerName) {
+    return extractMultiplier(getTicker(tickerName, getTickers()));
+  }
 
+  public Optional<Double> getMultiplierEven(String tickerName) {
+    return extractMultiplierEven(getTicker(tickerName, getTickers()));
+  }
+
+  public Set<String> getIndexes() {
+    return new HashSet<>(getTickers().keySet());
+  }
+
+  abstract protected Map<String,Ticker> getTickers();
   abstract public double getDivisor();
   abstract public double getDivisorEven();
 }

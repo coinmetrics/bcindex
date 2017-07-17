@@ -1,5 +1,6 @@
 package com.frobro.bcindex.web.service;
 
+import com.frobro.bcindex.web.model.BletchInTen;
 import com.frobro.bcindex.web.service.persistence.IndexDbDto;
 
 /**
@@ -8,14 +9,23 @@ import com.frobro.bcindex.web.service.persistence.IndexDbDto;
 public class IndexCalculatorTen extends IndexCalculator {
 
   public IndexCalculatorTen() {
-    BusRulesTen rules = new BusRulesTen();
-    this.constant = rules.getConstant();
-    this.constantEven = rules.getConstantEven();
+    this.constant = BletchInTen.getConstant();
+    this.constantEven = BletchInTen.getConstantEven();
   }
 
   @Override
-  protected BusinessRules newBusinessRules() {
+  protected BusinessRules newBusRules() {
     return new BusRulesTen();
+  }
+
+  @Override
+  protected double getDivisor() {
+    return BletchInTen.getDivisor();
+  }
+
+  @Override
+  protected double getDivisorEven() {
+    return BletchInTen.getDivisorEven();
   }
 
   @Override

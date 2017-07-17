@@ -33,10 +33,12 @@ public class SeedController {
 
   @Autowired
   public void setRepos(EvenIdxRepo eRepo, IndexRepo oRepo,
-                       TwentyRepo twRepo, TwentyEvenRepo teRepo) {
+                       TwentyRepo twRepo, TwentyEvenRepo teRepo,
+                       EthRepo ethRepo, EthEvenRepo eteRepo) {
 
-    repo = PrimeRepo.getRepo(oRepo,eRepo,twRepo,teRepo);
-    tickerService.setIndexRepo(oRepo, eRepo, twRepo, teRepo);
+    repo = PrimeRepo.getRepo(oRepo,eRepo,twRepo,teRepo,ethRepo,eteRepo);
+    tickerService.setIndexRepo(oRepo, eRepo, twRepo, teRepo,ethRepo,eteRepo);
+    // ETH index not currently supported in file saver
     fileDataSaver = new FileDataSaver(oRepo, eRepo, twRepo, teRepo);
   }
 

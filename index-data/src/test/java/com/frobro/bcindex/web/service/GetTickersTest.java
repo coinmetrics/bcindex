@@ -2,6 +2,7 @@ package com.frobro.bcindex.web.service;
 
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.domain.Index;
+import com.frobro.bcindex.web.model.BletchInTen;
 import com.frobro.bcindex.web.model.BletchleyData;
 import com.frobro.bcindex.web.service.persistence.IndexDbDto;
 import static org.junit.Assert.assertEquals;
@@ -35,7 +36,6 @@ public class GetTickersTest {
     TickerService service = new TickerService();
     double a = 10;
     double b = 20;
-    service.init();
 
     // when
     service.put("a",a).put("b", b);
@@ -57,7 +57,7 @@ public class GetTickersTest {
     // and
     double btcPrice = 2674.0;
     // and
-    BletchleyData input = new BletchleyData();
+    BletchleyData input = new BletchInTen();
     input.setLastUpdate(System.currentTimeMillis());
     input.setLastUsdBtc(btcPrice);
     input.setMembers(populateIndices());

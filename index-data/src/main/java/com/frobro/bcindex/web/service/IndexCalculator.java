@@ -14,23 +14,25 @@ public abstract class IndexCalculator {
 
   private static final BcLog log = BcLog.getLogger(IndexCalculator.class);
   // for 10 idx
-  private final BusinessRules businessRules;
   protected double constantEven;
   protected double constant;
   private double lastUsdPerBtc;
 
-  protected double divisor;
-  protected double divisorEven;
+  private final BusinessRules businessRules;
+  protected final double divisor;
+  protected final double divisorEven;
   protected long lastTimeStamp;
   protected Map<String,Index> lastIndexList;
 
   public IndexCalculator() {
-    businessRules = newBusinessRules();
-    divisor = businessRules.getDivisor();
-    divisorEven = businessRules.getDivisorEven();
+    businessRules = newBusRules();
+    divisor = getDivisor();
+    divisorEven = getDivisorEven();
   }
 
-  abstract protected BusinessRules newBusinessRules();
+  abstract protected BusinessRules newBusRules();
+  abstract protected double getDivisor();
+  abstract protected double getDivisorEven();
   abstract protected String indexName();
   abstract protected double buildFromSum(double lastSum,
                                          double constant,
@@ -38,15 +40,7 @@ public abstract class IndexCalculator {
   abstract protected IndexDbDto newDbDto(double priceBtc,
                                          double lastUsdPerBtc,
                                          long time);
-
-  public double getConstant() {
-    return constant;
-  }
-
-  public double getConstantEven() {
-    return constantEven;
-  }
-
+  
   public void updateLast(BletchleyData newData) {
     lastIndexList = newData.getLastIndexes();
     lastTimeStamp = newData.getTimeStamp();
@@ -88,7 +82,8 @@ public abstract class IndexCalculator {
                           double usdPerBtc, double result, long time) {
     log.debug(indexName() + ": '" + idxName + "' at time: '" + new Date(time)
         + "' in BTC=" + btcValue + " times "
-        + "last btc price=" + usdPerBtc + ". Which makes the index in USD=" + result);
+        + "last btc price=" + usdPerBtc + ". Which makes the index in USD="
+        + result + "\n");
   }
 
   private double getUsdPerBtc() {
@@ -103,7 +98,7 @@ public abstract class IndexCalculator {
   }
 
   protected IndexCalculator calculateMarketCap() {
-    log.debug("calculating market cap");
+    log.debug("calculating market cap for " + indexName());
 
     lastIndexList.keySet().stream().forEach(ticker -> {
 
@@ -118,7 +113,7 @@ public abstract class IndexCalculator {
   }
 
   private double calculateIndexValueBtc() {
-    log.debug("calculating index value");
+    log.debug("calculating index value for " + indexName());
 
     double lastSum = 0;
     for (Index ticker : lastIndexList.values()) {
@@ -134,7 +129,7 @@ public abstract class IndexCalculator {
   }
 
   private double calculateIndexValueEven() {
-    log.debug("calculating 10 even index value");
+    log.debug("calculating even index for " + indexName());
 
     double lastSum = 0;
     for (Index ticker : lastIndexList.values()) {

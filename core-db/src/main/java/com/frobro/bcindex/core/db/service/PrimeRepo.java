@@ -13,26 +13,34 @@ public class PrimeRepo {
   private long idxEvenTenCnt = 0;
   private long idxTwentyCnt = 0;
   private long idxTwentyEvenCnt = 0;
+  private long idxEthCnt = 0;
+  private long idxEthEvenCnt = 0;
 
   private IndexRepo indexRepo;
   private EvenIdxRepo evenIdxRepo;
   private TwentyRepo twentyRepo;
   private TwentyEvenRepo twentyEvenRepo;
+  private EthRepo ethRepo;
+  private EthEvenRepo ethEvenRepo;
 
   public static PrimeRepo getRepo(IndexRepo ir, EvenIdxRepo eir,
-                                  TwentyRepo tr, TwentyEvenRepo ter) {
+                                  TwentyRepo tr, TwentyEvenRepo ter,
+                                  EthRepo er, EthEvenRepo eer) {
     if (instance == null) {
-      instance = new PrimeRepo(ir,eir,tr,ter);
+      instance = new PrimeRepo(ir,eir,tr,ter, er, eer);
     }
     return instance;
   }
 
   private PrimeRepo(IndexRepo ir, EvenIdxRepo eir,
-                   TwentyRepo tr, TwentyEvenRepo ter) {
+                   TwentyRepo tr, TwentyEvenRepo ter,
+                    EthRepo er, EthEvenRepo eer) {
     this.indexRepo = ir;
     this.evenIdxRepo = eir;
     this.twentyRepo = tr;
     this.twentyEvenRepo = ter;
+    this.ethRepo = er;
+    this.ethEvenRepo = eer;
     initCounts();
   }
 
@@ -41,6 +49,26 @@ public class PrimeRepo {
     idxEvenTenCnt = initEvenTen();
     idxTwentyCnt = initTwenty();
     idxTwentyEvenCnt = initTwentyEven();
+    idxEthCnt = initEth();
+    idxEthEvenCnt = initEthEven();
+  }
+
+  private long initEth() {
+    long cnt = ethRepo.count();
+    if (cnt != 0) {
+      JpaIdxEth idx = ethRepo.findFirstByOrderByIdDesc();
+      cnt = idx.getBletchId();
+    }
+    return cnt;
+  }
+
+  private long initEthEven() {
+    long cnt = ethEvenRepo.count();
+    if (cnt != 0) {
+      JpaIdxEthEven idx = ethEvenRepo.findFirstByOrderByIdDesc();
+      cnt = idx.getBletchId();
+    }
+    return cnt;
   }
 
   private long initTen() {
@@ -104,10 +132,24 @@ public class PrimeRepo {
     twentyEvenRepo.save(idx);
   }
 
+  public void saveEth(JpaIdxEth idx) {
+    idxEthCnt++;
+    idx.setBletchId(idxEthCnt);
+    ethRepo.save(idx);
+  }
+
+  public void saveEthEven(JpaIdxEthEven idx) {
+    idxEthEvenCnt++;
+    idx.setBletchId(idxEthEvenCnt);
+    ethEvenRepo.save(idx);
+  }
+
   public void deleteAll() {
     this.indexRepo.deleteAll();
     this.evenIdxRepo.deleteAll();
     this.twentyRepo.deleteAll();
     this.twentyEvenRepo.deleteAll();
+    this.ethRepo.deleteAll();
+    this.ethEvenRepo.deleteAll();
   }
 }

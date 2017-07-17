@@ -54,14 +54,6 @@ public class BcLog {
     if (useConsole) {
       System.out.println("["+ level + "]" + " " + className + " " + msg);
     }
-    else {
-      if (level == LogLevel.INFO) {
-        log.info(msg);
-      }
-      else if (level == LogLevel.DEBUG) {
-        log.debug(msg);
-      }
-    }
   }
 
   private String createClassString(Class clz) {
