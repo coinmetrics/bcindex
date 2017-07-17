@@ -22,10 +22,11 @@ public abstract class DbBaseTest {
 
   @Autowired
   public void setIndexRepo(IndexRepo oRepo, EvenIdxRepo eRepo,
-                           TwentyRepo tRepo, TwentyEvenRepo teRepo) {
+                           TwentyRepo tRepo, TwentyEvenRepo teRepo,
+                           EthRepo etRepo, EthEvenRepo eteRepo) {
 
     this.oddRepo = oRepo;
-    this.repo = PrimeRepo.getRepo(oRepo, eRepo,tRepo,teRepo);
+    this.repo = PrimeRepo.getRepo(oRepo, eRepo,tRepo,teRepo,etRepo,eteRepo);
   }
 
   @Before
