@@ -7,5 +7,7 @@ public enum IndexType {
   ODD,
   EVEN,
   INDEX_TWENTY,
-  EVEN_TWENTY
+  EVEN_TWENTY,
+  INDEX_ETH,
+  EVEN_ETH
 }
