@@ -63,21 +63,23 @@ function topFunction() {
   <ul class="side">
   <li><a href="#Introduction">Introduction</a>
     <ul class ="side-second">
-  <li><a href="#10 Index">Bletchley 10 Indexes</a></li>
-  <li><a href="#20 Index">Bletchley 20 Indexes</a></li>
+  <li><a href="#10 Index">10 Indexes</a></li>
+  <li><a href="#20 Index">20 Indexes</a></li>
+  <li><a href="#ETI Index">Ethereum Token Indexes</a></li>
     </ul>
   </li>
   <li><a href="#Eligibility Criteria">Eligibility Criteria</a></li>
   <li><a href="#Index Calculation">Index Calculation</a></li>
   <li><a href="#Index Rebalancing">Index Rebalancing</a></li>
+  <li><a href="#Base Values">Creation Dates and Values</a></li>
   <li><a href="#Index Weights">Index Weights</a></li>
       <ul class ="side-second">
-        <li><a href="#10 Index Weight">Bletchley 10 Indexes</a></li>
+        <li><a href="#10 Index Weight">10 Indexes</a></li>
         <!--<li><a href="#10 Even Index Weight">Bletchley 10 Even Index</a></li>-->
-        <li><a href="#20 Index Weight">Bletchley 20 Indexes</a></li>
+        <li><a href="#20 Index Weight">20 Indexes</a></li>
         <!--<li><a href="#20 Even Index Weight">Bletchley 20 Even Index</a></li>-->
+        <li><a href="#ETI Index Weight">Ethereum Token Indexes</a></li>
     </ul>
-  <li><a href="#Base Values">Creation Dates and Values</a></li>
 </ul>
 <p>&nbsp;</p>
 </div>
@@ -92,21 +94,23 @@ function topFunction() {
   <ul class="top">
   <li><a href="#Introduction">Introduction</a>
     <ul class="second">
-        <li><a href="#10 Index">Bletchley 10 Indexes</a></li>
-        <li><a href="#20 Index">Bletchley 20 Indexes</a></li>
+        <li><a href="#10 Index">10 Indexes</a></li>
+        <li><a href="#20 Index">20 Indexes</a></li>
+        <li><a href="#ETI Index">Ethereum Token Indexes</a></li>
     </ul>
   </li>
   <li><a href="#Eligibility Criteria">Eligibility Criteria</a></li>
   <li><a href="#Index Calculation">Index Calculation</a></li>
   <li><a href="#Index Rebalancing">Index Rebalancing</a></li>
+  <li><a href="#Base Values">Creation Dates and Values</a></li>
   <li><a href="#Index Weights">Index Weights</a></li>
       <ul class ="second">
-        <li><a href="#10 Index Weight">Bletchley 10 Indexes</a></li>
+        <li><a href="#10 Index Weight">10 Indexes</a></li>
         <!--<li><a href="#10 Even Index Weight">Bletchley 10 Even Index</a></li>-->
-        <li><a href="#20 Index Weight">Bletchley 20 Indexes</a></li>
+        <li><a href="#20 Index Weight">20 Indexes</a></li>
         <!--<li><a href="#20 Even Index Weight">Bletchley 20 Even Index</a></li>-->
+        <li><a href="#ETI Index Weight">Ethereum Token Indexes</a></li>
     </ul>
-  <li><a href="#Base Values">Creation Dates and Values</a></li>
 </ul>
 </div>
         <br/>
@@ -131,6 +135,12 @@ function topFunction() {
         <p>The Bletchley 20 Index is a market cap weighted index composed of 20 medium sized digital assets. The market capitalization of each member is adjusted to reflect publicly available amounts of each asset and there are no limits set on the weight of any individual constituent. The market cap of each asset spans from $150 million to $500 million USD.</p>
         <p>The Bletchley 20 Even Index is an equal weighted index composed of the same constituents as the Bletchley 20 Index. At each monthly rebalance, every asset will have a weighting of exactly 5% of the total index, and the constituent weighting will then fluctuate based on changes in market pricing until the next rebalance.</p>
         <br/>
+        <a name="ETI Index"></a>
+        <b>Bletchley Ethereum Token Indexes</b>
+        <br/>
+        <p>The Bletchley Ethereum Token Index is a market cap weighted index composed of a variable number of assets that are run on the ethereum platform. The market capitalization of each member is adjusted to reflect publicly available amounts of each asset and there are no limits set on the weight of any individual constituent. Ethereum itself, along with ethereum classic, are not included in this index. It is composed of every token that meets all other eligibility criteria in addition to being listed in the top 30 assets on coinmarketcap.com.</p>
+        <p>The Bletchley Ethereum Token Even Index is an equal weighted index composed of the same constituents as the Ethereum Token Index. At each monthly rebalance, every asset will have a weighting of exactly 1 divided by the total number of members of the index, and the constituent weighting will then fluctuate based on changes in market pricing until the next rebalance.</p>
+        <br/>
         <a name="Eligibility Criteria"></a>
         <b>Eligibility Criteria</b>
         <br/>
@@ -150,590 +160,15 @@ function topFunction() {
         <br/>
         <p>All of the Bletchley indexes will be rebalanced at 3:00 PM US Central time on the third Wednesday of every month. The monthly rebalance will update both the amount of each asset publicly available and any additions and deletions from the indexes. The values used to determine eligibility for each rebalance will be prices, asset counts, and volume 24 hours prior to the rebalance. There will be no changes made to the weights and asset counts outside of the monthly rebalances.</p>
         <p>A buffer rule is used when determining constituent selection at each rebalance to reduce turnover of the index. The rule is applied to the Bletchley 10 Indexes such that all companies in the eligible investment universe ranked in the top 9 by total market capitalization are always included in the index. Then, if any current index member is ranked within the top 11, those members will be selected by rank until the index reaches its membership mandate of 10. If those steps fail to produce 10 members, the highest ranking non member will be added to the index.</p>
-        <p>Similarly, the Bletchley 20 Indexes use the same methodology with an automatic addition rank of 16 or higher and automatic deletion for those members ranked 25 and below.</p>
-        <p>Initial coin offerings will be treated in the same manner as all other assets, with the only added criteria that the ICO asset is ineligible for the first rebalance following the launch of the asset. </p>
+        <p>Similarly, the Bletchley 20 Indexes use the same methodology with an automatic addition rank of 16 or higher and automatic deletion for those members ranked 25 and below. The Ethereum Token Indexes use buffer bands of rank 25 and higher for automatic addition and 35 and below for removal on the coinmarketcap.com asset rankings.</p>
+        <p>Initial coin offerings will be treated in the same manner as all other assets, with the only added criteria that the ICO token is ineligible for the first rebalance following the close of fundraising of the asset. </p>
         <p>In the event of a hard fork in the blockchain of any constituent asset, the fork will be treated as an asset split with both unique forks remaining in the index with the original asset counts up until the next rebalancing. At which point all normal eligibility and ranking rules will be enforced on the two unique assets. This will give the potential for an index to have more than its set number of constituents following any contentious hard forks in a member. If the first rebalance after a hard fork occurs within seven days of the fork, any add or delete changes to the assets created by the fork will be delayed until the following rebalance. Asset counts will still be updated in this case.</p>
         <p>Any other unique situations, extreme circumstances surrounding the already described events, or unobtainable asset counts or prices will be handled at the discretion of the Bletchley Indexes.</p>
         <br/>
-        <a name="Index Weights"></a>
-        <b>Index Weights</b>
-        <br/><br/>
-<a name="10 Index Weight"></a>
-<table id="weights">
-  <tr>
-        <th>Bletchley 10 Index</th>
-        <th>Creation</th>
-        <th>April 2017</th>
-        <th>May 2017</th>
-        <th>June 2017</th>
-        </tr>
-
-        <tr>
-        <td>Bitcoin</td>    
-        <td>75.60%</td>
-        <td>71.25%</td>
-        <td>54.03%</td>
-        <td>45.86%</td>
-        </tr>
-        <tr>
-        <td>Ethereum</td>
-        <td>15.46%</td>
-        <td>16.51%</td>
-        <td>15.31%</td>
-        <td>32.54%</td>
-        </tr>
-        <tr>
-        <td>Ripple</td>    
-        <td>1.18%</td>
-        <td>4.54%</td>
-        <td>22.31%</td>
-        <td>11.64%</td>
-        </tr>
-        <tr>
-        <td>Litecoin</td>
-        <td>0.92%</td>
-        <td>2.01%</td>
-        <td>2.33%</td>
-        <td>2.33%</td>
-        </tr>
-        <tr>
-        <td>Dash</td>
-        <td>3.59%</td>
-        <td>1.89%</td>
-        <td>1.18%</td>
-        <td>1.40%</td>
-        </tr>
-        <tr>
-        <td>Monero</td>
-        <td>1.34%</td>
-        <td>1.09%</td>
-        <td>0.73%</td>
-        <td>0.78%</td>
-        </tr>
-        <tr>
-        <td>Ethereum Classic</td>
-        <td>0.70%</td>
-        <td>0.97%</td>
-        <td>1.08%</td>
-        <td>1.93%</td>
-        </tr>
-        <tr>
-        <td>NEM</td>
-        <td>0.48%</td>
-        <td>0.90%</td>
-        <td>1.85%</td>
-        <td>1.90%</td>
-        </tr>
-        <tr>
-        <td>Augur</td>
-        <td>0.39%</td>
-        <td>0.50%</td>
-        <td>0.32%</td>
-        <td>---</td>
-        </tr>
-        <tr>
-        <td>MaidSafeCoin</td>
-        <td>---</td>
-        <td>0.35%</td>
-        <td>---</td>
-        <td>---</td>
-        </tr>
-        <tr>
-        <td>Zcash</td>
-        <td>0.35%</td>
-        <td>---</td>
-        <td>---</td>
-        <td>---</td>
-        </tr>
-        <tr>
-        <td>Stellar Lumens</td>
-        <td>---</td>
-        <td>---</td>
-        <td>0.85%</td>
-        <td>---</td>
-        </tr>
-        <tr>
-        <td>Stratis</td>
-        <td>---</td>
-        <td>---</td>
-        <td>---</td>
-        <td>0.79%</td>
-        </tr>
-        <tr>
-        <td>BitShares</td>
-        <td>---</td>
-        <td>---</td>
-        <td>---</td>
-        <td>0.84%</td>
-        </tr>
-        </table>
-
-
-        <br/>
-       <a name="10 Even Index Weight"></a> 
-        <table id="weights">
-
-        <tr>
-        <th>Bletchley 10 Even Index</th>
-        <th>Creation</th>
-        <th>April 2017</th>
-        <th>May 2017</th>
-        <th>June 2017</th>
-        </tr>
-
-        <tr>
-        <td>Bitcoin</td>    
-        <td>10.00%</td>
-        <td>10.00%</td>
-        <td>10.00%</td>
-        <td>10.00%</td>
-        </tr>
-        <tr>
-        <td>Ethereum</td>
-        <td>10.00%</td>
-        <td>10.00%</td>
-        <td>10.00%</td>
-        <td>10.00%</td>
-        </tr>
-        <tr>
-        <td>Ripple</td>    
-        <td>10.00%</td>
-        <td>10.00%</td>
-        <td>10.00%</td>
-        <td>10.00%</td>
-        </tr>
-        <tr>
-        <td>Litecoin</td>
-        <td>10.00%</td>
-        <td>10.00%</td>
-        <td>10.00%</td>
-        <td>10.00%</td>
-        </tr>
-        <tr>
-        <td>Dash</td>
-        <td>10.00%</td>
-        <td>10.00%</td>
-        <td>10.00%</td>
-        <td>10.00%</td>
-        </tr>
-        <tr>
-        <td>Monero</td>
-        <td>10.00%</td>
-        <td>10.00%</td>
-        <td>10.00%</td>
-        <td>10.00%</td>
-        </tr>
-        <tr>
-        <td>Ethereum Classic</td>
-        <td>10.00%</td>
-        <td>10.00%</td>
-        <td>10.00%</td>
-        <td>10.00%</td>
-        </tr>
-        <tr>
-        <td>NEM</td>
-        <td>10.00%</td>
-        <td>10.00%</td>
-        <td>10.00%</td>
-        <td>10.00%</td>
-        </tr>
-        <tr>
-        <td>Augur</td>
-        <td>10.00%</td>
-        <td>10.00%</td>
-        <td>10.00%</td>
-        <td>---</td>
-        </tr>
-        <tr>
-        <td>MaidSafeCoin</td>
-        <td>---</td>
-        <td>10.00%</td>
-        <td>---</td>
-        <td>---</td>
-        </tr>
-        <tr>
-        <td>Zcash</td>
-        <td>10.00%</td>
-        <td>---</td>
-        <td>---</td>
-        <td>---</td>
-        </tr>
-        <tr>
-        <td>Stellar Lumens</td>
-        <td>---</td>
-        <td>---</td>
-        <td>10.00%</td>
-        <td>---</td>
-        </tr>
-        <tr>
-        <td>Stratis</td>
-        <td>---</td>
-        <td>---</td>
-        <td>---</td>
-        <td>10.00%</td>
-        </tr>
-        <tr>
-        <td>BitShares</td>
-        <td>---</td>
-        <td>---</td>
-        <td>---</td>
-        <td>10.00%</td>
-        </tr>
-        </table>
-        <br/>
         
-            <a name="20 Index Weight"></a>   
-            <table id="weights">
-
-        <tr>
-        <th>Bletchley 20 Index</th>
-        <th>Creation</th>
-        <th>May 2017</th>
-        <th>June 2017</th>
-        </tr>
-        <tr>
-        <td>PIVX</td>    
-        <td>10.96%</td>
-        <td>2.77%</td>
-        <td>---</td>
-        </tr>
-        <tr>
-        <td>Zcash</td>
-        <td>8.52%</td>
-        <td>5.60%</td>
-        <td>8.89%</td>
-        </tr>
-        <tr>
-        <td>Stratis</td>
-        <td>7.39%</td>
-        <td>6.20%</td>
-        <td>---</td>
-        </tr>
-        <tr>
-        <td>Golem</td>    
-        <td>6.91%</td>
-        <td>8.26%</td>
-        <td>7.39%</td>
-        </tr>
-        <tr>
-        <td>Factom</td>
-        <td>6.87%</td>
-        <td>3.67%</td>
-        <td>4.39%</td>
-        </tr>
-        <tr>
-        <td>Decred</td>
-        <td>6.16%</td>
-        <td>3.95%</td>
-        <td>2.83%</td>
-        </tr>
-        <tr>
-        <td>Steem</td>
-        <td>5.93%</td>
-        <td>10.91%</td>
-        <td>7.21%</td>
-        </tr>
-        <tr>
-        <td>GameCredits</td>
-        <td>5.47%</td>
-        <td>6.81%</td>
-        <td>3.64%</td>
-        </tr>
-        <tr>
-        <td>Dogecoin</td>
-        <td>5.23%</td>
-        <td>5.58%</td>
-        <td>4.90%</td>
-        </tr>
-        <tr>
-        <td>Waves</td>
-        <td>4.57%</td>
-        <td>6.66%</td>
-        <td>7.18%</td>
-        </tr>
-        <tr>
-        <td>Bytecoin</td>
-        <td>3.79%</td>
-        <td>5.47%</td>
-        <td>8.72%</td>
-        </tr>
-        <tr>
-        <td>Lisk</td>
-        <td>3.77%</td>
-        <td>2.92%</td>
-        <td>5.14%</td>
-        </tr>
-        <tr>
-        <td>Iconomi</td>    
-        <td>4.34%</td>
-        <td>3.33%</td>
-        <td>3.26%</td>
-        </tr>
-        <tr>
-        <td>Siacoin</td>
-        <td>2.29%</td>
-        <td>3.68%</td>
-        <td>7.49%</td>
-        </tr>
-        <tr>
-        <td>Stellar Lumens</td>    
-        <td>3.49%</td>
-        <td>---</td>
-        <td>5.25%</td>
-        </tr>
-        <tr>
-        <td>Ardor</td>
-        <td>3.27%</td>
-        <td>4.38%</td>
-        <td>3.83%</td>
-        </tr>
-        <tr>
-        <td>Bitshares</td>
-        <td>3.13%</td>
-        <td>5.83%</td>
-        <td>---</td>
-        </tr>
-        <tr>
-        <td>Ark</td>
-        <td>2.83%</td>
-        <td>---</td>
-        <td>---</td>
-        </tr>
-        <tr>
-        <td>First Blood</td>
-        <td>2.76%</td>
-        <td>---</td>
-        <td>---</td>
-        </tr>
-        <tr>
-        <td>Einsteinium</td>
-        <td>2.32%</td>
-        <td>---</td>
-        <td>---</td>
-        </tr>
-        <tr>
-        <td>MaidSafeCoin</td>
-        <td>---</td>
-        <td>7.13%</td>
-        <td>3.45%</td>
-        </tr>
-        <tr>
-        <td>NXT</td>
-        <td>---</td>
-        <td>3.01%</td>
-        <td>2.42%</td>
-        </tr>
-        <tr>
-        <td>Peercoin</td>
-        <td>---</td>
-        <td>2.00%</td>
-        <td>---</td>
-        </tr>
-        <tr>
-        <td>DigiByte</td>
-        <td>---</td>
-        <td>1.46%</td>
-        <td>3.68%</td>
-        </tr>
-        <tr>
-        <td>Augur</td>
-        <td>---</td>
-        <td>---</td>
-        <td>4.89%</td>
-        </tr>
-        <tr>
-        <td>Antshares</td>
-        <td>---</td>
-        <td>---</td>
-        <td>1.69%</td>
-        </tr>
-        <tr>
-        <td>Gnosis</td>
-        <td>---</td>
-        <td>---</td>
-        <td>3.74%</td>
-        </tr>
-        </table>
-        <br/>    
-            
-            <a name="20 Even Index Weight"></a>
-            <table id="weights">
-        <tr>
-        <th>Bletchley 20 Even Index</th>
-        <th>Creation</th>
-        <th>May 2017</th>
-        <th>June 2017</th>
-        </tr>
-        <tr>
-        <td>PIVX</td>    
-        <td>5.00%</td>
-        <td>5.00%</td>
-        <td>---</td>
-        </tr>
-        <tr>
-        <td>Zcash</td>
-        <td>5.00%</td>
-        <td>5.00%</td>
-        <td>5.00%</td>
-        </tr>
-        <tr>
-        <td>Stratis</td>
-        <td>5.00%</td>
-        <td>5.00%</td>
-        <td>---</td>
-        </tr>
-        <tr>
-        <td>Golem</td>    
-        <td>5.00%</td>
-        <td>5.00%</td>
-        <td>5.00%</td>
-        </tr>
-        <tr>
-        <td>Factom</td>
-        <td>5.00%</td>
-        <td>5.00%</td>
-        <td>5.00%</td>
-        </tr>
-        <tr>
-        <td>Decred</td>
-        <td>5.00%</td>
-        <td>5.00%</td>
-        <td>5.00%</td>
-        </tr>
-        <tr>
-        <td>Steem</td>
-        <td>5.00%</td>
-        <td>5.00%</td>
-        <td>5.00%</td>
-        </tr>
-        <tr>
-        <td>GameCredits</td>
-        <td>5.00%</td>
-        <td>5.00%</td>
-        <td>5.00%</td>
-        </tr>
-        <tr>
-        <td>Dogecoin</td>
-        <td>5.00%</td>
-        <td>5.00%</td>
-        <td>5.00%</td>
-        </tr>
-        <tr>
-        <td>Waves</td>
-        <td>5.00%</td>
-        <td>5.00%</td>
-        <td>5.00%</td>
-        </tr>
-        <tr>
-        <td>Bytecoin</td>
-        <td>5.00%</td>
-        <td>5.00%</td>
-        <td>5.00%</td>
-        </tr>
-        <tr>
-        <td>Lisk</td>
-        <td>5.00%</td>
-        <td>5.00%</td>
-        <td>5.00%</td>
-        </tr>
-        <tr>
-        <td>Iconomi</td>    
-        <td>5.00%</td>
-        <td>5.00%</td>
-        <td>5.00%</td>
-        </tr>
-        <tr>
-        <td>Siacoin</td>
-        <td>5.00%</td>
-        <td>5.00%</td>
-        <td>5.00%</td>
-        </tr>
-        <tr>
-        <td>Stellar Lumens</td>    
-        <td>5.00%</td>
-        <td>---</td>
-        <td>5.00%</td>
-        </tr>
-        <tr>
-        <td>Ardor</td>
-        <td>5.00%</td>
-        <td>5.00%</td>
-        <td>5.00%</td>
-        </tr>
-        <tr>
-        <td>Bitshares</td>
-        <td>5.00%</td>
-        <td>5.00%</td>
-        <td>---</td>
-        </tr>
-        <tr>
-        <td>Ark</td>
-        <td>5.00%</td>
-        <td>---</td>
-        <td>---</td>
-        </tr>
-        <tr>
-        <td>First Blood</td>
-        <td>5.00%</td>
-        <td>---</td>
-        <td>---</td>
-        </tr>
-        <tr>
-        <td>Einsteinium</td>
-        <td>5.00%</td>
-        <td>---</td>
-        <td>---</td>
-        </tr>
-        <tr>
-        <td>MaidSafeCoin</td>
-        <td>---</td>
-        <td>5.00%</td>
-        <td>5.00%</td>
-        </tr>
-        <tr>
-        <td>NXT</td>
-        <td>---</td>
-        <td>5.00%</td>
-        <td>5.00%</td>
-        </tr>
-        <tr>
-        <td>Peercoin</td>
-        <td>---</td>
-        <td>5.00%</td>
-        <td>---</td>
-        </tr>
-        <tr>
-        <td>DigiByte</td>
-        <td>---</td>
-        <td>5.00%</td>
-        <td>5.00%</td>
-        </tr>
-        <tr>
-        <td>Augur</td>
-        <td>---</td>
-        <td>---</td>
-        <td>5.00%</td>
-        </tr>
-        <tr>
-        <td>Antshares</td>
-        <td>---</td>
-        <td>---</td>
-        <td>5.00%</td>
-        </tr>
-        <tr>
-        <td>Gnosis</td>
-        <td>---</td>
-        <td>---</td>
-        <td>5.00%</td>
-        </tr>
-        </table>
-        <br/>    
-            
-            
         <a name="Base Values"></a>
         <b>Creation Dates and Values</b>
         <br/><br/>
-        <!--Bletchley 10 Index-->
         <table id="weights">
 
         <tr>
@@ -767,7 +202,875 @@ function topFunction() {
         <td>100</td>
         <td>0.08317</td>
         </tr>
+        <tr>
+        <td>Bletchley Ethereum Token</td>    
+        <td>6/21/2017</td>
+        <td>100</td>
+        <td>0.03617</td>
+        </tr>
+        <tr>
+        <td>Bletchley Ethereum Token Even</td>
+        <td>6/21/2017</td>
+        <td>100</td>
+        <td>0.03617</td>
+        </tr>
         </table>
+        <br/><br/>
+
+        <a name="Index Weights"></a>
+        <b>Index Weights</b>
+        <br/><br/>
+<a name="10 Index Weight"></a>
+<table id="weights">
+  <tr>
+        <th>Bletchley 10 Index</th>
+        <th>Creation</th>
+        <th>April 2017</th>
+        <th>May 2017</th>
+        <th>June 2017</th>
+        <th>July 2017</th>
+        </tr>
+
+        <tr>
+        <td>Bitcoin</td>    
+        <td>75.60%</td>
+        <td>71.25%</td>
+        <td>54.03%</td>
+        <td>45.86%</td>
+        <td>0.00%</td>
+        </tr>
+        <tr>
+        <td>Ethereum</td>
+        <td>15.46%</td>
+        <td>16.51%</td>
+        <td>15.31%</td>
+        <td>32.54%</td>
+        <td>0.00%</td>
+        </tr>
+        <tr>
+        <td>Ripple</td>    
+        <td>1.18%</td>
+        <td>4.54%</td>
+        <td>22.31%</td>
+        <td>11.64%</td>
+        <td>0.00%</td>
+        </tr>
+        <tr>
+        <td>Litecoin</td>
+        <td>0.92%</td>
+        <td>2.01%</td>
+        <td>2.33%</td>
+        <td>2.33%</td>
+        <td>0.00%</td>
+        </tr>
+        <tr>
+        <td>Dash</td>
+        <td>3.59%</td>
+        <td>1.89%</td>
+        <td>1.18%</td>
+        <td>1.40%</td>
+        <td>0.00%</td>
+        </tr>
+        <tr>
+        <td>Monero</td>
+        <td>1.34%</td>
+        <td>1.09%</td>
+        <td>0.73%</td>
+        <td>0.78%</td>
+        <td>0.00%</td>
+        </tr>
+        <tr>
+        <td>Ethereum Classic</td>
+        <td>0.70%</td>
+        <td>0.97%</td>
+        <td>1.08%</td>
+        <td>1.93%</td>
+        <td>0.00%</td>
+        </tr>
+        <tr>
+        <td>NEM</td>
+        <td>0.48%</td>
+        <td>0.90%</td>
+        <td>1.85%</td>
+        <td>1.90%</td>
+        <td>0.00%</td>
+        </tr>
+        <tr>
+        <td>Augur</td>
+        <td>0.39%</td>
+        <td>0.50%</td>
+        <td>0.32%</td>
+        <td>------</td>
+        <td>------</td>
+        </tr>
+        <tr>
+        <td>MaidSafeCoin</td>
+        <td>------</td>
+        <td>0.35%</td>
+        <td>------</td>
+        <td>------</td>
+        <td>------</td>
+        </tr>
+        <tr>
+        <td>Zcash</td>
+        <td>0.35%</td>
+        <td>------</td>
+        <td>------</td>
+        <td>------</td>
+        <td>------</td>
+        </tr>
+        <tr>
+        <td>Stellar Lumens</td>
+        <td>------</td>
+        <td>------</td>
+        <td>0.85%</td>
+        <td>------</td>
+        <td>------</td>
+        </tr>
+        <tr>
+        <td>Stratis</td>
+        <td>------</td>
+        <td>------</td>
+        <td>------</td>
+        <td>0.79%</td>
+        <td>0.00%</td>
+        </tr>
+        <tr>
+        <td>BitShares</td>
+        <td>------</td>
+        <td>------</td>
+        <td>------</td>
+        <td>0.84%</td>
+        <td>------</td>
+        </tr>
+        <tr>
+        <td>IOTA</td>
+        <td>------</td>
+        <td>-----</td>
+        <td>------</td>
+        <td>------</td>
+        <td>0.00%</td>
+        </tr>
+        </table>
+
+
+        <br/>
+       <a name="10 Even Index Weight"></a> 
+        <table id="weights">
+
+        <tr>
+        <th>Bletchley 10 Even Index</th>
+        <th>Creation</th>
+        <th>April 2017</th>
+        <th>May 2017</th>
+        <th>June 2017</th>
+        <th>July 2017</th>
+        </tr>
+
+        <tr>
+        <td>Bitcoin</td>    
+        <td>10.00%</td>
+        <td>10.00%</td>
+        <td>10.00%</td>
+        <td>10.00%</td>
+        <td>10.00%</td>
+        </tr>
+        <tr>
+        <td>Ethereum</td>
+        <td>10.00%</td>
+        <td>10.00%</td>
+        <td>10.00%</td>
+        <td>10.00%</td>
+        <td>10.00%</td>
+        </tr>
+        <tr>
+        <td>Ripple</td>    
+        <td>10.00%</td>
+        <td>10.00%</td>
+        <td>10.00%</td>
+        <td>10.00%</td>
+        <td>10.00%</td>
+        </tr>
+        <tr>
+        <td>Litecoin</td>
+        <td>10.00%</td>
+        <td>10.00%</td>
+        <td>10.00%</td>
+        <td>10.00%</td>
+        <td>10.00%</td>
+        </tr>
+        <tr>
+        <td>Dash</td>
+        <td>10.00%</td>
+        <td>10.00%</td>
+        <td>10.00%</td>
+        <td>10.00%</td>
+        <td>10.00%</td>
+        </tr>
+        <tr>
+        <td>Monero</td>
+        <td>10.00%</td>
+        <td>10.00%</td>
+        <td>10.00%</td>
+        <td>10.00%</td>
+        <td>10.00%</td>
+        </tr>
+        <tr>
+        <td>Ethereum Classic</td>
+        <td>10.00%</td>
+        <td>10.00%</td>
+        <td>10.00%</td>
+        <td>10.00%</td>
+        <td>10.00%</td>
+        </tr>
+        <tr>
+        <td>NEM</td>
+        <td>10.00%</td>
+        <td>10.00%</td>
+        <td>10.00%</td>
+        <td>10.00%</td>
+        <td>10.00%</td>
+        </tr>
+        <tr>
+        <td>Augur</td>
+        <td>10.00%</td>
+        <td>10.00%</td>
+        <td>10.00%</td>
+        <td>------</td>
+        <td>------</td>
+        </tr>
+        <tr>
+        <td>MaidSafeCoin</td>
+        <td>------</td>
+        <td>10.00%</td>
+        <td>------</td>
+        <td>------</td>
+        <td>------</td>
+        </tr>
+        <tr>
+        <td>Zcash</td>
+        <td>10.00%</td>
+        <td>------</td>
+        <td>------</td>
+        <td>------</td>
+        <td>------</td>
+        </tr>
+        <tr>
+        <td>Stellar Lumens</td>
+        <td>------</td>
+        <td>------</td>
+        <td>10.00%</td>
+        <td>------</td>
+        <td>------</td>
+        </tr>
+        <tr>
+        <td>Stratis</td>
+        <td>------</td>
+        <td>------</td>
+        <td>------</td>
+        <td>10.00%</td>
+        <td>10.00%</td>
+        </tr>
+        <tr>
+        <td>BitShares</td>
+        <td>------</td>
+        <td>------</td>
+        <td>------</td>
+        <td>10.00%</td>
+        <td>------</td>
+        </tr>
+        <tr>
+        <td>IOTA</td>
+        <td>------</td>
+        <td>------</td>
+        <td>------</td>
+        <td>------</td>
+        <td>10.00%</td>
+        </tr>
+        </table>
+        <br/>
+        
+            <a name="20 Index Weight"></a>   
+            <table id="weights">
+
+        <tr>
+        <th>Bletchley 20 Index</th>
+        <th>Creation</th>
+        <th>May 2017</th>
+        <th>June 2017</th>
+        <th>July 2017</th>
+        </tr>
+        <tr>
+        <td>PIVX</td>    
+        <td>10.96%</td>
+        <td>2.77%</td>
+        <td>------</td>
+        <td>------</td>
+        </tr>
+        <tr>
+        <td>Zcash</td>
+        <td>8.52%</td>
+        <td>5.60%</td>
+        <td>8.89%</td>
+        <td>0.00%</td>
+        </tr>
+        <tr>
+        <td>Stratis</td>
+        <td>7.39%</td>
+        <td>6.20%</td>
+        <td>------</td>
+        <td>------</td>
+        </tr>
+        <tr>
+        <td>Golem</td>    
+        <td>6.91%</td>
+        <td>8.26%</td>
+        <td>7.39%</td>
+        <td>0.00%</td>
+        </tr>
+        <tr>
+        <td>Factom</td>
+        <td>6.87%</td>
+        <td>3.67%</td>
+        <td>4.39%</td>
+        <td>0.00%</td>
+        </tr>
+        <tr>
+        <td>Decred</td>
+        <td>6.16%</td>
+        <td>3.95%</td>
+        <td>2.83%</td>
+        <td>0.00%</td>
+        </tr>
+        <tr>
+        <td>Steem</td>
+        <td>5.93%</td>
+        <td>10.91%</td>
+        <td>7.21%</td>
+        <td>0.00%</td>
+        </tr>
+        <tr>
+        <td>GameCredits</td>
+        <td>5.47%</td>
+        <td>6.81%</td>
+        <td>3.64%</td>
+        <td>0.00%</td>
+        </tr>
+        <tr>
+        <td>Dogecoin</td>
+        <td>5.23%</td>
+        <td>5.58%</td>
+        <td>4.90%</td>
+        <td>0.00%</td>
+        </tr>
+        <tr>
+        <td>Waves</td>
+        <td>4.57%</td>
+        <td>6.66%</td>
+        <td>7.18%</td>
+        <td>0.00%</td>
+        </tr>
+        <tr>
+        <td>Bytecoin</td>
+        <td>3.79%</td>
+        <td>5.47%</td>
+        <td>8.72%</td>
+        <td>0.00%</td>
+        </tr>
+        <tr>
+        <td>Lisk</td>
+        <td>3.77%</td>
+        <td>2.92%</td>
+        <td>5.14%</td>
+        <td>0.00%</td>
+        </tr>
+        <tr>
+        <td>Iconomi</td>    
+        <td>4.34%</td>
+        <td>3.33%</td>
+        <td>3.26%</td>
+        <td>0.00%</td>
+        </tr>
+        <tr>
+        <td>Siacoin</td>
+        <td>2.29%</td>
+        <td>3.68%</td>
+        <td>7.49%</td>
+        <td>0.00%</td>
+        </tr>
+        <tr>
+        <td>Stellar Lumens</td>    
+        <td>3.49%</td>
+        <td>------</td>
+        <td>5.25%</td>
+        <td>0.00%</td>
+        </tr>
+        <tr>
+        <td>Ardor</td>
+        <td>3.27%</td>
+        <td>4.38%</td>
+        <td>3.83%</td>
+        <td>0.00%</td>
+        </tr>
+        <tr>
+        <td>Bitshares</td>
+        <td>3.13%</td>
+        <td>5.83%</td>
+        <td>---</td>
+        <td>0.00%</td>
+        </tr>
+        <tr>
+        <td>Ark</td>
+        <td>2.83%</td>
+        <td>------</td>
+        <td>------</td>
+        <td>------</td>
+        </tr>
+        <tr>
+        <td>First Blood</td>
+        <td>2.76%</td>
+        <td>------</td>
+        <td>------</td>
+        <td>------</td>
+        </tr>
+        <tr>
+        <td>Einsteinium</td>
+        <td>2.32%</td>
+        <td>------</td>
+        <td>------</td>
+        <td>------</td>
+        </tr>
+        <tr>
+        <td>MaidSafeCoin</td>
+        <td>------</td>
+        <td>7.13%</td>
+        <td>3.45%</td>
+        <td>0.00%</td>
+        </tr>
+        <tr>
+        <td>NXT</td>
+        <td>------</td>
+        <td>3.01%</td>
+        <td>2.42%</td>
+        <td>------</td>
+        </tr>
+        <tr>
+        <td>Peercoin</td>
+        <td>------</td>
+        <td>2.00%</td>
+        <td>------</td>
+        <td>------</td>
+        </tr>
+        <tr>
+        <td>DigiByte</td>
+        <td>------</td>
+        <td>1.46%</td>
+        <td>3.68%</td>
+        <td>------</td>
+        </tr>
+        <tr>
+        <td>Augur</td>
+        <td>------</td>
+        <td>------</td>
+        <td>4.89%</td>
+        <td>0.00%</td>
+        </tr>
+        <tr>
+        <td>Antshares</td>
+        <td>------</td>
+        <td>------</td>
+        <td>1.69%</td>
+        <td>0.00%</td>
+        </tr>
+        <tr>
+        <td>Gnosis</td>
+        <td>------</td>
+        <td>------</td>
+        <td>3.74%</td>
+        <td>0.00%</td>
+        </tr>
+        <tr>
+        <td>Byteball</td>
+        <td>------</td>
+        <td>------</td>
+        <td>------</td>
+        <td>0.00%</td>
+        </tr>
+        </table>
+        <br/>    
+            
+            <a name="20 Even Index Weight"></a>
+            <table id="weights">
+        <tr>
+        <th>Bletchley 20 Even Index</th>
+        <th>Creation</th>
+        <th>May 2017</th>
+        <th>June 2017</th>
+        <th>July 2017</th>
+        </tr>
+        <tr>
+        <td>PIVX</td>    
+        <td>5.00%</td>
+        <td>5.00%</td>
+        <td>------</td>
+        <td>------</td>
+        </tr>
+        <tr>
+        <td>Zcash</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        </tr>
+        <tr>
+        <td>Stratis</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        <td>------</td>
+        <td>------</td>
+        </tr>
+        <tr>
+        <td>Golem</td>    
+        <td>5.00%</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        </tr>
+        <tr>
+        <td>Factom</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        </tr>
+        <tr>
+        <td>Decred</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        </tr>
+        <tr>
+        <td>Steem</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        </tr>
+        <tr>
+        <td>GameCredits</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        </tr>
+        <tr>
+        <td>Dogecoin</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        </tr>
+        <tr>
+        <td>Waves</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        </tr>
+        <tr>
+        <td>Bytecoin</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        </tr>
+        <tr>
+        <td>Lisk</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        </tr>
+        <tr>
+        <td>Iconomi</td>    
+        <td>5.00%</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        </tr>
+        <tr>
+        <td>Siacoin</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        </tr>
+        <tr>
+        <td>Stellar Lumens</td>    
+        <td>5.00%</td>
+        <td>------</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        </tr>
+        <tr>
+        <td>Ardor</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        </tr>
+        <tr>
+        <td>Bitshares</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        <td>------</td>
+        <td>5.00%</td>
+        </tr>
+        <tr>
+        <td>Ark</td>
+        <td>5.00%</td>
+        <td>------</td>
+        <td>------</td>
+        <td>------</td>
+        </tr>
+        <tr>
+        <td>First Blood</td>
+        <td>5.00%</td>
+        <td>------</td>
+        <td>------</td>
+        <td>------</td>
+        </tr>
+        <tr>
+        <td>Einsteinium</td>
+        <td>5.00%</td>
+        <td>------</td>
+        <td>------</td>
+        <td>------</td>
+        </tr>
+        <tr>
+        <td>MaidSafeCoin</td>
+        <td>------</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        </tr>
+        <tr>
+        <td>NXT</td>
+        <td>------</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        <td>------</td>
+        </tr>
+        <tr>
+        <td>Peercoin</td>
+        <td>------</td>
+        <td>5.00%</td>
+        <td>------</td>
+        <td>------</td>
+        </tr>
+        <tr>
+        <td>DigiByte</td>
+        <td>------</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        <td>------</td>
+        </tr>
+        <tr>
+        <td>Augur</td>
+        <td>------</td>
+        <td>------</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        </tr>
+        <tr>
+        <td>Antshares</td>
+        <td>------</td>
+        <td>------</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        </tr>
+        <tr>
+        <td>Gnosis</td>
+        <td>------</td>
+        <td>------</td>
+        <td>5.00%</td>
+        <td>5.00%</td>
+        </tr>
+        <tr>
+        <td>Byteball</td>
+        <td>------</td>
+        <td>------</td>
+        <td>------</td>
+        <td>5.00%</td>
+        </tr>
+        </table>
+        <br/>    
+            
+         <a name="ETI Index Weight"></a>
+<table id="weights">
+  <tr>
+        <th>Bletchley Ethereum Token Index</th>
+        <th>Creation</th>
+        <th>July 2017</th>
+        </tr>
+
+        <tr>
+        <td>Golem</td>    
+        <td>26.16%</td>
+        <td>26.16%</td>
+        </tr>
+        <tr>
+        <td>Gnosis</td>
+        <td>13.23%</td>
+        <td>16.51%</td>
+        </tr>
+        <tr>
+        <td>Augur</td>    
+        <td>17.31%</td>
+        <td>4.54%</td>
+        </tr>
+        <tr>
+        <td>Iconomi</td>
+        <td>11.53%</td>
+        <td>2.01%</td>
+        </tr>
+        <tr>
+        <td>First Blood</td>
+        <td>11.00%</td>
+        <td>1.89%</td>
+        </tr>
+        <tr>
+        <td>DigixDAO</td>
+        <td>9.91%</td>
+        <td>1.09%</td>
+        </tr>
+        <tr>
+        <td>SingularDTV</td>
+        <td>6.15%</td>
+        <td>0.97%</td>
+        </tr>
+        <tr>
+        <td>Aragon</td>
+        <td>4.71%</td>
+        <td>0.90%</td>
+        </tr>
+        <tr>
+        <td>Status</td>
+        <td>------</td>
+        <td>5.00%</td>
+        </tr>
+        <tr>
+        <td>Basic Attention Token</td>
+        <td>------</td>
+        <td>7.14%</td>
+        </tr>
+        <tr>
+        <td>Metal</td>
+        <td>------</td>
+        <td>7.14%</td>
+        </tr>
+        <tr>
+        <td>Edgeless</td>
+        <td>------</td>
+        <td>7.14%</td>
+        </tr>
+        <tr>
+        <td>Wings</td>
+        <td>------</td>
+        <td>7.14%</td>
+        </tr>
+        <tr>
+        <td>Melon</td>
+        <td>------</td>
+        <td>7.14%</td>
+        </tr>
+        </table>
+
+
+        <br/>
+       <a name="ETI Even Index Weight"></a> 
+        <table id="weights">
+
+       <tr>
+        <th>Bletchley Ethereum Token Even Index</th>
+        <th>Creation</th>
+        <th>July 2017</th>
+        </tr>
+
+        <tr>
+        <td>Golem</td>    
+        <td>12.50%</td>
+        <td>7.14%</td>
+        </tr>
+        <tr>
+        <td>Gnosis</td>
+        <td>12.50%</td>
+        <td>7.14%</td>
+        </tr>
+        <tr>
+        <td>Augur</td>    
+        <td>12.50%</td>
+        <td>7.14%</td>
+        </tr>
+        <tr>
+        <td>Iconomi</td>
+        <td>12.50%</td>
+        <td>7.14%</td>
+        </tr>
+        <tr>
+        <td>First Blood</td>
+        <td>12.50%</td>
+        <td>7.14%</td>
+        </tr>
+        <tr>
+        <td>DigixDAO</td>
+        <td>12.50%</td>
+        <td>7.14%</td>
+        </tr>
+        <tr>
+        <td>SingularDTV</td>
+        <td>12.50%</td>
+        <td>7.14%</td>
+        </tr>
+        <tr>
+        <td>Aragon</td>
+        <td>12.50%</td>
+        <td>7.14%</td>
+        </tr>
+        <tr>
+        <td>Status</td>
+        <td>------</td>
+        <td>5.00%</td>
+        </tr>
+        <tr>
+        <td>Basic Attention Token</td>
+        <td>------</td>
+        <td>7.14%</td>
+        </tr>
+        <tr>
+        <td>Metal</td>
+        <td>------</td>
+        <td>7.14%</td>
+        </tr>
+        <tr>
+        <td>Edgeless</td>
+        <td>------</td>
+        <td>7.14%</td>
+        </tr>
+        <tr>
+        <td>Wings</td>
+        <td>------</td>
+        <td>7.14%</td>
+        </tr>
+        <tr>
+        <td>Melon</td>
+        <td>------</td>
+        <td>7.14%</td>
+        </tr>
+        </table>
+        <br/>
+
         <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 
             </div>       

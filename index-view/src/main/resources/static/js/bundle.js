@@ -199,7 +199,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 var Config = {
     data: '/api/index',
-    initalState: { "index": "ODD", "currency": "USD", "timeFrame": "HOURLY" },
+    initalState: { "index": "ODD", "currency": "USD", "timeFrame": "DAILY" },
     dropdown: {
         index: [{
             id: 'ODD',
@@ -331,7 +331,7 @@ var Config = {
                         autoSkipPadding: 10,
                         padding: 20,
                         autoSkip: true,
-                        maxTicksLimit: 4,
+                        maxTicksLimit: 5,
                         bodyFontSize: 12
                     },
                     time: {
