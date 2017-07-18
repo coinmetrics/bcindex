@@ -66,8 +66,6 @@ public class TimeSeriesQuery {
         + "(MOD(bletch_id," + numBack + ") = 0) "
         + "order by bletch_id) as b;";
 
-    System.out.println("norm: \n" + query);
-
     return query;
   }
 

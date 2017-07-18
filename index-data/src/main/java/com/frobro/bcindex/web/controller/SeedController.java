@@ -73,6 +73,7 @@ public class SeedController {
       repo.saveTenEven(newEven(time));
       repo.saveTwenty(newTwenty(time));
       repo.saveEvenTwenty(new20Even(time));
+      repo.saveEthEven(newEthEven(time));
     }
     return "done seeding";
   }
@@ -102,6 +103,13 @@ public class SeedController {
       idx.setTimeStamp(BletchDate.toDate(vals[datePos]));
       idxList.add(idx);
       repo.saveTen(idx);
+
+      JpaIdxEth eth = new JpaIdxEth();
+      eth.setId(Long.valueOf(i));
+      eth.setIndexValueBtc(Double.parseDouble(vals[btcPos]));
+      eth.setIndexValueUsd(Double.parseDouble(vals[usdPos]));
+      eth.setTimeStamp(BletchDate.toDate(vals[datePos]));
+      repo.saveEth(eth);
     }
     return idxList;
   }
@@ -126,6 +134,12 @@ public class SeedController {
 
   private JpaTwentyEven new20Even(long now) {
     JpaTwentyEven idx = new JpaTwentyEven();
+    populate(idx, now);
+    return idx;
+  }
+
+  private JpaIdxEthEven newEthEven(long now) {
+    JpaIdxEthEven idx = new JpaIdxEthEven();
     populate(idx, now);
     return idx;
   }
