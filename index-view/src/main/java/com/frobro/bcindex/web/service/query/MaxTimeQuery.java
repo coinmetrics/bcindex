@@ -42,7 +42,7 @@ public class MaxTimeQuery extends TimeSeriesQuery {
         + ", first." + TIME_COL + " as " + FIRST_TIME_COL + ", b." + currency
         + ", b." + TIME_COL
         + " from "
-        + "(select count(*) as "  + NUM + " from " + table + ") as " + ENTRIES + ", "
+        + "(select max(bletch_id) as "  + NUM + " from " + table + ") as " + ENTRIES + ", "
         + "(select " + currency + ", " + TIME_COL + " from " + table
         + " where bletch_id = (select min(bletch_id) from " + table + ")) as first,"
         + "(select " + currency + ", " + TIME_COL + " from " + table
@@ -52,18 +52,23 @@ public class MaxTimeQuery extends TimeSeriesQuery {
         + "(MOD(bletch_id," + getModNum() + ") = 0) "
         + "order by bletch_id) as b;";
 
+    System.out.println(query);
+
     return query;
   }
 
   private String getModNum() {
     String modNumQuery = "(select case "
-    + " when count < " + TimeFrame.HOURLY.getNumDataPoints()
+    + " when count < " + TimeFrame.DAILY.getNumDataPoints()
     + " then " + TimeFrame.HOURLY.getTimeStep()
 
-    + " when count < " + TimeFrame.DAILY.getNumDataPoints()
+    + " when count < " + TimeFrame.WEEKLY.getNumDataPoints()
     + " then " + TimeFrame.DAILY.getTimeStep()
 
-    + " else " + TimeFrame.MONTHLY.getTimeStep()
+        + " when count < " + TimeFrame.MONTHLY.getNumDataPoints()
+        + " then " + TimeFrame.MONTHLY.getTimeStep()
+
+    + " else " + TimeFrame.QUARTERLY.getTimeStep()
 
     + " end "
     + " from (select max(bletch_id) as count from " + table+ ") as modnum) ";
