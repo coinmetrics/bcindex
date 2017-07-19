@@ -90,13 +90,6 @@ public class TimeSeriesTest extends DbBaseTest {
     verifyPassThroughFields(req, response);
 
     // and verify last price
-    System.out.println("*******************");
-    System.out.println("*******************");
-    System.out.println("*******************");
-    System.out.println("*******************");
-    System.out.println("*******************");
-    System.out.println("exp=" + price + ", act=" + response.getLastPrice());
-
     assertEquals(price, response.getLastPrice(), 0.01);
 
     // and verify time series
