@@ -22,11 +22,11 @@ let Config = {
             },
             {
                 id: 'INDEX_ETH',
-                text: 'Bletchley Ethereum Index'
+                text: 'Bletchley Ethereum Token Index'
             },
             {
                 id: 'EVEN_ETH',
-                text: 'Bletchley Ethereum Even Index'
+                text: 'Bletchley Ethereum Token Even Index'
             }
         ],
         currency:  [

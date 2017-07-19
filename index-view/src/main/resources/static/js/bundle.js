@@ -216,10 +216,10 @@ var Config = {
             text: 'Bletchley 20 Even Index'
         }, {
             id: 'INDEX_ETH',
-            text: 'Bletchley Ethereum Index'
+            text: 'Bletchley Ethereum Token Index'
         }, {
             id: 'EVEN_ETH',
-            text: 'Bletchley Ethereum Even Index'
+            text: 'Bletchley Ethereum Token Even Index'
         }],
         currency: [{
             id: 'USD',
@@ -337,7 +337,7 @@ var Config = {
                         autoSkipPadding: 10,
                         padding: 20,
                         autoSkip: true,
-                        maxTicksLimit: 5,
+                        maxTicksLimit: 4,
                         bodyFontSize: 12
                     },
                     time: {
