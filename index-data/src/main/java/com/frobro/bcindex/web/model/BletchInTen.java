@@ -9,15 +9,13 @@ import com.frobro.bcindex.web.service.BusinessRules;
 import com.frobro.bcindex.web.service.CurrPairJson;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * Created by rise on 7/13/17.
  */
 public class BletchInTen extends BletchleyData {
+  private static final BcLog log = BcLog.getLogger(BletchInTen.class);
 
   public static double getConstant() {
     return StaticValues.CONSTANT_TEN;
@@ -45,15 +43,18 @@ public class BletchInTen extends BletchleyData {
     Map<String, Index> tickers = new TreeMap<>();
     JsonNode root = getRoot(json);
 
-    root.fields().forEachRemaining(node -> {
+    root.elements().forEachRemaining(node -> {
+      JsonNode pxNd = node.get(CurrPairJson.PRICE_KEY_20);
+      double price = pxNd.asDouble();
 
-      double price = node.getValue().get(CurrPairJson.LAST_KEY).asDouble();
+      JsonNode symbolNd = node.get(CurrPairJson.NAME_KEY_20);
+      String symbol = symbolNd.asText();
 
-      String indexName = node.getKey();
-      if (indexes.contains(indexName)) {
-        addTicker(tickers, indexName, price);
+      if (indexes.contains(symbol)) {
+        addTicker(tickers, symbol, price);
       }
     });
+
     return tickers;
   }
 }

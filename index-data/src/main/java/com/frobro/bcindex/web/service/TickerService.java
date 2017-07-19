@@ -147,7 +147,7 @@ public class TickerService {
   }
   
   private String makeCallTenMembers() throws IOException {
-    return makeApiCall(POLONIEX_ENDPOINT);
+    return makeApiCall(COIN_CAP_ENDPOINT_20);
   }
 
   private String makeApiCall(String endpoint) throws IOException {
