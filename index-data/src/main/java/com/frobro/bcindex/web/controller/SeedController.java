@@ -37,15 +37,16 @@ public class SeedController {
                        EthRepo ethRepo, EthEvenRepo eteRepo) {
 
     repo = PrimeRepo.getRepo(oRepo,eRepo,twRepo,teRepo,ethRepo,eteRepo);
-    tickerService.setIndexRepo(oRepo, eRepo, twRepo, teRepo,ethRepo,eteRepo);
+    tickerService.setIndexRepo(oRepo, eRepo, twRepo, teRepo, ethRepo, eteRepo);
     // ETH index not currently supported in file saver
-    fileDataSaver = new FileDataSaver(oRepo, eRepo, twRepo, teRepo);
+    fileDataSaver = new FileDataSaver(oRepo, eRepo, twRepo, teRepo,ethRepo,eteRepo);
   }
 
   @PostConstruct
   public void start(){
     log.info("populating the database with mock data ...");
     seed();
+//    fileDataSaver.saveData();
   }
 
   @RequestMapping("/filedata")
@@ -93,6 +94,7 @@ public class SeedController {
 
     List<JpaIndexTen> idxList = new ArrayList<>(size);
 
+    long lastDate = 0;
     for (int i=1; i<size; i++) {
       String line = lines.get(i);
       String[] vals = line.split(delim);
@@ -110,7 +112,35 @@ public class SeedController {
       eth.setIndexValueUsd(Double.parseDouble(vals[usdPos]));
       eth.setTimeStamp(BletchDate.toDate(vals[datePos]));
       repo.saveEth(eth);
+
+      if (i == (size-1)) {
+        lastDate = BletchDate.toDate(vals[datePos]).getTime();
+      }
     }
+
+    // populate again!
+    lastDate += TimeUnit.MINUTES.toMillis(1);
+    for (int i=1; i<size; i++) {
+      String line = lines.get(i);
+      String[] vals = line.split(delim);
+      JpaIndexTen idx = new JpaIndexTen();
+      idx.setId(Long.valueOf(size + i));
+      idx.setIndexValueBtc(Double.parseDouble(vals[btcPos]));
+      idx.setIndexValueUsd(Double.parseDouble(vals[usdPos]));
+      idx.setTimeStamp(lastDate);
+      idxList.add(idx);
+      repo.saveTen(idx);
+
+      JpaIdxEth eth = new JpaIdxEth();
+      eth.setId(Long.valueOf(size+i));
+      eth.setIndexValueBtc(Double.parseDouble(vals[btcPos]));
+      eth.setIndexValueUsd(Double.parseDouble(vals[usdPos]));
+      eth.setTimeStamp(BletchDate.toDate(vals[datePos]));
+      repo.saveEth(eth);
+
+      lastDate += TimeUnit.MINUTES.toMillis(1);
+    }
+
     return idxList;
   }
 

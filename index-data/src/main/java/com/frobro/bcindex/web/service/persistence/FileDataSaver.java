@@ -15,8 +15,12 @@ import java.util.List;
  * Created by rise on 6/27/17.
  */
 public class FileDataSaver {
+  private static final Integer EXPORT = 1;
+  private static final Integer DB_DUMP = 2;
+  private static final Integer DB_DUMP_EVEN = 3;
   private static final List<String> filesTen = Arrays.asList("db_files/10_index_full_history.csv");
   private static final List<String> filesTwenty = Arrays.asList("db_files/20_index_full_history.csv");
+  private static final List<String> filesEth = Arrays.asList("db_files/eth_history.csv");
 
   private static final String DELIM = ",";
   private static final String FORMAT = "MM/dd/yy HH:mm";
@@ -32,23 +36,34 @@ public class FileDataSaver {
   private EvenIdxRepo evenIdxRepo;
   private TwentyRepo twentyRepo;
   private TwentyEvenRepo twentyEvenRepo;
+  private EthRepo ethRepo;
+  private EthEvenRepo ethEvenRepo;
+  private PrimeRepo primeRepo;
 
   public FileDataSaver(IndexRepo ir, EvenIdxRepo eir,
-                       TwentyRepo tr, TwentyEvenRepo ter) {
+                       TwentyRepo tr, TwentyEvenRepo ter,
+                       EthRepo ethRepo, EthEvenRepo ethEvenRepo) {
     this.indexRepo = ir;
     this.evenIdxRepo = eir;
     this.twentyRepo = tr;
     this.twentyEvenRepo = ter;
+    this.ethRepo = ethRepo;
+    this.ethEvenRepo = ethEvenRepo;
+    primeRepo = PrimeRepo.getRepo(ir,eir,tr,ter,ethRepo,ethEvenRepo);
   }
 
   public void saveData() {
+    saveDataEth("db_files/eth_history.csv", EXPORT);
+    saveDataEth("db_files/eth_dump_7_18_2017.csv", DB_DUMP);
+    saveDataEth("db_files/eth_dump_7_18_2017.csv", DB_DUMP_EVEN);
+
     for (String file : filesTen) {
       saveDataTen(file);
     }
-
-    for (String file : filesTwenty) {
-      saveDataTwenty(file);
-    }
+//
+//    for (String file : filesTwenty) {
+//      saveDataTwenty(file);
+//    }
   }
 
   private void saveDataTwenty(String fileName) {
@@ -99,14 +114,52 @@ public class FileDataSaver {
       setData(data, ten, BTC_POS, USD_POS, bid);
       setData(data, evenTen, BTC_POS, USD_POS, bid);
 
-      tenList.add(ten);
-      evenList.add(evenTen);
+      primeRepo.saveTen(ten);
+      primeRepo.saveTenEven(evenTen);
 
       bid = updateBid(bid);
     }
+  }
 
-    this.indexRepo.save(tenList);
-    this.evenIdxRepo.save(evenList);
+  private void saveDataEth(String fileName, Integer type) {
+    List<String> lines = BletchFiles.linesToList(fileName);
+
+    List<JpaIdxEth> tenList = new ArrayList<>(lines.size());
+    List<JpaIdxEthEven> evenList = new ArrayList<>(lines.size());
+
+    // skip the header line at position zero
+    for (int i=1; i<lines.size(); i++) {
+      String line = lines.get(i);
+
+      JpaIdxEth ten = new JpaIdxEth();
+      JpaIdxEthEven evenTen = new JpaIdxEthEven();
+
+      String[] data =  line.split(DELIM);
+
+      if (DB_DUMP.equals(type)) {
+        long time = Long.parseLong(data[4]);
+        // btc=2, usd=4, time=4
+        setData(data, ten, 2, 3, time);
+      }
+      else if (DB_DUMP_EVEN.equals(type)) {
+        long time = Long.parseLong(data[4]);
+        setData(data, evenTen, 2, 3, time);
+      }
+      else {
+        setData(data, ten, BTC_POS, USD_POS);
+        setData(data, evenTen, EVEN_BTC_POS, EVEN_USD_POS);
+      }
+
+      if (DB_DUMP.equals(type)) {
+        primeRepo.saveEth(ten);
+      }
+      else if (DB_DUMP_EVEN.equals(type)) {
+        primeRepo.saveEthEven(evenTen);
+      } else {
+        primeRepo.saveEth(ten);
+        primeRepo.saveEthEven(evenTen);
+      }
+    }
   }
 
   private long updateBid(long bid) {
@@ -117,11 +170,17 @@ public class FileDataSaver {
     return bid + TIME_INC;
   }
   private void setData(String[] data, JpaIndex idx,
-                       int btcpos, int usdpos, long bid) {
-    idx.setBletchId(bid);
+                       int btcpos, int usdpos) {
+    setData(data, idx, btcpos, usdpos,
+            parseDate(data[TIME_POS]));
+  }
+
+  private void setData(String[] data, JpaIndex idx,
+                       int btcpos, int usdpos,
+                       long time) {
     idx.setIndexValueBtc(Double.parseDouble(data[btcpos]));
     idx.setIndexValueUsd(Double.parseDouble(data[usdpos]));
-    idx.setTimeStamp(parseDate(data[TIME_POS]));
+    idx.setTimeStamp(time);
   }
 
   private long parseDate(String dateStr) {
