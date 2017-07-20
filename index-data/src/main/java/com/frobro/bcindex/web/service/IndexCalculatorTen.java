@@ -41,13 +41,13 @@ public class IndexCalculatorTen extends IndexCalculator {
   @Override
   protected IndexDbDto newDbDto(double indexPrice, double usdPerBtc, long time) {
     IndexDbDto dto = new IndexDbDto();
-    dto.indexValueBtc = indexPrice;
-    dto.indexValueUsd = toUsd(indexPrice, usdPerBtc);
+    dto.indexValueBtc = toUsd(indexPrice, usdPerBtc);
+    dto.indexValueUsd = indexPrice; 
     dto.timeStamp = time;
     return dto;
   }
 
   private double toUsd(double indexPrice, double usdPerBtc) {
-    return indexPrice*usdPerBtc;
+    return indexPrice/usdPerBtc;
   }
 }
