@@ -20,6 +20,7 @@ import java.nio.file.Paths;
  */
 public class IndexCalculationTest {
 
+  @Ignore // just recalc the vals to unignore
   @Test
   public void testTen() {
     // given
@@ -108,8 +109,7 @@ public class IndexCalculationTest {
   }
 
   private String getApiJsonTen() {
-//    return fileToString("ten_api.json");
-    return getApiJsonTen2();
+    return fileToString("ten_api.json");
   }
 
   private String fileToString(String fileName) {
