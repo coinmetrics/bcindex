@@ -16,6 +16,8 @@ public class TimeSeriesQuery {
   protected static final String LAST_TIME_COL = "lasttime";
   protected static final String FIRST_TIME_COL = "firsttime";
   protected static final String FIRST_PX_COL = "firstpx";
+  protected static final String MAX_PRICE = "maxprice";
+  protected static final String MIN_PRICE = "minprice";
 
   private final RequestDto req;
   protected final String currency;
@@ -36,6 +38,7 @@ public class TimeSeriesQuery {
             response.addData(rs.getDouble(getCurrency()), rs.getLong(TimeSeriesQuery.TIME_COL))
                     .updateLast(rs.getDouble(LAST_PX_COL), rs.getLong(LAST_TIME_COL))
                     .updateFirst(rs.getDouble(FIRST_PX_COL), rs.getLong(FIRST_TIME_COL))
+                    .setMaxAndMinPrice(rs.getDouble(MAX_PRICE), rs.getDouble(MIN_PRICE))
     );
     return response;
   }
@@ -52,8 +55,12 @@ public class TimeSeriesQuery {
         + ", last." + TIME_COL + " as " + LAST_TIME_COL
         + ", first." + currency + " as " + FIRST_PX_COL
         + ", first." + TIME_COL + " as " + FIRST_TIME_COL + ", b." + currency
-        + ", b." + TIME_COL
+        + ", b." + TIME_COL + ", prices.max as " + MAX_PRICE + ", prices.min "
+        + " as " + MIN_PRICE
         + " from "
+        + "(select max(" + currency + ") as max, min(" + currency + ") as min "
+        + " from " + table + " where bletch_id > "
+        + idForTimeFrame + " ) as prices, "
         + "(select " + currency + ", " + TIME_COL + " from " + table
         + " where bletch_id = (select max(bletch_id) from " + table + ")) as last,"
         + "(select " + currency + ", " + TIME_COL + " from " + table

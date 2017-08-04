@@ -27,6 +27,7 @@ public class MaxTimeQuery extends TimeSeriesQuery {
                 .addData(rs.getDouble(getCurrency()), rs.getLong(TimeSeriesQuery.TIME_COL))
                 .updateLast(rs.getDouble(LAST_PX_COL), rs.getLong(LAST_TIME_COL))
                 .updateFirst(rs.getDouble(FIRST_PX_COL), rs.getLong(FIRST_TIME_COL))
+                .setMaxAndMinPrice(rs.getDouble(MAX_PRICE), rs.getDouble(MIN_PRICE))
     );
     return response;
   }
@@ -34,15 +35,18 @@ public class MaxTimeQuery extends TimeSeriesQuery {
   @Override
   public String queryString() {
 
-    String query = "select " + ENTRIES + "." + NUM +
-        " as " + COUNT_COL + ", last." + currency + " as "
+    String query = "select const.maxbid "
+        + " as " + COUNT_COL + ", const.maxprice as " + MAX_PRICE + ", "
+        + "const.minprice as " + MIN_PRICE + ", last." + currency + " as "
         + LAST_PX_COL
         + ", last." + TIME_COL + " as " + LAST_TIME_COL
         + ", first." + currency + " as " + FIRST_PX_COL
         + ", first." + TIME_COL + " as " + FIRST_TIME_COL + ", b." + currency
         + ", b." + TIME_COL
         + " from "
-        + "(select max(bletch_id) as "  + NUM + " from " + table + ") as " + ENTRIES + ", "
+        + "(select max(bletch_id) as maxbid, max(" + currency + ") as maxprice, "
+        + "min(" + currency + ") as minprice "
+        + " from " + table + ") as const, "
         + "(select " + currency + ", " + TIME_COL + " from " + table
         + " where bletch_id = (select min(bletch_id) from " + table + ")) as first,"
         + "(select " + currency + ", " + TIME_COL + " from " + table

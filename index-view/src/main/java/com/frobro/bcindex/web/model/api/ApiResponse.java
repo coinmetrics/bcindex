@@ -19,9 +19,9 @@ public class ApiResponse {
   public String timeUnit;
 
   public double lastPrice = UNINITIALIZED;
+  public Double high;
+  public Double low;
   public Double prevClose;
-  public Double high = 0.0;
-  public Double low = Double.MAX_VALUE;
   public Double change;
   public Double percentChange;
 
@@ -65,21 +65,7 @@ public class ApiResponse {
   private ApiResponse addPrice(double px) {
     px = format(px);
     data.add(px);
-    checkHigh(px);
-    checkLow(px);
     return this;
-  }
-
-  private void checkHigh(double px) {
-    if (px > high) {
-      high = px;
-    }
-  }
-
-  private void checkLow(double px) {
-    if (px < low) {
-      low = px;
-    }
   }
 
   private ApiResponse addTime(long time) {
@@ -115,6 +101,16 @@ public class ApiResponse {
 
   private ApiResponse updateLastTime(long time) {
     this.lastTime = BletchDate.toDate(round(time));
+    return this;
+  }
+
+  public ApiResponse setMaxAndMinPrice(double max, double min) {
+    if (high == null) {
+      this.high = max;
+    }
+    if (low == null) {
+      this.low = min;
+    }
     return this;
   }
 
@@ -158,16 +154,8 @@ public class ApiResponse {
 
     setLastFromList();
     setPrevClose();
-    checkHighAndLow(lastPrice, prevClose);
     change = lastPrice - prevClose;
     percentChange = (change/prevClose)*100.0;
-  }
-
-  private void checkHighAndLow(double lastPrice, double prevClose) {
-    checkHigh(lastPrice);
-    checkHigh(prevClose);
-    checkLow(lastPrice);
-    checkLow(prevClose);
   }
 
   private boolean notNull(Object obj) {
