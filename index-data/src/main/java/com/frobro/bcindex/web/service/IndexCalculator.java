@@ -37,6 +37,7 @@ public abstract class IndexCalculator {
   abstract protected double buildFromSum(double lastSum,
                                          double constant,
                                          double divisor);
+
   abstract protected IndexDbDto newDbDto(double priceBtc,
                                          double lastUsdPerBtc,
                                          long time);
@@ -47,7 +48,7 @@ public abstract class IndexCalculator {
 
     calculateMarketCap();
 
-    lastUsdPerBtc = getUsdPerBtc();
+    lastUsdPerBtc = newData.getPriceUsdBtc();
   }
 
   public IndexDbDto calcuateOddIndex() {
@@ -84,17 +85,6 @@ public abstract class IndexCalculator {
         + "' in BTC=" + btcValue + " times "
         + "last btc price=" + usdPerBtc + ". Which makes the index in USD="
         + result + "\n");
-  }
-
-  private double getUsdPerBtc() {
-    double numUsdPerBtc = -1;
-
-    Index usdBtc = lastIndexList.get(BletchleyData.getUsdBtcTicker());
-
-    if (usdBtc != null) {
-      numUsdPerBtc = usdBtc.getLast();
-    }
-    return numUsdPerBtc;
   }
 
   protected IndexCalculator calculateMarketCap() {
@@ -145,14 +135,14 @@ public abstract class IndexCalculator {
   private void logCalculation(double lastSum, double btcResult) {
     log.debug("last mkt cap sum: " + lastSum
         + " constant: " + constant + " divsor: "
-        + divisor + " usd-btc: " + getUsdPerBtc()
+        + divisor + " usd-btc: " + lastUsdPerBtc
         + ", BTC=" + btcResult);
   }
 
   private void logCalculationEven(double lastSum, double btcResultEven) {
     log.debug("last even sum: " + lastSum
         + " even constant: " + constantEven + " even divsor: "
-        + divisorEven + " usd-btc: " + getUsdPerBtc()
+        + divisorEven + " usd-btc: " + lastUsdPerBtc
         + ", even BTC=" + btcResultEven);
   }
 

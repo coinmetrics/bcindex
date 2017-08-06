@@ -134,9 +134,11 @@ public class TickerService {
   }
 
   public void updateTickerBtc(String response) throws IOException {
+    // get the value
     ObjectMapper mapper = new ObjectMapper();
     CoinCapDto dto = mapper.readValue(response, CoinCapDto.class);
     double btcPrice = dto.getBtcPrice();
+    // set the value
     inputDataTen.setLastUsdBtc(btcPrice);
     inputDataTwenty.setLastUsdBtc(btcPrice);
     inputEth.setLastUsdBtc(btcPrice);

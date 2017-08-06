@@ -9,65 +9,41 @@ import java.io.StringWriter;
 /**
  * Created by rise on 3/23/17.
  */
-public class BcLog {
-
+abstract public class BcLog {
   private static final String LOG_KEY = "bclog.console";
-  private Logger log;
-  private boolean useConsole;
-  private final String className;
 
   public static BcLog getLogger(Class clz) {
-    return new BcLog(clz);
+    if (System.getProperties().containsKey(LOG_KEY)) {
+      return new ConsoleLogger(clz);
+    }
+    return new BcLog4J();
   }
 
   public static String getLogKey() {
     return LOG_KEY;
   }
 
-  private BcLog(Class clz) {
-    this.className = createClassString(clz);
-    log =  LoggerFactory.getLogger(clz);
-    useConsole = System.getProperties().containsKey(LOG_KEY);
+  protected BcLog() {
   }
 
-  public void info(String msg) {
-    log(LogLevel.INFO, msg);
-  }
+  abstract public void info(String msg);
 
-  public void error(String msg) {
-    log(LogLevel.ERROR, msg);
-  }
+  abstract public void warn(String msg);
 
-  public void error(String msg, Throwable t) {
-    error(msg + "\n" + toString(t));
-  }
+  abstract public void warn(Throwable t);
 
-  public void error(Throwable t) {
-    error(toString(t));
-  }
+  abstract public void error(String msg);
 
-  public void debug(String msg) {
-    log(LogLevel.DEBUG, msg);
-  }
+  abstract public void error(String msg, Throwable t);
 
-  private void log(LogLevel level, String msg) {
-    if (useConsole) {
-      System.out.println("["+ level + "]" + " " + className + " " + msg);
-    }
-  }
+  abstract public void error(Throwable t);
 
-  private String createClassString(Class clz) {
-    return clz.getName();
-  }
+  abstract public void debug(String msg);
 
-  private String toString(Throwable t) {
+  protected String toString(Throwable t) {
     StringWriter sw = new StringWriter();
     PrintWriter pw = new PrintWriter(sw);
     t.printStackTrace(pw);
     return sw.toString();
-  }
-
-  private enum LogLevel {
-    INFO, DEBUG, WARN, ERROR
   }
 }
