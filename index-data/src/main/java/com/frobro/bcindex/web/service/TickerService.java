@@ -3,6 +3,7 @@ package com.frobro.bcindex.web.service;
 import java.io.IOException;
 import java.util.*;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -135,13 +136,23 @@ public class TickerService {
 
   public void updateTickerBtc(String response) throws IOException {
     // get the value
-    ObjectMapper mapper = new ObjectMapper();
-    CoinCapDto dto = mapper.readValue(response, CoinCapDto.class);
-    double btcPrice = dto.getBtcPrice();
+    double btcPrice = getBtcPrice(response);
     // set the value
     inputDataTen.setLastUsdBtc(btcPrice);
     inputDataTwenty.setLastUsdBtc(btcPrice);
     inputEth.setLastUsdBtc(btcPrice);
+  }
+
+  private double getBtcPrice(String json) {
+    try {
+
+      ObjectMapper mapper = new ObjectMapper();
+      JsonNode root = mapper.readTree(json);
+      return root.get("btcPrice").asDouble();
+
+    } catch (IOException ioe) {
+      throw new RuntimeException(ioe);
+    }
   }
 
   public String makeApiCallBtc() throws IOException {
