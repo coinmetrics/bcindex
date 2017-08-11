@@ -53,9 +53,9 @@ public class FileDataSaver {
   }
 
   public void saveData() {
-    saveDataEth("db_files/eth_history.csv", EXPORT);
-    saveDataEth("db_files/eth_dump_7_18_2017.csv", DB_DUMP);
-    saveDataEth("db_files/eth_dump_7_18_2017.csv", DB_DUMP_EVEN);
+//    saveDataEth("db_files/eth_history.csv", EXPORT);
+//    saveDataEth("db_files/eth_dump_7_18_2017.csv", DB_DUMP);
+    saveDataEthEven("/home/rise/Linux_files/repos/bcindex/utils/db_data/eth_even_prod.csv");
 
     for (String file : filesTen) {
       saveDataTen(file);
@@ -121,8 +121,25 @@ public class FileDataSaver {
     }
   }
 
+  private void saveDataEthEven(String fileName) {
+    List<String> lines = BletchFiles.fileSystemToList(fileName);
+
+    for (int i=1; i<lines.size(); i++) {
+      String line = lines.get(i);
+
+      JpaIdxEthEven idx = new JpaIdxEthEven();
+      String[] data = line.split(DELIM);
+
+      long time = Long.parseLong(data[4]);
+      // btc=2, usd=4, time=4
+      setData(data, idx, 2, 3, time);
+
+      primeRepo.saveEthEven(idx);
+    }
+  }
+
   private void saveDataEth(String fileName, Integer type) {
-    List<String> lines = BletchFiles.linesToList(fileName);
+    List<String> lines = BletchFiles.fileSystemToList(fileName);
 
     List<JpaIdxEth> tenList = new ArrayList<>(lines.size());
     List<JpaIdxEthEven> evenList = new ArrayList<>(lines.size());

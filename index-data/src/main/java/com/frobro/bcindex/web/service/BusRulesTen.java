@@ -24,15 +24,6 @@ public class BusRulesTen extends BusinessRules {
   private void populate() {
     tickers = new HashMap<>();
     populateValuesFromFile(tickers, StaticValues.MKT_CAP_FILE);
-    Ticker btcTicker = getBtcTicker();
-    tickers.put(btcTicker.getName(), btcTicker);
-  }
-
-  private Ticker getBtcTicker() {
-    Ticker btcTicker = new Ticker(BletchleyData.getUsdBtcTicker());
-    btcTicker.setEvenMultiplier(0).setMultiplier(0);
-
-    return btcTicker;
   }
 
   private void logMultipliers() {

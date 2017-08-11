@@ -20,8 +20,9 @@ abstract public class BletchleyData {
   private static final double USD_BTC_MKT_CAP = 0;
 
   private BusinessRules businessRules = newBusinessRules();
-  private long lastUpdateTime = 0;
   private Map<String,Index> lastIndexes = new HashMap<>();
+  private long lastUpdateTime = 0;
+  private double priceUsdBtc;
 
   public void setLastUpdate(long time) {
     this.lastUpdateTime = time;
@@ -41,13 +42,12 @@ abstract public class BletchleyData {
                                             throws IOException;
 
   public BletchleyData setLastUsdBtc(double last) {
-    Index newEntry = new Index()
-        .setName(USD_BTC_KEY)
-        .setMktCap(USD_BTC_MKT_CAP)
-        .setEvenMult(USD_BTC_MKT_CAP)
-        .setLast(last);
-    lastIndexes.put(USD_BTC_KEY, newEntry);
+    this.priceUsdBtc = last;
     return this;
+  }
+
+  public double getPriceUsdBtc() {
+    return priceUsdBtc;
   }
 
   public BletchleyData setMembers(String apiResponse) {

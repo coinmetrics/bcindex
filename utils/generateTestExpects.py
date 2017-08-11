@@ -1,5 +1,6 @@
+import json
 
-def parseFile(filename, mult, multEven):
+def parseBackfillFile(filename, mult, multEven):
 	csvfile = open(file, 'r')
 	for line in csvfile:
 		delim = ","
@@ -7,6 +8,12 @@ def parseFile(filename, mult, multEven):
 		arr = line.split(delim)
 		mult[arr[0]] = arr[1]
 		multEven[arr[0]] = arr[2]
+
+def getPricesFromApiJson(filename):
+	with open(filename, 'r') as json_file:
+		dataStr = json_file.read()
+		data = json.loads(dataStr.replace("\'", '"'))
+		print data
 
 # file = raw_input("enter path to csv:")
 file = "../index-data/src/main/resources/business_rules/jun_rebal.csv"
@@ -18,7 +25,7 @@ def createTen(last, btc_usd):
 
 	mult = {}
 	multEven = {}
-	parseFile(file, mult, multEven)
+	parseBackfillFile(file, mult, multEven)
 
 	sum = 0.0
 	for coin in mult:
@@ -59,4 +66,6 @@ last['BTC_BTS'] = 0.00005
 last['BTC_XEM'] = 0.00005477 
 btc_usd = 2015.57
 
-createTen(last, btc_usd)
+getPricesFromApiJson("/home/rise/Linux_files/repos/bcindex/index-data/src/test/resources/test_data/ten_api.json")
+
+#createTen(last, btc_usd)
