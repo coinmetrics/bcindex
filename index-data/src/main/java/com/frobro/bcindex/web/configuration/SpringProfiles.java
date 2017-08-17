@@ -8,7 +8,7 @@ public enum SpringProfiles {
     @Override
     public boolean isActive() {
       String profile = getProfile();
-      return isNull(profile) || getValue().equals(profile);
+      return isNull(profile) || getValue().equals(profile) || "devNoPop".equals(profile);
     }
     /*
      * dev is our default profile so
