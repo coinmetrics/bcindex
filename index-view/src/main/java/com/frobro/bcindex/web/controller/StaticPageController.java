@@ -24,4 +24,9 @@ public class StaticPageController {
   public String methodology(Model model) {
     return "methodology";
   }
+
+  @RequestMapping("/annc")
+  public String annc(Model model) {
+    return "annc";
+  }
 }
