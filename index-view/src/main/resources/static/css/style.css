@@ -13,7 +13,7 @@ h6{
    color:#000000;
    font-family: "Comic Sans MS", cursive, sans-serif;
 }
-h1,h2,h3,h5,h6{font-family:"Segoe UI",Arial,sans-serif;font-weight:400;margin:10px 0}
+h1,h2,h3,h5,h6,{font-family:"Segoe UI",Arial,sans-serif;font-weight:400;margin:10px 0}
 hr{border:0;border-top:1px solid #eee;margin:20px 0}
 body {margin: 0;}
 a{background-color:transparent;text-decoration:none;}
@@ -130,15 +130,32 @@ button.accordion {
     transition: 0.4s;
 }
 
+button.accordion-two {
+    background-color: #BBBDBD;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+
 
 button.accordion.active, button.accordion:hover {
-    background-color: #ddd; 
+    background-color: #D7DBDD; 
+}
+
+button.accordion-two.active, button.accordion-two:hover {
+    background-color: #BBBDBD; 
 }
 
 div.panel {
     padding: 0 18px;
     display: none;
-    background-color: white;
+    background-color: #F7F9F9;
 }
 
 ul, dd {
@@ -244,12 +261,14 @@ ul, dd {
 position:relative;
 width:100%;
 height:100%;
+padding-bottom:0px;
 }
 
 #onboard-mobile{
 position:relative;
 width:100%;
 height:100%;
+padding-bottom:0px;
 }
 
 #myChart {max-height:1000px;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;}
@@ -341,6 +360,13 @@ ul.top{
     margin:2.5%;
 }
 
+ul.indexannc{
+    list-style-type: none;
+    padding-top:none;
+    padding-left:4%;
+    background-color:#F7F9F9;
+}
+
 ul.second{
     list-style-type: disc;
     padding-left:30px;
@@ -357,7 +383,9 @@ ul.side-second{
 }
 
 .container{width:100%;background-color:#F7F9F9;}
+.containerindex{width:100%;background-color:#F7F9F9;padding-left:10px;padding-top:none;}
 .container-slogan{width:100%;background-color:#edf2f7;font-size:20px;color:#424949;text-align:center;font-weight:500;}
+.container-slogan-annc{width:100%;background-color:#F7F9F9;font-size:20px;color:#424949;text-align:center;font-weight:500;}
 .disclaimer{width:90%;background-color:#edf2f7;font-size:9px;text-align:center;justify-content:center;
     padding-left:5%;padding-right:5%;color:#000419;}
 .timezone{width:90%;background-color:#edf2f7;font-size:9px;text-align:center;justify-content:center;
