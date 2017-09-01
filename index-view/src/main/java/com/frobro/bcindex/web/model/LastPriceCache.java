@@ -32,14 +32,14 @@ public class LastPriceCache {
   public double getLast(IndexType index, Currency currency) {
     double price = 0.0;
     switch (index) {
-      case ODD:
+      case ODD_INDEX:
         if (isUsd(currency)) {
           price = tenPxUsd;
         } else if (isBtc(currency)) {
           price = tenPxBtc;
         }
         break;
-      case EVEN:
+      case EVEN_INDEX:
         if (isUsd(currency)) {
           price = tenEvenPxUsd;
         } else if (isBtc(currency)) {

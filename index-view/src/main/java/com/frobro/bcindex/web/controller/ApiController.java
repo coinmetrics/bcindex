@@ -76,7 +76,7 @@ public class ApiController {
     RequestDto dto = new RequestDto();
     dto.timeFrame = timeFrame;
     dto.currency = Currency.USD;
-    dto.index = IndexType.ODD;
+    dto.index = IndexType.ODD_INDEX;
     return dto;
   }
 }

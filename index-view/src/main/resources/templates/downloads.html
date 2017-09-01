@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" style="background-color:#F7F9F9;">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="keywords" content="Download, Index, Fund, Donate, Bletchley"/>
+    <meta name="description" content="Download and donation information for the Bletchley Indexes."/>
+    <title>Bletchley Indexes: Download</title>
+    <link th:href="@{/css/style.css}" href="../static/css/style.css"  rel="stylesheet" type="text/css"  />
+
+
+    <div class="topnav">
+        <li><a th:href="@{/home}" href="home.html" class="homelink">Bletchley Indexes</a></li>
+        <li><a th:href="@{/home}" href="home.html">Home</a></li>
+        <li><a th:href="@{/methodology}" href="methodology.html">Methodology</a></li>
+        <li><a th:href="@{/annc}" href="annc.html">Updates</a></li>
+        <li><a th:href="@{/about}" href="about.html">About</a></li>
+        <li><a th:href="@{/contact}" href="contact.html">Contact</a></li>
+    </div>
+
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+</head>
+<body>
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-98341900-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+<div class="container">
+            <div class="timeframe">
+    <div class="download-header">
+        <h2>Download Index as a csv file</h2>
+    </div>            
+    <div class="download-btns">
+            <button  data-timeframe="hourly" class="btn btn-timeframe" onclick="window.location.href='/bletchley_ten.csv'">Bletchley Ten Index</button>
+    </div>
+    <div class="download-btns">
+            <button data-timeframe="daily" class="btn btn-timeframe" onclick="window.location.href='/bletchley_ten_even.csv'">Bletchley Ten Even</button>
+    </div>
+    <div class="download-btns">
+            <button data-timeframe="weekly" class="btn btn-timeframe" onclick="window.location.href='/bletchley_twenty.csv'">Twenty Index</button>
+    </div>
+    <div class="download-btns">
+            <button data-timeframe="monthly" class="btn btn-timeframe" onclick="window.location.href='/bletchley_twenty_even.csv'">Twenty Even</button>
+    </div>
+    <div class="download-btns">
+            <button data-timeframe="max" class="btn btn-timeframe" onclick="window.location.href='/bletchley_ethereum.csv'">Ethereum Index</button>
+    </div>
+    <div class="download-btns">
+            <button data-timeframe="max" class="btn btn-timeframe" onclick="window.location.href='/bletchley_ethereum_even.csv'">Ethereum Even</button>
+    </div>
+        </div>
+</div>
+
+
+<script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-98341900-1', 'auto');
+      ga('send', 'pageview');
+</script>
+</body>
+</html>

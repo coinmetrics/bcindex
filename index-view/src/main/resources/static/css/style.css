@@ -117,6 +117,19 @@ a:active,a:hover{outline-width:0}abbr[title]{border-bottom:none;text-decoration:
     outline: none;
 }
 
+.download-header {
+    margin: auto;
+    width: 30%;
+    padding: 0px;
+    text-align: center;
+}
+
+.download-btns {
+        margin: auto;
+        width: 10%;
+        padding: 30px;
+}
+
 button.accordion {
     background-color: #D7DBDD;
     color: #444;

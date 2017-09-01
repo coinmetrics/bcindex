@@ -29,4 +29,9 @@ public class StaticPageController {
   public String annc(Model model) {
     return "annc";
   }
+
+  @RequestMapping("downloads")
+  public String downloads(Model model) {
+    return "downloads";
+  }
 }

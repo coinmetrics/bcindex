@@ -77,10 +77,10 @@ public class TimeSeriesQuery {
   }
 
   private String getIdxColName(IndexType type) {
-    if (type == IndexType.EVEN) {
+    if (type == IndexType.EVEN_INDEX) {
       return "even_index";
     }
-    else if (type == IndexType.ODD) {
+    else if (type == IndexType.ODD_INDEX) {
       return "odd_index";
     }
     else {

@@ -9,7 +9,6 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
@@ -36,7 +35,7 @@ public class TimeSeriesTest extends DbBaseTest {
     // and
     RequestDto req = new RequestDto();
     req.currency = Currency.BTC;
-    req.index = IndexType.ODD;
+    req.index = IndexType.ODD_INDEX;
     req.timeFrame = timeFrame;
 
     // when
@@ -81,7 +80,7 @@ public class TimeSeriesTest extends DbBaseTest {
     // and
     RequestDto req = new RequestDto();
     req.currency = Currency.USD;
-    req.index = IndexType.ODD;
+    req.index = IndexType.ODD_INDEX;
     req.timeFrame = timeFrame;
 
     // when
