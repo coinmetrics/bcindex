@@ -126,8 +126,9 @@ a:active,a:hover{outline-width:0}abbr[title]{border-bottom:none;text-decoration:
 
 .download-btns {
         margin: auto;
-        width: 10%;
+        width: 30%;
         padding: 30px;
+        text-align: center;
 }
 
 button.accordion {
