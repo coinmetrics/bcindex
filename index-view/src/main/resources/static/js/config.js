@@ -1,15 +1,15 @@
 let Config = {
     data: '/api/index',
-    initalState: {"index":"ODD","currency":"USD","timeFrame":"DAILY"} ,
+    initalState: {"index":"ODD_INDEX","currency":"USD","timeFrame":"DAILY"} ,
     dropdown: {
         index: [
             {
-                id: 'ODD',
+                id: 'ODD_INDEX',
                 text: 'Bletchley 10 Index',
                 selected: true
             },
             {
-                id: 'EVEN',
+                id: 'EVEN_INDEX',
                 text: 'Bletchley 10 Even Index'
             },
             {
