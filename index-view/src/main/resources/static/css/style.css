@@ -118,18 +118,36 @@ a:active,a:hover{outline-width:0}abbr[title]{border-bottom:none;text-decoration:
 }
 
 .download-header {
-    margin: auto;
-    width: 30%;
-    padding: 0px;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
     text-align: center;
+    padding-bottom: 0px;
 }
 
-.download-btns {
-        margin: auto;
-        width: 30%;
-        padding: 30px;
-        text-align: center;
+.btn-download {
+    padding:12px;
+    background: #424949;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.25em;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    border-radius: 15px;
 }
+
+.btn-download:hover {
+    background: #229954;
+    color: #424949;
+}
+
+.btn-download.selected {
+    background: #229954;
+    border: none;
+    outline: none;
+}
+
 
 button.accordion {
     background-color: #D7DBDD;
@@ -397,6 +415,7 @@ ul.side-second{
 }
 
 .container{width:100%;background-color:#F7F9F9;}
+.containerdownloads{background-color:#F7F9F9;}
 .containerindex{width:100%;background-color:#F7F9F9;padding-left:10px;padding-top:none;}
 .container-slogan{width:100%;background-color:#edf2f7;font-size:20px;color:#424949;text-align:center;font-weight:500;}
 .container-slogan-annc{width:100%;background-color:#F7F9F9;font-size:20px;color:#424949;text-align:center;font-weight:500;}
@@ -421,6 +440,7 @@ ul.side-second{
 .half-mobile-image{width:50%;background-color:#ECF0F1;float:left;text-align:center;height:170px;padding:80px 0;}
 .halfcontact{width:50%;background-color:#F7F9F9;float:left;text-align:center;height:375px;padding:40px 0;}
 .halfcontact{width:50%;background-color:#F7F9F9;float:left;text-align:center;height:375px;padding:40px 0;}
+.halfdownload{width:50%;background-color:#F7F9F9;float:left;text-align:center;height:125px;padding:40px 0;}
 .half-two{width:50%;background-color:#F7F9F9;float:left;text-align:center;height:150px;padding:80px 0;}
 .half-two-image{width:50%;background-color:#F7F9F9;float:left;text-align:center;height:150px;padding:80px 0;}
 .imgcontainer{width:100%;height:150px;}
@@ -466,6 +486,7 @@ ul.side-second{
 
 @media screen and (max-width: 992px) and (min-width: 601px) {
     .containerbody{margin-left:10%;margin-right:10%;}
+    .containerdownloads{margin-left:10%;margin-right:10%;}
     .topnav{padding-left: 10%}
     .hide-large{margin-left:8%;}
     .btn-timeframe-mobile{display:none;}
@@ -491,6 +512,7 @@ ul.side-second{
 @media screen and (min-width: 993px) {
     .hide-large{display:none!important}
     .containerbody{margin-left:25%;margin-right:25%;}
+    .containerdownloads{margin-left:25%;margin-right:25%;}
     .topnav{padding-left:25%;}
     .btn-timeframe-mobile{display:none;}
     .disclaimer-mobile{display:none;}
