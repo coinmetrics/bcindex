@@ -4,7 +4,7 @@ import datetime
 
 def create_file(coin):
 	# get data
-	url = "http://www.coincap.io/history/90day/" + coin
+	url = "http://www.coincap.io/history/365day/" + coin
 	
 	response = requests.get(url)
 
