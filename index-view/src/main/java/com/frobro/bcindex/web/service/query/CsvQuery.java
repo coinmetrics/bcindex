@@ -21,7 +21,7 @@ public class CsvQuery {
       + "index_value_btc, time_stamp, to_timestamp(time_stamp/1000) as time, date_part('day', "
       + " to_timestamp(time_stamp/1000)) as day from ";
 
-  private static final String QUERY_LAST = " where date_part('hour',to_timestamp(time_stamp/1000)) = 15)"
+  private static final String QUERY_LAST = " )"
       + " as a) as b where b.rank =1;";
 
   private final JdbcTemplate jdbc;
