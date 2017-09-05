@@ -53,13 +53,13 @@ public class MaxTimeQuery extends TimeSeriesQuery {
         + " where bletch_id = (select max(bletch_id) from " + table + ")) as last,"
         + "(select " + currency
         + ", " + TIME_COL + " from " + table + " where "
-        + "(MOD(bletch_id," + getModNum() + ") = 0) "
+        + "(MOD(bletch_id," + getModNum(table) + ") = 0) "
         + "order by bletch_id) as b;";
 
     return query;
   }
 
-  private String getModNum() {
+  static String getModNum(String table) {
     String modNumQuery = "(select case "
     + " when count < " + TimeFrame.DAILY.getNumDataPoints()
     + " then " + TimeFrame.HOURLY.getTimeStep()

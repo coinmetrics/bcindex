@@ -2,6 +2,7 @@ package com.frobro.bcindex.web.controller;
 
 import com.frobro.bcindex.web.model.CsvFile;
 import com.frobro.bcindex.web.model.api.IndexType;
+import com.frobro.bcindex.web.service.query.CsvIdBasedQuery;
 import com.frobro.bcindex.web.service.query.CsvQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,7 +66,7 @@ public class DownloadController {
   private ResponseEntity<ByteArrayResource> responseFile(String tableName) throws IOException {
     // get data from db
     CsvFile csvFile = new CsvFile();
-    CsvQuery query = new CsvQuery(jdbc);
+    CsvIdBasedQuery query = new CsvIdBasedQuery(jdbc);
     File file = csvFile.populateAndGetFile(query.getCsvContent(tableName));
 
     // write data to resource
