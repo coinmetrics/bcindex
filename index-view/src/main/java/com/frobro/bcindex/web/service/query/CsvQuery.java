@@ -37,7 +37,8 @@ public class CsvQuery {
     lines.add("time (CST), time (unix millis), index (BTC), index (USD)");
 
     jdbc.query(query(tableName), (rs, rowNum) ->
-      lines.add(rs.getString(TIME_COL) + DELIM
+      //TODO: use db formatting instead of explicitly removing +00
+      lines.add(rs.getString(TIME_COL).substring(0,19) + DELIM
           + rs.getString(EPOCH_COL) + DELIM
           + rs.getString(BTC_COL) + DELIM
           + rs.getString(USD_COL)
