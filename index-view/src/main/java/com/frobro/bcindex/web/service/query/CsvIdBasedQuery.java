@@ -45,8 +45,6 @@ public class CsvIdBasedQuery {
     Csv csv = new Csv();
 
     String query = query(tableName);
-    System.out.println(query);
-
     jdbc.query(query, (rs, rowNum) ->
             csv
                 .epochTime(rs.getLong(EPOCH_TIME))
@@ -90,10 +88,30 @@ public class CsvIdBasedQuery {
       return lines;
     }
 
-    void addHeader(String h) {
-      lines.push(dateToLine(firstEpochTime) + firstPxBtc + firstPxUsd);
-      lines.push(h);
-      lines.addLast(dateToLine(lastEpochTime) + lastPxBtc + lastPxUsd);
+    private boolean not(boolean b) {
+      return !b;
+    }
+
+    void addHeader(String header) {
+      String firstLine = dateToLine(firstEpochTime) + firstPxBtc + firstPxUsd;
+      addFirstLineIfAbsent(firstLine);
+
+      lines.push(header);
+
+      String lastLine = dateToLine(lastEpochTime) + lastPxBtc + lastPxUsd;
+      addLastLineIfAbsent(lastLine);
+    }
+
+    private void addFirstLineIfAbsent(String firstLine) {
+      if (not(firstLine.equals(lines.get(0)))) {
+        lines.push(firstLine);
+      }
+    }
+
+    private void addLastLineIfAbsent(String lastLine) {
+      if (not(lastLine.equals(lines.get(lines.size()-1)))) {
+        lines.addLast(lastLine);
+      }
     }
 
     private void addToCurrentLine(String s) {
