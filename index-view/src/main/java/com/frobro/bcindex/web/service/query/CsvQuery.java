@@ -22,7 +22,7 @@ public class CsvQuery {
       + " to_timestamp(time_stamp/1000)) as day from ";
 
   private static final String QUERY_LAST = " )"
-      + " as a) as b where b.rank =1;";
+      + " as a) as b where b.rank = 1 order by b.time_stamp;";
 
   private final JdbcTemplate jdbc;
 
