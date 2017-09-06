@@ -2,10 +2,9 @@
 block chain index
 
 To run in dev mode do the following:
-  1. cd index-data/
-  2. mvn spring-boot:run
-  3. cd ../index-web/
-  4. mvn spring-boot:run
+  1. run: mvn clean install (in root dir)
+  2. run: index-data/runDev.sh
+  3. run: index-view/runDev.sh
 
 To see the in memory database go to localhost:9122
 Make sure saved seetings = 'Generic H2 (Server) 
