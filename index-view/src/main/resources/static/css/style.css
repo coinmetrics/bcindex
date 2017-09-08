@@ -251,6 +251,14 @@ ul, dd {
     font-size: 11px;
 }
 
+#weightsequal {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 11px;
+    table-layout: fixed;
+}
+
 #weights td, #weights th {
     border-bottom: 1px solid #ddd;
     padding: 8px;
@@ -262,6 +270,25 @@ ul, dd {
 #weights tr:hover {background-color: #ddd;}
 
 #weights th {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    text-align: left;
+    background-color: #4C80AF;
+    color: white;
+    border-bottom: 1px solid #ddd;
+}
+
+#weightsequal td, #weightsequal th {
+    border-bottom: 1px solid #ddd;
+    padding: 8px;
+    
+}
+
+#weightsequal tr:nth-child(even){background-color: #f2f2f2;}
+
+#weightsequal tr:hover {background-color: #ddd;}
+
+#weightsequal th {
     padding-top: 6px;
     padding-bottom: 6px;
     text-align: left;
@@ -496,6 +523,11 @@ table.download-table tbody tr:hover {
     }
     #weights{
         font-size: 75%;
+        width: 100%;
+    }
+    #weightsequal{
+        font-size: 75%;
+        width: 100%;
     }
     .rightsidebar{display:none;} 
     .topnav li a.homelink{display:none;}
@@ -539,6 +571,9 @@ table.download-table tbody tr:hover {
         font-size: 90%;
     }
     #weights{
+        font-size: 90%;
+    }
+    #weightsequal{
         font-size: 90%;
     }
     .rightsidebar{display:none;}
