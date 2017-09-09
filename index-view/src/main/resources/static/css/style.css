@@ -11,7 +11,7 @@ h6{
    left: 0; 
    width: 100%; 
    color:#000000;
-   font-family: "Comic Sans MS", cursive, sans-serif;
+   font-family: "Segoe UI", Arial, sans-serif;
 }
 h1,h2,h3,h5,h6,{font-family:"Segoe UI",Arial,sans-serif;font-weight:400;margin:10px 0}
 hr{border:0;border-top:1px solid #eee;margin:20px 0}
@@ -349,6 +349,10 @@ padding-bottom:0px;
 
 }
 
+.topnav .icon {
+  display: none;
+}
+
 .topnav li b {
     float: left;
     padding-left:40px;
@@ -512,6 +516,7 @@ table.download-table tbody tr:hover {
 .chart-element{background-color:#000C4D;margin-left:0%;margin-right:0%;padding-left:60px;padding-right:60px;}
 .main-chart-element{background-color:#000C4D;margin-left:0%;margin-right:0%;padding-left:80px;padding-right:80px;}
 .info-element{background-color: #edf2f7;margin-left:0%;margin-right:0%;padding-left:10px;padding-right:10px;}
+.blogdate{color:#8B8B8B;}
 
 @media screen and (max-width: 600px) {
     .containerbody{margin-left:2.5%;margin-right:2.5%;}
@@ -528,6 +533,22 @@ table.download-table tbody tr:hover {
     #weightsequal{
         font-size: 75%;
         width: 100%;
+    }
+    .topnav.responsive {position: relative;}
+    .topnav.responsive .icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+    }
+    .topnav.responsive li a {
+    float: none;
+    display: block;
+    text-align: left;
+    }
+    .topnav li :not(:first-child) {display: none;}
+    .topnav li .icon {
+    float: right;
+    display: block;
     }
     .rightsidebar{display:none;} 
     .topnav li a.homelink{display:none;}
@@ -558,6 +579,7 @@ table.download-table tbody tr:hover {
     .containerbody{margin-left:10%;margin-right:10%;}
     .containerdownloads{margin-left:10%;margin-right:10%;}
     .topnav{padding-left: 10%}
+    .topnav li a.homelink{display:none;}
     .hide-large{margin-left:8%;}
     .btn-timeframe-mobile{display:none;}
     .ticker-info-box ul li dt {font-size:10px;}
