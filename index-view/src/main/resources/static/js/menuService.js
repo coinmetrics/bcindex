@@ -1,8 +1,12 @@
 function menuToggle(x) {
-    var x = document.getElementById('openMenu');
-    if (x.style.display === 'block') {
-        x.style.display = 'none';
+    var dropdown = document.getElementById('openMenu');
+    var originalIcon = document.getElementById('navIcon');
+
+    if (dropdown.style.display === 'block') {
+        dropdown.style.display = 'none';
+        originalIcon.style.display = 'block';
     } else {
-        x.style.display = 'block';
+        dropdown.style.display = 'block';
+        originalIcon.style.display = 'none';        
     }
 }
