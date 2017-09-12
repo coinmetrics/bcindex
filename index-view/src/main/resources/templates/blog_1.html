@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="keywords" content="About, Index, Fund, Passive, Digital Asset, Bletchley"/>
+    <meta name="description" content="A description of the mission and values of the Bletchley Indexes."/>
+    <title>Bletchley Indexes: About us</title>
+    <link th:href="@{/css/style.css}" href="../static/css/style.css"  rel="stylesheet" type="text/css"  />
+
+<div class="topnav">
+  <li><a th:href="@{/home}" href="home.html" class="homelink">Bletchley Indexes</a></li>
+  <li><a th:href="@{/home}" href="home.html">Home</a></li>
+  <li><a th:href="@{/methodology}" href="methodology.html">Methodology</a></li>
+  <li><a th:href="@{/annc}" href="annc.html">Updates</a></li>
+  <li><a th:href="@{/about}" href="about.html">About</a></li>
+  <li><a th:href="@{/contact}" href="contact.html">Contact</a></li>
+  <li><a class="active" th:href="@{/blog}" href="blog.html">Blog</a></li>
+</div>
+
+
+</head>
+<body>
+   
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-98341900-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+<div class="containerbody">
+<br/><br/>
+    <h1 align = "center">Indexing and Performance in Crypto Assets</h1>
+    <p>Passive indexing is a strategy continuing to gain market share in traditional financial markets, but is still not truly available in the crypto asset class. This is partly due to a lack of mechanisms for investors to track indexes, as well as a lack of quality benchmarks that measure true performance.</p>
+    <p>Bletchley Indexes is attempting to attack the second problem, while actively looking to partner on the first issue with the many teams that are trying to develop the infrastructure and technology to manage assets. In this post we are going to start off with a discussion on the current state of indexing and valuation metrics in crypto. Then we will look at the performance of the Bletchley Indexes by the realized volatility, Sharpe ratios, and correlations against both established financial assets and individual crypto assets.</p>
+    <h2 align = "center">Measuring Crypto Asset Performance</h2>
+    <p>Market capitalization is a term that has been borrowed from stock markets and inappropriately applied to the crypto space. It is defined as the total value of all shares outstanding of a company. But in crypto land, we have taken to defining market cap as the value of all publicly (not total) available coins or tokens.</p>
+    <p>By taking this well known concept of total market cap and conflating it with something else, the entire crypto community is doing a disservice to investors and hindering its own adoption. To be clear, I'm not referring to the discussion over replacing market cap with utility value or network value, but rather pointing out the necessary distinction between publicly or total available coins that has largely been missed no matter the terminology.</p>
+    <p>Let's take a look at how big this difference really is. Using coinmarketcap.com, summing up the 200 most valuable coins by what is commonly referred to as market cap, yields a total of $157 billion. But when you use the accurately defined market cap, also available on coinmarketcap.com, of the top 100 currencies and assets each, the total comes out to $273 billion. Of course there are some cases of assets that clearly should be removed, such as SolarCoin ($19 billion) and DynamicCoin ($12 billion). But here are some well known tokens with high public valuations.</p> 
+
+    <div style="overflow-x:auto;">
+<table id="weightsequal">
+  <tr>
+        <th></th>
+        <th>Ripple</th>
+        <th>NEO</th>
+        <th>Omise Go</th>
+        <th>Gnosis</th>
+        <th>Stellar</th>
+        <th>Qtum</th>
+        <th>EOS</th>
+        <th>Metal</th>
+        </tr>
+        <tr>
+        <td>Publicly Available Value ($M)</td>    
+        <td>8,575</td>
+        <td>1,539</td>
+        <td>1,266</td>
+        <td>170</td>
+        <td>333</td>
+        <td>870</td>
+        <td>325</td>
+        <td>261</td>
+        </tr>
+        <tr>
+        <td>True Market Cap ($M)</td>
+        <td>22,362</td>
+        <td>3,078</td>
+        <td>1,805</td>
+        <td>1,542</td>
+        <td>2,075</td>
+        <td>1,474</td>
+        <td>977</td>
+        <td>901</td>
+        </tr>
+        <tr>
+        <td>Float %</td>
+        <td>38%</td>
+        <td>50%</td>
+        <td>70%</td>
+        <td>11%</td>
+        <td>16%</td>
+        <td>59%</td>
+        <td>33%</td>
+        <td>29%</td>
+        </tr>
+        </table>
+       </div>
+
+    <p>These are coins with a huge number of investors who look at market commentary or these ranking sites and think the "market caps" shown are something they are not, often resulting in extreme overvaluations since buyers are working with poor information.</p>
+
+    <p>The problem isn't on the same order of magnitude for mineable coins like bitcoin, but there is still an issue when talking about realized returns of investors. Bitcoin has an inflation rate of 3.88%. If the price for one bitcoin stays unchanged over a year, someone who actually holds the coins will realize a 0% return, but someone looking at market cap stats will see the 3.88% growth and think that constituted positive return. </p>
+
+    <p>Discrepancies of 4% are hard to notice in a market experiencing 400% gains since the start of the year, but do exist and the community should be clear about when we are talking about performance rather than size of the market. </p>
+
+    <p>What is a better path forward? I propose that all of the coin ranking sites change defaults to show the total coins outstanding, and remove market cap when they are talking about publicly available values. We should adopt the standard of the stock market, and simply display a float percentage (publicly available shares divided by total outstanding) next to the accurate market cap numbers.</p>
+
+    <p>Market cap when talking about the size of the market is absolutely the right thing to use, and it is the best way to include the growth of new ICOs. But when performance is the issue there needs to be a focus on talking about individual coin, and of course index, prices. We created Bletchley Indexes to help meet this need.</p>
+
+    <h2 align = "center">Volatility and Sharpe Ratios</h2>
+    <p>Crypto assets are a classic example of high risk, high reward. While returns over the last year have been staggering, the extremely high volatility means there are a lot of traders and investors who have missed out due to the inability to manage the emotions involved with such a bumpy ride.</p>
+
+    <p>Passive investing typically goes to ETFs of traditional financial assets that tend to have volatilities of 15 or less (lately) on an annualized basis. With the data provided by the Bletchley Indexes, it is now easy to compare those numbers and see just how large the gap with crypto assets is. Below is a table of annualized volatility, realized returns, and Sharpe ratios of eight established financial assets, bitcoin, the Bletchley 10 Index, and the Bletchley 10 Even Index.</p>
+
+    <p>For those unfamiliar, the Sharpe ratio is a way to normalize returns for the risk that was taken to achieve them, with higher values being better. It is calculated here as the annualized return divided by the annualized volatility, so we are using a zero risk free rate. Data is from March 17th, 2017 to August 30th, so the major caveat of a small sample size applies to all data in this analysis.</p>
+
+    <p>A quick note on methodology, when comparing crypto to traditional assets we use the standard 252 trading day annualization factors, and remove weekends and holidays from the data set. When looking at exclusively crypto assets, we use the full 365 day year and 15:00 US Central time as each daily closing price. For a detailed description of the Bletchley Indexes used here see <a th:href="@{/methodology.html}" href="methodology.html">Index Methodology</a></p>
+<div style="overflow-x:auto;">
+<table id="weightsequal">
+  <tr>
+        <th></th>
+        <th>S&P 500</th>
+        <th>Gold</th>
+        <th>Nasdaq</th>
+        <th>Emerging Markets</th>
+        <th>Topix Index</th>
+        <th>Hang Sang Index</th>
+        <th>US 30 Year Bonds</th>
+        <th>Bitcoin</th>
+        <th>10 Index</th>
+        <th>10 Even Index</th>
+        </tr>
+        <tr>
+        <td>Volatility</td>    
+        <td>7.3%</td>
+        <td>9.8%</td>
+        <td>11.3%</td>
+        <td>12.0%</td>
+        <td>10.3%</td>
+        <td>10.5%</td>
+        <td>17.7%</td>
+        <td>87.6%</td>
+        <td>88.8%</td>
+        <td>114.2%</td>
+        </tr>
+        <tr>
+        <td>Return</td>
+        <td>7.2%</td>
+        <td>14.0%</td>
+        <td>21.0%</td>
+        <td>29.0%</td>
+        <td>5.8%</td>
+        <td>33.8%</td>
+        <td>-26%</td>
+        <td>688.8%</td>
+        <td>1,202.2%</td>
+        <td>2,962.0%</td>
+        </tr>
+        <tr>
+        <td>Sharpe Ratio</td>    
+        <td>1.00</td>
+        <td>1.43</td>
+        <td>1.86</td>
+        <td>2.41</td>
+        <td>0.56</td>
+        <td>3.20</td>
+        <td>-1.47</td>
+        <td>7.86</td>
+        <td>13.53</td>
+        <td>25.94</td>
+        </tr>
+        </table>
+       </div>
+        
+    <p>The volatility and return numbers speak for themselves, but the Sharpe ratio values here are what are really amazing. A smart-beta (equal-weight) passive investing approach in cryptoassets has almost a 26 Sharpe ratio over a six-month sample set!</p>
+    <p>Of course you would have done well in any crypto asset over that period, so let's see how things stack up in that world.</p>
+    <div style="overflow-x:auto;">
+    <table id="weightsequal">
+  <tr>
+        <th></th>
+        <th>Bitcoin</th>
+        <th>Ethereum</th>
+        <th>Litecoin</th>
+        <th>Ripple</th>
+        <th>Dash</th>
+        <th>Monero</th>
+        <th>10 Index</th>
+        <th>10 Even Index</th>
+        </tr>
+
+        <tr>
+        <td>Volatility</td>    
+        <td>86.2%</td>
+        <td>159.3%</td>
+        <td>173.9%</td>
+        <td>304.9%</td>
+        <td>141.9%</td>
+        <td>159.8%</td>
+        <td>86.8%</td>
+        <td>116.2%</td>
+        </tr>
+        <tr>
+        <td>Return</td>
+        <td>682%</td>
+        <td>1,573%</td>
+        <td>3,738%</td>
+        <td>8,732%</td>
+        <td>645%</td>
+        <td>1,076%</td>
+        <td>1,106%</td>
+        <td>2,808%</td>
+        </tr>
+        <tr>
+        <td>Sharpe Ratio</td>    
+        <td>7.91</td>
+        <td>9.87</td>
+        <td>21.49</td>
+        <td>28.64</td>
+        <td>4.54</td>
+        <td>6.73</td>
+        <td>12.75</td>
+        <td>24.17</td>
+        </tr>
+        </table>
+        </div>
+        
+    <p>Here it is much harder to argue that indexing is the best choice, but much lower volatility is achieved while maintaining exceptional returns and Sharpe ratios.</p> 
+    <h2 align="center">Correlations</h2>
+    <p>Now let's move to the correlations between the Bletchley Indexes the financial markets.</p>
+<div style="overflow-x:auto;">
+<table id="weightsequal">
+  <tr>
+        <th></th>
+        <th>S&P 500</th>
+        <th>Gold</th>
+        <th>Nasdaq</th>
+        <th>Emerging Markets</th>
+        <th>US 30 Year Bonds</th>
+        <th>Bletchley 10 Index</th>
+        <th>Bletchley 10 Even Index</th>
+        </tr>
+
+        <tr>
+        <td>S&P 500</td>
+        <td>1.00</td>
+        <td>-0.33</td>
+        <td>0.83</td>
+        <td>0.69</td>
+        <td>0.33</td>
+        <td>0.02</td>
+        <td>0.06</td>
+        </tr>
+        <tr>
+        <td>Gold</td>
+        <td>-0.33</td>
+        <td>1.00</td>
+        <td>-0.14</td>
+        <td>-0.07</td>
+        <td>-0.52</td>
+        <td>0.02</td>
+        <td>0.04</td>
+        </tr>
+        <tr>
+        <td>Nasdaq</td>    
+        <td>0.83</td>
+        <td>-0.14</td>
+        <td>1.00</td>
+        <td>0.64</td>
+        <td>0.18</td>
+        <td>0.04</td>
+        <td>0.08</td>
+        </tr>
+        <tr>
+        <td>Emerging Markets</td>    
+        <td>0.69</td>
+        <td>-0.07</td>
+        <td>0.64</td>
+        <td>1.00</td>
+        <td>0.12</td>
+        <td>-0.04</td>
+        <td>-0.01</td>
+        </tr>
+        <tr>
+        <td>US 30 Year Bonds</td>    
+        <td>0.33</td>
+        <td>-0.52</td>
+        <td>0.18</td>
+        <td>0.12</td>
+        <td>1.00</td>
+        <td>0.06</td>
+        <td>0.00</td>
+        </tr>
+        <tr>
+        <td>10 Index</td>    
+        <td>0.02</td>
+        <td>0.02</td>
+        <td>0.04</td>
+        <td>-0.04</td>
+        <td>0.05</td>
+        <td>1.00</td>
+        <td>0.84</td>
+        </tr>
+        <tr>
+        <td>10 Even Index</td>    
+        <td>0.06</td>
+        <td>0.04</td>
+        <td>0.08</td>
+        <td>-0.01</td>
+        <td>0.06</td>
+        <td>0.84</td>
+        <td>1.00</td>
+        </tr>
+        </table>
+        </div>
+
+      <p>These correlations add to the strong arguement that bitcoin and crypto are unique asset classes that deserve to stand on their own, and are a great way to diversify any financial portfolio. No correlations between a crypto asset and any traditional asset are above 0.10.</p>
+      <p>Unfortunately we've been unable to find reliable historical daily data for crypto assets at a consistent timestamp that matches our indexes, so we can't show the correlations there. If anyone has that data we'd be happy to run the numbers and share results.</p>
+      <p>Hopefully these numbers will help to convince the community that passive indexing does work in crypto, and that indexes are a cornerstone of financial markets for very good reasons that should be adopted in this exciting new area.</p>
+      <br/>
+      <p><i>Thanks to Nic Carter for his input and editing on this post</i></p>
+      
+<div class="container">
+<div class="container-slogan">
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>Bletchley - A Better Benchmark</p>
+</div>
+</div>
+
+</body>
+</html>
