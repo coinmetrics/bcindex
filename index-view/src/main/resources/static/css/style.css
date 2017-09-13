@@ -335,6 +335,36 @@ padding-bottom:0px;
 .rightsidebar{height:100%;width:200px;background-color:#fff;position:fixed!important;z-index:1;overflow:auto}
 
 
+.open-menu {
+    background-color: #424949;
+    float: right;
+    width: 200px;
+    height: 100px;
+    text-align: center;
+    padding: 0px 0px;
+    text-decoration: none;
+    font-size: 17px;
+    color: white;
+    display: none;
+}
+.menu-text {
+    padding-top: 40px;
+}
+.nav-icon {
+    float: right;
+    padding-right: 20px;
+    padding-top: 5px;
+}
+
+.bar1, .bar2, .bar3 {
+    width: 35px;
+    height: 3px;
+    background-color: white;
+    margin: 6px 0;
+    transition: 0.4s;
+    align: right;
+}
+
 .topnav {
     list-style-type: none;
     margin: 0;
@@ -346,7 +376,6 @@ padding-bottom:0px;
 
 .topnav li {
     float: left;
-
 }
 
 .topnav li b {
