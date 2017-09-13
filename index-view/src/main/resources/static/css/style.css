@@ -541,6 +541,18 @@ table.download-table tbody tr:hover {
 .chart-element{background-color:#000C4D;margin-left:0%;margin-right:0%;padding-left:60px;padding-right:60px;}
 .main-chart-element{background-color:#000C4D;margin-left:0%;margin-right:0%;padding-left:80px;padding-right:80px;}
 .info-element{background-color: #edf2f7;margin-left:0%;margin-right:0%;padding-left:10px;padding-right:10px;}
+.blogdate{color:#8B8B8B;}
+.underline{border-bottom: 1px solid #000000;width: 100%;display: block;}
+
+@media screen and (max-width: 373px) {
+    .topnav{font-size:85%;}
+    .topnav li a{padding: 14px 10px;}
+}
+
+@media screen and (max-width: 410px) and (min-width: 374px) {
+    .topnav{font-size:100%;}
+    .topnav li a{padding: 14px 12px;}
+}
 
 @media screen and (max-width: 600px) {
     .containerbody{margin-left:2.5%;margin-right:2.5%;}
@@ -620,6 +632,7 @@ table.download-table tbody tr:hover {
     .disclaimer-mobile{display:none;}
     .ticker-info-box ul li dt-a {font-size:10px;display:none;}
     #onboard-mobile{display:none;}
+    .topnav li a.nav-icon{display:none;}
     #myBtn{
         bottom: -4px;
         right: 15%;
