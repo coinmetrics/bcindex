@@ -34,4 +34,14 @@ public class StaticPageController {
   public String downloads(Model model) {
     return "downloads";
   }
+
+  @RequestMapping("/blog")
+  public String blog() {
+    return "blog";
+  }
+
+  @RequestMapping("/blog/idx_perf_post")
+  public String idxPerfPost() {
+    return "idx_perf_post";
+  }
 }
