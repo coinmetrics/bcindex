@@ -35,6 +35,30 @@
 
 </script>
 
+<button onclick="topFunction()" id="myBtn" title="Go to top"><img th:src="@{/img/UpArrow.png}" src="../static/img/UpArrow.png" /></button>
+
+
+<script>
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20){
+        document.getElementById("myBtn").style.display = "block";
+    } 
+    else{
+        document.getElementById("myBtn").style.display = "none";
+    }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+}
+</script>
+
+
 
 <div class="containerbody">
 <br/><br/>
@@ -104,6 +128,8 @@
     <p>What is a better path forward? I propose that all of the coin ranking sites change defaults to show the total coins outstanding, and remove market cap when they are talking about publicly available values. We should adopt the standard of the stock market, and simply display a float percentage (publicly available shares divided by total outstanding) next to the accurate market cap numbers.</p>
 
     <p>Market cap when talking about the size of the market is absolutely the right thing to use, and it is the best way to include the growth of new ICOs. But when performance is the issue there needs to be a focus on talking about individual coin, and of course index, prices. We created Bletchley Indexes to help meet this need.</p>
+
+    <p><i>Edit: <a href="https://blog.sia.tech/want-to-deflate-the-token-bubble-fix-the-market-cap-indicator-d50f7f1e1ec4">Here</a> is a post by the team at Sia voicing similar concerns and suggestions.</i></p>
 
     <h2 align = "center">Volatility and Sharpe Ratios</h2>
     <p>Crypto assets are a classic example of high risk, high reward. While returns over the last year have been staggering, the extremely high volatility means there are a lot of traders and investors who have missed out due to the inability to manage the emotions involved with such a bumpy ride.</p>
