@@ -69,7 +69,6 @@ public class TimeSeriesTest extends DbBaseTest {
     TimeFrame timeFrame = TimeFrame.HOURLY;
     int numEntries = 600; // 10* 60 (data pts * min/hour)
     populateDb(numEntries, price);
-    System.out.println("size: " + oddRepo.count());
 
     // and
     assertEquals(numEntries, oddRepo.count());

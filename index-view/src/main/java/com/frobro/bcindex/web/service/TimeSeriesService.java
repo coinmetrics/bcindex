@@ -38,6 +38,7 @@ public class TimeSeriesService {
 
     ApiResponse response = ApiResponse.newResponse(req);
 
+    // populate the response
     query.execute(jdbc, response);
 
     response.calculateDerivedData();

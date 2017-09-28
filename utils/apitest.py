@@ -10,6 +10,10 @@ data = {'index':'ODD', 'currency':'USD','timeFrame':'MONTHLY'}
 
 #resp = requests.post(stage, json=data)
 #resp = requests.post(local, json=data)
-resp = requests.post(prod, json=data)
+# resp = requests.post(prod, json=data)
 
-print resp.text
+# print resp.text
+
+
+for i in range(0,15):
+	print requests.get("http://coincap.io/global").text

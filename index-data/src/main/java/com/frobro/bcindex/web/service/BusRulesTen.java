@@ -2,7 +2,6 @@ package com.frobro.bcindex.web.service;
 
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.constants.StaticValues;
-import com.frobro.bcindex.web.model.BletchleyData;
 import com.frobro.bcindex.web.model.Ticker;
 
 import java.util.*;

@@ -2,18 +2,16 @@ package com.frobro.bcindex.web.controller;
 
 import com.frobro.bcindex.core.db.domain.*;
 import com.frobro.bcindex.core.db.service.*;
+import com.frobro.bcindex.core.db.service.files.BletchFiles;
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.service.TickerService;
 import com.frobro.bcindex.web.service.persistence.FileDataSaver;
-import com.frobro.bcindex.web.service.util.BletchFiles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.ThreadLocalRandom;
@@ -95,14 +93,25 @@ public class SeedController {
     List<JpaIndexTen> idxList = new ArrayList<>(size);
 
     long lastDate = 0;
-    for (int i=1; i<size; i++) {
+    long diff = 0;
+    long time = 0;
+    for (int i=size-1; i>=0; i--) {
       String line = lines.get(i);
       String[] vals = line.split(delim);
+      time = Long.parseLong(vals[datePos]);
+
+      // if is the most recent time set the time
+      // diff so all times will be recent
+      if (i == size-1) {
+        diff = System.currentTimeMillis() - time;
+      }
+
       JpaIndexTen idx = new JpaIndexTen();
       idx.setId(Long.valueOf(i));
       idx.setIndexValueBtc(Double.parseDouble(vals[btcPos]));
       idx.setIndexValueUsd(Double.parseDouble(vals[usdPos]));
-      idx.setTimeStamp(BletchDate.toDate(vals[datePos]));
+
+      idx.setTimeStamp(time + diff);
       idxList.add(idx);
       repo.saveTen(idx);
 

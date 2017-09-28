@@ -1,4 +1,4 @@
-package com.frobro.bcindex.web.service.util;
+package com.frobro.bcindex.core.db.service.files;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,9 +11,6 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * Created by rise on 6/17/17.
- */
 public class BletchFiles {
 
   public static List<String> linesToList(String fileName) {

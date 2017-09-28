@@ -38,26 +38,32 @@ public class ApiResponse {
   protected ApiResponse() {}
 
   public static ApiResponse newResponse(RequestDto req) {
+    return newResponse(req.index, req.timeFrame, req.currency);
+  }
+
+  public static ApiResponse newResponse(IndexType index,
+                                        TimeFrame timeFrame,
+                                        Currency currency) {
     ApiResponse response;
 
-    if (req.timeFrame == TimeFrame.MAX) {
+    if (timeFrame == TimeFrame.MAX) {
       response = new MaxApiResponse();
     }
     else {
       response = new ApiResponse();
     }
 
-    response.currency = req.currency;
-    response.index = req.index;
-    response.timeFrame = req.timeFrame;
-    response.timeUnit = getTimeUnit(req);
+    response.currency = currency;
+    response.index = index;
+    response.timeFrame = timeFrame;
+    response.timeUnit = getTimeUnit(timeFrame);
     return response;
   }
 
-  private static String getTimeUnit(RequestDto req) {
+  private static String getTimeUnit(TimeFrame timeFrame) {
     String unit = null;
-    if (req.timeFrame != TimeFrame.MAX) {
-      unit = req.timeFrame.getTimeStepUnit();
+    if (timeFrame != TimeFrame.MAX) {
+      unit = timeFrame.getTimeStepUnit();
     }
     return unit;
   }
