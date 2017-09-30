@@ -46,7 +46,7 @@ public class ApiController {
 
       PublicRequest pubReq = RequestConverter.convert(reqStr);
       RequestDto dto = RequestConverter.convert(pubReq);
-      ApiResponse privateResp = cache.respondTo(dto);
+      ApiResponse privateResp = dbTickerService.respond(dto);
       PublicApiResponse publicResp = RequestConverter.convert(privateResp);
       return DbTickerService.toJson(publicResp);
 
@@ -83,7 +83,7 @@ public class ApiController {
       log.error("request to api is not valid, using default");
     }
 
-    return cache.respondAsJson(dto);
+    return dbTickerService.respondAsJson(dto);
   }
 
   private boolean reqestNotValid(RequestDto dto) {

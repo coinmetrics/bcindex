@@ -52,7 +52,7 @@ public class RequestConverter {
     publicResp.percentChange = privateResp.percentChange;
 
     publicResp.data = privateResp.data;
-    publicResp.times = privateResp.times.stream().map(k -> BletchDate.toString(k)).collect(Collectors.toList());
+    publicResp.times = privateResp.times.stream().map(k -> BletchDate.toEpochMilli(k)).collect(Collectors.toList());
 
     return publicResp;
   }

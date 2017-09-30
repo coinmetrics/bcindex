@@ -95,10 +95,10 @@ public class SeedController {
     long lastDate = 0;
     long diff = 0;
     long time = 0;
-    for (int i=size-1; i>=0; i--) {
+    for (int i=size-1; i>0; i--) {
       String line = lines.get(i);
       String[] vals = line.split(delim);
-      time = Long.parseLong(vals[datePos]);
+      time = BletchDate.toEpochMilli(vals[datePos]);
 
       // if is the most recent time set the time
       // diff so all times will be recent
