@@ -23,8 +23,8 @@ public class QueryLatest {
       "  twe.index_value_btc as " + TWENTY_IDX_EVEN_BTC + "," +
       "  twe.index_value_usd as " + TWENTY_IDX_EVEN_USD + " " +
       "from " +
-      "  (select index_value_btc,index_value_usd from odd_index where id > (select count(*) from odd_index)-1 order by id desc) as tn," +
-      "  (select index_value_btc,index_value_usd from even_index where id > (select count(*) from odd_index)-1 order by id desc) as tne," +
-      "  (select index_value_btc,index_value_usd from even_index where id > (select count(*) from odd_index)-1 order by id desc) as twi," +
-      "  (select index_value_btc,index_value_usd from even_index where id > (select count(*) from odd_index)-1 order by id desc) as twe;";
+      "  (select index_value_btc,index_value_usd, time_stamp from odd_index where id > (select count(*) from odd_index)-1 order by id desc) as tn," +
+      "  (select index_value_btc,index_value_usd, time_stamp from even_index where id > (select count(*) from odd_index)-1 order by id desc) as tne," +
+      "  (select index_value_btc,index_value_usd, time_stamp from even_index where id > (select count(*) from odd_index)-1 order by id desc) as twi," +
+      "  (select index_value_btc,index_value_usd, time_stamp from even_index where id > (select count(*) from odd_index)-1 order by id desc) as twe;";
 }

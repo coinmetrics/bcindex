@@ -30,6 +30,11 @@ public class BletchDate {
     return date.format(frmt);
   }
 
+  public static long toString(String date) {
+    LocalDateTime time = LocalDateTime.parse(date, DateTimeFormatter.ofPattern(DATE_FORMAT));
+    return time.atZone(ZoneId.of(TIME_ZONE)).toInstant().toEpochMilli();
+  }
+
   private static LocalDateTime toLocalDateTime(long time) {
     return LocalDateTime.ofInstant(Instant.ofEpochMilli(time),
         ZoneId.of(TIME_ZONE));

@@ -2,6 +2,7 @@ package com.frobro.bcindex.web.controller;
 
 import com.frobro.bcindex.web.model.CsvFile;
 import com.frobro.bcindex.web.model.api.IndexType;
+import com.frobro.bcindex.web.service.query.CsvIdBasedQuery;
 import com.frobro.bcindex.web.service.query.CsvTimeQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,8 +66,7 @@ public class DownloadController {
   private ResponseEntity<ByteArrayResource> responseFile(String tableName) throws IOException {
     CsvFile csvFile = new CsvFile();
     // define the time interval between points
-    long interval = TimeUnit.DAYS.toMillis(1);
-    CsvTimeQuery query = new CsvTimeQuery(jdbc, interval);
+    CsvIdBasedQuery query = new CsvIdBasedQuery(jdbc);
     // get data from db
     File file = csvFile.populateAndGetFile(query.getCsvContent(tableName));
 

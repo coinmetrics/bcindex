@@ -1,41 +1,17 @@
 package com.frobro.bcindex.web.service.cache;
 
 import com.frobro.bcindex.web.model.api.*;
-import com.frobro.bcindex.web.service.query.CsvTimeQuery;
-import org.springframework.jdbc.core.JdbcTemplate;
+import com.frobro.bcindex.web.service.DbTickerService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class DataCache {
-  private final Map<String,ApiResponse> apiMap = new HashMap<>();
+  private static final Logger LOG = LoggerFactory.getLogger(DataCache.class);
 
-  // 10 max
-  private ApiResponse tenUsdMax = getTenUsdDto(TimeFrame.MAX);
-  private ApiResponse tenBtcMax = getTenBtcDto(TimeFrame.MAX);
-  // 10 monthly
-  private ApiResponse tenMonthUsd = getTenUsdDto(TimeFrame.MONTHLY);
-  private ApiResponse tenMonthBtc = getTenBtcDto(TimeFrame.MONTHLY);
-  // 10 weekly
-  private ApiResponse tenWkUsd = getTenUsdDto(TimeFrame.WEEKLY);
-  private ApiResponse tenWkBtc = getTenBtcDto(TimeFrame.WEEKLY);
-  // 10 daily
-  private ApiResponse tenDlyUsd = getTenUsdDto(TimeFrame.DAILY);
-  private ApiResponse tenDlyBtc = getTenBtcDto(TimeFrame.DAILY);
-  // 10 hourly
-  private ApiResponse tenHourUsd = getTenUsdDto(TimeFrame.HOURLY);
-  private ApiResponse tenHourBtc = getTenBtcDto(TimeFrame.HOURLY);
-  // ---------
-  // 10 even usd
-  // 10 even btc
-  // 20 usd
-  // 20 btc
-  // 20 even usd
-  // 20 even btc
-  // eth usd
-  // eth btc
-
-  private final JdbcTemplate jdbc;
+  private final Map<String,ApiResponse> apiMap = new ConcurrentHashMap<>();
 
   private static ApiResponse getTenUsdDto(TimeFrame frame) {
     RequestDto dto = new RequestDto();
@@ -53,34 +29,74 @@ public class DataCache {
     return ApiResponse.newResponse(dto);
   }
 
-  public DataCache(JdbcTemplate jdbc) {
-    this.jdbc = jdbc;
+  public void update() {
+    for (IndexType index : IndexType.values()) {
+
+    }
   }
 
   public ApiResponse respondTo(RequestDto req) {
+    ApiResponse resp = apiMap.get(createKey(req));
 
-    return null;
+    if (req == null) {
+      throw new IllegalStateException("no response for: " + req);
+    }
+    return resp;
   }
 
   private void populate() {
-    // for every index
-    //    for every time frame
-    //        populate usd and btc responses
-    populate(IndexType.ODD_INDEX, TimeFrame.MONTHLY);
   }
 
-  private void populate(IndexType index, TimeFrame timeFrame) {
-    CsvTimeQuery query = new CsvTimeQuery(jdbc, timeFrame.getTimeStep());
-    // create usd
-    ApiResponse usd = ApiResponse.newResponse(index, timeFrame, Currency.USD);
-    // create btc
-    ApiResponse btc = ApiResponse.newResponse(index, timeFrame, Currency.BTC);
-    // make the db call and populate
-    query.getCacheContent(index.name(), timeFrame, usd, btc);
-    // create usd string and put
-    apiMap.put(createKey(usd.index, usd.timeFrame, usd.currency),usd);
-    // create btc string and put
-    apiMap.put(createKey(btc.index, btc.timeFrame, btc.currency),btc);
+  public String respondAsJson(RequestDto req) {
+    return DbTickerService.toJson(respondTo(req));
+  }
+
+  public void populateFromDb(DbTickerService dataService) {
+    RequestDto req = new RequestDto();
+
+    for (IndexType index : IndexType.values()) {
+      LOG.info("populating index: " + index.name());
+      req.index = index;
+
+
+      for (TimeFrame timeFrame : TimeFrame.values()) {
+        if (timeFrame == TimeFrame.QUARTERLY) continue;
+
+        LOG.info("populating time frame: " + timeFrame.name());
+
+        req.timeFrame = timeFrame;
+        //        populate usd response
+        req.currency = Currency.USD;
+        populateById(req, dataService);
+
+        // and btc
+        req.currency = Currency.BTC;
+        populateById(req, dataService);
+      }
+    }
+  }
+
+  private void populateById(RequestDto req, DbTickerService service) {
+    ApiResponse response = service.respond(req);
+    apiMap.put(createKey(req), response);
+  }
+
+  private void populateByTime(IndexType index, TimeFrame timeFrame) {
+//    CsvTimeQuery query = new CsvTimeQuery(jdbc, timeFrame.getTimeStep());
+//    // create usd
+//    ApiResponse usd = ApiResponse.newResponse(index, timeFrame, Currency.USD);
+//    // create btc
+//    ApiResponse btc = ApiResponse.newResponse(index, timeFrame, Currency.BTC);
+//    // make the db call and populate
+//    query.getCacheContent(index.name(), timeFrame, usd, btc);
+//    // create usd string and put
+//    apiMap.put(createKey(usd.index, usd.timeFrame, usd.currency),usd);
+//    // create btc string and put
+//    apiMap.put(createKey(btc.index, btc.timeFrame, btc.currency),btc);
+  }
+
+  private String createKey(RequestDto req) {
+    return createKey(req.index, req.timeFrame, req.currency);
   }
 
   private String createKey(IndexType index, TimeFrame frame, Currency currency) {

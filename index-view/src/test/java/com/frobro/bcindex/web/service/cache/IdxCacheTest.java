@@ -25,7 +25,7 @@ public class IdxCacheTest {
     req.index = IndexType.ODD_INDEX;
 
     // and
-    DataCache cache = new DataCache(Mockito.mock(JdbcTemplate.class));
+    DataCache cache = new DataCache();
     // cache is populated directly not from db
 
     // and initial response is correct

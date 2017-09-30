@@ -20,6 +20,18 @@ public class DbTickerService {
   private TimeSeriesService timeSeriesService = new TimeSeriesService();
   private JdbcTemplate jdbc;
 
+  public static String toJson(Object response) {
+    String responseStr = "error";
+    try {
+
+      responseStr = new ObjectMapper().writeValueAsString(response);
+
+    } catch (JsonProcessingException jpe) {
+      log.error(jpe);
+    }
+    return responseStr;
+  }
+
   public DbTickerService setJdbc(JdbcTemplate jdbc) {
     this.jdbc = jdbc;
     timeSeriesService.setJdbc(jdbc);
@@ -41,18 +53,6 @@ public class DbTickerService {
   private ApiResponse getData(RequestDto req) {
     ApiResponse resp = timeSeriesService.getData(req);
     return resp;
-  }
-
-  private String toJson(ApiResponse response) {
-    String responseStr = "error";
-    try {
-
-      responseStr = new ObjectMapper().writeValueAsString(response);
-
-    } catch (JsonProcessingException jpe) {
-      log.error(jpe);
-    }
-    return responseStr;
   }
 
   public DbTickerService updateTickers() {

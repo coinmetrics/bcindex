@@ -136,31 +136,6 @@ public enum TimeFrame {
       return 10713600000L;
     }
   },
-  YEARLY {
-    @Override
-    public int getNumDataPoints() {
-      return (int) BletchDate.MIN_IN_YEAR;
-    }
-
-    @Override
-    public int getTimeStep() {
-      return (int) BletchDate.MIN_IN_WEEK; // min in week
-    }
-
-    public String getTimeStepUnit() {
-      return UNIT_WEEK;
-    }
-
-    @Override
-    public long round(long raw) {
-      return BletchDate.roundWeek(raw);
-    }
-
-    @Override
-    public long getTimeSpan() {
-      return 31536000000L;
-    }
-  },
   MAX {
     @Override
     public int getNumDataPoints() {

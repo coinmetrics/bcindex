@@ -68,6 +68,41 @@ public class ApiResponse {
     return unit;
   }
 
+  /*
+  public double lastPrice = UNINITIALIZED;
+  public Double high;
+  public Double low;
+  public Double prevClose;
+  public Double change;
+  public Double percentChange;
+
+  private String lastTime;
+  private String firstTime;
+  private Double firstPx;
+   */
+  public ApiResponse update(long time, double px) {
+    times.remove(0);
+    addTime(time);
+    lastTime = times.get(times.size()-1);
+    firstTime = times.get(0);
+
+    data.remove(0);
+    addPrice(px);
+    firstPx = data.get(0);
+    lastPrice = data.get(data.size()-1);
+
+    if (px > high) {
+      high = px;
+    }
+    else if (px < low) {
+      low = px;
+    }
+    prevClose = firstPx;
+    change = lastPrice - prevClose;
+    percentChange = (change/prevClose)*100.0;
+    return this;
+  }
+
   private ApiResponse addPrice(double px) {
     px = format(px);
     data.add(px);
