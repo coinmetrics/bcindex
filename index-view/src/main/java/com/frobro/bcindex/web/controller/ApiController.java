@@ -29,7 +29,7 @@ public class ApiController {
   @Autowired
   public void init(JdbcTemplate jdbc) {
     dbTickerService.setJdbc(jdbc);
-//    cache.populateFromDb(dbTickerService);
+    cache.populateFromDb(dbTickerService);
     timerService = new TimerService(dbTickerService);
     timerService.run();
   }
@@ -83,7 +83,7 @@ public class ApiController {
       log.error("request to api is not valid, using default");
     }
 
-    return dbTickerService.respondAsJson(dto);
+    return cache.respondAsJson(dto);
   }
 
   private boolean reqestNotValid(RequestDto dto) {
