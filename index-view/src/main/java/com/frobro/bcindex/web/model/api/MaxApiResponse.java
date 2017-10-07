@@ -26,11 +26,6 @@ public class MaxApiResponse extends ApiResponse {
     return this;
   }
 
-  @Override
-  protected long round(long time) {
-    return timeFrame.round(time);
-  }
-
   private TimeFrame setQueryTimeFrame(long maxBletchId) {
     TimeFrame frame;
     if (maxBletchId <= TimeFrame.DAILY.getNumDataPoints()) {

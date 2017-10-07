@@ -27,8 +27,8 @@ class CachePopulator implements Populatable {
       btc.addData(result.getDouble(getBtcCol(i)), time);
     }
 
-    usd.calculateDerivedData();
-    btc.calculateDerivedData();
+    usd.calcAndFormatData();
+    btc.calcAndFormatData();
     return this;
   }
 }

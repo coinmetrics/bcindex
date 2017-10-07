@@ -39,7 +39,7 @@ public class TimeSeriesTest extends DbBaseTest {
     req.timeFrame = timeFrame;
 
     // when
-    ApiResponse response = ser.respond(req);
+    ApiResponse response = ser.getData(req);
 
     verifyPassThroughFields(req, response);
     double btcClose = oddRepo.findOne(1L).getIndexValueBtc();
@@ -83,7 +83,7 @@ public class TimeSeriesTest extends DbBaseTest {
     req.timeFrame = timeFrame;
 
     // when
-    ApiResponse response = ser.respond(req);
+    ApiResponse response = ser.getData(req);
 
     verifyPassThroughFields(req, response);
 

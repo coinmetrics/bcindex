@@ -158,7 +158,7 @@ public enum TimeFrame {
 
     @Override
     public long round(long raw) {
-      throw new IllegalStateException("Not a valid call for max");
+      return raw;
     }
 
     @Override

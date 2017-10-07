@@ -1,6 +1,7 @@
 package com.frobro.bcindex.web.service.cache;
 
 import com.frobro.bcindex.web.model.api.*;
+import com.frobro.bcindex.web.service.DataProvider;
 import com.frobro.bcindex.web.service.DbTickerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +37,8 @@ public class DataCache {
   }
 
   public ApiResponse respondTo(RequestDto req) {
-    ApiResponse resp = apiMap.get(createKey(req));
+    String key = createKey(req);
+    ApiResponse resp = apiMap.get(key);
 
     if (req == null) {
       throw new IllegalStateException("no response for: " + req);
@@ -51,7 +53,7 @@ public class DataCache {
     return DbTickerService.toJson(respondTo(req));
   }
 
-  public void populateFromDb(DbTickerService dataService) {
+  public void populateFromDb(DataProvider dataService) {
     RequestDto req = new RequestDto();
 
     for (IndexType index : IndexType.values()) {
@@ -76,9 +78,14 @@ public class DataCache {
     }
   }
 
-  private void populateById(RequestDto req, DbTickerService service) {
-    ApiResponse response = service.respond(req);
-    apiMap.put(createKey(req), response);
+  private void populateById(RequestDto req, DataProvider service) {
+    ApiResponse response = service.getData(req);
+    if (response.firstAndLastNotNull()) {
+      apiMap.put(createKey(req), response);
+    }
+    else {
+      LOG.warn("not data exists for request: " + req);
+    }
   }
 
   private void populateByTime(IndexType index, TimeFrame timeFrame) {

@@ -1,12 +1,12 @@
 package com.frobro.bcindex.web.service.cache;
 
+import static org.junit.Assert.assertEquals;
 import com.frobro.bcindex.core.db.service.files.BletchFiles;
 import com.frobro.bcindex.web.model.api.*;
-import org.h2.jdbc.JdbcResultSet;
+import com.frobro.bcindex.web.service.TestDataProvider;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.sql.ResultSet;
 import java.util.List;
@@ -14,19 +14,19 @@ import java.util.concurrent.TimeUnit;
 
 public class IdxCacheTest {
 
-  private static final long HOUR_INTERVAL_MILLIS = TimeUnit.HOURS.toMillis(1);
-
-  @Test @Ignore
+  @Test
   public void testTenIdxUsd() {
     // given request
     RequestDto req = new RequestDto();
     req.currency = Currency.USD;
-    req.timeFrame = TimeFrame.MAX;
+    req.timeFrame = TimeFrame.DAILY;
     req.index = IndexType.ODD_INDEX;
 
     // and
     DataCache cache = new DataCache();
+    TestDataProvider dataProvider = new TestDataProvider();
     // cache is populated directly not from db
+    cache.populateFromDb(dataProvider);
 
     // and initial response is correct
     ApiResponse response = cache.respondTo(req);
@@ -37,6 +37,7 @@ public class IdxCacheTest {
 
     // then
     // - max values reflect the new data
+    assertEquals(dataProvider.getData(req), response);
   }
 
   @Test

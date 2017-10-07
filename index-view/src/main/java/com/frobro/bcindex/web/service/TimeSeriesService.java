@@ -41,8 +41,7 @@ public class TimeSeriesService {
     // populate the response
     query.execute(jdbc, response);
 
-    response.calculateDerivedData();
-    response.formatData();
+    response.calcAndFormatData();
     return response;
   }
 }

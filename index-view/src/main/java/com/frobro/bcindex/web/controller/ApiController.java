@@ -46,7 +46,7 @@ public class ApiController {
 
       PublicRequest pubReq = RequestConverter.convert(reqStr);
       RequestDto dto = RequestConverter.convert(pubReq);
-      ApiResponse privateResp = dbTickerService.respond(dto);
+      ApiResponse privateResp = cache.respondTo(dto);
       PublicApiResponse publicResp = RequestConverter.convert(privateResp);
       return DbTickerService.toJson(publicResp);
 

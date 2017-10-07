@@ -13,7 +13,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 /**
  * Created by rise on 3/23/17.
  */
-public class DbTickerService {
+public class DbTickerService implements DataProvider {
 
   private static final BcLog log = BcLog.getLogger(DbTickerService.class);
   private final LastPriceCache priceCache = new LastPriceCache();
@@ -46,13 +46,9 @@ public class DbTickerService {
     return toJson(getData(req));
   }
 
-  public ApiResponse respond(RequestDto req) {
+  @Override
+  public ApiResponse getData(RequestDto req) {
     return timeSeriesService.getData(req);
-  }
-
-  private ApiResponse getData(RequestDto req) {
-    ApiResponse resp = timeSeriesService.getData(req);
-    return resp;
   }
 
   public DbTickerService updateTickers() {
