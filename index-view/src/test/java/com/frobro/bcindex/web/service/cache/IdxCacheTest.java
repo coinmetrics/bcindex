@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import com.frobro.bcindex.core.db.service.files.BletchFiles;
 import com.frobro.bcindex.web.model.api.*;
 import com.frobro.bcindex.web.service.TestDataProvider;
+import com.frobro.bcindex.web.service.query.GroupUpdate;
+import com.frobro.bcindex.web.service.query.IndexUpdate;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -31,9 +33,13 @@ public class IdxCacheTest {
     // and initial response is correct
     ApiResponse response = cache.respondTo(req);
 
-    // when
-    // - new data is received
-    // - and a new request is sent
+    // and
+    GroupUpdate update = new GroupUpdate();
+
+    // when - new data is received
+    cache.update(update);
+
+    // and a new request is sent
 
     // then
     // - max values reflect the new data

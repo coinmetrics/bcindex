@@ -3,6 +3,10 @@ package com.frobro.bcindex.web.service.cache;
 import com.frobro.bcindex.web.model.api.*;
 import com.frobro.bcindex.web.service.DataProvider;
 import com.frobro.bcindex.web.service.DbTickerService;
+import com.frobro.bcindex.web.service.TimeSeriesService;
+import com.frobro.bcindex.web.service.query.GroupUpdate;
+import com.frobro.bcindex.web.service.query.IndexUpdate;
+import com.frobro.bcindex.web.service.query.TimeSeriesQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,25 +18,24 @@ public class DataCache {
 
   private final Map<String,ApiResponse> apiMap = new ConcurrentHashMap<>();
 
-  private static ApiResponse getTenUsdDto(TimeFrame frame) {
-    RequestDto dto = new RequestDto();
-    dto.currency = Currency.USD;
-    dto.timeFrame = frame;
-    dto.index = IndexType.ODD_INDEX;
-    return ApiResponse.newResponse(dto);
-  }
-
-  private static ApiResponse getTenBtcDto(TimeFrame frame) {
-    RequestDto dto = new RequestDto();
-    dto.currency = Currency.BTC;
-    dto.timeFrame = frame;
-    dto.index = IndexType.ODD_INDEX;
-    return ApiResponse.newResponse(dto);
-  }
-
   public void update() {
-    for (IndexType index : IndexType.values()) {
+    // get index data from db
+    TimeSeriesService seriesService = new TimeSeriesService();
+    update(seriesService.getLastestData());
+  }
 
+  void update(GroupUpdate update) {
+    // update each api response
+    for (IndexType index : IndexType.values()) {
+      for (TimeFrame frame : TimeFrame.values()) {
+        ApiResponse data = apiMap.get(createKey(index, frame, Currency.USD));
+        IndexUpdate updateData = update.get(index);
+        long updateTime = updateData.getTimeStamp();
+        if (data.timeElapsed(updateTime)) {
+          data.update(updateTime,
+                      updateData.getUsdPrice());
+        }
+      }
     }
   }
 

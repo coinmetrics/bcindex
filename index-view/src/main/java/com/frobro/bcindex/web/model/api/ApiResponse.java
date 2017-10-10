@@ -34,6 +34,8 @@ public class ApiResponse {
   private String firstTime;
   private Double firstPx;
 
+  private long lastTimeMillis;
+
   protected ApiResponse() {}
 
   public static ApiResponse newResponse(RequestDto req) {
@@ -67,6 +69,16 @@ public class ApiResponse {
     return unit;
   }
 
+  public boolean timeElasped(long time) {
+    /* implement time frame.timeElasped which
+       returns true if this time stamp is past
+       the time frame time. for example
+       hour --> return TimeUnit.Hour.toMillis <
+                (time - getLastTime());
+     */
+    return timeFrame.timeElasped(time);
+  }
+
   /*
   public double lastPrice = UNINITIALIZED;
   public Double high;
@@ -80,6 +92,7 @@ public class ApiResponse {
   private Double firstPx;
    */
   public ApiResponse update(long time, double px) {
+    make sure this is right
     times.remove(0);
     addTime(time);
     lastTime = times.get(times.size()-1);
@@ -140,7 +153,8 @@ public class ApiResponse {
   }
 
   private ApiResponse updateLastTime(long time) {
-    this.lastTime = BletchDate.toDate(round(time));
+    lastTimeMillis = time;
+    this.lastTime = BletchDate.toDate(round(lastTimeMillis));
     return this;
   }
 
@@ -240,6 +254,11 @@ public class ApiResponse {
 
   public double getLastPrice() {
     return lastPrice;
+  }
+
+  public long getLatestTime() {
+    String timeStr = lastTime != null ? lastTime : times.get(times.size()-1);
+    return BletchDate.toEpochMilli(timeStr);
   }
 
   @Override
