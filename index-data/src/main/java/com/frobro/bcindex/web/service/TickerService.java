@@ -32,7 +32,7 @@ public class TickerService {
 
   private static final BcLog log = BcLog.getLogger(TickerService.class);
   private static final String EMPTY_RESPONSE = "noop";
-  private final static String COIN_CAP_ENDPOINT = "http://www.coincap.io/global";
+  private final static String COIN_MARKET_CAP_BTC_ENDPOINT = "https://api.coinmarketcap.com/v1/ticker/bitcoin/";
   private final static String POLONIEX_ENDPOINT = "https://poloniex.com/public?command=returnTicker";
   private static final String COIN_CAP_ENDPOINT_20 = "http://www.coincap.io/front";
   private static final String COIN_CAP_ENDPOINT_ETH = COIN_CAP_ENDPOINT_20;
@@ -148,7 +148,8 @@ public class TickerService {
 
       ObjectMapper mapper = new ObjectMapper();
       JsonNode root = mapper.readTree(json);
-      return root.get("btcPrice").asDouble();
+      JsonNode node = root.get(0);
+      return node.get("price_usd").asDouble();
 
     } catch (IOException ioe) {
       throw new RuntimeException(ioe);
@@ -156,7 +157,7 @@ public class TickerService {
   }
 
   public String makeApiCallBtc() throws IOException {
-    return makeApiCall(COIN_CAP_ENDPOINT);
+    return makeApiCall(COIN_MARKET_CAP_BTC_ENDPOINT);
   }
   
   private String makeCallTenMembers() throws IOException {
