@@ -1,6 +1,68 @@
 package com.frobro.bcindex.web.model.api;
 
 public enum PublicIndex {
-  ETHER_INDEX,
-  EVEN_ETHER_INDEX
+  TEN_INDEX {
+    @Override
+    public IndexType getPrivateIdx() {
+      return IndexType.ODD_INDEX;
+    }
+  },
+  TEN_EVEN_INDEX{
+    @Override
+    public IndexType getPrivateIdx() {
+      return IndexType.EVEN_INDEX;
+    }
+  },
+  TWENTY_INDEX{
+    @Override
+    public IndexType getPrivateIdx() {
+      return IndexType.INDEX_TWENTY;
+    }
+  },
+  TWENTY_EVEN_INDEX{
+    @Override
+    public IndexType getPrivateIdx() {
+      return IndexType.EVEN_TWENTY;
+    }
+  },
+  ETHER_INDEX{
+    @Override
+    public IndexType getPrivateIdx() {
+      return IndexType.INDEX_ETH;
+    }
+  },
+  EVEN_ETHER_INDEX{
+    @Override
+    public IndexType getPrivateIdx() {
+      return IndexType.EVEN_ETH;
+    }
+  };
+
+  public static PublicIndex getPublicIdx(IndexType privateIdx) {
+    PublicIndex publicIndex;
+
+    switch (privateIdx) {
+      case EVEN_INDEX:
+        publicIndex = TEN_EVEN_INDEX;
+        break;
+      case INDEX_TWENTY:
+        publicIndex = TWENTY_INDEX;
+        break;
+      case EVEN_TWENTY:
+        publicIndex = TWENTY_EVEN_INDEX;
+        break;
+      case INDEX_ETH:
+        publicIndex = ETHER_INDEX;
+        break;
+      case EVEN_ETH:
+        publicIndex = EVEN_ETHER_INDEX;
+        break;
+      default:
+        publicIndex = TEN_INDEX;
+        break;
+    }
+    return publicIndex;
+  }
+
+  abstract public IndexType getPrivateIdx();
 }

@@ -76,7 +76,8 @@ public class ApiResponse {
        hour --> return TimeUnit.Hour.toMillis <
                 (time - getLastTime());
      */
-    return timeFrame.timeElasped(time);
+//    return timeFrame.timeElasped(time);
+    return false;
   }
 
   /*
@@ -92,7 +93,7 @@ public class ApiResponse {
   private Double firstPx;
    */
   public ApiResponse update(long time, double px) {
-    make sure this is right
+//    make sure this is right
     times.remove(0);
     addTime(time);
     lastTime = times.get(times.size()-1);

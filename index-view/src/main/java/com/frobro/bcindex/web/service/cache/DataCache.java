@@ -29,12 +29,12 @@ public class DataCache {
     for (IndexType index : IndexType.values()) {
       for (TimeFrame frame : TimeFrame.values()) {
         ApiResponse data = apiMap.get(createKey(index, frame, Currency.USD));
-        IndexUpdate updateData = update.get(index);
-        long updateTime = updateData.getTimeStamp();
-        if (data.timeElapsed(updateTime)) {
-          data.update(updateTime,
-                      updateData.getUsdPrice());
-        }
+//        IndexUpdate updateData = update.get(index);
+//        long updateTime = updateData.getTimeStamp();
+//        if (data.timeElapsed(updateTime)) {
+//          data.update(updateTime,
+//                      updateData.getUsdPrice());
+//        }
       }
     }
   }

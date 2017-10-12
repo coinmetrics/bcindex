@@ -29,14 +29,14 @@ public class ApiController {
   @Autowired
   public void init(JdbcTemplate jdbc) {
     dbTickerService.setJdbc(jdbc);
-    cache.populateFromDb(dbTickerService);
+//    cache.populateFromDb(dbTickerService);
     timerService = new TimerService(dbTickerService);
-    timerService.run();
+//    timerService.run();
   }
 
   @PostConstruct
   public void init(){
-    timerService.updateIfInDevMode();
+//    timerService.updateIfInDevMode();
   }
 
   @RequestMapping(value = "api/index", method = RequestMethod.POST)
@@ -46,9 +46,7 @@ public class ApiController {
 
       PublicRequest pubReq = RequestConverter.convert(reqStr);
       RequestDto dto = RequestConverter.convert(pubReq);
-      ApiResponse privateResp = cache.respondTo(dto);
-      PublicApiResponse publicResp = RequestConverter.convert(privateResp);
-      return DbTickerService.toJson(publicResp);
+      return processRequest(dto);
 
     } catch (IOException ioe) {
       log.error("error parsing api request:\n", ioe);
@@ -56,15 +54,21 @@ public class ApiController {
 
     return DbTickerService.toJson(
         ResponseEntity.status(HttpStatus.BAD_REQUEST)
-        .body("supported currency ("
-            + Currency.USD.name()
-            + ", " + Currency.BTC
-            + ") supported indexes ("
-            + PublicIndex.ETHER_INDEX.name()
-            + ", " + PublicIndex.EVEN_ETHER_INDEX.name()
-            + ") supported time frames ("
-            + PublicTimeFrame.DAILY.name()
-            + ", " + PublicTimeFrame.WEEKLY + ")"));
+            .body("supported currency ("
+                + Currency.USD.name()
+                + ", " + Currency.BTC
+                + ") supported indexes ("
+                + PublicIndex.ETHER_INDEX.name()
+                + ", " + PublicIndex.EVEN_ETHER_INDEX.name()
+                + ") supported time frames ("
+                + PublicTimeFrame.DAILY.name()
+                + ", " + PublicTimeFrame.WEEKLY + ")"));
+  }
+
+  private String processRequest(RequestDto req) {
+    ApiResponse privateResp = dbTickerService.getData(req);
+    PublicApiResponse publicResp = RequestConverter.convert(privateResp);
+    return DbTickerService.toJson(publicResp);
   }
 
   @RequestMapping(value = "blet/index", method = RequestMethod.POST)
@@ -83,7 +87,7 @@ public class ApiController {
       log.error("request to api is not valid, using default");
     }
 
-    return cache.respondAsJson(dto);
+    return dbTickerService.respondAsJson(dto);
   }
 
   private boolean reqestNotValid(RequestDto dto) {

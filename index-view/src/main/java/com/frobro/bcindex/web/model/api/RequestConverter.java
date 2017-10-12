@@ -1,6 +1,5 @@
 package com.frobro.bcindex.web.model.api;
 
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.frobro.bcindex.core.db.service.BletchDate;
 
@@ -16,12 +15,7 @@ public class RequestConverter {
     privateReq.currency = pubReq.currency;
 
     // set index
-    if (pubReq.index == PublicIndex.ETHER_INDEX) {
-      privateReq.index = IndexType.INDEX_ETH;
-    }
-    else if (pubReq.index == PublicIndex.EVEN_ETHER_INDEX) {
-      privateReq.index = IndexType.EVEN_ETH;
-    }
+    privateReq.index = pubReq.index.getPrivateIdx();
 
     // set time frame
     if (pubReq.timeFrame == PublicTimeFrame.DAILY) {
@@ -32,6 +26,14 @@ public class RequestConverter {
     }
 
     return privateReq;
+  }
+
+  public static PublicRequest convert(RequestDto internalReq) {
+    PublicRequest pubReq = new PublicRequest();
+    pubReq.index = PublicIndex.getPublicIdx(internalReq.index);
+    pubReq.timeFrame = convert(internalReq.timeFrame);
+    pubReq.currency = internalReq.currency;
+    return pubReq;
   }
 
   public static PublicRequest convert(String json) throws IOException {
@@ -68,12 +70,6 @@ public class RequestConverter {
   }
 
   private static PublicIndex convert(IndexType privateIdx) {
-    PublicIndex publicIdx = PublicIndex.ETHER_INDEX;
-
-    if (IndexType.EVEN_ETH == privateIdx) {
-      publicIdx = PublicIndex.EVEN_ETHER_INDEX;
-    }
-
-    return publicIdx;
+    return PublicIndex.getPublicIdx(privateIdx);
   }
 }
