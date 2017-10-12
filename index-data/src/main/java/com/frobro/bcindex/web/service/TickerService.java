@@ -3,10 +3,8 @@ package com.frobro.bcindex.web.service;
 import java.io.IOException;
 import java.util.*;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.frobro.bcindex.core.db.domain.*;
 import com.frobro.bcindex.core.db.service.*;
 import com.frobro.bcindex.web.bclog.BcLog;
@@ -15,7 +13,6 @@ import com.frobro.bcindex.web.model.BletchInEth;
 import com.frobro.bcindex.web.model.BletchInTen;
 import com.frobro.bcindex.web.model.BletchInTwenty;
 import com.frobro.bcindex.web.service.persistence.IndexDbDto;
-import com.frobro.bcindex.web.model.BletchleyData;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;

@@ -23,6 +23,8 @@ times = resp.json()['times']
 
 
 filename = "csv_data/" + index + "_" + currency + ".csv"
+filename = filename.lower()
+
 outfile = open(filename, 'w')
 
 for i in range(0,len(prices)):

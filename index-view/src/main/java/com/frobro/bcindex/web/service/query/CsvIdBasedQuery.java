@@ -27,7 +27,7 @@ public class CsvIdBasedQuery {
     this.jdbc = jdbc;
   }
 
-  private String query(String table) {
+  public String query(String table) {
     return "select last.index_value_usd as " + LAST_PX_USD + ", last.index_value_btc as " + LAST_PX_BTC
          + ", last.time_stamp as " + LAST_EPOCH_TIME + ", " +
         "first.index_value_usd as " + FIRST_PX_USD + ", first.index_value_btc as " + FIRST_PX_BTC
@@ -42,7 +42,7 @@ public class CsvIdBasedQuery {
 
   public List<String> getCsvContent(String tableName) {
     List<String> lines = new LinkedList<>();
-    Csv csv = new Csv();
+    BletchCsv csv = new BletchCsv();
 
     String query = query(tableName);
     jdbc.query(query, (rs, rowNum) ->
@@ -65,120 +65,5 @@ public class CsvIdBasedQuery {
     csv.addHeader("time (CST), time (unix millis), index (BTC), index (USD)");
 
     return csv.getLines();
-  }
-
-  private class Csv {
-    private final  DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    private String firstPxUsd;
-    private String firstPxBtc;
-    private Long firstEpochTime;
-    private String lastPxUsd;
-    private String lastPxBtc;
-    private Long lastEpochTime;
-    LinkedList<String> lines = new LinkedList<>();
-    String currLine = "";
-
-    Csv newline() {
-      lines.add(currLine);
-      currLine = "";
-      return this;
-    }
-
-    List<String> getLines() {
-      return lines;
-    }
-
-    private boolean not(boolean b) {
-      return !b;
-    }
-
-    void addHeader(String header) {
-      String firstLine = dateToLine(firstEpochTime) + firstPxBtc + firstPxUsd;
-      addFirstLineIfAbsent(firstLine);
-
-      lines.push(header);
-
-      String lastLine = dateToLine(lastEpochTime) + lastPxBtc + lastPxUsd;
-      addLastLineIfAbsent(lastLine);
-    }
-
-    private void addFirstLineIfAbsent(String firstLine) {
-      if (not(firstLine.equals(lines.get(0)))) {
-        lines.push(firstLine);
-      }
-    }
-
-    private void addLastLineIfAbsent(String lastLine) {
-      if (not(lastLine.equals(lines.get(lines.size()-1)))) {
-        lines.addLast(lastLine);
-      }
-    }
-
-    private void addToCurrentLine(String s) {
-      currLine = currLine.concat(s);
-    }
-
-    Csv usdPrice(String px) {
-      addToCurrentLine(px);
-      return this;
-    }
-
-    Csv btcPrice(String px) {
-      addToCurrentLine(px);
-      return this;
-    }
-
-    Csv epochTime(long t) {
-      addToCurrentLine(dateToLine(t));
-      return this;
-    }
-
-    private String dateToLine(long t) {
-      LocalDateTime date =
-          LocalDateTime.ofInstant(Instant.ofEpochMilli(t), ZoneId.of("America/Chicago"));
-      return date.format(formatter) + "," + String.valueOf(t) + ",";
-    }
-
-    Csv firstPxUsd(String px) {
-      if (this.firstPxUsd == null) {
-        firstPxUsd = px;
-      }
-      return this;
-    }
-
-    Csv firstPxBt(String px) {
-      if (this.firstPxBtc == null) {
-        firstPxBtc = px;
-      }
-      return this;
-    }
-
-    Csv firstEpochTime(long t) {
-      if (this.firstEpochTime == null) {
-        firstEpochTime = t;
-      }
-      return this;
-    }
-
-    Csv lastPxUsd(String px) {
-      if (lastPxUsd == null) {
-        lastPxUsd = px;
-      }
-      return this;
-    }
-
-    Csv lastPxBtc(String px) {
-      if (lastPxBtc == null) {
-        lastPxBtc = px;
-      }
-      return this;
-    }
-
-    Csv lastEpochTime(long t) {
-      if (lastEpochTime == null) {
-        lastEpochTime = t;
-      }
-      return this;
-    }
   }
 }

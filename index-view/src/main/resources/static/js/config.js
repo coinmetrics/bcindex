@@ -1,5 +1,5 @@
 let Config = {
-    data: '/api/index',
+    data: '/blet/index',
     initalState: {"index":"ODD_INDEX","currency":"USD","timeFrame":"DAILY"} ,
     dropdown: {
         index: [

@@ -2,6 +2,8 @@ package com.frobro.bcindex.web.service;
 
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.model.api.*;
+import com.frobro.bcindex.web.service.query.GroupUpdate;
+import com.frobro.bcindex.web.service.query.IndexUpdate;
 import com.frobro.bcindex.web.service.query.TimeSeriesQuery;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -38,10 +40,14 @@ public class TimeSeriesService {
 
     ApiResponse response = ApiResponse.newResponse(req);
 
+    // populate the response
     query.execute(jdbc, response);
 
-    response.calculateDerivedData();
-    response.formatData();
+    response.calcAndFormatData();
     return response;
+  }
+
+  public GroupUpdate getLastestData() {
+    return null;
   }
 }

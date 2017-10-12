@@ -198,7 +198,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 var Config = {
-    data: '/api/index',
+    data: '/blet/index',
     initalState: { "index": "ODD_INDEX", "currency": "USD", "timeFrame": "DAILY" },
     dropdown: {
         index: [{

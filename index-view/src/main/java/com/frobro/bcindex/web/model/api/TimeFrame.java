@@ -26,6 +26,11 @@ public enum TimeFrame {
     public String getTimeStepUnit() {
       return UNIT_MINUTE;
     }
+
+    @Override
+    public long getTimeSpan() {
+      return 3600000;
+    }
   },
 
   DAILY {
@@ -48,6 +53,11 @@ public enum TimeFrame {
     public long round(long raw) {
       return BletchDate.roundMinute(raw);
     }
+
+    @Override
+    public long getTimeSpan() {
+      return 86400000;
+    }
   },
   WEEKLY {
     @Override
@@ -68,6 +78,11 @@ public enum TimeFrame {
     @Override
     public long round(long raw) {
       return BletchDate.roundHour(raw);
+    }
+
+    @Override
+    public long getTimeSpan() {
+      return 604800000;
     }
   },
   MONTHLY {
@@ -90,6 +105,11 @@ public enum TimeFrame {
     public long round(long raw) {
       return BletchDate.roundHour(raw);
     }
+
+    @Override
+    public long getTimeSpan() {
+      return 2678400000L;
+    }
   },
   QUARTERLY {
     @Override
@@ -110,25 +130,10 @@ public enum TimeFrame {
     public long round(long raw) {
       return BletchDate.roundDay(raw);
     }
-  },
-  YEARLY {
-    @Override
-    public int getNumDataPoints() {
-      return (int) BletchDate.MIN_IN_YEAR;
-    }
 
     @Override
-    public int getTimeStep() {
-      return (int) BletchDate.MIN_IN_WEEK; // min in week
-    }
-
-    public String getTimeStepUnit() {
-      return UNIT_WEEK;
-    }
-
-    @Override
-    public long round(long raw) {
-      return BletchDate.roundWeek(raw);
+    public long getTimeSpan() {
+      return 10713600000L;
     }
   },
   MAX {
@@ -153,6 +158,11 @@ public enum TimeFrame {
 
     @Override
     public long round(long raw) {
+      return raw;
+    }
+
+    @Override
+    public long getTimeSpan() {
       throw new IllegalStateException("Not a valid call for max");
     }
   };
@@ -166,6 +176,7 @@ public enum TimeFrame {
   abstract public int getTimeStep();
   abstract public int getNumDataPoints();
   abstract public String getTimeStepUnit();
+  abstract public long getTimeSpan();
   public long round(long raw) { return raw; }
   public int getModNum() {
     return getNumDataPoints()/getTimeStep();

@@ -3,7 +3,7 @@ package com.frobro.bcindex.web.controller;
 import com.frobro.bcindex.web.model.CsvFile;
 import com.frobro.bcindex.web.model.api.IndexType;
 import com.frobro.bcindex.web.service.query.CsvIdBasedQuery;
-import com.frobro.bcindex.web.service.query.CsvQuery;
+import com.frobro.bcindex.web.service.query.CsvTimeQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,18 +11,18 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.concurrent.TimeUnit;
 
-@Controller
+@RestController
 public class DownloadController {
   private Logger log = LoggerFactory.getLogger(DownloadController.class);
 
@@ -64,9 +64,10 @@ public class DownloadController {
   }
 
   private ResponseEntity<ByteArrayResource> responseFile(String tableName) throws IOException {
-    // get data from db
     CsvFile csvFile = new CsvFile();
+    // define the time interval between points
     CsvIdBasedQuery query = new CsvIdBasedQuery(jdbc);
+    // get data from db
     File file = csvFile.populateAndGetFile(query.getCsvContent(tableName));
 
     // write data to resource
