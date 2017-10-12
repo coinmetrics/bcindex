@@ -7,7 +7,7 @@ import org.junit.Test;
 public class PublicApiTest {
 
   @Test
-  public void testLoopCombos() {
+  public void testCombosOfRequests() {
     // given
     PublicRequest pubReq = new PublicRequest();
     pubReq.timeFrame = PublicTimeFrame.DAILY;
@@ -21,5 +21,22 @@ public class PublicApiTest {
 
       assertEquals(pubReq, converted);
     }
+  }
+
+  @Test
+  public void testResponseConversion() {
+    RequestDto dto = new RequestDto();
+    dto.currency = Currency.USD;
+    dto.timeFrame = TimeFrame.DAILY;
+    dto.index = IndexType.ODD_INDEX;
+    ApiResponse resp = ApiResponse.newResponse(dto);
+
+    PublicApiResponse publicResp = RequestConverter.convert(resp);
+
+    assertEquals(resp.change, publicResp.change);
+    assertEquals(resp.currency, publicResp.currency);
+    assertEquals(PublicIndex.TEN_INDEX, publicResp.index);
+    // add verify summary
+    // add verify data and times
   }
 }
