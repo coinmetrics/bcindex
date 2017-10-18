@@ -6,6 +6,7 @@ import com.frobro.bcindex.web.service.query.TimeSeriesQuery;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by rise on 5/12/17.
@@ -165,6 +166,10 @@ public enum TimeFrame {
     public long getTimeSpan() {
       throw new IllegalStateException("Not a valid call for max");
     }
+
+    public boolean timeElapsed(long timeDiff, long timeStep) {
+      return timeDiff > TimeUnit.MINUTES.toMillis(timeStep);
+    }
   };
 
   protected static final String UNIT_MINUTE = "minute";
@@ -188,5 +193,12 @@ public enum TimeFrame {
 
   public TimeSeriesQuery getQuery(RequestDto req) {
     return new TimeSeriesQuery(req);
+  }
+
+  public boolean timeElapsed(long timeDiff) {
+    System.out.println("diff=  "+timeDiff
+              + "\n" + "thresh " + TimeUnit.MINUTES.toMillis(getTimeStep()));
+    System.out.println();
+    return timeDiff > TimeUnit.MINUTES.toMillis(getTimeStep());
   }
 }

@@ -11,6 +11,10 @@ public class MaxApiResponse extends ApiResponse {
 
   protected MaxApiResponse() {}
 
+  public long getMaxBletchId() {
+    return maxBletchId;
+  }
+
   public ApiResponse setTotalCount(long maxBletchId) {
     if (this.maxBletchId == null) {
       this.maxBletchId = maxBletchId;

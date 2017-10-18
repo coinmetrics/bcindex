@@ -2,6 +2,7 @@ package com.frobro.bcindex.web.model;
 
 import com.frobro.bcindex.web.model.api.Currency;
 import com.frobro.bcindex.web.model.api.IndexType;
+import com.frobro.bcindex.web.service.time.TimeService;
 
 import java.util.concurrent.TimeUnit;
 
@@ -25,7 +26,7 @@ public class LastPriceCache {
   }
 
   public boolean isMinuteSinceLastUpdate() {
-    return (System.currentTimeMillis() - timeStamp) >
+    return (TimeService.currentTimeMillis() - timeStamp) >
         TimeUnit.MINUTES.toMillis(1);
   }
 

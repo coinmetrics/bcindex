@@ -8,6 +8,7 @@ import com.frobro.bcindex.web.model.LastPriceCache;
 import com.frobro.bcindex.web.model.api.ApiResponse;
 import com.frobro.bcindex.web.model.api.RequestDto;
 import com.frobro.bcindex.web.service.query.QueryLatest;
+import com.frobro.bcindex.web.service.time.TimeService;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
@@ -83,7 +84,7 @@ public class DbTickerService implements DataProvider {
             .setTwentyEvenPxBtc(rs.getDouble(QueryLatest.TWENTY_IDX_EVEN_BTC))
             .setTwentyEvenPxUsd(rs.getDouble(QueryLatest.TWENTY_IDX_EVEN_USD))
     );
-    priceCache.setTimeStamp(System.currentTimeMillis());
+    priceCache.setTimeStamp(TimeService.currentTimeMillis());
   }
 
   public LastPriceCache getCache() {

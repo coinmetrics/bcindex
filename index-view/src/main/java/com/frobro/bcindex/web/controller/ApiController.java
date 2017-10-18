@@ -29,14 +29,14 @@ public class ApiController {
   @Autowired
   public void init(JdbcTemplate jdbc) {
     dbTickerService.setJdbc(jdbc);
-//    cache.populateFromDb(dbTickerService);
+    cache.populateFromDb(dbTickerService);
     timerService = new TimerService(dbTickerService);
 //    timerService.run();
   }
 
   @PostConstruct
   public void init(){
-//    timerService.updateIfInDevMode();
+    timerService.updateIfInDevMode();
   }
 
   @RequestMapping(value = "api/index", method = RequestMethod.POST)

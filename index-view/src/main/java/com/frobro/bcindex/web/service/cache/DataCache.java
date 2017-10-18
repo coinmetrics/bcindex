@@ -1,21 +1,21 @@
 package com.frobro.bcindex.web.service.cache;
 
+import com.frobro.bcindex.core.db.service.BletchDate;
 import com.frobro.bcindex.web.model.api.*;
 import com.frobro.bcindex.web.service.DataProvider;
 import com.frobro.bcindex.web.service.DbTickerService;
 import com.frobro.bcindex.web.service.TimeSeriesService;
 import com.frobro.bcindex.web.service.query.GroupUpdate;
 import com.frobro.bcindex.web.service.query.IndexUpdate;
-import com.frobro.bcindex.web.service.query.TimeSeriesQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 
 public class DataCache {
   private static final Logger LOG = LoggerFactory.getLogger(DataCache.class);
-
   private final Map<String,ApiResponse> apiMap = new ConcurrentHashMap<>();
 
   public void update() {
@@ -28,15 +28,67 @@ public class DataCache {
     // update each api response
     for (IndexType index : IndexType.values()) {
       for (TimeFrame frame : TimeFrame.values()) {
-        ApiResponse data = apiMap.get(createKey(index, frame, Currency.USD));
-//        IndexUpdate updateData = update.get(index);
-//        long updateTime = updateData.getTimeStamp();
-//        if (data.timeElapsed(updateTime)) {
-//          data.update(updateTime,
-//                      updateData.getUsdPrice());
-//        }
+        if (frame == TimeFrame.QUARTERLY) continue;
+
+        String key = createKey(index, frame, Currency.USD);
+        ApiResponse data = apiMap.get(key);
+        IndexUpdate updateData = update.get(index);
+
+        long updateTime = updateData.getTimeStamp();
+        if (notNull(data, key) && timeElapsed(data, updateTime)) {
+          data.update(updateTime,
+              updateData.getUsdPrice());
+        }
       }
     }
+  }
+
+  // update only if the time has elapsed for this time frame
+  public boolean timeElapsed(ApiResponse data, long updateTime) {
+    long lastTime = data.getLatestTime();
+
+    // if is max time frame
+    if (data.timeFrame == TimeFrame.MAX) {
+      long maxBletchId = ((MaxApiResponse)data).getMaxBletchId();
+      return timeElapsed(lastTime, toTimeStep(maxBletchId));
+    }
+
+    return data.timeFrame.timeElapsed(
+        data.timeFrame.round(updateTime) - lastTime);
+  }
+
+  private long toTimeStep(long maxBletchId) {
+    long timeStep;
+    if (maxBletchId < TimeFrame.DAILY.getNumDataPoints()) {
+      timeStep = TimeFrame.HOURLY.getTimeStep();
+    }
+    else if (maxBletchId < TimeFrame.WEEKLY.getNumDataPoints()) {
+      timeStep = TimeFrame.DAILY.getTimeStep();
+    }
+    else if (maxBletchId < TimeFrame.MONTHLY.getNumDataPoints()) {
+      timeStep = TimeFrame.MONTHLY.getTimeStep();
+    }
+    else {
+      timeStep = TimeFrame.QUARTERLY.getTimeStep();
+    }
+    return timeStep;
+  }
+
+  private boolean timeElapsed(long timeDiff, long timeStep) {
+    return timeDiff > TimeUnit.MINUTES.toMillis(timeStep);
+  }
+
+  private boolean notNull(ApiResponse data, String key) {
+    boolean result = false;
+
+    if (data != null) {
+      result = true;
+    }
+    else {
+      LOG.error("no data for key: " + key);
+    }
+
+    return result;
   }
 
   public ApiResponse respondTo(RequestDto req) {
@@ -47,9 +99,6 @@ public class DataCache {
       throw new IllegalStateException("no response for: " + req);
     }
     return resp;
-  }
-
-  private void populate() {
   }
 
   public String respondAsJson(RequestDto req) {
@@ -63,10 +112,8 @@ public class DataCache {
       LOG.info("populating index: " + index.name());
       req.index = index;
 
-
       for (TimeFrame timeFrame : TimeFrame.values()) {
         if (timeFrame == TimeFrame.QUARTERLY) continue;
-
         LOG.info("populating time frame: " + timeFrame.name());
 
         req.timeFrame = timeFrame;
@@ -91,33 +138,11 @@ public class DataCache {
     }
   }
 
-  private void populateByTime(IndexType index, TimeFrame timeFrame) {
-//    CsvTimeQuery query = new CsvTimeQuery(jdbc, timeFrame.getTimeStep());
-//    // create usd
-//    ApiResponse usd = ApiResponse.newResponse(index, timeFrame, Currency.USD);
-//    // create btc
-//    ApiResponse btc = ApiResponse.newResponse(index, timeFrame, Currency.BTC);
-//    // make the db call and populate
-//    query.getCacheContent(index.name(), timeFrame, usd, btc);
-//    // create usd string and put
-//    apiMap.put(createKey(usd.index, usd.timeFrame, usd.currency),usd);
-//    // create btc string and put
-//    apiMap.put(createKey(btc.index, btc.timeFrame, btc.currency),btc);
-  }
-
   private String createKey(RequestDto req) {
     return createKey(req.index, req.timeFrame, req.currency);
   }
 
   private String createKey(IndexType index, TimeFrame frame, Currency currency) {
     return index.name() + "." + frame.name() + "." + currency;
-  }
-
-  private double formatUsd(double d) {
-    return Currency.USD.format(d);
-  }
-
-  private double formatBtc(double d) {
-    return Currency.BTC.format(d);
   }
 }

@@ -80,20 +80,7 @@ public class ApiResponse {
     return false;
   }
 
-  /*
-  public double lastPrice = UNINITIALIZED;
-  public Double high;
-  public Double low;
-  public Double prevClose;
-  public Double change;
-  public Double percentChange;
-
-  private String lastTime;
-  private String firstTime;
-  private Double firstPx;
-   */
   public ApiResponse update(long time, double px) {
-//    make sure this is right
     times.remove(0);
     addTime(time);
     lastTime = times.get(times.size()-1);

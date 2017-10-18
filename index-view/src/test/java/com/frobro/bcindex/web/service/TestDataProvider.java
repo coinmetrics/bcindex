@@ -33,6 +33,13 @@ public class TestDataProvider implements DataProvider {
   @Override
   public ApiResponse getData(RequestDto req) {
     ApiResponse resp = ApiResponse.newResponse(req);
+
+
+    // set total count to avoid later NPE
+    if (req.timeFrame == TimeFrame.MAX) {
+      ((MaxApiResponse)resp).setTotalCount(0);
+    }
+
     multiplier = createUniqueMultiplier(req);
     addPriceAndTime(resp);
     resp.calcAndFormatData();
