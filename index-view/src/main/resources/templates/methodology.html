@@ -67,6 +67,7 @@ function topFunction() {
     <ul class ="side-second">
   <li><a href="#10 Index">10 Indexes</a></li>
   <li><a href="#20 Index">20 Indexes</a></li>
+  <li><a href="#40 Index">40 Indexes</a></li>
   <li><a href="#ETI Index">Ethereum Token Indexes</a></li>
     </ul>
   </li>
@@ -98,14 +99,16 @@ function topFunction() {
     <ul class="second">
         <li><a href="#10 Index">10 Indexes</a></li>
         <li><a href="#20 Index">20 Indexes</a></li>
-        <li><a href="#ETI Index">Ethereum Token Indexes</a></li>
+        <li><a href="#40 Index">40 Indexes</a></li>
+        <li><a href="#ETI Index">Ethereum Token Indexes</a></l
+        i>
     </ul>
   </li>
   <li><a href="#Eligibility Criteria">Eligibility Criteria</a></li>
   <li><a href="#Index Calculation">Index Calculation</a></li>
   <li><a href="#Index Rebalancing">Index Rebalancing</a></li>
   <li><a href="#Base Values">Creation Dates and Values</a></li>
-  <li><a href="#Index Weights">Index Weights</a></li>
+  <li><a href="#Index Weights">Historical Index Weights</a></li>
       <ul class ="second">
         <li><a href="#10 Index Weight">10 Indexes</a></li>
         <!--<li><a href="#10 Even Index Weight">Bletchley 10 Even Index</a></li>-->
@@ -137,6 +140,12 @@ function topFunction() {
         <p>The Bletchley 20 Index is a market cap weighted index composed of 20 medium sized digital assets by market capitilization. The market capitalization of each member is calculated off of the expected total supply in 2050 (pulled from onchainfx.com) for each asset, then adjusted to reflect the publicly available amount (float) of each asset available today. There are no limits set on the weight of any individual constituent. The market cap of each asset spans from $200 million to $2 billion USD.</p>
         <p>The Bletchley 20 Even Index is an equal weighted index composed of the same constituents as the Bletchley 20 Index. At each monthly rebalance, every asset will have a weighting of exactly 5% of the total index, and the constituent weighting will then fluctuate based on changes in market pricing until the next rebalance.</p>
         <br/>
+        <a name="40 Index"></a>
+        <b>Bletchley 40 Indexes</b>
+        <br/>
+        <p>The Bletchley 40 Index is a market cap weighted index composed of 40 small sized digital assets by market capitilization. The market capitalization of each member is calculated off of the expected total supply in 2050 (pulled from onchainfx.com) for each asset, then adjusted to reflect the publicly available amount (float) of each asset available today. There are no limits set on the weight of any individual constituent. The market cap of each asset spans from $200 million to $2 billion USD.</p>
+        <p>The Bletchley 40 Even Index is an equal weighted index composed of the same constituents as the Bletchley 40 Index. At each monthly rebalance, every asset will have a weighting of exactly 2.5% of the total index, and the constituent weighting will then fluctuate based on changes in market pricing until the next rebalance.</p>
+        <br/>
         <a name="ETI Index"></a>
         <b>Bletchley Ethereum Token Indexes</b>
         <br/>
@@ -151,21 +160,21 @@ function topFunction() {
         <p>A free float, or publicly available supply requirement, of at least 10% must be met, as determined by onchainfx.com.</p>
         <p>Initial coin offerings will be treated in the same manner as all other assets, with the only added criteria that the ICO token is ineligible for the first rebalance following the close of fundraising of the asset.</p>
         <p>An asset must be listed on at least one of what is considered quality exchanges by Bletchley Indexes. This test helps prevent fraudulent assets from being eligible for inclusion in the indexes. These are currently, Bitfinex, Bittrex, Kraken, Binance, and Poloniex.</p>
+        <p>An asset meeting all of these criteria will be added to our selection list. All of the rankings on this page reference the location on an asset on the selection list. </p> 
         <br/>
         <a name="Index Calculation"></a>
         <b>Index Calculation</b>
         <br/>
         <p>The index value is defined as the quotient of the sum of the adjusted market capitalization of each member by the divisor of the index. All of these calculations are done in units of bitcoin, and after arriving at an index value in bitcoin, the current exchange rates are then used to determine the US Dollar denominated values.</p>
         <p>Continuity of the index value is maintained by changing the divisor to keep the index value the same at the moment preceding any change, and then immediately following any change. The divisor is only regularly edited at the monthly rebalances, but could also be updated due to any special changes in the indexes.</p>
-        <p>The market capitalization of an asset is adjusted to reflect only the currently circulating supply of that asset publicly available for purchase.</p>
+        <p>The market capitalization of an asset is adjusted to reflect only the currently circulating supply of that asset publicly available for purchase, also called the float.</p>
         <br/>
         <a name="Index Rebalancing"></a>
         <b>Index Rebalancing</b>
         <br/>
         <p>All of the Bletchley indexes will be rebalanced at 3:00 PM US Central time on the third Wednesday of every month. The monthly rebalance will update both the amount of each asset publicly available and any additions and deletions from the indexes. The values used to determine eligibility for each rebalance will be prices, asset counts, and volume 48 hours prior to the rebalance. There will be no changes made to the weights and asset counts outside of the monthly rebalances.</p>
         <p>A buffer rule is used when determining constituent selection at each rebalance to reduce turnover of the index. The rule is applied to the Bletchley 10 Indexes such that all companies in the eligible investment universe ranked in the top 8 by total market capitalization are always included in the index. Then, if any current index member is ranked within the top 12, those members will be selected by rank until the index reaches its membership mandate of 10. If those steps fail to produce 10 members, the highest ranking non member will be added to the index.</p>
-        <p>Similarly, the Bletchley 20 Indexes use the same methodology with an automatic addition rank of 16 or higher and automatic deletion for those members ranked 25 and below. The Ethereum Token Indexes use buffer bands of rank 25 and higher for automatic addition and 35 and below for removal based on the coinmarketcap.com asset rankings.</p>
-        <p>In addition to the buffer rules, an asset can not be added to an index if it has been deleted in the previous rebalance. At least one rebalance must pass before that asset is eligible to re-enter the index.</p>
+        <p>Similarly, the Bletchley 20 Indexes use the same methodology with an automatic addition rank of 16 or higher and automatic deletion for those members ranked 25 and below. The Bletchley 40 Indexes use an automatic addition threshold of 30 and automatic deletion of 50. The Ethereum Token Indexes use buffer bands of rank 25 and higher for automatic addition and 35 and below for removal based on the coinmarketcap.com asset rankings.</p>
         <p>In the event of a hard fork in the blockchain of any constituent asset, the fork will be treated as an asset split with both unique forks remaining in the index with the original asset counts up until the next rebalancing. At which point all normal eligibility and ranking rules will be enforced on the two unique assets. This will give the potential for an index to have more than its set number of constituents following any contentious hard forks in a member. If the first rebalance after a hard fork occurs within seven days of the fork, any add or delete changes to the assets created by the fork will be delayed until the following rebalance. Asset counts will still be updated in this case.</p>
         <p>Any other unique situations, extreme circumstances surrounding the already described events, or unobtainable asset counts or prices will be handled at the discretion of the Bletchley Indexes.</p>
         <br/>
@@ -205,6 +214,18 @@ function topFunction() {
         <td>4/19/2017</td>
         <td>100</td>
         <td>0.08317</td>
+        </tr>
+        <tr>
+        <td>Bletchley 40</td>    
+        <td>10/18/2017</td>
+        <td>100</td>
+        <td>0.018078</td>
+        </tr>
+        <tr>
+        <td>Bletchley 40 Even</td>
+        <td>10/18/2017</td>
+        <td>100</td>
+        <td>0.018078</td>
         </tr>
         <tr>
         <td>Bletchley Ethereum Token</td>    
