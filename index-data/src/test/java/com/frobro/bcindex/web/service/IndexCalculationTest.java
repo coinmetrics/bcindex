@@ -27,7 +27,6 @@ public class IndexCalculationTest {
     BletchleyData inputData = new BletchInTen();
     inputData.setLastUsdBtc(getLastBtc());
     inputData.setLastUpdate(getTime());
-    inputData.setMembers(getApiJsonTen());
     // and
     IndexCalculator calculator = new IndexCalculatorTen();
     calculator.updateLast(inputData);
@@ -59,7 +58,6 @@ public class IndexCalculationTest {
 
     inputData.setLastUsdBtc(getLastBtc());
     inputData.setLastUpdate(getTime());
-    inputData.setMembers(getApiJsonEth());
     // and
     IndexCalculator calculator = new IndexCalculatorEth();
 //    IndexCalculator calculator = new IndexCalculatorTwenty();

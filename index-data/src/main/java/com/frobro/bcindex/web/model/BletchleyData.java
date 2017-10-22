@@ -8,6 +8,7 @@ import com.frobro.bcindex.web.service.BusinessRules;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -37,9 +38,6 @@ abstract public class BletchleyData {
   }
 
   abstract protected BusinessRules newBusinessRules();
-  abstract Map<String,Index> populateTickers(String response,
-                                             Set<String> indexes)
-                                            throws IOException;
 
   public BletchleyData setLastUsdBtc(double last) {
     this.priceUsdBtc = last;
@@ -50,22 +48,8 @@ abstract public class BletchleyData {
     return priceUsdBtc;
   }
 
-  public BletchleyData setMembers(String apiResponse) {
-    Set<String> indexes = businessRules.getIndexes();
-    Map<String, Index> tickers = tickers(apiResponse, indexes);
-    setMembers(tickers);
-    return this;
-  }
-
-  protected Map<String, Index> tickers(String response, Set<String> indexes) {
-    try {
-
-      return populateTickers(response, indexes);
-
-    } catch (IOException ioe) {
-      log.error(ioe);
-    }
-    return new HashMap<>();
+  public Set<String> getMembers() {
+    return new HashSet<>(businessRules.getIndexes());
   }
 
   // public for testing
@@ -77,16 +61,6 @@ abstract public class BletchleyData {
   protected JsonNode getRoot(String json) throws IOException {
     ObjectMapper mapper = new ObjectMapper();
     return mapper.readTree(json);
-  }
-
-  protected void addTicker(Map<String,Index> tickerMap, String name, double price) {
-    Index currPair = newIndex(name, price);
-    tickerMap.put(currPair.getName(), currPair);
-  }
-
-  private Index newIndex(String indexName, double price) {
-    Index currPair = new Index().setName(indexName);
-    return currPair.setLast(price);
   }
 
   public Map<String,Index> getLastIndexes() {
