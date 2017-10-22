@@ -41,13 +41,7 @@ public class Index implements Comparable<Index> {
   }
 
   public Index setLast(double last) {
-    // hack for issue #39
-    if ("XLM".equalsIgnoreCase(name)) {
-      this.last = 0.028;
-    }
-    else {
-      this.last = last;
-    }
+    this.last = last;
     return this;
   }
 
