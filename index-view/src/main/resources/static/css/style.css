@@ -543,6 +543,10 @@ table.download-table tbody tr:hover {
 .info-element{background-color: #edf2f7;margin-left:0%;margin-right:0%;padding-left:10px;padding-right:10px;}
 .blogdate{color:#8B8B8B;}
 .underline{border-bottom: 1px solid #000000;width: 100%;display: block;}
+.partners-border{border-bottom: 2px solid #BABABA;width: 100%;justify-content:center;text-align: center;align-content: center;}
+.partners-section{width: 80%;display: block;margin-left:10%;text-align: center;margin-right:10%;}
+.partners-heading{width:100%;background-color:#edf2f7;font-size:150%;color:#424949;text-align:center;font-weight:500;}
+.partners-image{width:120px;height:75px;justify-content: center;display:block;text-align: center;margin:0 auto;padding-bottom:0px;}
 
 @media screen and (max-width: 373px) {
     .topnav{font-size:85%;}
@@ -590,6 +594,7 @@ table.download-table tbody tr:hover {
     .disclaimer{display:none;}
     .timezone{font-size:7px;}
     .weights-link{font-size:9px;}
+    .partners-image{width:100px;height:60px;}
     .onboard{height:150px;}
     #onboard{display:none;}
     h4{font-size:18px;}
