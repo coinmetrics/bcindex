@@ -5,13 +5,15 @@ import com.frobro.bcindex.web.service.TickerService;
 import com.frobro.bcindex.web.service.TimerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
 
 /**
  * Created by rise on 3/21/17.
  */
-@Controller
+@RestController
 public class HomeController {
 
   private TickerService tickerService = new TickerService();
@@ -25,6 +27,11 @@ public class HomeController {
                                tRepo, teRepo,
                                etRepo, eteRepo);
     timerService = new TimerService(tickerService);
+  }
+
+  @RequestMapping("/bc-health-check")
+  public String healthCheck() {
+    return "app is up";
   }
 
   @PostConstruct

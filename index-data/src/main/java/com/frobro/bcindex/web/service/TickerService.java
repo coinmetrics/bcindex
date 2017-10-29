@@ -12,15 +12,9 @@ import com.frobro.bcindex.web.domain.Index;
 import com.frobro.bcindex.web.model.BletchInEth;
 import com.frobro.bcindex.web.model.BletchInTen;
 import com.frobro.bcindex.web.model.BletchInTwenty;
+import com.frobro.bcindex.web.service.apis.CoinCompare;
+import com.frobro.bcindex.web.service.apis.HttpApi;
 import com.frobro.bcindex.web.service.persistence.IndexDbDto;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
 
 /**
  * Created by rise on 3/23/17.
@@ -28,11 +22,7 @@ import org.apache.http.util.EntityUtils;
 public class TickerService {
 
   private static final BcLog log = BcLog.getLogger(TickerService.class);
-  private static final String EMPTY_RESPONSE = "noop";
-  private final static String COIN_CAP_ENDPOINT = "http://www.coincap.io/global";
-  private final static String POLONIEX_ENDPOINT = "https://poloniex.com/public?command=returnTicker";
-  private static final String COIN_CAP_ENDPOINT_20 = "http://www.coincap.io/front";
-  private static final String COIN_CAP_ENDPOINT_ETH = COIN_CAP_ENDPOINT_20;
+  private final CoinCompare coinCompare = new CoinCompare();
   // calculators
   private IndexCalculator indexCalculatorTen = new IndexCalculatorTen();
   private IndexCalculator indexCalculatorTwenty = new IndexCalculatorTwenty();
@@ -78,26 +68,36 @@ public class TickerService {
     clearInputData();
 
     // get bit coin latest
-    String btcResponse = makeApiCallBtc();
-    updateTickerBtc(btcResponse);
+    updateTickerBtc();
 
     // update 10 idx
-    String response = makeCallTenMembers();
-    inputDataTen.setMembers(response);
+    inputDataTen.setMembers(coinCompare.getData(inputDataTen.getMembers()));
     inputDataTen.setLastUpdate(System.currentTimeMillis());
     calculateAndSetIndexesTen(inputDataTen);
 
     // update 20 idx
-    String response20 = makeApiCallTwenty();
-    inputDataTwenty.setMembers(response20);
+    inputDataTwenty.setMembers(coinCompare.getData(inputDataTwenty.getMembers()));
     inputDataTwenty.setLastUpdate(System.currentTimeMillis());
     calculateAndSetIndexesTwenty(inputDataTwenty);
 
     // update ETH idx
-    String responseEth = response20; // right now these calls are the same
-    inputEth.setMembers(responseEth);
+    inputEth.setMembers(coinCompare.getData(inputEth.getMembers()));
     inputEth.setLastUpdate(System.currentTimeMillis());
     calculateAndSetIndexesEth(inputEth);
+
+    logIndexSummary();
+  }
+
+  private void logIndexSummary() {
+    String summary = "\nten      [btc=" + lastIndex.indexValueBtc + ", usd=" + lastIndex.indexValueUsd + "]\n"
+                     + "ten even [btc=" + lastEvenIndex.indexValueBtc + ", usd=" + lastEvenIndex.indexValueUsd + "]\n"
+        + "-----------------------------\n"
+        + "twenty      [btc=" + lastTwentyIdx.indexValueBtc + ", usd=" + lastTwentyIdx.indexValueUsd + "]\n"
+        + "twenty even [btc=" + lastEvenTwentyIdx.indexValueBtc + ", usd=" + lastEvenTwentyIdx.indexValueUsd + "]\n"
+        + "-----------------------------\n"
+        + "eth      [btc=" + lastIdxEth.indexValueBtc + ", usd=" + lastIdxEth.indexValueUsd + "]\n"
+        + "eth even [btc=" + lastIdxEthEven.indexValueBtc + ", usd=" + lastIdxEthEven.indexValueUsd + "]\n";
+        log.debug(summary);
   }
 
   private void clearInputData() {
@@ -123,74 +123,13 @@ public class TickerService {
     lastEvenIndex = indexCalculatorTen.calculateEvenIndex();
   }
 
-  private String makeApiCallEth() throws IOException {
-    return makeApiCall(COIN_CAP_ENDPOINT_ETH);
-  }
-
-  private String makeApiCallTwenty() throws IOException {
-    return makeApiCall(COIN_CAP_ENDPOINT_20);
-  }
-
-  public void updateTickerBtc(String response) throws IOException {
+  public void updateTickerBtc() throws IOException {
     // get the value
-    double btcPrice = getBtcPrice(response);
+    double btcPrice = coinCompare.getBtcPrice();
     // set the value
     inputDataTen.setLastUsdBtc(btcPrice);
     inputDataTwenty.setLastUsdBtc(btcPrice);
     inputEth.setLastUsdBtc(btcPrice);
-  }
-
-  private double getBtcPrice(String json) {
-    try {
-
-      ObjectMapper mapper = new ObjectMapper();
-      JsonNode root = mapper.readTree(json);
-      return root.get("btcPrice").asDouble();
-
-    } catch (IOException ioe) {
-      throw new RuntimeException(ioe);
-    }
-  }
-
-  public String makeApiCallBtc() throws IOException {
-    return makeApiCall(COIN_CAP_ENDPOINT);
-  }
-  
-  private String makeCallTenMembers() throws IOException {
-    return makeApiCall(COIN_CAP_ENDPOINT_20);
-  }
-
-  private String makeApiCall(String endpoint) throws IOException {
-    String response = EMPTY_RESPONSE;
-    CloseableHttpClient httpClient = HttpClients.createDefault();
-    try {
-
-      HttpGet getRequest = new HttpGet(
-          endpoint);
-      getRequest.addHeader("accept", "application/json");
-      response = httpClient.execute(getRequest, createResponseHandler());
-
-    } finally {
-      httpClient.close();
-    }
-    return response;
-  }
-  private ResponseHandler<String> createResponseHandler() {
-    return new ResponseHandler<String>() {
-
-      @Override
-      public String handleResponse(
-          final HttpResponse response) throws ClientProtocolException, IOException {
-
-        int status = response.getStatusLine().getStatusCode();
-        if (status >= 200 && status < 300) {
-          HttpEntity entity = response.getEntity();
-          return entity != null ? EntityUtils.toString(entity) : null;
-        } else {
-          throw new ClientProtocolException("Unexpected response status: " + status);
-        }
-      }
-    };
   }
 
   public void saveIndices() {

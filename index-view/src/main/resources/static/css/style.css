@@ -594,6 +594,7 @@ table.download-table tbody tr:hover {
     .disclaimer{display:none;}
     .timezone{font-size:7px;}
     .weights-link{font-size:9px;}
+    .partners-image{width:65px;height:40px;}
     .onboard{height:150px;}
     .partners-image{width:100px;height:60px;}
     #onboard{display:none;}
