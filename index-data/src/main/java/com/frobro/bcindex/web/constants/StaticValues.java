@@ -25,4 +25,8 @@ public class StaticValues {
   public static final double DIVISOR_ETHER = 70706194.7234075;
   public static final double DIVISOR_EVEN_ETHER = 60413786.1399758;
   public static final String MKT_CAP_FILE_EHTER = "business_rules/eth_oct.csv";
+
+    // Application sector index values
+  public static final double DIVISOR_APP = 56029891.92909;
+  public static final String MKT_CAP_FILE_APP = "business_rules/app_oct.csv";
 }
