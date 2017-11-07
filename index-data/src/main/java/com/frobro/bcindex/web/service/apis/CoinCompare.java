@@ -69,8 +69,6 @@ public class CoinCompare {
       throws IOException {
 
     JsonNode root = mapper.readTree(response);
-    System.out.println(root);
-
     Map<String, Index> tickers = new TreeMap<>();
 
     for (String coin : coins) {
