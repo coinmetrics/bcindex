@@ -3,8 +3,12 @@ package com.frobro.bcindex.web.controller;
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.model.api.*;
 import com.frobro.bcindex.web.service.DbTickerService;
+import com.frobro.bcindex.web.service.TimeSeriesService;
 import com.frobro.bcindex.web.service.TimerService;
+import com.frobro.bcindex.web.service.cache.CacheLoader;
+import com.frobro.bcindex.web.service.cache.CacheUpdateMgr;
 import com.frobro.bcindex.web.service.cache.DataCache;
+import com.frobro.bcindex.web.service.time.TimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,20 +27,34 @@ public class ApiController {
   private static final BcLog log = BcLog.getLogger(ApiController.class);
 
   private DbTickerService dbTickerService = new DbTickerService();
-  private final DataCache cache = new DataCache();
   private TimerService timerService;
+  private CacheUpdateMgr cacheMgr;
+  private DataCache cache = new DataCache();
+  private JdbcTemplate jdbc;
 
   @Autowired
   public void init(JdbcTemplate jdbc) {
-    dbTickerService.setJdbc(jdbc);
-    cache.populateFromDb(dbTickerService);
-    timerService = new TimerService(dbTickerService);
-//    timerService.run();
+    this.jdbc = jdbc;
   }
 
   @PostConstruct
   public void init(){
+    dbTickerService.setJdbc(jdbc);
+    TimeSeriesService service = new TimeSeriesService();
+    service.setJdbc(jdbc);
+    // initialize the cache
+    cacheMgr = new CacheUpdateMgr(cache, service);
+    CacheLoader.load(cache, cacheMgr,dbTickerService);
+
+    timerService = new TimerService(cacheMgr);
+    timerService.run();
     timerService.updateIfInDevMode();
+  }
+
+  @RequestMapping(value = "cacheupdate", method = RequestMethod.GET)
+  public String cacheUpdate() {
+    cacheMgr.update();
+    return "updated";
   }
 
   @RequestMapping(value = "api/index", method = RequestMethod.POST)
@@ -87,7 +105,7 @@ public class ApiController {
       log.error("request to api is not valid, using default");
     }
 
-    return dbTickerService.respondAsJson(dto);
+    return cache.respondAsJson(dto);
   }
 
   private boolean reqestNotValid(RequestDto dto) {

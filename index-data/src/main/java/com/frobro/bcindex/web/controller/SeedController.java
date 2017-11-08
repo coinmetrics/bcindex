@@ -77,7 +77,7 @@ public class SeedController {
     return "done seeding";
   }
 
-  private boolean tooManyLines(int size, int maxSize) {
+  private boolean isTooLarge(int size, int maxSize) {
     return size > maxSize;
   }
 
@@ -88,23 +88,18 @@ public class SeedController {
     int numHours = 26;
     int numIterations = (int) TimeUnit.HOURS.toMinutes(numHours);
 
-    int size = tooManyLines(lines.size(), numIterations) ? numIterations : lines.size();
+    int size = isTooLarge(lines.size(), numIterations) ? numIterations : lines.size();
 
     List<JpaIndexTen> idxList = new ArrayList<>(size);
 
     long lastDate = 0;
     long diff = 0;
-    long time = 0;
-    for (int i=size-1; i>0; i--) {
+    // start clock from now - [time length]. so the last time
+    // will be now. That way new data will have consistent timestamps
+    long time = System.currentTimeMillis() - TimeUnit.DAYS.toMillis(5); //TimeUnit.MINUTES.toMillis(size);
+    for (int i=1; i<size-1; i++) {
       String line = lines.get(i);
       String[] vals = line.split(delim);
-      time = BletchDate.toEpochMilli(vals[datePos]);
-
-      // if is the most recent time set the time
-      // diff so all times will be recent
-      if (i == size-1) {
-        diff = System.currentTimeMillis() - time;
-      }
 
       JpaIndexTen idx = new JpaIndexTen();
       idx.setId(Long.valueOf(i));
@@ -122,32 +117,7 @@ public class SeedController {
       eth.setTimeStamp(BletchDate.toDate(vals[datePos]));
       repo.saveEth(eth);
 
-      if (i == (size-1)) {
-        lastDate = BletchDate.toDate(vals[datePos]).getTime();
-      }
-    }
-
-    // populate again!
-    lastDate += TimeUnit.MINUTES.toMillis(1);
-    for (int i=1; i<size; i++) {
-      String line = lines.get(i);
-      String[] vals = line.split(delim);
-      JpaIndexTen idx = new JpaIndexTen();
-      idx.setId(Long.valueOf(size + i));
-      idx.setIndexValueBtc(Double.parseDouble(vals[btcPos]));
-      idx.setIndexValueUsd(Double.parseDouble(vals[usdPos]));
-      idx.setTimeStamp(lastDate);
-      idxList.add(idx);
-      repo.saveTen(idx);
-
-      JpaIdxEth eth = new JpaIdxEth();
-      eth.setId(Long.valueOf(size+i));
-      eth.setIndexValueBtc(Double.parseDouble(vals[btcPos]));
-      eth.setIndexValueUsd(Double.parseDouble(vals[usdPos]));
-      eth.setTimeStamp(BletchDate.toDate(vals[datePos]));
-      repo.saveEth(eth);
-
-      lastDate += TimeUnit.MINUTES.toMillis(1);
+      time += TimeUnit.MINUTES.toMillis(1);
     }
 
     return idxList;

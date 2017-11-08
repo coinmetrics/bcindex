@@ -1,9 +1,11 @@
 package com.frobro.bcindex.web.service.query;
 
 public class IndexUpdate {
+  // need to populate this
+  private Long maxBletchId;
   private Double usdPrice;
   private Double btcPrice;
-  private long timeStamp;
+  private Long timeStamp;
 
   public Double getUsdPrice() {
     return usdPrice;
@@ -30,5 +32,14 @@ public class IndexUpdate {
   public IndexUpdate setTimeStamp(long timeStamp) {
     this.timeStamp = timeStamp;
     return this;
+  }
+
+  public IndexUpdate setMaxBletchId(long maxId) {
+    this.maxBletchId = maxId;
+    return this;
+  }
+
+  public long getMaxBletchId() {
+    return maxBletchId.longValue();
   }
 }

@@ -47,21 +47,6 @@ public class TimeSeriesTest extends DbBaseTest {
     assertEquals(req.currency, response.currency);
   }
 
-  private void populateDb(int numEntries, double price) {
-    long now = System.currentTimeMillis();
-    for (int i=1; i<=numEntries; i++) {
-      JpaIndexTen idx = IndexFactory.getNewOdd();
-      if (i == numEntries) {
-        idx.setIndexValueUsd(price);
-      }
-      // add a minute, since that is the resolution
-      // we will save things in prod
-      now += TimeUnit.MINUTES.toMillis(1);
-      idx.setTimeStamp(now);
-      repo.saveTen(idx);
-    }
-  }
-
   @Test
   public void testOddRepoHourly() {
     // given

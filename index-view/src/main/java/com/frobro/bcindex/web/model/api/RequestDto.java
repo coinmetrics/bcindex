@@ -13,6 +13,14 @@ public class RequestDto {
         && this.index != null;
   }
 
+  public RequestDto copy() {
+    RequestDto newDto = new RequestDto();
+    newDto.timeFrame = this.timeFrame;
+    newDto.currency = this.currency;
+    newDto.index = this.index;
+    return newDto;
+  }
+
   @Override
   public String toString() {
     return "RequestDto{" +

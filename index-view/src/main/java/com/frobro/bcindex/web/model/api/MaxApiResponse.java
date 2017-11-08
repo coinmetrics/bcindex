@@ -24,10 +24,21 @@ public class MaxApiResponse extends ApiResponse {
       timeFrame = queryTimeFrame;
     }
     if (queryTimeUnit == null) {
-      queryTimeUnit = queryTimeFrame.getTimeStepUnit();
+      queryTimeUnit = setTimeUnit(queryTimeFrame, maxBletchId);
       timeUnit = queryTimeUnit;
     }
     return this;
+  }
+
+  private String setTimeUnit(TimeFrame frame, long maxBletchId) {
+    String unit;
+    if (maxBletchId <= (TimeFrame.MONTHLY.getNumDataPoints()*2)) {
+      unit = frame.getTimeStepUnit();
+    }
+    else {
+      unit = TimeFrame.MAX.getDayTimeUnit();
+    }
+    return unit;
   }
 
   private TimeFrame setQueryTimeFrame(long maxBletchId) {
@@ -42,7 +53,7 @@ public class MaxApiResponse extends ApiResponse {
       frame = TimeFrame.MONTHLY;
     }
     else {
-      frame = TimeFrame.QUARTERLY;
+      frame = TimeFrame.MAX;
     }
     return frame;
   }

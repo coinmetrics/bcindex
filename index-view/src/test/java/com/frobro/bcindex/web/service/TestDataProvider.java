@@ -1,6 +1,7 @@
 package com.frobro.bcindex.web.service;
 
 import com.frobro.bcindex.web.model.api.*;
+import com.frobro.bcindex.web.service.time.TimeService;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -28,7 +29,6 @@ public class TestDataProvider implements DataProvider {
     multMap.put(TimeFrame.MONTHLY.name(), 7);
     multMap.put(TimeFrame.MAX.name(), 60);
   }
-  private int multiplier;
 
   @Override
   public ApiResponse getData(RequestDto req) {
@@ -40,8 +40,7 @@ public class TestDataProvider implements DataProvider {
       ((MaxApiResponse)resp).setTotalCount(0);
     }
 
-    multiplier = createUniqueMultiplier(req);
-    addPriceAndTime(resp);
+    addPriceAndTime(resp, createUniqueMultiplier(req));
     resp.calcAndFormatData();
     return resp;
   }
@@ -53,8 +52,8 @@ public class TestDataProvider implements DataProvider {
     return idxM + curM - time;
   }
 
-  private void addPriceAndTime(ApiResponse resp) {
-    long now = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
+  private void addPriceAndTime(ApiResponse resp, int multiplier) {
+    long now = TimeService.currentTimeMillis();
     double low = 1.0;
     double high = new Double(SIZE * multiplier);
     resp.updateFirst(low, (now-1));

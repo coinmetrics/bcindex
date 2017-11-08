@@ -7,7 +7,7 @@ public class TimeService {
     return clock.getTimeEpochMillis();
   }
 
-  static void setClock(BletchClock ck) {
+  public static void setClock(BletchClock ck) {
     clock = ck;
   }
 }

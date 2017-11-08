@@ -1,10 +1,8 @@
 package com.frobro.bcindex.web.service.cache;
 
-import com.frobro.bcindex.core.db.service.BletchDate;
 import com.frobro.bcindex.web.model.api.*;
 import com.frobro.bcindex.web.service.DataProvider;
 import com.frobro.bcindex.web.service.DbTickerService;
-import com.frobro.bcindex.web.service.TimeSeriesService;
 import com.frobro.bcindex.web.service.query.GroupUpdate;
 import com.frobro.bcindex.web.service.query.IndexUpdate;
 import org.slf4j.Logger;
@@ -12,97 +10,87 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.TimeUnit;
+
+import static com.frobro.bcindex.web.service.cache.DataNamer.createName;
 
 public class DataCache {
   private static final Logger LOG = LoggerFactory.getLogger(DataCache.class);
   private final Map<String,ApiResponse> apiMap = new ConcurrentHashMap<>();
 
-  public void update() {
-    // get index data from db
-    TimeSeriesService seriesService = new TimeSeriesService();
-    update(seriesService.getLastestData());
+  /**
+   * should remove the last element and
+   * add the latest data to its list
+   */
+  void updateCache(Expiration exp, GroupUpdate update) {
+    IndexUpdate newData = update.get(exp.getIndex());
+    push(apiMap.get(getUsdKey(exp)), apiMap.get(getBtcKey(exp)), newData);
   }
 
-  void update(GroupUpdate update) {
-    // update each api response
-    for (IndexType index : IndexType.values()) {
-      for (TimeFrame frame : TimeFrame.values()) {
-        if (frame == TimeFrame.QUARTERLY) continue;
+  /**
+   * should only overwrite the latest element
+   * needed to keep all time frames consistent
+   * with what the latest data is
+   */
+  void overwriteLatest(Expiration exp, GroupUpdate update) {
+    LOG.debug("overwriting latest data for: "
+        + createName(exp.getIndex(), exp.getTimeFrame()));
+    IndexUpdate newData = update.get(exp.getIndex());
+    overwrite(apiMap.get(getUsdKey(exp)), apiMap.get(getBtcKey(exp)), newData);
+  }
 
-        String key = createKey(index, frame, Currency.USD);
-        ApiResponse data = apiMap.get(key);
-        IndexUpdate updateData = update.get(index);
+  private void overwrite(ApiResponse usd, ApiResponse btc, IndexUpdate newData) {
+    if (notNull(usd)) {
+      usd.overWriteLastest(newData.getTimeStamp(), newData.getUsdPrice());
+    }
 
-        long updateTime = updateData.getTimeStamp();
-        if (notNull(data, key) && timeElapsed(data, updateTime)) {
-          data.update(updateTime,
-              updateData.getUsdPrice());
-        }
-      }
+    if (notNull(btc)) {
+      btc.overWriteLastest(newData.getTimeStamp(), newData.getBtcPrice());
     }
   }
 
-  // update only if the time has elapsed for this time frame
-  public boolean timeElapsed(ApiResponse data, long updateTime) {
-    long lastTime = data.getLatestTime();
-
-    // if is max time frame
-    if (data.timeFrame == TimeFrame.MAX) {
-      long maxBletchId = ((MaxApiResponse)data).getMaxBletchId();
-      return timeElapsed(lastTime, toTimeStep(maxBletchId));
-    }
-
-    return data.timeFrame.timeElapsed(
-        data.timeFrame.round(updateTime) - lastTime);
+  private String getUsdKey(Expiration exp) {
+    return createName(exp.getIndex(), exp.getTimeFrame(), Currency.USD);
   }
 
-  private long toTimeStep(long maxBletchId) {
-    long timeStep;
-    if (maxBletchId < TimeFrame.DAILY.getNumDataPoints()) {
-      timeStep = TimeFrame.HOURLY.getTimeStep();
-    }
-    else if (maxBletchId < TimeFrame.WEEKLY.getNumDataPoints()) {
-      timeStep = TimeFrame.DAILY.getTimeStep();
-    }
-    else if (maxBletchId < TimeFrame.MONTHLY.getNumDataPoints()) {
-      timeStep = TimeFrame.MONTHLY.getTimeStep();
-    }
-    else {
-      timeStep = TimeFrame.QUARTERLY.getTimeStep();
-    }
-    return timeStep;
+  private String getBtcKey(Expiration exp) {
+    return createName(exp.getIndex(), exp.getTimeFrame(), Currency.BTC);
   }
 
-  private boolean timeElapsed(long timeDiff, long timeStep) {
-    return timeDiff > TimeUnit.MINUTES.toMillis(timeStep);
+  private void push(ApiResponse usd, ApiResponse btc, IndexUpdate newData) {
+    if (notNull(usd)) {
+      usd.pushLatest(newData.getTimeStamp(), newData.getUsdPrice());
+    }
+
+    if (notNull(btc)) {
+      btc.pushLatest(newData.getTimeStamp(), newData.getBtcPrice());
+    }
   }
 
-  private boolean notNull(ApiResponse data, String key) {
+  private boolean notNull(ApiResponse data) {
     boolean result = false;
 
     if (data != null) {
       result = true;
     }
     else {
-      LOG.error("no data for key: " + key);
+      LOG.error("missing data in cache");
     }
 
     return result;
   }
 
+  public String respondAsJson(RequestDto req) {
+    return DbTickerService.toJson(respondTo(req));
+  }
+
   public ApiResponse respondTo(RequestDto req) {
-    String key = createKey(req);
+    String key = createName(req);
     ApiResponse resp = apiMap.get(key);
 
     if (req == null) {
       throw new IllegalStateException("no response for: " + req);
     }
     return resp;
-  }
-
-  public String respondAsJson(RequestDto req) {
-    return DbTickerService.toJson(respondTo(req));
   }
 
   public void populateFromDb(DataProvider dataService) {
@@ -113,7 +101,6 @@ public class DataCache {
       req.index = index;
 
       for (TimeFrame timeFrame : TimeFrame.values()) {
-        if (timeFrame == TimeFrame.QUARTERLY) continue;
         LOG.info("populating time frame: " + timeFrame.name());
 
         req.timeFrame = timeFrame;
@@ -128,21 +115,17 @@ public class DataCache {
     }
   }
 
-  private void populateById(RequestDto req, DataProvider service) {
+  public void populateById(RequestDto req, DataProvider service) {
     ApiResponse response = service.getData(req);
     if (response.firstAndLastNotNull()) {
-      apiMap.put(createKey(req), response);
+      apiMap.put(createName(req), response);
     }
     else {
       LOG.warn("not data exists for request: " + req);
     }
   }
 
-  private String createKey(RequestDto req) {
-    return createKey(req.index, req.timeFrame, req.currency);
-  }
-
-  private String createKey(IndexType index, TimeFrame frame, Currency currency) {
-    return index.name() + "." + frame.name() + "." + currency;
+  public void printKeys() {
+    this.apiMap.entrySet().stream().forEach(System.out::println);
   }
 }

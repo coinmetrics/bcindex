@@ -1,6 +1,7 @@
 package com.frobro.bcindex.web.service;
 
 import com.frobro.bcindex.web.bclog.BcLog;
+import com.frobro.bcindex.web.service.cache.CacheUpdateMgr;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -10,19 +11,20 @@ import java.util.concurrent.TimeUnit;
  * Created by rise on 5/1/17.
  */
 public class TimerService {
-  private static final int REFRESH_PERIOD_SECONDS = 60; // 1 minute
+  private static final BcLog LOG = BcLog.getLogger(TimerService.class);
+  private static final int REFRESH_PERIOD_SECONDS = 10; // 1 minute
   private static final String DEV_MODE = "dev";
   private static final String POSTGRES_DEV_MODE = "pgres";
   private static final BcLog log = BcLog.getLogger(TimerService.class);
 
   private final boolean inDevMode;
-  private DbTickerService dbTickerService;
+  private final CacheUpdateMgr cache;
   private ScheduledExecutorService executor;
 
-  public TimerService(DbTickerService service) {
-    this.dbTickerService = service;
+  public TimerService(CacheUpdateMgr cache) {
     this.executor = Executors.newScheduledThreadPool(1);
     inDevMode = decideOnMode();
+    this.cache = cache;
   }
 
   private boolean decideOnMode() {
@@ -30,33 +32,45 @@ public class TimerService {
 
     String mode = System.getProperty("spring.profiles.active");
     if (mode != null) {
-      if (DEV_MODE.equalsIgnoreCase(mode) || POSTGRES_DEV_MODE.equalsIgnoreCase(mode)) {
+      if (DEV_MODE.equalsIgnoreCase(mode)) {
         state = true;
       }
     }
-    return state;
+    return false; //state;
    }
 
   public void run() {
-    // DONT RUN, AS WE CALL THE DB
-    //run(20);
+    run(20);
   }
 
   public void updateIfInDevMode() {
     if (inDevMode) {
-      dbTickerService.updateTickers();
+      cache.update();
     }
   }
 
   private void run(long initialDelay) {
-    Runnable task = getTask();
+    if (not(inDevMode)) {
+      Runnable task = getTask();
+      log.info("starting update thread ----------");
 
-    int period = REFRESH_PERIOD_SECONDS;
-    executor.scheduleAtFixedRate(task, initialDelay, period, TimeUnit.SECONDS);
+      executor.scheduleAtFixedRate(task, initialDelay, REFRESH_PERIOD_SECONDS, TimeUnit.SECONDS);
+    }
+  }
+
+  private boolean not(boolean b) {
+    return !b;
   }
 
   private Runnable getTask() {
-    return () -> dbTickerService.updateTickers();
+
+    return () -> {
+      try {
+        cache.update();
+      } catch (Exception e) {
+        LOG.error(e);
+      }
+    };
   }
 
   public void shutdown() {

@@ -6,6 +6,8 @@ import com.frobro.bcindex.web.service.query.TimeSeriesQuery;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -112,31 +114,6 @@ public enum TimeFrame {
       return 2678400000L;
     }
   },
-  QUARTERLY {
-    @Override
-    public int getNumDataPoints() {
-      return (int) BletchDate.MIN_IN_QUARTER;
-    }
-
-    @Override
-    public int getTimeStep() {
-      return (int) BletchDate.MIN_IN_DAY; // min in day
-    }
-
-    public String getTimeStepUnit() {
-      return UNIT_DAY;
-    }
-
-    @Override
-    public long round(long raw) {
-      return BletchDate.roundDay(raw);
-    }
-
-    @Override
-    public long getTimeSpan() {
-      return 10713600000L;
-    }
-  },
   MAX {
     @Override
     public int getNumDataPoints() {
@@ -182,6 +159,7 @@ public enum TimeFrame {
   abstract public int getNumDataPoints();
   abstract public String getTimeStepUnit();
   abstract public long getTimeSpan();
+
   public long round(long raw) { return raw; }
   public int getModNum() {
     return getNumDataPoints()/getTimeStep();
@@ -196,9 +174,36 @@ public enum TimeFrame {
   }
 
   public boolean timeElapsed(long timeDiff) {
-    System.out.println("diff=  "+timeDiff
-              + "\n" + "thresh " + TimeUnit.MINUTES.toMillis(getTimeStep()));
-    System.out.println();
-    return timeDiff > TimeUnit.MINUTES.toMillis(getTimeStep());
+    return timeDiff >= TimeUnit.MINUTES.toMillis(getTimeStep());
+  }
+
+  public List<TimeFrame> getSmallerTimeFrames() {
+    List<TimeFrame> list = new LinkedList<>();
+    for (TimeFrame frame : values()) {
+
+      if (MAX.equals(frame)) continue;
+
+      if (this.getTimeStep() > frame.getTimeStep()) {
+        list.add(frame);
+      }
+    }
+    return list;
+  }
+
+  public List<TimeFrame> getLargerTimeFrames() {
+    List<TimeFrame> list = new LinkedList<>();
+    for (TimeFrame frame : values()) {
+
+      if (MAX.equals(frame)) continue;
+
+      if (this.getTimeStep() < frame.getTimeStep()) {
+        list.add(frame);
+      }
+    }
+    return list;
+  }
+
+  public String getDayTimeUnit() {
+    return UNIT_DAY;
   }
 }
