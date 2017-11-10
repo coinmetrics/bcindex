@@ -22,6 +22,19 @@ public class CoinCompare {
   private final ObjectMapper mapper = new ObjectMapper();
   private final HttpApi http = new HttpApi();
 
+  private Set<String> batchCoins = new HashSet<>();
+
+  public CoinCompare batchCoins(Set<String> coins) {
+    batchCoins.addAll(coins);
+    return this;
+  }
+
+  public Map<String,Index> callBatchedData() throws IOException {
+    Map<String,Index> data = getData(batchCoins);
+    batchCoins.clear();
+    return data;
+  }
+
   public Map<String,Index> getData(Set<String> coins) throws IOException {
     final String baseRequest = generateBaseRequest(coins);
 

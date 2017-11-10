@@ -16,7 +16,7 @@ import java.util.Set;
  * Created by rise on 4/22/17.
  */
 abstract public class BletchleyData {
-  private static final BcLog log = BcLog.getLogger(BletchleyData.class);
+  private static final BcLog LOG = BcLog.getLogger(BletchleyData.class);
   private static final String USD_BTC_KEY = "usd_btc";
   private static final double USD_BTC_MKT_CAP = 0;
 
@@ -50,6 +50,18 @@ abstract public class BletchleyData {
 
   public Set<String> getMembers() {
     return new HashSet<>(businessRules.getIndexes());
+  }
+
+  public BletchleyData filterAndSet(Map<String,Index> members) {
+    for (String coin : businessRules.getIndexes()) {
+      if (members.containsKey(coin)) {
+        lastIndexes.put(coin, members.get(coin));
+      }
+      else {
+        LOG.error("no data for coin: " + coin);
+      }
+    }
+    return this;
   }
 
   // public for testing

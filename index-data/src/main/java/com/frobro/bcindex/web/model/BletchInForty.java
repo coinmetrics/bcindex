@@ -1,9 +1,7 @@
 package com.frobro.bcindex.web.model;
 
-import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.constants.StaticValues;
 import com.frobro.bcindex.web.service.BusRulesForty;
-import com.frobro.bcindex.web.service.BusRulesTen;
 import com.frobro.bcindex.web.service.BusinessRules;
 
 public class BletchInForty extends BletchleyData {
