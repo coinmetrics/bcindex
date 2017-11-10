@@ -24,7 +24,7 @@ public class BusRulesForty extends BusinessRules {
     }
 
     private void logMultipliers() {
-        log.debug("10 index multipliers");
+        log.debug("40 index multipliers");
         logValues(tickers);
     }
 

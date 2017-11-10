@@ -11,7 +11,7 @@ public class IndexCalculatorForty extends IndexCalculator {
 
     @Override
     protected BusinessRules newBusRules() {
-        return new BusRulesEth();
+        return new BusRulesForty();
     }
 
     @Override
