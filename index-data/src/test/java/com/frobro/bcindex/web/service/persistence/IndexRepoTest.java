@@ -24,6 +24,8 @@ public class IndexRepoTest {
   private TwentyEvenRepo twentyEvenRepo;
   private EthRepo ethRepo;
   private EthEvenRepo ethEvenRepo;
+  private FortyIdxRepo fortyRepo;
+  private FortyEvenIdxRepo fortyEvenRepo;
   private PrimeRepo primeRepo;
 
   @Autowired
@@ -32,17 +34,22 @@ public class IndexRepoTest {
                            TwentyRepo trepo,
                            TwentyEvenRepo terepo,
                            EthRepo etRepo,
-                           EthEvenRepo eteRepo) {
+                           EthEvenRepo eteRepo,
+                           FortyIdxRepo fRepo,
+                           FortyEvenIdxRepo feRepo) {
     this.indexRepo = repo;
     this.evenRepo = eRepo;
     this.twentyRepo = trepo;
     this.twentyEvenRepo = terepo;
     this.ethRepo = etRepo;
     this.ethEvenRepo = eteRepo;
+    this.fortyRepo = fRepo;
+    this.fortyEvenRepo = feRepo;
 
     primeRepo = PrimeRepo.getRepo(indexRepo,evenRepo,
                               twentyRepo,twentyEvenRepo,
-                              ethRepo, ethEvenRepo);
+                              ethRepo, ethEvenRepo,
+                              fRepo, feRepo);
   }
 
   @Test
@@ -100,6 +107,20 @@ public class IndexRepoTest {
     validate(index, retreived);
   }
 
+  @Test
+  public void testSaveForty() {
+    JpaIdxForty forty = new JpaIdxForty();
+    populate(forty);
+    primeRepo.saveForty(forty);
+    JpaIdxForty retrieved = fortyRepo.findFirstByOrderByIdDesc();
+    validate(forty, retrieved);
+
+    JpaIdxFortyEven fortyEven = new JpaIdxFortyEven();
+    populate(fortyEven);
+    primeRepo.saveFortyEven(fortyEven);
+    JpaIdxFortyEven retrievedEven = fortyEvenRepo.findFirstByOrderByIdDesc();
+    validate(forty, retrievedEven);
+  }
   private void populate(JpaIndex idx) {
     idx.setIndexValueBtc(12)
         .setIndexValueUsd(34)

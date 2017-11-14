@@ -22,10 +22,13 @@ public class HomeController {
   @Autowired
   public void init(IndexRepo repo, EvenIdxRepo eRepo,
                    TwentyRepo tRepo, TwentyEvenRepo teRepo,
-                   EthRepo etRepo, EthEvenRepo eteRepo) {
+                   EthRepo etRepo, EthEvenRepo eteRepo,
+                   FortyIdxRepo fRepo, FortyEvenIdxRepo feRepo) {
+
     tickerService.setIndexRepo(repo, eRepo,
                                tRepo, teRepo,
-                               etRepo, eteRepo);
+                               etRepo, eteRepo,
+                               fRepo, feRepo);
     timerService = new TimerService(tickerService);
   }
 

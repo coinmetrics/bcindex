@@ -7,10 +7,10 @@ import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * #40 start persisting forty index
  * Created by rise on 5/22/17.
  */
 public abstract class DbBaseTest {
@@ -27,10 +27,11 @@ public abstract class DbBaseTest {
   @Autowired
   public void setIndexRepo(IndexRepo oRepo, EvenIdxRepo eRepo,
                            TwentyRepo tRepo, TwentyEvenRepo teRepo,
-                           EthRepo etRepo, EthEvenRepo eteRepo) {
+                           EthRepo etRepo, EthEvenRepo eteRepo,
+                           FortyIdxRepo fRepo, FortyEvenIdxRepo feRepo) {
 
     this.oddRepo = oRepo;
-    this.repo = PrimeRepo.getRepo(oRepo, eRepo,tRepo,teRepo,etRepo,eteRepo);
+    this.repo = PrimeRepo.getRepo(oRepo, eRepo,tRepo,teRepo,etRepo,eteRepo,fRepo,feRepo);
   }
 
   @Before

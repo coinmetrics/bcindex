@@ -46,11 +46,13 @@ public class TickerService {
 
   public void setIndexRepo(IndexRepo repo, EvenIdxRepo eRepo,
                            TwentyRepo tRepo, TwentyEvenRepo teRepo,
-                           EthRepo etRepo, EthEvenRepo eteRepo) {
+                           EthRepo etRepo, EthEvenRepo eteRepo,
+                           FortyIdxRepo fRepo, FortyEvenIdxRepo feRepo) {
 
     this.repo = PrimeRepo.getRepo(repo, eRepo,
                                   tRepo, teRepo,
-                                  etRepo, eteRepo);
+                                  etRepo, eteRepo,
+                                  fRepo, feRepo);
   }
 
   public TickerService updateTickers() {
@@ -164,7 +166,7 @@ public class TickerService {
     saveIndexTen();
     saveIndexTwenty();
     saveIndexEth();
-    // saveIndexForty();
+    saveIndexForty();
   }
 
   private void saveIndexTen() {
@@ -195,6 +197,16 @@ public class TickerService {
     JpaIdxEthEven eIdx = new JpaIdxEthEven();
     populateJpa(eIdx, lastIdxEthEven);
     repo.saveEthEven(eIdx);
+  }
+
+  private void saveIndexForty() {
+    JpaIdxForty idx = new JpaIdxForty();
+    populateJpa(idx, lastIdxForty);
+    repo.saveForty(idx);
+
+    JpaIdxFortyEven eIdx = new JpaIdxFortyEven();
+    populateJpa(eIdx, lastIdxFortyEven);
+    repo.saveFortyEven(eIdx);
   }
 
   private void populateJpa(JpaIndex idx, IndexDbDto dto) {
