@@ -10,7 +10,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import java.util.concurrent.TimeUnit;
 
 /**
- * #40 start persisting forty index
  * Created by rise on 5/22/17.
  */
 public abstract class DbBaseTest {
