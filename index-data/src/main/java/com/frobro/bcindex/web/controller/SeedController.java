@@ -97,7 +97,7 @@ public class SeedController {
     long diff = 0;
     // start clock from now - [time length]. so the last time
     // will be now. That way new data will have consistent timestamps
-    long time = System.currentTimeMillis() - TimeUnit.DAYS.toMillis(5); //TimeUnit.MINUTES.toMillis(size);
+    long time = System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(size); //TimeUnit.MINUTES.toMillis(size);
     for (int i=1; i<size-1; i++) {
       String line = lines.get(i);
       String[] vals = line.split(delim);
