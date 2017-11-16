@@ -4,6 +4,7 @@ package com.frobro.bcindex.web.service.apis;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.frobro.bcindex.web.domain.Index;
+import com.frobro.bcindex.web.service.Bset;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +20,7 @@ public class CryptoCompare {
   private static final String COIN_COMPARE_BASE = "https://min-api.cryptocompare.com/data/pricemulti?fsyms=";
   private static final String COIN_COMPARE_BTC_ENDPOINT = "https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC&tsyms=USD";
   private static final String CURRENCY = "&tsyms=USD";
+  private static final int COIN_LIMIT = 60;
   private final ObjectMapper mapper = new ObjectMapper();
   private final HttpApi http = new HttpApi();
 
@@ -30,26 +32,37 @@ public class CryptoCompare {
   }
 
   public Map<String,Index> callBatchedData() throws IOException {
-    Map<String,Index> data = getData(batchCoins);
+    Map<String,Index> data;
+    // calls with too many coins returns an error --> no data
+    if (batchCoins.size() > COIN_LIMIT) {
+      String[] array = batchCoins.toArray(new String[0]);
+      data = getData(Bset.leftHalf(array));
+      Map<String,Index> data2 = getData(Bset.rightHalf(array));
+      data.putAll(data2);
+    }
+    else {
+      data = getData(batchCoins);
+    }
+
     batchCoins.clear();
     return data;
   }
 
-  public Map<String,Index> getData(Set<String> coins) throws IOException {
-    final String baseRequest = generateBaseRequest(coins);
-
-    String request = COIN_COMPARE_BASE + removeTrailingDelim(baseRequest.toString()) + CURRENCY;
-    String response = http.makeApiCall(request);
-
-    return parseData(response, coins);
-  }
-
-  private String generateBaseRequest(Set<String> coins) {
+  private String generateRequest(Set<String> coins) {
     StringBuilder baseRequest = new StringBuilder();
+
     coins.stream().forEach(coin -> {
       baseRequest.append(coin).append(DELIM);
     });
-    return baseRequest.toString();
+
+    return COIN_COMPARE_BASE + removeTrailingDelim(baseRequest.toString()) + CURRENCY;
+  }
+
+  public Map<String,Index> getData(Set<String> coins) throws IOException {
+    final String request = generateRequest(coins);
+    String response = http.makeApiCall(request);
+
+    return parseData(response, coins);
   }
 
   private String removeTrailingDelim(String reqStr) {

@@ -80,6 +80,7 @@ public class TickerService {
                .batchCoins(inputDataTwenty.getMembers())
                .batchCoins(inputEth.getMembers())
                .batchCoins(inputForty.getMembers());
+
     // call the api to get the data
     Map<String,Index> apiData = cryptoCompare.callBatchedData();
 
