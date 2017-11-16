@@ -8,7 +8,7 @@ import java.io.IOException;
 /**
  * Unit test for simple App.
  */
-public class CoinCompareTest {
+public class CryptoCompareTest {
 
     @Test
     public void testParse() throws IOException {

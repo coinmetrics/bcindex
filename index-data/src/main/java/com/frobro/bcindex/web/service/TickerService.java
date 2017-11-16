@@ -11,7 +11,7 @@ import com.frobro.bcindex.web.model.BletchInEth;
 import com.frobro.bcindex.web.model.BletchInForty;
 import com.frobro.bcindex.web.model.BletchInTen;
 import com.frobro.bcindex.web.model.BletchInTwenty;
-import com.frobro.bcindex.web.service.apis.CoinCompare;
+import com.frobro.bcindex.web.service.apis.CryptoCompare;
 import com.frobro.bcindex.web.service.persistence.IndexDbDto;
 
 /**
@@ -20,7 +20,7 @@ import com.frobro.bcindex.web.service.persistence.IndexDbDto;
 public class TickerService {
 
   private static final BcLog log = BcLog.getLogger(TickerService.class);
-  private final CoinCompare coinCompare = new CoinCompare();
+  private final CryptoCompare cryptoCompare = new CryptoCompare();
   // calculators
   private IndexCalculator indexCalculatorTen = new IndexCalculatorTen();
   private IndexCalculator indexCalculatorTwenty = new IndexCalculatorTwenty();
@@ -76,12 +76,12 @@ public class TickerService {
     updateTickerBtc();
 
     // batch all api calls
-    coinCompare.batchCoins(inputDataTen.getMembers())
+    cryptoCompare.batchCoins(inputDataTen.getMembers())
                .batchCoins(inputDataTwenty.getMembers())
                .batchCoins(inputEth.getMembers())
                .batchCoins(inputForty.getMembers());
     // call the api to get the data
-    Map<String,Index> apiData = coinCompare.callBatchedData();
+    Map<String,Index> apiData = cryptoCompare.callBatchedData();
 
     long time = System.currentTimeMillis();
 
@@ -154,7 +154,7 @@ public class TickerService {
 
   public void updateTickerBtc() throws IOException {
     // get the value
-    double btcPrice = coinCompare.getBtcPrice();
+    double btcPrice = cryptoCompare.getBtcPrice();
     // set the value
     inputDataTen.setLastUsdBtc(btcPrice);
     inputDataTwenty.setLastUsdBtc(btcPrice);

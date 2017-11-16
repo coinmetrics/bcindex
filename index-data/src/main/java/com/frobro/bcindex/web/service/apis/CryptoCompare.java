@@ -13,8 +13,8 @@ import java.util.*;
 /**
  * Created by rise on 3/23/17.
  */
-public class CoinCompare {
-  private static final Logger LOG = LoggerFactory.getLogger(CoinCompare.class);
+public class CryptoCompare {
+  private static final Logger LOG = LoggerFactory.getLogger(CryptoCompare.class);
   private static final String DELIM = ",";
   private static final String COIN_COMPARE_BASE = "https://min-api.cryptocompare.com/data/pricemulti?fsyms=";
   private static final String COIN_COMPARE_BTC_ENDPOINT = "https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC&tsyms=USD";
@@ -24,7 +24,7 @@ public class CoinCompare {
 
   private Set<String> batchCoins = new HashSet<>();
 
-  public CoinCompare batchCoins(Set<String> coins) {
+  public CryptoCompare batchCoins(Set<String> coins) {
     batchCoins.addAll(coins);
     return this;
   }
