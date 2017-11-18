@@ -18,9 +18,9 @@ import static org.junit.Assert.assertTrue;
  * Unit test for simple App.
  */
 public class ExpirationTest {
-    
+
     @Test
-    public void testMax() {
+    public void testExpirationBasedOnMaxId() {
         // run once at each with max id less then threshhold
         runAboveAndBelowThresh(DAILY.getNumDataPoints()-1, HOURLY.getTimeStep());
         runAboveAndBelowThresh(WEEKLY.getNumDataPoints()-1, DAILY.getTimeStep());

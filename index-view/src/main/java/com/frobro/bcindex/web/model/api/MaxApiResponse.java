@@ -1,5 +1,7 @@
 package com.frobro.bcindex.web.model.api;
 
+import com.frobro.bcindex.web.service.StaticThresholds;
+
 /**
  * Created by rise on 7/3/17.
  */
@@ -20,7 +22,7 @@ public class MaxApiResponse extends ApiResponse {
       this.maxBletchId = maxBletchId;
     }
     if (queryTimeFrame == null) {
-      queryTimeFrame = setQueryTimeFrame(maxBletchId);
+      queryTimeFrame = StaticThresholds.getTimeFrame(maxBletchId);
       timeFrame = queryTimeFrame;
     }
     if (queryTimeUnit == null) {
@@ -39,22 +41,5 @@ public class MaxApiResponse extends ApiResponse {
       unit = TimeFrame.MAX.getDayTimeUnit();
     }
     return unit;
-  }
-
-  private TimeFrame setQueryTimeFrame(long maxBletchId) {
-    TimeFrame frame;
-    if (maxBletchId <= TimeFrame.DAILY.getNumDataPoints()) {
-      frame = TimeFrame.HOURLY;
-    }
-    else if (maxBletchId <= TimeFrame.WEEKLY.getNumDataPoints()) {
-      frame = TimeFrame.DAILY;
-    }
-    else if (maxBletchId <= (TimeFrame.MONTHLY.getNumDataPoints()*2)) {
-      frame = TimeFrame.MONTHLY;
-    }
-    else {
-      frame = TimeFrame.MAX;
-    }
-    return frame;
   }
 }
