@@ -74,6 +74,8 @@ public class SeedController {
       repo.saveTwenty(newTwenty(time));
       repo.saveEvenTwenty(new20Even(time));
       repo.saveEthEven(newEthEven(time));
+      repo.saveForty(newForty(time));
+      repo.saveFortyEven(newFortyEven(time));
     }
     return "done seeding";
   }
@@ -122,6 +124,18 @@ public class SeedController {
     }
 
     return idxList;
+  }
+
+  private JpaIdxForty newForty(long time) {
+    JpaIdxForty idx = new JpaIdxForty();
+    populate(idx, time);
+    return idx;
+  }
+
+  private JpaIdxFortyEven newFortyEven(long time) {
+    JpaIdxFortyEven idx = new JpaIdxFortyEven();
+    populate(idx, time);
+    return idx;
   }
 
   private JpaIndexTen newOdd(long now) {
