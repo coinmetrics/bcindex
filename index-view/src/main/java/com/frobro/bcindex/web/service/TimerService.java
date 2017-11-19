@@ -1,6 +1,7 @@
 package com.frobro.bcindex.web.service;
 
 import com.frobro.bcindex.web.bclog.BcLog;
+import com.frobro.bcindex.web.service.cache.CacheLoader;
 import com.frobro.bcindex.web.service.cache.CacheUpdateMgr;
 
 import java.util.concurrent.Executors;
@@ -39,8 +40,8 @@ public class TimerService {
     return false; //state;
    }
 
-  public void run() {
-    run(20);
+  public void run(CacheLoader cacheLoader) {
+    run(cacheLoader, 20);
   }
 
   public void updateIfInDevMode() {
@@ -49,7 +50,13 @@ public class TimerService {
     }
   }
 
-  private void run(long initialDelay) {
+  private void run(CacheLoader cacheLoader, long initialDelay) {
+    // cacheLoader.load needs to be called off the main thread because
+    // it takes more than 90 seconds to load. Heroku will
+    // raise a
+    // Error R10 (Boot timeout) -> Web process failed to bind to $PORT within 90 seconds to launch
+    cacheLoader.load();
+
     if (not(inDevMode)) {
       Runnable task = getTask();
       log.info("starting update thread ----------");

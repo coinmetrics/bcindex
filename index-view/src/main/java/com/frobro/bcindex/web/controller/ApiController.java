@@ -39,15 +39,18 @@ public class ApiController {
 
   @PostConstruct
   public void init(){
+    // init the db access
     dbTickerService.setJdbc(jdbc);
     TimeSeriesService service = new TimeSeriesService();
     service.setJdbc(jdbc);
+
     // initialize the cache
     cacheMgr = new CacheUpdateMgr(cache, service);
-    CacheLoader.load(cache, cacheMgr,dbTickerService);
+    CacheLoader cacheLoader =
+        new CacheLoader(cache,cacheMgr, dbTickerService);
 
     timerService = new TimerService(cacheMgr);
-    timerService.run();
+    timerService.run(cacheLoader);
     timerService.updateIfInDevMode();
   }
 
