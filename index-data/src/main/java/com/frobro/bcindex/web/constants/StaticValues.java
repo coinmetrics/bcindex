@@ -22,8 +22,8 @@ public class StaticValues {
   public static final String MKT_CAP_FILE_40 = "business_rules/40_nov_rebal.csv";
 
   // Ethereum index values
-  public static final double DIVISOR_ETHER = 66521043.32;
-  public static final double DIVISOR_EVEN_ETHER = 59614852.49;
+  public static final double DIVISOR_ETHER = 75846730.53;
+  public static final double DIVISOR_EVEN_ETHER = 67972350.2;
   public static final String MKT_CAP_FILE_EHTER = "business_rules/eth_nov.csv";
 
     // Application sector index values
