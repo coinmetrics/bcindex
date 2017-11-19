@@ -21,6 +21,14 @@ let Config = {
                 text: 'Bletchley 20 Even Index'
             },
             {
+                id: 'FORTY_INDEX',
+                text: 'Bletchley 40 Index'
+            },
+            {
+                id: 'FORTY_EVEN_INDEX',
+                text: 'Bletchley 40 Even Index'
+            },
+            {
                 id: 'INDEX_ETH',
                 text: 'Bletchley Ethereum Token Index'
             },

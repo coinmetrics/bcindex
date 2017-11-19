@@ -8,6 +8,8 @@ public enum IndexType {
   EVEN_INDEX,
   INDEX_TWENTY,
   EVEN_TWENTY,
+  FORTY_INDEX,
+  FORTY_EVEN_INDEX,
   INDEX_ETH,
   EVEN_ETH
 }
