@@ -209,6 +209,12 @@ var Config = {
             id: 'EVEN_INDEX',
             text: 'Bletchley 10 Even Index'
         }, {
+            id: 'INDEX_ETH',
+            text: 'Bletchley Ethereum Token Index'
+        }, {
+            id: 'EVEN_ETH',
+            text: 'Bletchley Ethereum Token Even Index'
+        }, {
             id: 'INDEX_TWENTY',
             text: 'Bletchley 20 Index'
         }, {
@@ -220,12 +226,6 @@ var Config = {
         }, {
             id: 'FORTY_EVEN_INDEX',
             text: 'Bletchley 40 Even Index'
-        }, {
-            id: 'INDEX_ETH',
-            text: 'Bletchley Ethereum Token Index'
-        }, {
-            id: 'EVEN_ETH',
-            text: 'Bletchley Ethereum Token Even Index'
         }],
         currency: [{
             id: 'USD',
