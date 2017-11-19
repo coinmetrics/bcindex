@@ -74,6 +74,14 @@ public abstract class DbBaseTest {
     set(idx, ie20);
     repo.saveEvenTwenty(ie20);
 
+    JpaIdxFortyEven i40 = new JpaIdxFortyEven();
+    set(idx, i40);
+    repo.saveFortyEven(i40);
+
+    JpaIdxForty ie40 = new JpaIdxForty();
+    set(idx, ie40);
+    repo.saveForty(ie40);
+
     JpaIdxEth eth = new JpaIdxEth();
     set(idx, eth);
     repo.saveEth(eth);
