@@ -17,6 +17,7 @@ import static com.frobro.bcindex.web.service.cache.DataNamer.createName;
 public class DataCache {
   private static final Logger LOG = LoggerFactory.getLogger(DataCache.class);
   private final Map<String,ApiResponse> apiMap = new ConcurrentHashMap<>();
+  private boolean isInit = Boolean.FALSE;
 
   /**
    * should remove the last element and
@@ -133,6 +134,11 @@ public class DataCache {
         populateById(req, dataService);
       }
     }
+    isInit = Boolean.TRUE;
+  }
+
+  public boolean isInitialized() {
+    return isInit;
   }
 
   public void populateById(RequestDto req, DataProvider service) {

@@ -8,6 +8,8 @@ import com.frobro.bcindex.web.model.api.RequestDto;
 import com.frobro.bcindex.web.model.api.TimeFrame;
 import com.frobro.bcindex.web.service.DbTickerService;
 
+import java.util.concurrent.TimeUnit;
+
 public class CacheLoader {
   private static final BcLog LOG = BcLog.getLogger(CacheLoader.class);
 
@@ -24,7 +26,7 @@ public class CacheLoader {
   }
 
   public void load() {
-    LOG.info("started loading cache");
+    LOG.info("started loading cache ...");
     RequestDto req = new RequestDto();
 
     for (IndexType index : IndexType.values()) {
@@ -43,6 +45,11 @@ public class CacheLoader {
         mgr.loadExpiration(req, source);
       }
     }
+
+    try { Thread.sleep(TimeUnit.SECONDS.toMillis(40)); } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+
     LOG.info("completed loading cache");
   }
 }

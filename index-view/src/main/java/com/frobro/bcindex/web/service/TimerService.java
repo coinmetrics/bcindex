@@ -51,12 +51,6 @@ public class TimerService {
   }
 
   private void run(CacheLoader cacheLoader, long initialDelay) {
-    // cacheLoader.load needs to be called off the main thread because
-    // it takes more than 90 seconds to load. Heroku will
-    // raise a
-    // Error R10 (Boot timeout) -> Web process failed to bind to $PORT within 90 seconds to launch
-    cacheLoader.load();
-
     if (not(inDevMode)) {
       Runnable task = getTask();
       log.info("starting update thread ----------");
@@ -73,7 +67,9 @@ public class TimerService {
 
     return () -> {
       try {
-        cache.update();
+        if (cache.isInit()) {
+          cache.update();
+        }
       } catch (Exception e) {
         LOG.error(e);
       }

@@ -5,7 +5,6 @@ import com.frobro.bcindex.web.model.api.IndexType;
 import com.frobro.bcindex.web.model.api.RequestDto;
 import com.frobro.bcindex.web.model.api.TimeFrame;
 import com.frobro.bcindex.web.service.DataProvider;
-import com.frobro.bcindex.web.service.DbTickerService;
 import com.frobro.bcindex.web.service.TimeSeriesService;
 import com.frobro.bcindex.web.service.query.GroupUpdate;
 import org.slf4j.Logger;
@@ -47,7 +46,7 @@ public class CacheUpdateMgr {
       expList.add(exp);
     }
     else {
-      LOG.warn("not data exists for request: " + req);
+      LOG.warn("no data exists for request: " + req);
     }
   }
 
@@ -58,6 +57,10 @@ public class CacheUpdateMgr {
   public void update() {
     LOG.debug("getting new data from the data base");
     update(dbService.getLastestData());
+  }
+
+  public boolean isInit() {
+    return cache.isInitialized();
   }
 
   Set<String> update(GroupUpdate update) {

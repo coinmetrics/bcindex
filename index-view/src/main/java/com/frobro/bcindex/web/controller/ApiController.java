@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by rise on 5/12/17.
@@ -31,7 +34,7 @@ public class ApiController {
   private CacheUpdateMgr cacheMgr;
   private DataCache cache = new DataCache();
   private JdbcTemplate jdbc;
-
+  private ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
   @Autowired
   public void init(JdbcTemplate jdbc) {
     this.jdbc = jdbc;
@@ -49,9 +52,26 @@ public class ApiController {
     CacheLoader cacheLoader =
         new CacheLoader(cache,cacheMgr, dbTickerService);
 
+    // start cache loading thread
+    Runnable task = getLoadCacheTask();
+    executor.schedule(task, 0, TimeUnit.SECONDS);
+
+    // start data update thread
     timerService = new TimerService(cacheMgr);
     timerService.run(cacheLoader);
     timerService.updateIfInDevMode();
+  }
+
+
+  private Runnable getLoadCacheTask() {
+    // cacheLoader.load needs to be called off the main thread because
+    // it takes more than 90 seconds to load. Heroku will
+    // raise a
+    // Error R10 (Boot timeout) -> Web process failed to bind to $PORT within 90 seconds to launch
+    // If the dynamo state is not "UP" in 75 seconds an H20 will be thrown, even if the port is bound in time
+    return () -> {
+      new CacheLoader(cache, cacheMgr, dbTickerService).load();
+    };
   }
 
   @RequestMapping(value = "cacheupdate", method = RequestMethod.GET)
