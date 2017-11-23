@@ -134,6 +134,9 @@ public class DataCache {
         populateById(req, dataService);
       }
     }
+  }
+
+  public void initCompleted() {
     isInit = Boolean.TRUE;
   }
 

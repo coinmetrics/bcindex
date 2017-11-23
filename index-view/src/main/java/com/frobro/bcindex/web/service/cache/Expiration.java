@@ -77,12 +77,15 @@ public class Expiration {
     return timeFrame;
   }
 
+  public String getLabel() {
+    return index.name() + ":" + timeFrame.name();
+  }
   @Override
   public String toString() {
     return "Expiration{" +
         "index=" + index +
         ", timeFrame=" + timeFrame +
-        ", lastUpdateTime=" + lastUpdateTime +
+        ", lastUpdateTime=" + BletchDate.toDate(lastUpdateTime) +
         '}';
   }
 }

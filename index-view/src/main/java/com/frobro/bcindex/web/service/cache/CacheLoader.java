@@ -44,6 +44,7 @@ public class CacheLoader {
         cache.populateById(req, source);
         mgr.loadExpiration(req, source);
       }
+      cache.initCompleted();
     }
 
     try { Thread.sleep(TimeUnit.SECONDS.toMillis(40)); } catch (Exception e) {

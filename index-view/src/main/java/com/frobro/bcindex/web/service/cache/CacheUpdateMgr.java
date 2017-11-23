@@ -36,6 +36,14 @@ public class CacheUpdateMgr {
     }
   }
 
+  public String expirationsToString() {
+    StringBuilder msg = new StringBuilder();
+    for (IndexType idx : expireMap.keySet()) {
+      msg.append(expireMap.get(idx).toString());
+    }
+    return msg.toString();
+  }
+
   public void loadExpiration(RequestDto req, DataProvider dataProvider) {
     ApiResponse response = dataProvider.getData(req);
     if (response.firstAndLastNotNull()) {
@@ -46,7 +54,8 @@ public class CacheUpdateMgr {
       expList.add(exp);
     }
     else {
-      LOG.warn("no data exists for request: " + req);
+      LOG.warn("while loading expiration "
+          + "could not find data for request: " + req);
     }
   }
 
@@ -71,18 +80,23 @@ public class CacheUpdateMgr {
       List<Expiration> expires = get(index);
 
       for (Expiration exp : expires) {
+        String label = exp.getLabel();
+
         if (exp.isExpired(update.get(index))) {
-          // remove oldest and add new to list
+          LOG.debug(label + " has expired");
           cache.updateCache(exp, update);
           updated.add(createName(index,exp.getTimeFrame()));
           exp.updateLastTime(update.getTime(index));
         }
+
         else {
           // overwrite the latest data with the new data
           cache.overwriteLatest(exp, update);
+          LOG.debug(label + " replacing last data point");
         }
       }
     }
+
     return updated;
   }
 
