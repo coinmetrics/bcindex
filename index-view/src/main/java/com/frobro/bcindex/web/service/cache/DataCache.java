@@ -5,6 +5,7 @@ import com.frobro.bcindex.web.service.DataProvider;
 import com.frobro.bcindex.web.service.DbTickerService;
 import com.frobro.bcindex.web.service.query.GroupUpdate;
 import com.frobro.bcindex.web.service.query.IndexUpdate;
+import com.frobro.bcindex.web.service.time.TimeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -87,9 +88,28 @@ public class DataCache {
     String key = createName(req);
     ApiResponse resp = apiMap.get(key);
 
-    if (req == null) {
-      throw new IllegalStateException("no response for: " + req);
+    if (resp == null) {
+      LOG.warn("response is null for request: " + req
+        + ", using default response");
+      resp = createEmpty(req);
     }
+
+    return resp;
+  }
+
+  private ApiResponse createEmpty(RequestDto req) {
+    ApiResponse resp = ApiResponse.newResponse(req);
+    double px = 0.0;
+    long time = TimeService.currentTimeMillis();
+    resp.lastPrice = px;
+    resp.high = px;
+    resp.low = px;
+    resp.prevClose = px;
+    resp.change = 0.0;
+    resp.percentChange = 0.0;
+    resp.updateFirst(px, time);
+    resp.updateLast(px, time);
+    resp.addData(px, time);
     return resp;
   }
 
