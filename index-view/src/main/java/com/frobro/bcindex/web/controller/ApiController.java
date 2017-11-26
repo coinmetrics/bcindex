@@ -99,7 +99,9 @@ public class ApiController {
                 + Currency.USD.name()
                 + ", " + Currency.BTC
                 + ") supported indexes ("
-                + PublicIndex.ETHER_INDEX.name()
+                + PublicIndex.FORTY_INDEX.name()
+                + ", " + PublicIndex.FORTY_EVEN_INDEX.name()
+                + ", "+ PublicIndex.ETHER_INDEX.name()
                 + ", " + PublicIndex.EVEN_ETHER_INDEX.name()
                 + ") supported time frames ("
                 + PublicTimeFrame.DAILY.name()
