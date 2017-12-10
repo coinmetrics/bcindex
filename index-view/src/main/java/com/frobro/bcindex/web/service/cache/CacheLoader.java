@@ -42,13 +42,13 @@ public class CacheLoader {
 
         mgr.loadExpiration(req.index, req.timeFrame, latestTime);
       }
-      cache.initCompleted();
     }
 
     try { Thread.sleep(TimeUnit.SECONDS.toMillis(40)); } catch (Exception e) {
       throw new RuntimeException(e);
     }
 
+    cache.initCompleted();
     LOG.info("completed loading cache");
   }
 }
