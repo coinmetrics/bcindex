@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class TimerService {
   private static final BcLog LOG = BcLog.getLogger(TimerService.class);
-  private static final int REFRESH_PERIOD_SECONDS = 10; // 1 minute
+  private static final int REFRESH_PERIOD_SECONDS = 60; // 1 minute
   private static final String DEV_MODE = "dev";
   private static final String POSTGRES_DEV_MODE = "pgres";
   private static final BcLog log = BcLog.getLogger(TimerService.class);
@@ -42,12 +42,6 @@ public class TimerService {
 
   public void run(CacheLoader cacheLoader) {
     run(cacheLoader, 20);
-  }
-
-  public void updateIfInDevMode() {
-    if (inDevMode) {
-      cache.update();
-    }
   }
 
   private void run(CacheLoader cacheLoader, long initialDelay) {

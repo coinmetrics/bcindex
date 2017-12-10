@@ -2,8 +2,10 @@ package com.frobro.bcindex.web.service.persistence;
 
 import com.frobro.bcindex.core.db.domain.*;
 import com.frobro.bcindex.core.db.service.*;
+import com.frobro.bcindex.web.controller.ApiController;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -31,6 +33,13 @@ public abstract class DbBaseTest {
 
     this.oddRepo = oRepo;
     this.repo = PrimeRepo.getRepo(oRepo, eRepo,tRepo,teRepo,etRepo,eteRepo,fRepo,feRepo);
+  }
+
+  // we don't want the loading and updating threads spinning
+  // the ApiController starts them in its init method
+  @BeforeClass
+  public static void turnOffApiController() {
+    ApiController.turnOffThisControllerForTesting();
   }
 
   @Before

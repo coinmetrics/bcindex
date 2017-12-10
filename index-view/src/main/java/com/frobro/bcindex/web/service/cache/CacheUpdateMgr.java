@@ -1,5 +1,6 @@
 package com.frobro.bcindex.web.service.cache;
 
+import com.frobro.bcindex.core.db.service.BletchDate;
 import com.frobro.bcindex.web.model.api.ApiResponse;
 import com.frobro.bcindex.web.model.api.IndexType;
 import com.frobro.bcindex.web.model.api.RequestDto;
@@ -85,11 +86,10 @@ public class CacheUpdateMgr {
         else {
           // overwrite the latest data with the new data
           cache.overwriteLatest(exp, update);
-          LOG.debug(label + " replacing last data point");
+          LOG.debug(label + " overwriting last data point");
         }
       }
     }
-
     return updated;
   }
 

@@ -27,6 +27,7 @@ import java.util.concurrent.TimeUnit;
  */
 @RestController
 public class ApiController {
+  private static final String CONTROLLER_OFF = "bletch.controller.off";
   private static final BcLog log = BcLog.getLogger(ApiController.class);
 
   private DbTickerService dbTickerService = new DbTickerService();
@@ -35,6 +36,15 @@ public class ApiController {
   private DataCache cache = new DataCache();
   private JdbcTemplate jdbc;
   private ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
+
+  public static void turnOffThisControllerForTesting() {
+    System.setProperty(CONTROLLER_OFF,"true");
+  }
+
+  private boolean thisControllerIsOn() {
+    return System.getProperty(CONTROLLER_OFF) == null;
+  }
+
   @Autowired
   public void init(JdbcTemplate jdbc) {
     this.jdbc = jdbc;
@@ -42,24 +52,26 @@ public class ApiController {
 
   @PostConstruct
   public void init(){
-    // init the db access
-    dbTickerService.setJdbc(jdbc);
-    TimeSeriesService service = new TimeSeriesService();
-    service.setJdbc(jdbc);
+    if (thisControllerIsOn()) {
+      // init the db access
+      dbTickerService.setJdbc(jdbc);
+      TimeSeriesService service = new TimeSeriesService();
+      service.setJdbc(jdbc);
 
-    // initialize the cache
-    cacheMgr = new CacheUpdateMgr(cache, service);
-    CacheLoader cacheLoader =
-        new CacheLoader(cache,cacheMgr, dbTickerService);
+      // initialize the cache
+      cacheMgr = new CacheUpdateMgr(cache, service);
+      CacheLoader cacheLoader =
+          new CacheLoader(cache,cacheMgr, dbTickerService);
 
-    // start cache loading thread
-    Runnable task = getLoadCacheTask();
-    executor.schedule(task, 0, TimeUnit.SECONDS);
+      // start cache loading thread
+      Runnable task = getLoadCacheTask();
+      Thread loadThread = new Thread(task);
+      loadThread.start();
 
-    // start data update thread
-    timerService = new TimerService(cacheMgr);
-    timerService.run(cacheLoader);
-    timerService.updateIfInDevMode();
+      // start data update thread
+      timerService = new TimerService(cacheMgr);
+      timerService.run(cacheLoader);
+    }
   }
 
 
