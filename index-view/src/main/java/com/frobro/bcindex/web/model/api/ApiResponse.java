@@ -87,7 +87,10 @@ public class ApiResponse {
     return firstPx;
   }
 
-  public ApiResponse pushLatest(long time, double px) {
+  /*
+   * removes oldest and adds new time/price
+   */
+  public ApiResponse addNewAndRemoveLast(long time, double px) {
     times.remove(0);
     addTime(time);
     lastTime = times.get(times.size()-1);

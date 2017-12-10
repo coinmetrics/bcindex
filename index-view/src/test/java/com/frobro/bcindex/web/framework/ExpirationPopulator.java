@@ -20,7 +20,7 @@ public class ExpirationPopulator {
         return map;
     }
 
-    public static List<Expiration> createExpirations(IndexType index,
+    private static List<Expiration> createExpirations(IndexType index,
                                                      long startTimeMillis) {
 
         List<Expiration> expList = new ArrayList<>(TimeFrame.values().length);

@@ -60,11 +60,11 @@ public class DataCache {
 
   private void push(ApiResponse usd, ApiResponse btc, IndexUpdate newData) {
     if (notNull(usd)) {
-      usd.pushLatest(newData.getTimeStamp(), newData.getUsdPrice());
+      usd.addNewAndRemoveLast(newData.getTimeStamp(), newData.getUsdPrice());
     }
 
     if (notNull(btc)) {
-      btc.pushLatest(newData.getTimeStamp(), newData.getBtcPrice());
+      btc.addNewAndRemoveLast(newData.getTimeStamp(), newData.getBtcPrice());
     }
   }
 
@@ -144,7 +144,7 @@ public class DataCache {
     return isInit;
   }
 
-  public void populateById(RequestDto req, DataProvider service) {
+  public long populateById(RequestDto req, DataProvider service) {
     ApiResponse response = service.getData(req);
     if (response.firstAndLastNotNull()) {
       apiMap.put(createName(req), response);
@@ -152,6 +152,7 @@ public class DataCache {
     else {
       LOG.warn("not data exists for request: " + req);
     }
+    return response.getLatestTime();
   }
 
   public void printKeys() {

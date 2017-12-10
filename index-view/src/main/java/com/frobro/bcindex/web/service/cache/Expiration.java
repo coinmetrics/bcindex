@@ -20,8 +20,7 @@ public class Expiration {
   }
 
   public boolean isExpired(IndexUpdate idxUpdate) {
-    long updateTime = idxUpdate.getTimeStamp();
-    long diffMillis = updateTime - lastUpdateTime;
+    long diffMillis = timeSinceLast(idxUpdate.getTimeStamp());
 
     boolean expired;
 
@@ -34,6 +33,10 @@ public class Expiration {
 
     if (expired) LOG.debug(index.name() + ", " + timeFrame.name() + " has expired");
     return expired;
+  }
+
+  long timeSinceLast(long currentTime) {
+    return currentTime - lastUpdateTime;
   }
 
   private boolean isMax(TimeFrame frame) {

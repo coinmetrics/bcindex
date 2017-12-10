@@ -4,8 +4,6 @@ import com.frobro.bcindex.core.db.service.BletchDate;
 import com.frobro.bcindex.web.service.query.MaxTimeQuery;
 import com.frobro.bcindex.web.service.query.TimeSeriesQuery;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -173,8 +171,12 @@ public enum TimeFrame {
     return new TimeSeriesQuery(req);
   }
 
+  public long expireDurationMillis() {
+    return TimeUnit.MINUTES.toMillis(getTimeStep());
+  }
+
   public boolean timeElapsed(long timeDiff) {
-    return timeDiff >= TimeUnit.MINUTES.toMillis(getTimeStep());
+    return timeDiff >= expireDurationMillis();
   }
 
   public List<TimeFrame> getSmallerTimeFrames() {

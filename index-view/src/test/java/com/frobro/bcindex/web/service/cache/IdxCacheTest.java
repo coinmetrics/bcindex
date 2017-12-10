@@ -86,14 +86,14 @@ public class IdxCacheTest {
     long t0 = TimeService.currentTimeMillis();
     mgr.set(ExpirationPopulator.createExpirations(t0));
 
-    long t1 = t0 + TimeUnit.MINUTES.toMillis(req.timeFrame.getTimeStep()+1);
+    long pastExpireTime = t0 + TimeUnit.MINUTES.toMillis(req.timeFrame.getTimeStep() + 1);
 
     // and
     double newPxUsd = 123.00;
     double newPxBtc = 1.0304;
     long maxBletchId = 500000;
     // update only the 10 index
-    update.updateTen(newPxUsd, newPxBtc, t1, maxBletchId);
+    update.updateTen(newPxUsd, newPxBtc, pastExpireTime, maxBletchId);
 
     // and - new data is received
     Set<String> expiredFuture = mgr.update(update);
@@ -111,16 +111,17 @@ public class IdxCacheTest {
     long maxIdRej = 600000;
 
     // when
-    long t2 = t0 + TimeUnit.MINUTES.toMillis(1)-1;
+    long beforeExpireTime = t0 + TimeUnit.MINUTES.toMillis(1) - 1;
     // and
-    update.updateTen(usdRej, btcRej, t2, maxIdRej);
+    update.updateTen(usdRej, btcRej, beforeExpireTime, maxIdRej);
     Set<String> rejectedUpdate = mgr.update(update);
 
+    // then
     assertEquals(Collections.emptySet(), rejectedUpdate);
     ApiResponse resp = cache.respondTo(req);
-    // and last time is == t2 because it was overwritten
+    // and last time is equals beforeExpireTime because it was overwritten
     // but the oldest time should not be removed
-    assertEquals(req.timeFrame.round(t2), resp.getLatestTime());
+    assertEquals(req.timeFrame.round(beforeExpireTime), resp.getLatestTime());
     assertEquals(firstTime, resp.getFirstTime());
     // and last px is equal to usdRej
     assertEquals(usdRej, resp.getLastPrice(), 0.001);
@@ -151,8 +152,9 @@ public class IdxCacheTest {
     cacheIsPopulated(cache);
 
     // and initial prices are saved
-    final Map<TimeFrame,Double> originalFstPx = new HashMap<>();
-    final Map<TimeFrame,Double> originalLastPx = new HashMap<>();
+    final Map<TimeFrame, Double> originalFstPx = new HashMap<>();
+    final Map<TimeFrame, Double> originalLastPx = new HashMap<>();
+
     req.timeFrame.getLargerTimeFrames().stream().forEach(t -> {
       RequestDto d = req.copy();
       d.timeFrame = t;
@@ -170,7 +172,7 @@ public class IdxCacheTest {
     mgr.set(ExpirationPopulator.createExpirations(t0));
 
     // and initial time is set to past expiration
-    long future = t0 + TimeUnit.MINUTES.toMillis(req.timeFrame.getTimeStep()+1);
+    long future = t0 + TimeUnit.MINUTES.toMillis(req.timeFrame.getTimeStep() + 1);
 
     // and
     double newPxUsd = 123.00;
@@ -237,13 +239,17 @@ public class IdxCacheTest {
     req.index = IndexType.ODD_INDEX;
 
     List<Double> expData = new ArrayList<>();
-    expData.add(1.0); expData.add(2.0);
-    expData.add(3.0); expData.add(4.0);
+    expData.add(1.0);
+    expData.add(2.0);
+    expData.add(3.0);
+    expData.add(4.0);
     expData.add(5.0);
     List<Long> expTimes = Arrays.asList(1L, 2L, 3L, 4L, 5L);
     // and
     ApiResponse resp = ApiResponse.newResponse(req);
-    expData.stream().forEach(d -> {resp.addData(d,0L);});
+    expData.stream().forEach(d -> {
+      resp.addData(d, 0L);
+    });
     resp.high = 5.0;
     resp.low = 1.0;
     resp.times = expTimes.stream()
@@ -253,12 +259,12 @@ public class IdxCacheTest {
 
     // when
     double newData = 100.0;
-    resp.pushLatest(TimeService.currentTimeMillis(), newData);
+    resp.addNewAndRemoveLast(TimeService.currentTimeMillis(), newData);
 
     expData.add(newData);
     int size = expData.size();
-    assertEquals(size-1, resp.data.size());
-    assertEquals(expData.subList(1,size),resp.data);
+    assertEquals(size - 1, resp.data.size());
+    assertEquals(expData.subList(1, size), resp.data);
   }
 }
 

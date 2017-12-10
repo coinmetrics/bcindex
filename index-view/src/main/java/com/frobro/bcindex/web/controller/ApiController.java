@@ -70,7 +70,11 @@ public class ApiController {
     // Error R10 (Boot timeout) -> Web process failed to bind to $PORT within 90 seconds to launch
     // If the dynamo state is not "UP" in 75 seconds an H20 will be thrown, even if the port is bound in time
     return () -> {
-      new CacheLoader(cache, cacheMgr, dbTickerService).load();
+      try {
+        new CacheLoader(cache, cacheMgr, dbTickerService).load();
+      } catch (Exception e) {
+        log.error(e);
+      }
     };
   }
 

@@ -44,19 +44,12 @@ public class CacheUpdateMgr {
     return msg.toString();
   }
 
-  public void loadExpiration(RequestDto req, DataProvider dataProvider) {
-    ApiResponse response = dataProvider.getData(req);
-    if (response.firstAndLastNotNull()) {
-      Expiration exp = new Expiration(req.index, req.timeFrame);
-      exp.updateLastTime(response.getLatestTime());
+  public void loadExpiration(IndexType index, TimeFrame frame, long latestTime) {
+      Expiration exp = new Expiration(index, frame);
+      exp.updateLastTime(latestTime);
 
-      List<Expiration> expList = expireMap.get(req.index);
+      List<Expiration> expList = expireMap.get(index);
       expList.add(exp);
-    }
-    else {
-      LOG.warn("while loading expiration "
-          + "could not find data for request: " + req);
-    }
   }
 
   public void set(Map<IndexType,List<Expiration>> map) {

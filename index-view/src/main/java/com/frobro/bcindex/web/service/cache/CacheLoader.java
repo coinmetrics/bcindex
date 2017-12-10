@@ -2,10 +2,7 @@ package com.frobro.bcindex.web.service.cache;
 
 
 import com.frobro.bcindex.web.bclog.BcLog;
-import com.frobro.bcindex.web.model.api.Currency;
-import com.frobro.bcindex.web.model.api.IndexType;
-import com.frobro.bcindex.web.model.api.RequestDto;
-import com.frobro.bcindex.web.model.api.TimeFrame;
+import com.frobro.bcindex.web.model.api.*;
 import com.frobro.bcindex.web.service.DbTickerService;
 
 import java.util.concurrent.TimeUnit;
@@ -34,15 +31,16 @@ public class CacheLoader {
 
       for (TimeFrame timeFrame : TimeFrame.values()) {
         req.timeFrame = timeFrame;
+
         //        populate usd response
         req.currency = Currency.USD;
-        cache.populateById(req, source);
-        mgr.loadExpiration(req, source);
+        long latestTime = cache.populateById(req, source);
 
-        // and btc
+        // and btc [latest time should be the same as above
         req.currency = Currency.BTC;
         cache.populateById(req, source);
-        mgr.loadExpiration(req, source);
+
+        mgr.loadExpiration(req.index, req.timeFrame, latestTime);
       }
       cache.initCompleted();
     }
