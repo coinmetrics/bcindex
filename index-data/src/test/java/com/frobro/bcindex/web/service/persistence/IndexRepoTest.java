@@ -26,6 +26,8 @@ public class IndexRepoTest {
   private EthEvenRepo ethEvenRepo;
   private FortyIdxRepo fortyRepo;
   private FortyEvenIdxRepo fortyEvenRepo;
+  private TotalRepo totalRepo;
+  private TotalEvenRepo totalEvenRepo;
   private PrimeRepo primeRepo;
 
   @Autowired
@@ -36,7 +38,9 @@ public class IndexRepoTest {
                            EthRepo etRepo,
                            EthEvenRepo eteRepo,
                            FortyIdxRepo fRepo,
-                           FortyEvenIdxRepo feRepo) {
+                           FortyEvenIdxRepo feRepo,
+                           TotalRepo toRepo,
+                           TotalEvenRepo toeRepo) {
     this.indexRepo = repo;
     this.evenRepo = eRepo;
     this.twentyRepo = trepo;
@@ -45,11 +49,14 @@ public class IndexRepoTest {
     this.ethEvenRepo = eteRepo;
     this.fortyRepo = fRepo;
     this.fortyEvenRepo = feRepo;
+    this.totalRepo = toRepo;
+    this.totalEvenRepo = toeRepo;
 
     primeRepo = PrimeRepo.getRepo(indexRepo,evenRepo,
                               twentyRepo,twentyEvenRepo,
                               ethRepo, ethEvenRepo,
-                              fRepo, feRepo);
+                              fRepo, feRepo,
+                              toRepo, toeRepo);
   }
 
   @Test
@@ -121,6 +128,22 @@ public class IndexRepoTest {
     JpaIdxFortyEven retrievedEven = fortyEvenRepo.findFirstByOrderByIdDesc();
     validate(forty, retrievedEven);
   }
+
+  @Test
+  public void testSaveTotal() {
+    JpaIndexTotal total = new JpaIndexTotal();
+    populate(total);
+    primeRepo.saveTotal(total);
+    JpaIndexTotal retrieved = totalRepo.findFirstByOrderByIdDesc();
+    validate(total, retrieved);
+
+    JpaIndexTotalEven totalEven = new JpaIndexTotalEven();
+    populate(totalEven);
+    primeRepo.saveTotalEven(totalEven);
+    JpaIndexTotalEven retrievedEven = totalEvenRepo.findFirstByOrderByIdDesc();
+    validate(totalEven, retrievedEven);
+  }
+
   private void populate(JpaIndex idx) {
     idx.setIndexValueBtc(12)
         .setIndexValueUsd(34)

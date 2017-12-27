@@ -33,12 +33,13 @@ public class SeedController {
   public void setRepos(EvenIdxRepo eRepo, IndexRepo oRepo,
                        TwentyRepo twRepo, TwentyEvenRepo teRepo,
                        EthRepo ethRepo, EthEvenRepo eteRepo,
-                       FortyIdxRepo fRepo, FortyEvenIdxRepo feRepo) {
+                       FortyIdxRepo fRepo, FortyEvenIdxRepo feRepo,
+                       TotalRepo toRepo, TotalEvenRepo toeRepo) {
 
-    repo = PrimeRepo.getRepo(oRepo,eRepo,twRepo,teRepo,ethRepo,eteRepo,fRepo,feRepo);
-    tickerService.setIndexRepo(oRepo,eRepo,twRepo,teRepo,ethRepo,eteRepo,fRepo,feRepo);
+    repo = PrimeRepo.getRepo(oRepo,eRepo,twRepo,teRepo,ethRepo,eteRepo,fRepo,feRepo,toRepo,toeRepo);
+    tickerService.setIndexRepo(oRepo,eRepo,twRepo,teRepo,ethRepo,eteRepo,fRepo,feRepo,toRepo,toeRepo);
     // ETH index not currently supported in file saver
-    fileDataSaver = new FileDataSaver(oRepo, eRepo, twRepo, teRepo,ethRepo,eteRepo,fRepo,feRepo);
+    fileDataSaver = new FileDataSaver(oRepo, eRepo, twRepo, teRepo,ethRepo,eteRepo,fRepo,feRepo,toRepo,toeRepo);
   }
 
   @PostConstruct
@@ -76,6 +77,8 @@ public class SeedController {
       repo.saveEthEven(newEthEven(time));
       repo.saveForty(newForty(time));
       repo.saveFortyEven(newFortyEven(time));
+      repo.saveTotal(newTotal(time));
+      repo.saveTotalEven(newTotalEven(time));
     }
     return "done seeding";
   }
@@ -134,6 +137,18 @@ public class SeedController {
 
   private JpaIdxFortyEven newFortyEven(long time) {
     JpaIdxFortyEven idx = new JpaIdxFortyEven();
+    populate(idx, time);
+    return idx;
+  }
+
+  private JpaIndexTotal newTotal(long time) {
+    JpaIndexTotal idx = new JpaIndexTotal();
+    populate(idx, time);
+    return idx;
+  }
+
+  private JpaIndexTotalEven newTotalEven(long time) {
+    JpaIndexTotalEven idx = new JpaIndexTotalEven();
     populate(idx, time);
     return idx;
   }

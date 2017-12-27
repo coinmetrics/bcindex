@@ -45,7 +45,8 @@ public class FileDataSaver {
   public FileDataSaver(IndexRepo ir, EvenIdxRepo eir,
                        TwentyRepo tr, TwentyEvenRepo ter,
                        EthRepo ethRepo, EthEvenRepo ethEvenRepo,
-                       FortyIdxRepo fRepo, FortyEvenIdxRepo feRepo) {
+                       FortyIdxRepo fRepo, FortyEvenIdxRepo feRepo,
+                       TotalRepo toRepo, TotalEvenRepo toeRepo) {
     this.indexRepo = ir;
     this.evenIdxRepo = eir;
     this.twentyRepo = tr;
@@ -54,7 +55,7 @@ public class FileDataSaver {
     this.ethEvenRepo = ethEvenRepo;
     this.fortyRepo = fRepo;
     this.fortyEvenRepo = feRepo;
-    primeRepo = PrimeRepo.getRepo(ir,eir,tr,ter,ethRepo,ethEvenRepo,fRepo,feRepo);
+    primeRepo = PrimeRepo.getRepo(ir,eir,tr,ter,ethRepo,ethEvenRepo,fRepo,feRepo,toRepo,toeRepo);
   }
 
   public void saveData() {

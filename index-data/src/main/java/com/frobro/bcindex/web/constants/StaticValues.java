@@ -29,5 +29,5 @@ public class StaticValues {
     // Application sector index values
   public static final double DIVISOR_TOTAL = 596549111;
   public static final double DIVISOR_EVEN_TOTAL = 596549111;
-  public static final String MKT_CAP_FILE_TOTAL = "business_rules/app_oct.csv";
+  public static final String MKT_CAP_FILE_TOTAL = "business_rules/total_dec_rebal.csv";
 }

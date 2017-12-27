@@ -226,6 +226,13 @@ var Config = {
         }, {
             id: 'FORTY_EVEN_INDEX',
             text: 'Bletchley 40 Even Index'
+        }, {
+            id: 'TOTAL_INDEX',
+            text: 'Bletchley Total Index'
+           },
+           {
+            id: 'TOTAL_EVEN_INDEX',
+            text: 'Bletchley Total Even Index'
         }],
         currency: [{
             id: 'USD',

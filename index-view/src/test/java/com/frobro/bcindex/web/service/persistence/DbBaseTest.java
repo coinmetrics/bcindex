@@ -29,10 +29,11 @@ public abstract class DbBaseTest {
   public void setIndexRepo(IndexRepo oRepo, EvenIdxRepo eRepo,
                            TwentyRepo tRepo, TwentyEvenRepo teRepo,
                            EthRepo etRepo, EthEvenRepo eteRepo,
-                           FortyIdxRepo fRepo, FortyEvenIdxRepo feRepo) {
+                           FortyIdxRepo fRepo, FortyEvenIdxRepo feRepo,
+                           TotalRepo toRepo, TotalEvenRepo toeRepo) {
 
     this.oddRepo = oRepo;
-    this.repo = PrimeRepo.getRepo(oRepo, eRepo,tRepo,teRepo,etRepo,eteRepo,fRepo,feRepo);
+    this.repo = PrimeRepo.getRepo(oRepo, eRepo,tRepo,teRepo,etRepo,eteRepo,fRepo,feRepo,toRepo,toeRepo);
   }
 
   // we don't want the loading and updating threads spinning
@@ -98,6 +99,14 @@ public abstract class DbBaseTest {
     JpaIdxEthEven eEth = new JpaIdxEthEven();
     set(idx, eEth);
     repo.saveEthEven(eEth);
+
+    JpaIndexTotal tot = new JpaIndexTotal();
+    set(idx, tot);
+    repo.saveTotal(tot);
+
+    JpaIndexTotalEven eTot = new JpaIndexTotalEven();
+    set(idx, eTot);
+    repo.saveTotalEven(eTot);
   }
 
   private void set(JpaIndex src, JpaIndex desc) {

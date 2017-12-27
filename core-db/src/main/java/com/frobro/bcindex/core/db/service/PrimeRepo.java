@@ -17,6 +17,8 @@ public class PrimeRepo {
   private long idxEthEvenCnt = 0;
   private long idxFortyCnt = 0;
   private long idxFortyEvenCnt = 0;
+  private long idxTotalCnt = 0;
+  private long idxTotalEvenCnt = 0;
 
   private IndexRepo indexRepo;
   private EvenIdxRepo evenIdxRepo;
@@ -26,13 +28,16 @@ public class PrimeRepo {
   private EthEvenRepo ethEvenRepo;
   private FortyIdxRepo fortyRepo;
   private FortyEvenIdxRepo fortyEvenRepo;
+  private TotalRepo totalRepo;
+  private TotalEvenRepo totalEvenRepo;
 
   public static PrimeRepo getRepo(IndexRepo ir, EvenIdxRepo eir,
                                   TwentyRepo tr, TwentyEvenRepo ter,
                                   EthRepo er, EthEvenRepo eer,
-                                  FortyIdxRepo fr, FortyEvenIdxRepo fer) {
+                                  FortyIdxRepo fr, FortyEvenIdxRepo fer,
+                                  TotalRepo t, TotalEvenRepo te) {
     if (instance == null) {
-      instance = new PrimeRepo(ir,eir,tr,ter, er, eer, fr, fer);
+      instance = new PrimeRepo(ir,eir,tr,ter, er, eer, fr, fer, t, te);
     }
     return instance;
   }
@@ -40,7 +45,8 @@ public class PrimeRepo {
   private PrimeRepo(IndexRepo ir, EvenIdxRepo eir,
                    TwentyRepo tr, TwentyEvenRepo ter,
                     EthRepo er, EthEvenRepo eer,
-                    FortyIdxRepo fr, FortyEvenIdxRepo fer) {
+                    FortyIdxRepo fr, FortyEvenIdxRepo fer,
+                    TotalRepo t, TotalEvenRepo te) {
 
     this.indexRepo = ir;
     this.evenIdxRepo = eir;
@@ -50,6 +56,8 @@ public class PrimeRepo {
     this.ethEvenRepo = eer;
     this.fortyRepo = fr;
     this.fortyEvenRepo = fer;
+    this.totalRepo = t;
+    this.totalEvenRepo = te;
     initCounts();
   }
 
@@ -62,6 +70,26 @@ public class PrimeRepo {
     idxEthEvenCnt = initEthEven();
     idxFortyCnt = initForty();
     idxFortyEvenCnt = initFortyEven();
+    idxTotalCnt = initTotal();
+    idxTotalEvenCnt = initTotalEven();
+  }
+
+  private long initTotal() {
+    long cnt = totalRepo.count();
+    if (cnt != 0) {
+      JpaIndexTotal idx = totalRepo.findFirstByOrderByIdDesc();
+      cnt = idx.getBletchId();
+    }
+    return cnt;
+  }
+
+  private long initTotalEven() {
+    long cnt = totalEvenRepo.count();
+    if (cnt != 0) {
+      JpaIndexTotalEven idx = totalEvenRepo.findFirstByOrderByIdDesc();
+      cnt = idx.getBletchId();
+    }
+    return cnt;
   }
 
   private long initForty() {
@@ -183,6 +211,18 @@ public class PrimeRepo {
     idxFortyEvenCnt++;
     idx.setBletchId(idxFortyEvenCnt);
     fortyEvenRepo.save(idx);
+  }
+
+  public void saveTotal(JpaIndexTotal idx) {
+    idxTotalCnt++;
+    idx.setBletchId(idxTotalCnt);
+    totalRepo.save(idx);
+  }
+
+  public void saveTotalEven(JpaIndexTotalEven idx) {
+    idxTotalEvenCnt++;
+    idx.setBletchId(idxTotalEvenCnt);
+    totalEvenRepo.save(idx);
   }
 
   public void deleteAll() {

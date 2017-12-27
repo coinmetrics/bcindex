@@ -23,12 +23,14 @@ public class HomeController {
   public void init(IndexRepo repo, EvenIdxRepo eRepo,
                    TwentyRepo tRepo, TwentyEvenRepo teRepo,
                    EthRepo etRepo, EthEvenRepo eteRepo,
-                   FortyIdxRepo fRepo, FortyEvenIdxRepo feRepo) {
+                   FortyIdxRepo fRepo, FortyEvenIdxRepo feRepo,
+                   TotalRepo toRepo, TotalEvenRepo toeRepo) {
 
     tickerService.setIndexRepo(repo, eRepo,
                                tRepo, teRepo,
                                etRepo, eteRepo,
-                               fRepo, feRepo);
+                               fRepo, feRepo,
+                               toRepo, toeRepo);
     timerService = new TimerService(tickerService);
   }
 

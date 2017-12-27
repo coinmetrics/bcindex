@@ -7,10 +7,7 @@ import com.frobro.bcindex.core.db.domain.*;
 import com.frobro.bcindex.core.db.service.*;
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.domain.Index;
-import com.frobro.bcindex.web.model.BletchInEth;
-import com.frobro.bcindex.web.model.BletchInForty;
-import com.frobro.bcindex.web.model.BletchInTen;
-import com.frobro.bcindex.web.model.BletchInTwenty;
+import com.frobro.bcindex.web.model.*;
 import com.frobro.bcindex.web.service.apis.CryptoCompare;
 import com.frobro.bcindex.web.service.persistence.IndexDbDto;
 
@@ -26,6 +23,7 @@ public class TickerService {
   private IndexCalculator indexCalculatorTwenty = new IndexCalculatorTwenty();
   private IndexCalculator indexCalculatorEth = new IndexCalculatorEth();
   private IndexCalculator indexCalculatorForty = new IndexCalculatorForty();
+  private IndexCalculator indexCalculatorTotal = new IndexCalculatorTotal();
   // repos
   PrimeRepo repo;
   // db data
@@ -37,22 +35,27 @@ public class TickerService {
   private IndexDbDto lastIdxEthEven;
   private IndexDbDto lastIdxForty;
   private IndexDbDto lastIdxFortyEven;
+  private IndexDbDto lastIdxTotal;
+  private IndexDbDto lastIdxTotalEven;
 
   // input data
   private BletchInTen inputDataTen = new BletchInTen();
   private BletchInTwenty inputDataTwenty = new BletchInTwenty();
   private BletchInEth inputEth = new BletchInEth();
   private BletchInForty inputForty = new BletchInForty();
+  private BletchInTotal inputTotal = new BletchInTotal();
 
   public void setIndexRepo(IndexRepo repo, EvenIdxRepo eRepo,
                            TwentyRepo tRepo, TwentyEvenRepo teRepo,
                            EthRepo etRepo, EthEvenRepo eteRepo,
-                           FortyIdxRepo fRepo, FortyEvenIdxRepo feRepo) {
+                           FortyIdxRepo fRepo, FortyEvenIdxRepo feRepo,
+                           TotalRepo toRepo, TotalEvenRepo toeRepo) {
 
     this.repo = PrimeRepo.getRepo(repo, eRepo,
                                   tRepo, teRepo,
                                   etRepo, eteRepo,
-                                  fRepo, feRepo);
+                                  fRepo, feRepo,
+                                  toRepo, toeRepo);
   }
 
   public TickerService updateTickers() {
@@ -79,7 +82,8 @@ public class TickerService {
     cryptoCompare.batchCoins(inputDataTen.getMembers())
                .batchCoins(inputDataTwenty.getMembers())
                .batchCoins(inputEth.getMembers())
-               .batchCoins(inputForty.getMembers());
+               .batchCoins(inputForty.getMembers())
+               .batchCoins(inputTotal.getMembers());
 
     // call the api to get the data
     Map<String,Index> apiData = cryptoCompare.callBatchedData();
@@ -106,6 +110,11 @@ public class TickerService {
     inputForty.setLastUpdate(time);
     calculateAndSetIndexesForty(inputForty);
 
+    // update total idx
+    inputTotal.filterAndSet(apiData);
+    inputTotal.setLastUpdate(time);
+    calculateAndSetIndexesTotal(inputTotal);
+
     logIndexSummary();
   }
 
@@ -120,13 +129,19 @@ public class TickerService {
         + "forty even [btc=" + lastIdxFortyEven.indexValueBtc + ", usd=" + lastIdxFortyEven.indexValueUsd + "]\n"
         + "-----------------------------\n"
         + "eth      [btc=" + lastIdxEth.indexValueBtc + ", usd=" + lastIdxEth.indexValueUsd + "]\n"
-        + "eth even [btc=" + lastIdxEthEven.indexValueBtc + ", usd=" + lastIdxEthEven.indexValueUsd + "]\n";
+        + "eth even [btc=" + lastIdxEthEven.indexValueBtc + ", usd=" + lastIdxEthEven.indexValueUsd + "]\n"
+        + "-----------------------------\n"
+        + "total      [btc=" + lastIdxTotal.indexValueBtc + ", usd=" + lastIdxTotal.indexValueUsd + "]\n"
+        + "total even [btc=" + lastIdxTotalEven.indexValueBtc + ", usd=" + lastIdxTotalEven.indexValueUsd + "]\n";
         log.debug(summary);
   }
 
   private void clearInputData() {
     inputDataTen = new BletchInTen();
     inputDataTwenty = new BletchInTwenty();
+    inputEth = new BletchInEth();
+    inputForty = new BletchInForty();
+    inputTotal = new BletchInTotal();
   }
 
   private void calculateAndSetIndexesTwenty(BletchInTwenty data) {
@@ -147,6 +162,12 @@ public class TickerService {
     lastIdxFortyEven = indexCalculatorForty.calculateEvenIndex();
   }
 
+  private void calculateAndSetIndexesTotal(BletchInTotal data) {
+    indexCalculatorTotal.updateLast(data);
+    lastIdxTotal = indexCalculatorTotal.calcuateOddIndex();
+    lastIdxTotalEven = indexCalculatorTotal.calculateEvenIndex();
+  }
+
   private void calculateAndSetIndexesTen(BletchInTen data) {
     indexCalculatorTen.updateLast(data);
     lastIndex = indexCalculatorTen.calcuateOddIndex();
@@ -161,6 +182,7 @@ public class TickerService {
     inputDataTwenty.setLastUsdBtc(btcPrice);
     inputEth.setLastUsdBtc(btcPrice);
     inputForty.setLastUsdBtc(btcPrice);
+    inputTotal.setLastUsdBtc(btcPrice);
   }
 
   public void saveIndices() {
@@ -168,6 +190,7 @@ public class TickerService {
     saveIndexTwenty();
     saveIndexEth();
     saveIndexForty();
+    saveIndexTotal();
   }
 
   private void saveIndexTen() {
@@ -208,6 +231,16 @@ public class TickerService {
     JpaIdxFortyEven eIdx = new JpaIdxFortyEven();
     populateJpa(eIdx, lastIdxFortyEven);
     repo.saveFortyEven(eIdx);
+  }
+
+  private void saveIndexTotal() {
+    JpaIndexTotal idx = new JpaIndexTotal();
+    populateJpa(idx, lastIdxTotal);
+    repo.saveTotal(idx);
+
+    JpaIndexTotalEven eIdx = new JpaIndexTotalEven();
+    populateJpa(eIdx, lastIdxTotalEven);
+    repo.saveTotalEven(eIdx);
   }
 
   private void populateJpa(JpaIndex idx, IndexDbDto dto) {

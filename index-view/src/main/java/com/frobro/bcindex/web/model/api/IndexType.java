@@ -11,5 +11,7 @@ public enum IndexType {
   FORTY_INDEX,
   FORTY_EVEN_INDEX,
   INDEX_ETH,
-  EVEN_ETH
+  EVEN_ETH,
+  TOTAL_INDEX,
+  TOTAL_EVEN_INDEX
 }
