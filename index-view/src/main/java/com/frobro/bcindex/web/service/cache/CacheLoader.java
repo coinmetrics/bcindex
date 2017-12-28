@@ -4,6 +4,7 @@ package com.frobro.bcindex.web.service.cache;
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.model.api.*;
 import com.frobro.bcindex.web.service.DbTickerService;
+import com.frobro.bcindex.web.service.time.TimeService;
 
 import java.util.concurrent.TimeUnit;
 
@@ -35,6 +36,11 @@ public class CacheLoader {
         //        populate usd response
         req.currency = Currency.USD;
         long latestTime = cache.populateById(req, source);
+
+        // if we have no data
+        if (cache.noTimeExists(latestTime)) {
+          latestTime = TimeService.currentTimeMillis();
+        }
 
         // and btc [latest time should be the same as above
         req.currency = Currency.BTC;

@@ -71,7 +71,7 @@ public class TickerService {
   }
 
   private void update() throws IOException {
-    log.debug("updating latest data");
+    log.info("updating latest data");
 
     clearInputData();
 

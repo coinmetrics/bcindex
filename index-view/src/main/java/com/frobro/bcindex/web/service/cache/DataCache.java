@@ -16,6 +16,7 @@ import static com.frobro.bcindex.web.service.cache.DataNamer.createName;
 
 public class DataCache {
   private static final Logger LOG = LoggerFactory.getLogger(DataCache.class);
+  private static final long NO_TIME_EXISTS = -987654321;
   private final Map<String,ApiResponse> apiMap = new ConcurrentHashMap<>();
   private boolean isInit = Boolean.FALSE;
 
@@ -144,6 +145,10 @@ public class DataCache {
     return isInit;
   }
 
+  public boolean noTimeExists(long time) {
+    return NO_TIME_EXISTS == time;
+  }
+
   public long populateById(RequestDto req, DataProvider service) {
     ApiResponse response = service.getData(req);
     if (response.firstAndLastNotNull()) {
@@ -152,7 +157,7 @@ public class DataCache {
     else {
       LOG.warn("not data exists for request: " + req);
     }
-    return response.getLatestTime();
+    return NO_TIME_EXISTS;
   }
 
   public void printKeys() {
