@@ -119,6 +119,8 @@ public class ApiController {
                 + ", " + PublicIndex.FORTY_EVEN_INDEX.name()
                 + ", "+ PublicIndex.ETHER_INDEX.name()
                 + ", " + PublicIndex.EVEN_ETHER_INDEX.name()
+                + ", "+ PublicIndex.TOTAL_INDEX.name()
+                + ", " + PublicIndex.TOTAL_EVEN_INDEX.name()
                 + ") supported time frames ("
                 + PublicTimeFrame.DAILY.name()
                 + ", " + PublicTimeFrame.WEEKLY + ")"));

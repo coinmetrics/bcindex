@@ -48,7 +48,20 @@ public enum PublicIndex {
     public IndexType getPrivateIdx() {
       return IndexType.EVEN_ETH;
     }
+  },
+  TOTAL_INDEX{
+    @Override
+    public IndexType getPrivateIdx() {
+      return IndexType.TOTAL_INDEX;
+    }
+  },
+  TOTAL_EVEN_INDEX{
+    @Override
+    public IndexType getPrivateIdx() {
+      return IndexType.TOTAL_EVEN_INDEX;
+    }
   };
+
 
   public static PublicIndex getPublicIdx(IndexType privateIdx) {
     PublicIndex publicIndex;
@@ -74,6 +87,12 @@ public enum PublicIndex {
         break;
       case FORTY_EVEN_INDEX:
         publicIndex = PublicIndex.FORTY_EVEN_INDEX;
+        break;
+      case TOTAL_INDEX:
+        publicIndex = PublicIndex.TOTAL_INDEX;
+        break;
+      case TOTAL_EVEN_INDEX:
+        publicIndex = PublicIndex.TOTAL_EVEN_INDEX;
         break;
       default:
         publicIndex = TEN_INDEX;
