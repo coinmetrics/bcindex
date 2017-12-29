@@ -2,8 +2,11 @@ package com.frobro.bcindex.web.service.cache;
 
 
 import com.frobro.bcindex.web.bclog.BcLog;
-import com.frobro.bcindex.web.model.api.*;
-import com.frobro.bcindex.web.service.DbTickerService;
+import com.frobro.bcindex.web.model.api.Currency;
+import com.frobro.bcindex.web.model.api.IndexType;
+import com.frobro.bcindex.web.model.api.RequestDto;
+import com.frobro.bcindex.web.model.api.TimeFrame;
+import com.frobro.bcindex.web.service.DataProvider;
 import com.frobro.bcindex.web.service.time.TimeService;
 
 import java.util.concurrent.TimeUnit;
@@ -13,14 +16,14 @@ public class CacheLoader {
 
   private final DataCache cache;
   private final CacheUpdateMgr mgr;
-  private final DbTickerService source;
+  private final DataProvider source;
 
   public CacheLoader(DataCache cache,
                      CacheUpdateMgr mgr,
-                     DbTickerService db) {
+                     DataProvider dataSource) {
     this.cache = cache;
     this.mgr = mgr;
-    this.source = db;
+    this.source = dataSource;
   }
 
   public void load() {
@@ -37,7 +40,7 @@ public class CacheLoader {
         req.currency = Currency.USD;
         long latestTime = cache.populateById(req, source);
 
-        // if we have no data
+        // if we have no dataØ
         if (cache.noTimeExists(latestTime)) {
           latestTime = TimeService.currentTimeMillis();
         }
