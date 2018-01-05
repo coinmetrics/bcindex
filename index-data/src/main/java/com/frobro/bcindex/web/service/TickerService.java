@@ -64,8 +64,8 @@ public class TickerService {
       update();
       saveIndices();
 
-    } catch (IOException ioe) {
-      log.error("could not successfully update. ", ioe);
+    } catch (Exception e) {
+      log.error("could not successfully update. ", e);
     }
     return this;
   }
