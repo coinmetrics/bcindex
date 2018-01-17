@@ -330,7 +330,7 @@ height:100%;
 padding-bottom:0px;
 }
 
-#myChart {max-height:1000px;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;}
+#myChart {max-height:800px;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;}
 
 .rightsidebar{height:100%;width:200px;background-color:#fff;position:fixed!important;z-index:1;overflow:auto}
 
@@ -509,6 +509,7 @@ table.download-table tbody tr:hover {
 }
 
 .container{width:100%;background-color:#F7F9F9;}
+.masterbody{max-width:1200px;max-height:1000px;justify-content: center;align-content: center;margin-left: auto;margin-right: auto;}
 .containerdownloads{background-color:#F7F9F9;}
 .containerindex{width:100%;background-color:#F7F9F9;padding-left:10px;padding-top:none;}
 .container-slogan{width:100%;background-color:#edf2f7;font-size:20px;color:#424949;text-align:center;font-weight:500;}
