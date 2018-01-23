@@ -62,7 +62,7 @@ a:active,a:hover{outline-width:0}abbr[title]{border-bottom:none;text-decoration:
 .last-price {
     float: right;
     font-size: 24px;
-    background: #000C4D;
+    background: rgba(0, 11, 77, 0.85);
     padding-top: 0px;
     padding-right: 40px;
     font-weight: bolder; 
