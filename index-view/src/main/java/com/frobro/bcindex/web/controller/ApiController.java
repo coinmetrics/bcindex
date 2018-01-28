@@ -96,6 +96,31 @@ public class ApiController {
     return "updated";
   }
 
+  @RequestMapping(value= "api/index/mult", method = RequestMethod.GET)
+  public String multiPlot() {
+
+    RequestDto reqTen = new RequestDto();
+    reqTen.currency = Currency.USD;
+    reqTen.index = IndexType.ODD_INDEX;
+    reqTen.timeFrame = TimeFrame.DAILY;
+
+    RequestDto reqForty = new RequestDto();
+    reqForty.currency = Currency.USD;
+    reqForty.index = IndexType.FORTY_INDEX;
+    reqForty.timeFrame = TimeFrame.DAILY;
+
+    ApiResponse firstResp = cache.respondTo(reqTen);
+    ApiResponse secondResp = cache.respondTo(reqForty);
+
+    MultApiResponse resp = new MultApiResponse();
+    resp.firstPlotPrices.addAll(firstResp.data);
+    resp.firstPlotTimes.addAll(firstResp.times);
+    resp.secondPlotPrices.addAll(secondResp.data);
+    resp.secondPlotTimes.addAll(secondResp.times);
+
+    return DbTickerService.toJson(resp);
+  }
+
   @RequestMapping(value = "api/index", method = RequestMethod.POST)
   public String publicApiEndPoint(@RequestBody String reqStr) {
 
