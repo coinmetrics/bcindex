@@ -112,15 +112,32 @@ public class ApiController {
     ApiResponse firstResp = cache.respondTo(reqTen);
     ApiResponse secondResp = cache.respondTo(reqForty);
 
-    MultApiResponse resp = new MultApiResponse();
-    resp.firstPlotPrices.addAll(firstResp.data);
-    resp.firstPlotTimes.addAll(firstResp.times);
-    resp.secondPlotPrices.addAll(secondResp.data);
-    resp.secondPlotTimes.addAll(secondResp.times);
-
-    return DbTickerService.toJson(resp);
+    return DbTickerService.toJson(newMultResp(firstResp, secondResp));
   }
 
+  private MultApiResponse newMultResp(ApiResponse firstResp,
+                                      ApiResponse secondResp) {
+    MultApiResponse resp = new MultApiResponse();
+    resp.index = firstResp.index;
+    resp.currency = firstResp.currency;
+    resp.timeFrame = firstResp.timeFrame;
+    resp.timeUnit = firstResp.timeUnit;
+    // derived data
+    resp.lastPrice = firstResp.lastPrice;
+    resp.high = firstResp.high;
+    resp.low = firstResp.low;
+    resp.prevClose = firstResp.prevClose;
+    resp.change = firstResp.change;
+    resp.percentChange = firstResp.percentChange;
+
+    resp.prices.add(firstResp.data);
+    resp.prices.add(secondResp.data);
+    resp.times.add(firstResp.times);
+    resp.times.add(secondResp.times);
+
+    return resp;
+  }
+  
   @RequestMapping(value = "api/index", method = RequestMethod.POST)
   public String publicApiEndPoint(@RequestBody String reqStr) {
 

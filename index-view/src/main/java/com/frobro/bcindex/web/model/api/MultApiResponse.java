@@ -8,9 +8,18 @@ import java.util.List;
  * plots with multiple data
  */
 public class MultApiResponse {
-  public final List<Double> firstPlotPrices = new LinkedList<>();
-  public List<String> firstPlotTimes = new LinkedList<>();
+  public IndexType index;
+  public Currency currency;
+  public TimeFrame timeFrame;
+  public String timeUnit;
 
-  public final List<Double> secondPlotPrices = new LinkedList<>();
-  public List<String> secondPlotTimes = new LinkedList<>();
+  public double lastPrice = -1.0;
+  public Double high;
+  public Double low;
+  public Double prevClose;
+  public Double change;
+  public Double percentChange;
+
+  public final List<List<Double>> prices = new LinkedList<>();
+  public final List<List<String>> times = new LinkedList<>();
 }
