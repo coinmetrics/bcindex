@@ -26,8 +26,20 @@ public class StaticValues {
   public static final double DIVISOR_EVEN_ETHER = 98207361.36;
   public static final String MKT_CAP_FILE_EHTER = "business_rules/eth_jan_rebal.csv";
 
-    // Application sector index values
+    // Total index values
   public static final double DIVISOR_TOTAL = 605137602;
   public static final double DIVISOR_EVEN_TOTAL = 794370599.2;
   public static final String MKT_CAP_FILE_TOTAL = "business_rules/total_jan_rebal.csv";
+
+      // Currency index values
+  public static final double DIVISOR_CURRENCY = 2573516110.81778;
+  public static final String MKT_CAP_FILE_CURRENCY = "business_rules/currency_jan.csv";
+
+        // Platform index values
+  public static final double DIVISOR_PLATFORM = 1994000972.09515;
+  public static final String MKT_CAP_FILE_PLATFORM = "business_rules/platform_jan.csv";
+
+        // Application index values
+  public static final double DIVISOR_APPLICATION = 217795068.51043;
+  public static final String MKT_CAP_FILE_APPLICATION = "business_rules/application_jan.csv";
 }
