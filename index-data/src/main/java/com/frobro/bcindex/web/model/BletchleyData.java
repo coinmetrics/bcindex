@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.domain.Index;
-import com.frobro.bcindex.web.service.BusinessRules;
+import com.frobro.bcindex.web.service.rules.BusinessRules;
 
 import java.io.IOException;
 import java.util.HashMap;

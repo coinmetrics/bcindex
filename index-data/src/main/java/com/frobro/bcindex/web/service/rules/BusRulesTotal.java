@@ -1,19 +1,17 @@
-package com.frobro.bcindex.web.service;
+package com.frobro.bcindex.web.service.rules;
 
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.constants.StaticValues;
 import com.frobro.bcindex.web.model.Ticker;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
-/**
- * Created by rise on 6/11/17.
- */
-public class BusRulesTwenty extends BusinessRules {
-  private static final BcLog log = BcLog.getLogger(BusRulesTwenty.class);
+public class BusRulesTotal extends BusinessRules {
+  private static final BcLog log = BcLog.getLogger(BusRulesTotal.class);
   protected static Map<String,Ticker> tickers;
 
-  public BusRulesTwenty() {
+  public BusRulesTotal() {
     if (shouldPopulate(tickers)) {
       populate();
       logMultipliers();
@@ -22,26 +20,26 @@ public class BusRulesTwenty extends BusinessRules {
 
   private void populate() {
     tickers = new HashMap<>();
-    populateValuesFromFile(tickers, StaticValues.MKT_CAP_FILE_20);
+    populateValuesFromFile(tickers, StaticValues.MKT_CAP_FILE_TOTAL);
   }
 
   private void logMultipliers() {
-    log.debug("20 index multipliers");
+    log.debug("total index multipliers");
     logValues(tickers);
   }
 
   @Override
-  protected Map<String,Ticker> getTickers() {
+  protected Map<String, Ticker> getTickers() {
     return tickers;
   }
 
   @Override
   public double getDivisor() {
-    return StaticValues.DIVISOR_20;
+    return StaticValues.DIVISOR_TOTAL;
   }
 
   @Override
   public double getDivisorEven() {
-    return StaticValues.DIVISOR_EVEN_20;
+    return StaticValues.DIVISOR_EVEN_TOTAL;
   }
 }

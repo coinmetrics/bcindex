@@ -2,8 +2,9 @@ package com.frobro.bcindex.web.service;
 
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.constants.StaticValues;
-import com.frobro.bcindex.web.model.BletchInTwenty;
 import com.frobro.bcindex.web.service.persistence.IndexDbDto;
+import com.frobro.bcindex.web.service.rules.BusRulesEth;
+import com.frobro.bcindex.web.service.rules.BusinessRules;
 
 /**
  * Created by rise on 7/16/17.

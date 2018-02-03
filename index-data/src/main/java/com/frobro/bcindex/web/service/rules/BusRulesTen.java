@@ -1,4 +1,4 @@
-package com.frobro.bcindex.web.service;
+package com.frobro.bcindex.web.service.rules;
 
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.constants.StaticValues;

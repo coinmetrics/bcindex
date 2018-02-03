@@ -1,8 +1,8 @@
 package com.frobro.bcindex.web.model;
 
 import com.frobro.bcindex.web.constants.StaticValues;
-import com.frobro.bcindex.web.service.BusRulesForty;
-import com.frobro.bcindex.web.service.BusinessRules;
+import com.frobro.bcindex.web.service.rules.BusRulesForty;
+import com.frobro.bcindex.web.service.rules.BusinessRules;
 
 public class BletchInForty extends BletchleyData {
   public static double getDivisor() {

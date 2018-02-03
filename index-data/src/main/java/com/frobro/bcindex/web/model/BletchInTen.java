@@ -1,15 +1,9 @@
 package com.frobro.bcindex.web.model;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.constants.StaticValues;
-import com.frobro.bcindex.web.domain.Index;
-import com.frobro.bcindex.web.service.BusRulesTen;
-import com.frobro.bcindex.web.service.BusinessRules;
-import com.frobro.bcindex.web.service.CurrPairJson;
-
-import java.io.IOException;
-import java.util.*;
+import com.frobro.bcindex.web.service.rules.BusRulesTen;
+import com.frobro.bcindex.web.service.rules.BusinessRules;
 
 /**
  * Created by rise on 7/13/17.
