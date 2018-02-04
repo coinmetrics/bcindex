@@ -45,4 +45,9 @@ public class BusRulesEth extends BusinessRules {
   public double getDivisorEven() {
     return StaticValues.DIVISOR_EVEN_ETHER;
   }
+
+  @Override
+  public String indexName() {
+    return StaticValues.ETH_INDEX_NAME;
+  }
 }

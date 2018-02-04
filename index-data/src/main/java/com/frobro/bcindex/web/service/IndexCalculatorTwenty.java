@@ -1,7 +1,6 @@
 package com.frobro.bcindex.web.service;
 
 import com.frobro.bcindex.web.bclog.BcLog;
-import com.frobro.bcindex.web.model.BletchInTwenty;
 import com.frobro.bcindex.web.service.persistence.IndexDbDto;
 import com.frobro.bcindex.web.service.rules.BusRulesTwenty;
 import com.frobro.bcindex.web.service.rules.BusinessRules;
@@ -12,29 +11,13 @@ import com.frobro.bcindex.web.service.rules.BusinessRules;
 public class IndexCalculatorTwenty extends IndexCalculator {
   private static final BcLog log = BcLog.getLogger(IndexCalculatorTwenty.class);
 
+  public IndexCalculatorTwenty() {
+    super(new BusRulesTwenty());
+  }
+
   @Override
   protected double buildFromSum(double lastSum, double constant, double divisor) {
     return lastSum/divisor;
-  }
-
-  @Override
-  protected BusinessRules newBusRules() {
-    return new BusRulesTwenty();
-  }
-
-  @Override
-  protected String indexName() {
-    return "20 INDEX";
-  }
-
-  @Override
-  protected double getDivisor() {
-    return BletchInTwenty.getDivisor();
-  }
-
-  @Override
-  protected double getDivisorEven() {
-    return BletchInTwenty.getDivisorEven();
   }
 
   @Override

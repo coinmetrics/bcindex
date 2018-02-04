@@ -30,11 +30,11 @@ public class BusRulesTen extends BusinessRules {
     logValues(tickers);
   }
 
-  public double getConstant() {
+  public static double getConstant() {
     return StaticValues.CONSTANT_TEN;
   }
 
-  public double getConstantEven() {
+  public static double getConstantEven() {
     return StaticValues.CONSTANT_EVEN_TEN;
   }
 
@@ -51,5 +51,10 @@ public class BusRulesTen extends BusinessRules {
   @Override
   public double getDivisorEven() {
     return StaticValues.DIVISOR_EVEN_TEN;
+  }
+
+  @Override
+  public String indexName() {
+    return StaticValues.TEN_INDEX_NAME;
   }
 }

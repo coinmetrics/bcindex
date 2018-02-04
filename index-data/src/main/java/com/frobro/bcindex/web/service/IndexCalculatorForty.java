@@ -1,34 +1,17 @@
 package com.frobro.bcindex.web.service;
 
-import com.frobro.bcindex.web.constants.StaticValues;
 import com.frobro.bcindex.web.service.persistence.IndexDbDto;
 import com.frobro.bcindex.web.service.rules.BusRulesForty;
-import com.frobro.bcindex.web.service.rules.BusinessRules;
 
 public class IndexCalculatorForty extends IndexCalculator {
+
+    public IndexCalculatorForty() {
+        super(new BusRulesForty());
+    }
+
     @Override
     protected double buildFromSum(double lastSum, double constant, double divisor) {
         return lastSum/divisor;
-    }
-
-    @Override
-    protected BusinessRules newBusRules() {
-        return new BusRulesForty();
-    }
-
-    @Override
-    protected String indexName() {
-        return "FORTY INDEX";
-    }
-
-    @Override
-    protected double getDivisor() {
-        return StaticValues.DIVISOR_40;
-    }
-
-    @Override
-    protected double getDivisorEven() {
-        return StaticValues.DIVISOR_EVEN_40;
     }
 
     @Override

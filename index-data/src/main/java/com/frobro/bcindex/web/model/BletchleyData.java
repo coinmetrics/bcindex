@@ -15,15 +15,19 @@ import java.util.Set;
 /**
  * Created by rise on 4/22/17.
  */
-abstract public class BletchleyData {
+public class BletchleyData {
   private static final BcLog LOG = BcLog.getLogger(BletchleyData.class);
   private static final String USD_BTC_KEY = "usd_btc";
   private static final double USD_BTC_MKT_CAP = 0;
 
-  private BusinessRules businessRules = newBusinessRules();
+  private final BusinessRules businessRules;
   private Map<String,Index> lastIndexes = new HashMap<>();
   private long lastUpdateTime = 0;
   private double priceUsdBtc;
+
+  public BletchleyData(BusinessRules businessRules) {
+    this.businessRules = businessRules;
+  }
 
   public void setLastUpdate(long time) {
     this.lastUpdateTime = time;
@@ -36,8 +40,6 @@ abstract public class BletchleyData {
   public static String getUsdBtcTicker() {
     return USD_BTC_KEY;
   }
-
-  abstract protected BusinessRules newBusinessRules();
 
   public BletchleyData setLastUsdBtc(double last) {
     this.priceUsdBtc = last;

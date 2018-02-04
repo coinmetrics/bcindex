@@ -42,4 +42,9 @@ public class BusRulesTotal extends BusinessRules {
   public double getDivisorEven() {
     return StaticValues.DIVISOR_EVEN_TOTAL;
   }
+
+  @Override
+  public String indexName() {
+    return StaticValues.TOTAL_INDEX_NAME;
+  }
 }

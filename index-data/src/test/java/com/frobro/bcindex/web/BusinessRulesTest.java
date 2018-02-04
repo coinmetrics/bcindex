@@ -13,5 +13,8 @@ public class BusinessRulesTest {
         new BusRulesForty();
         new BusRulesEth();
         new BusRulesTotal();
+        new BusRulesApp();
+        new BusRulesCurrency();
+        new BusRulesPlatform();
     }
 }

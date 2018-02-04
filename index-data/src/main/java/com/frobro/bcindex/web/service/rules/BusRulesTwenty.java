@@ -44,4 +44,9 @@ public class BusRulesTwenty extends BusinessRules {
   public double getDivisorEven() {
     return StaticValues.DIVISOR_EVEN_20;
   }
+
+  @Override
+  public String indexName() {
+    return StaticValues.TWENTY_INDEX_NAME;
+  }
 }

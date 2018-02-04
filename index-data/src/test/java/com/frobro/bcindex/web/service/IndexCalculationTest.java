@@ -2,11 +2,10 @@ package com.frobro.bcindex.web.service;
 
 import static org.junit.Assert.assertEquals;
 
-import com.frobro.bcindex.web.model.BletchInEth;
-import com.frobro.bcindex.web.model.BletchInTen;
-import com.frobro.bcindex.web.model.BletchInTwenty;
 import com.frobro.bcindex.web.model.BletchleyData;
 import com.frobro.bcindex.web.service.persistence.IndexDbDto;
+import com.frobro.bcindex.web.service.rules.BusRulesEth;
+import com.frobro.bcindex.web.service.rules.BusRulesTen;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -24,7 +23,7 @@ public class IndexCalculationTest {
   @Test
   public void testTen() {
     // given
-    BletchleyData inputData = new BletchInTen();
+    BletchleyData inputData = new BletchleyData(new BusRulesTen());
     inputData.setLastUsdBtc(getLastBtc());
     inputData.setLastUpdate(getTime());
     // and
@@ -53,7 +52,7 @@ public class IndexCalculationTest {
   public void testEth() {
     System.setProperty("bclog.console", "true");
     // given
-    BletchleyData inputData = new BletchInEth();
+    BletchleyData inputData = new BletchleyData(new BusRulesEth());
 //    BletchleyData inputData = new BletchInTwenty();
 
     inputData.setLastUsdBtc(getLastBtc());

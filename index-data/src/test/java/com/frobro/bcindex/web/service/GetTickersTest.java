@@ -2,17 +2,17 @@ package com.frobro.bcindex.web.service;
 
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.domain.Index;
-import com.frobro.bcindex.web.model.BletchInTen;
 import com.frobro.bcindex.web.model.BletchleyData;
 import com.frobro.bcindex.web.service.persistence.IndexDbDto;
 import static org.junit.Assert.assertEquals;
+
+import com.frobro.bcindex.web.service.rules.BusRulesTen;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * Created by rise on 3/23/17.
@@ -58,7 +58,7 @@ public class GetTickersTest {
     // and
     double btcPrice = 2674.0;
     // and
-    BletchleyData input = new BletchInTen();
+    BletchleyData input = new BletchleyData(new BusRulesTen());
     input.setLastUpdate(System.currentTimeMillis());
     input.setLastUsdBtc(btcPrice);
     input.setMembers(populateIndices());

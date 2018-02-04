@@ -10,10 +10,10 @@ import java.util.*;
  */
 abstract public class BusinessRules {
   private static final BcLog log = BcLog.getLogger(BusinessRules.class);
-  private static final String DELIMINATOR = ",";
-  private static final int NAME_POS = 0;
-  private static final int MULT_POS = 1;
   private static final int EVEN_MULT_POS = 2;
+  protected static final String DELIMINATOR = ",";
+  protected static final int NAME_POS = 0;
+  protected static final int MULT_POS = 1;
 
   protected boolean shouldPopulate(Map<String, Ticker> map) {
     return map == null;
@@ -94,5 +94,7 @@ abstract public class BusinessRules {
   abstract protected Map<String,Ticker> getTickers();
   abstract public double getDivisor();
   abstract public double getDivisorEven();
+  abstract public String indexName();
+
 }
 

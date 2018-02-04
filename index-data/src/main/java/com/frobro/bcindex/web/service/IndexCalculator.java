@@ -19,22 +19,30 @@ public abstract class IndexCalculator {
   protected double constant;
   private double lastUsdPerBtc;
 
-  private final BusinessRules businessRules;
+  protected final BusinessRules businessRules;
   protected final double divisor;
   protected final double divisorEven;
   protected long lastTimeStamp;
   protected Map<String,Index> lastIndexList;
 
-  public IndexCalculator() {
-    businessRules = newBusRules();
-    divisor = getDivisor();
-    divisorEven = getDivisorEven();
+  protected IndexCalculator(BusinessRules rules) {
+    this.businessRules = rules;
+    divisor = businessRules.getDivisor();
+    divisorEven = businessRules.getDivisorEven();
   }
 
-  abstract protected BusinessRules newBusRules();
-  abstract protected double getDivisor();
-  abstract protected double getDivisorEven();
-  abstract protected String indexName();
+  private  double getDivisor() {
+    return businessRules.getDivisor();
+  }
+
+  private double getDivisorEven() {
+    return businessRules.getDivisorEven();
+  }
+
+  protected String indexName() {
+    return businessRules.indexName();
+  }
+
   abstract protected double buildFromSum(double lastSum,
                                          double constant,
                                          double divisor);

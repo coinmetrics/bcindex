@@ -7,31 +7,14 @@ import com.frobro.bcindex.web.service.rules.BusRulesTotal;
 import com.frobro.bcindex.web.service.rules.BusinessRules;
 
 public class IndexCalculatorTotal extends IndexCalculator {
-  private static final BcLog log = BcLog.getLogger(IndexCalculatorTotal.class);
+
+  public IndexCalculatorTotal() {
+    super(new BusRulesTotal());
+  }
 
   @Override
   protected double buildFromSum(double lastSum, double constant, double divisor) {
     return lastSum/divisor;
-  }
-
-  @Override
-  protected BusinessRules newBusRules() {
-    return new BusRulesTotal();
-  }
-
-  @Override
-  protected String indexName() {
-    return "TOTAL INDEX";
-  }
-
-  @Override
-  protected double getDivisor() {
-    return StaticValues.DIVISOR_TOTAL;
-  }
-
-  @Override
-  protected double getDivisorEven() {
-    return StaticValues.DIVISOR_EVEN_TOTAL;
   }
 
   @Override

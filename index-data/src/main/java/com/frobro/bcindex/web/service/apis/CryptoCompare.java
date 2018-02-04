@@ -20,15 +20,33 @@ public class CryptoCompare {
   private static final String COIN_COMPARE_BASE = "https://min-api.cryptocompare.com/data/pricemulti?fsyms=";
   private static final String COIN_COMPARE_BTC_ENDPOINT = "https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC&tsyms=USD";
   private static final String CURRENCY = "&tsyms=USD";
+  private static final String BITCOIN_SYMBOL = "BTC";
   private static final int COIN_LIMIT = 60;
   private final ObjectMapper mapper = new ObjectMapper();
   private final HttpApi http = new HttpApi();
 
   private Set<String> batchCoins = new HashSet<>();
 
+  public CryptoCompare addBtcToBatch() {
+    Set<String> coinSet = new HashSet<>();
+    coinSet.add(BITCOIN_SYMBOL);
+    batchCoins(coinSet);
+    return this;
+  }
+
   public CryptoCompare batchCoins(Set<String> coins) {
     batchCoins.addAll(coins);
     return this;
+  }
+
+  public double extractBtcFromData(Map<String,Index> data) {
+    Index btc = data.get(BITCOIN_SYMBOL);
+
+    if (btc == null) {
+      throw new IllegalStateException("No bitcoin price received from api");
+    }
+
+    return btc.getLast();
   }
 
   public Map<String,Index> callBatchedData() throws IOException {

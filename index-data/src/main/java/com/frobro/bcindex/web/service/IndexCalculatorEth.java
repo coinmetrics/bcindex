@@ -10,31 +10,14 @@ import com.frobro.bcindex.web.service.rules.BusinessRules;
  * Created by rise on 7/16/17.
  */
 public class IndexCalculatorEth extends IndexCalculator {
-  private static final BcLog log = BcLog.getLogger(IndexCalculatorEth.class);
+
+  public IndexCalculatorEth() {
+    super(new BusRulesEth());
+  }
 
   @Override
   protected double buildFromSum(double lastSum, double constant, double divisor) {
     return lastSum/divisor;
-  }
-
-  @Override
-  protected BusinessRules newBusRules() {
-    return new BusRulesEth();
-  }
-
-  @Override
-  protected String indexName() {
-    return "ETHEREUM INDEX";
-  }
-
-  @Override
-  protected double getDivisor() {
-    return StaticValues.DIVISOR_ETHER;
-  }
-
-  @Override
-  protected double getDivisorEven() {
-    return StaticValues.DIVISOR_EVEN_ETHER;
   }
 
   @Override
