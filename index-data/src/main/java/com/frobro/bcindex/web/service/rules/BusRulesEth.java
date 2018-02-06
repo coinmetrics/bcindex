@@ -17,18 +17,13 @@ public class BusRulesEth extends BusinessRules {
   public BusRulesEth() {
     if (shouldPopulate(tickers)) {
       populate();
-      logMultipliers();
+      logValues(tickers, indexName());
     }
   }
 
   private void populate() {
     tickers = new HashMap<>();
     populateValuesFromFile(tickers, StaticValues.MKT_CAP_FILE_EHTER);
-  }
-
-  private void logMultipliers() {
-    log.debug("Ethereum index multipliers");
-    logValues(tickers);
   }
 
   @Override

@@ -25,13 +25,13 @@ public class StaticValues {
   public static final String MKT_CAP_FILE_40 = "business_rules/40_jan_rebal.csv";
 
   // Ethereum index values
-  public static final String ETH_INDEX_NAME = "10 INDEX";
+  public static final String ETH_INDEX_NAME = "Ethereum INDEX";
   public static final double DIVISOR_ETHER = 102023741.6;
   public static final double DIVISOR_EVEN_ETHER = 98207361.36;
   public static final String MKT_CAP_FILE_EHTER = "business_rules/eth_jan_rebal.csv";
 
     // Total index values
-  public static final String TOTAL_INDEX_NAME = "10 INDEX";
+  public static final String TOTAL_INDEX_NAME = "Total INDEX";
   public static final double DIVISOR_TOTAL = 605137602;
   public static final double DIVISOR_EVEN_TOTAL = 794370599.2;
   public static final String MKT_CAP_FILE_TOTAL = "business_rules/total_jan_rebal.csv";

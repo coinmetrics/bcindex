@@ -40,7 +40,8 @@ abstract public class BusinessRules {
     });
   }
 
-  protected void logValues(Map<String,Ticker> map) {
+  protected void logValues(Map<String,Ticker> map, String index) {
+    log.debug(index + " multipliers");
     map.entrySet().stream().forEach(entry -> {
       log.debug("mapping ticker: " + entry.getKey()
           + " with multiplier: " + entry.getValue().getMultiplier()

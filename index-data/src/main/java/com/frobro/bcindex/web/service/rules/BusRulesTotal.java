@@ -14,18 +14,13 @@ public class BusRulesTotal extends BusinessRules {
   public BusRulesTotal() {
     if (shouldPopulate(tickers)) {
       populate();
-      logMultipliers();
+      logValues(tickers, indexName());
     }
   }
 
   private void populate() {
     tickers = new HashMap<>();
     populateValuesFromFile(tickers, StaticValues.MKT_CAP_FILE_TOTAL);
-  }
-
-  private void logMultipliers() {
-    log.debug("total index multipliers");
-    logValues(tickers);
   }
 
   @Override

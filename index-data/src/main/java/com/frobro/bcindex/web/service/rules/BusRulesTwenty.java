@@ -16,18 +16,13 @@ public class BusRulesTwenty extends BusinessRules {
   public BusRulesTwenty() {
     if (shouldPopulate(tickers)) {
       populate();
-      logMultipliers();
+      logValues(tickers, indexName());
     }
   }
 
   private void populate() {
     tickers = new HashMap<>();
     populateValuesFromFile(tickers, StaticValues.MKT_CAP_FILE_20);
-  }
-
-  private void logMultipliers() {
-    log.debug("20 index multipliers");
-    logValues(tickers);
   }
 
   @Override
