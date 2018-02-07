@@ -48,6 +48,6 @@ public class StaticValues {
 
         // Application index values
   public static final String APP_INDEX_NAME = "application index";
-  public static final double DIVISOR_APPLICATION = 217795068.51043;
+  public static final double DIVISOR_APPLICATION = 222593358.51043;
   public static final String MKT_CAP_FILE_APPLICATION = "business_rules/application_jan.csv";
 }
