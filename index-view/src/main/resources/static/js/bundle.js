@@ -323,7 +323,7 @@ var Config = {
             scales: {
                 yAxes: [{
                     gridLines: {
-                        color: "rgba(0, 100, 100, 0.3)"
+                        color: "rgba(0, 100, 100, 0.5)"
                     },
                     ticks: {
                         beginAtZero: false,
