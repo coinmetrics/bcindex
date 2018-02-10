@@ -20,7 +20,8 @@ public enum SpringProfiles {
       return getProfile() == null;
     }
   },
-  POSTGRES;
+  POSTGRES,
+  RELEASE;
 
   public String getValue() {
     return name().toLowerCase();

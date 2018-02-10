@@ -60,13 +60,16 @@ public class TickerService {
                            TwentyRepo tRepo, TwentyEvenRepo teRepo,
                            EthRepo etRepo, EthEvenRepo eteRepo,
                            FortyIdxRepo fRepo, FortyEvenIdxRepo feRepo,
-                           TotalRepo toRepo, TotalEvenRepo toeRepo) {
+                           TotalRepo toRepo, TotalEvenRepo toeRepo,
+                           CurrencyRepo currRepo, PlatformRepo pRepo,
+                           ApplicationRepo aRepo) {
 
     this.repo = PrimeRepo.getRepo(repo, eRepo,
                                   tRepo, teRepo,
                                   etRepo, eteRepo,
                                   fRepo, feRepo,
-                                  toRepo, toeRepo);
+                                  toRepo, toeRepo,
+                                  currRepo,pRepo,aRepo);
   }
 
   public TickerService updateTickers() {
@@ -276,6 +279,7 @@ public class TickerService {
     saveIndexEth();
     saveIndexForty();
     saveIndexTotal();
+    saveSector();
   }
 
   private void saveIndexTen() {
@@ -326,6 +330,20 @@ public class TickerService {
     JpaIndexTotalEven eIdx = new JpaIndexTotalEven();
     populateJpa(eIdx, lastIdxTotalEven);
     repo.saveTotalEven(eIdx);
+  }
+
+  private void saveSector() {
+    JpaCurrency idx = new JpaCurrency();
+    populateJpa(idx, lastIdxCurrency);
+    repo.saveCurrency(idx);
+
+    JpaPlatform pIdx = new JpaPlatform();
+    populateJpa(pIdx, lastIdxPlatform);
+    repo.savePlatform(pIdx);
+
+    JpaApplication aIdx = new JpaApplication();
+    populateJpa(aIdx, lastIdxApp);
+    repo.saveAplication(aIdx);
   }
 
   private void populateJpa(JpaIndex idx, IndexDbDto dto) {

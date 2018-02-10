@@ -1,5 +1,8 @@
 package com.frobro.bcindex.web.controller;
 
+import com.frobro.bcindex.core.db.domain.ApplicationRepo;
+import com.frobro.bcindex.core.db.domain.CurrencyRepo;
+import com.frobro.bcindex.core.db.domain.PlatformRepo;
 import com.frobro.bcindex.core.db.service.*;
 import com.frobro.bcindex.web.service.TickerService;
 import com.frobro.bcindex.web.service.TimerService;
@@ -24,13 +27,16 @@ public class HomeController {
                    TwentyRepo tRepo, TwentyEvenRepo teRepo,
                    EthRepo etRepo, EthEvenRepo eteRepo,
                    FortyIdxRepo fRepo, FortyEvenIdxRepo feRepo,
-                   TotalRepo toRepo, TotalEvenRepo toeRepo) {
+                   TotalRepo toRepo, TotalEvenRepo toeRepo,
+                   CurrencyRepo cRepo, PlatformRepo pRepo,
+                   ApplicationRepo aRepo) {
 
     tickerService.setIndexRepo(repo, eRepo,
                                tRepo, teRepo,
                                etRepo, eteRepo,
                                fRepo, feRepo,
-                               toRepo, toeRepo);
+                               toRepo, toeRepo,
+                               cRepo, pRepo, aRepo);
     timerService = new TimerService(tickerService);
   }
 

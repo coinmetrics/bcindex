@@ -21,7 +21,8 @@ public class H2Configuration implements DisposableBean {
   private static DbManager dbManager;
 
   public static void startIfConfigured() {
-    if (SpringProfiles.DEV.isActive()) {
+    if (SpringProfiles.DEV.isActive() ||
+        SpringProfiles.RELEASE.isActive()) {
       startDataBase();
     }
   }
@@ -35,7 +36,8 @@ public class H2Configuration implements DisposableBean {
 
   @Override
   public void destroy() throws Exception {
-    if (SpringProfiles.DEV.isActive()) {
+    if (SpringProfiles.DEV.isActive() ||
+        SpringProfiles.RELEASE.isActive()) {
       stopDataBase();
     }
   }

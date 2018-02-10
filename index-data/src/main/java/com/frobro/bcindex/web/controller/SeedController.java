@@ -34,12 +34,17 @@ public class SeedController {
                        TwentyRepo twRepo, TwentyEvenRepo teRepo,
                        EthRepo ethRepo, EthEvenRepo eteRepo,
                        FortyIdxRepo fRepo, FortyEvenIdxRepo feRepo,
-                       TotalRepo toRepo, TotalEvenRepo toeRepo) {
+                       TotalRepo toRepo, TotalEvenRepo toeRepo,
+                       CurrencyRepo cRepo, PlatformRepo pRepo,
+                       ApplicationRepo aRepo) {
 
-    repo = PrimeRepo.getRepo(oRepo,eRepo,twRepo,teRepo,ethRepo,eteRepo,fRepo,feRepo,toRepo,toeRepo);
-    tickerService.setIndexRepo(oRepo,eRepo,twRepo,teRepo,ethRepo,eteRepo,fRepo,feRepo,toRepo,toeRepo);
+    repo = PrimeRepo.getRepo(oRepo,eRepo,twRepo,teRepo,ethRepo,eteRepo,
+        fRepo,feRepo,toRepo,toeRepo,cRepo,pRepo,aRepo);
+    tickerService.setIndexRepo(oRepo,eRepo,twRepo,teRepo,ethRepo,eteRepo,
+        fRepo,feRepo,toRepo,toeRepo,cRepo,pRepo,aRepo);
     // ETH index not currently supported in file saver
-    fileDataSaver = new FileDataSaver(oRepo, eRepo, twRepo, teRepo,ethRepo,eteRepo,fRepo,feRepo,toRepo,toeRepo);
+    fileDataSaver = new FileDataSaver(oRepo, eRepo, twRepo, teRepo,ethRepo,eteRepo,
+        fRepo,feRepo,toRepo,toeRepo,cRepo,pRepo,aRepo);
   }
 
   @PostConstruct

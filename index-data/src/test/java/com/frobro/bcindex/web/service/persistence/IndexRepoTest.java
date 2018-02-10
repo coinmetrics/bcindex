@@ -28,6 +28,9 @@ public class IndexRepoTest {
   private FortyEvenIdxRepo fortyEvenRepo;
   private TotalRepo totalRepo;
   private TotalEvenRepo totalEvenRepo;
+  private CurrencyRepo currencyRepo;
+  private PlatformRepo platformRepo;
+  private ApplicationRepo appRepo;
   private PrimeRepo primeRepo;
 
   @Autowired
@@ -40,7 +43,10 @@ public class IndexRepoTest {
                            FortyIdxRepo fRepo,
                            FortyEvenIdxRepo feRepo,
                            TotalRepo toRepo,
-                           TotalEvenRepo toeRepo) {
+                           TotalEvenRepo toeRepo,
+                           CurrencyRepo cRepo,
+                           PlatformRepo pRepo,
+                           ApplicationRepo aRepo) {
     this.indexRepo = repo;
     this.evenRepo = eRepo;
     this.twentyRepo = trepo;
@@ -51,12 +57,16 @@ public class IndexRepoTest {
     this.fortyEvenRepo = feRepo;
     this.totalRepo = toRepo;
     this.totalEvenRepo = toeRepo;
+    this.currencyRepo = cRepo;
+    this.platformRepo = pRepo;
+    this.appRepo = aRepo;
 
     primeRepo = PrimeRepo.getRepo(indexRepo,evenRepo,
                               twentyRepo,twentyEvenRepo,
                               ethRepo, ethEvenRepo,
                               fRepo, feRepo,
-                              toRepo, toeRepo);
+                              toRepo, toeRepo,
+                              cRepo,pRepo,aRepo);
   }
 
   @Test
