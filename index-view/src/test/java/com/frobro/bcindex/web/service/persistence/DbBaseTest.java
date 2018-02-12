@@ -30,10 +30,13 @@ public abstract class DbBaseTest {
                            TwentyRepo tRepo, TwentyEvenRepo teRepo,
                            EthRepo etRepo, EthEvenRepo eteRepo,
                            FortyIdxRepo fRepo, FortyEvenIdxRepo feRepo,
-                           TotalRepo toRepo, TotalEvenRepo toeRepo) {
+                           TotalRepo toRepo, TotalEvenRepo toeRepo,
+                           CurrencyRepo cRepo, PlatformRepo pRepo,
+                           ApplicationRepo aRepo) {
 
     this.oddRepo = oRepo;
-    this.repo = PrimeRepo.getRepo(oRepo, eRepo,tRepo,teRepo,etRepo,eteRepo,fRepo,feRepo,toRepo,toeRepo);
+    this.repo = PrimeRepo.getRepo(oRepo, eRepo,tRepo,teRepo,etRepo,eteRepo,fRepo,feRepo,
+        toRepo,toeRepo,cRepo,pRepo,aRepo);
   }
 
   // we don't want the loading and updating threads spinning
@@ -66,54 +69,7 @@ public abstract class DbBaseTest {
       // we will save things in prod
       now += TimeUnit.MINUTES.toMillis(1);
       idx.setTimeStamp(now);
-      repo.saveTen(idx);
-      saveAll(idx);
+      repo.saveAll(idx);
     }
-  }
-
-  private void saveAll(JpaIndex idx) {
-    JpaEvenIndex eTen = new JpaEvenIndex();
-    set(idx, eTen);
-    repo.saveTenEven(eTen);
-
-    JpaIdxTwenty i20 = new JpaIdxTwenty();
-    set(idx, i20);
-    repo.saveTwenty(i20);
-
-    JpaTwentyEven ie20 = new JpaTwentyEven();
-    set(idx, ie20);
-    repo.saveEvenTwenty(ie20);
-
-    JpaIdxFortyEven i40 = new JpaIdxFortyEven();
-    set(idx, i40);
-    repo.saveFortyEven(i40);
-
-    JpaIdxForty ie40 = new JpaIdxForty();
-    set(idx, ie40);
-    repo.saveForty(ie40);
-
-    JpaIdxEth eth = new JpaIdxEth();
-    set(idx, eth);
-    repo.saveEth(eth);
-
-    JpaIdxEthEven eEth = new JpaIdxEthEven();
-    set(idx, eEth);
-    repo.saveEthEven(eEth);
-
-    JpaIndexTotal tot = new JpaIndexTotal();
-    set(idx, tot);
-    repo.saveTotal(tot);
-
-    JpaIndexTotalEven eTot = new JpaIndexTotalEven();
-    set(idx, eTot);
-    repo.saveTotalEven(eTot);
-  }
-
-  private void set(JpaIndex src, JpaIndex desc) {
-    desc.setBletchId(src.getBletchId());
-    desc.setIndexValueBtc(src.getIndexValueBtc());
-    desc.setIndexValueUsd(src.getIndexValueUsd());
-    desc.setTimeStamp(src.getTimeStamp());
-    desc.setId(src.getId());
   }
 }

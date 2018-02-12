@@ -19,6 +19,8 @@ public class BletchDate {
   public static final long MIN_IN_MONTH = MIN_IN_DAY * 31;
   public static final long MIN_IN_YEAR = MIN_IN_DAY * 365;
   public static final long MIN_IN_QUARTER = MIN_IN_YEAR / 4;
+  public static final long MIN_IN_4_HOURS = MIN_IN_HOUR * 4;
+  public static final long MIN_IN_6_HOURS = MIN_IN_HOUR * 6;
   public static final long MIN_IN_12_HOURS = MIN_IN_HOUR * 12;
 
   public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss.SSS";

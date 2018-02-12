@@ -42,7 +42,7 @@ public enum TimeFrame {
 
     @Override
     public int getTimeStep() {
-      return 24; // every 24 minutes ~ 60 data points in a day
+      return 8; // every 24 minutes ~ 60 data points in a day
     }
 
     @Override
@@ -94,7 +94,7 @@ public enum TimeFrame {
 
     @Override
     public int getTimeStep() {
-      return (int) BletchDate.MIN_IN_12_HOURS;
+      return (int) BletchDate.MIN_IN_4_HOURS;
     }
 
     @Override

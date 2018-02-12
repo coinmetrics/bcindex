@@ -84,6 +84,9 @@ public class SeedController {
       repo.saveFortyEven(newFortyEven(time));
       repo.saveTotal(newTotal(time));
       repo.saveTotalEven(newTotalEven(time));
+      repo.saveCurrency(newCurrency(time));
+      repo.savePlatform(newPlatform(time));
+      repo.saveAplication(newApplication(time));
     }
     return "done seeding";
   }
@@ -132,6 +135,24 @@ public class SeedController {
     }
 
     return idxList;
+  }
+
+  private JpaCurrency newCurrency(long time) {
+    JpaCurrency idx = new JpaCurrency();
+    populate(idx, time);
+    return idx;
+  }
+
+  private JpaPlatform newPlatform(long time) {
+    JpaPlatform idx = new JpaPlatform();
+    populate(idx, time);
+    return idx;
+  }
+
+  private JpaApplication newApplication(long time) {
+    JpaApplication idx = new JpaApplication();
+    populate(idx, time);
+    return idx;
   }
 
   private JpaIdxForty newForty(long time) {

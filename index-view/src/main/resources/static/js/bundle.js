@@ -233,7 +233,19 @@ var Config = {
            {
             id: 'TOTAL_EVEN_INDEX',
             text: 'Bletchley Total Even Index'
-        }],
+        }, {
+                id: 'CURRENCY_SECTOR',
+                text: 'Bletchley Currency Index'
+            },
+            {
+                id: 'PLATFORM_SECTOR',
+                text: 'Bletchley Platform Index'
+            },
+            {
+                id: 'APPLICATION_SECTOR',
+                text: 'Bletchley Application Index'
+            }
+        ],
         currency: [{
             id: 'USD',
             text: 'US Dollar',

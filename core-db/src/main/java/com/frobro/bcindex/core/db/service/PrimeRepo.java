@@ -287,6 +287,68 @@ public class PrimeRepo {
     applicationRepo.save(idx);
   }
 
+  public void saveAll(JpaIndex idx) {
+    JpaIndexTen ten = new JpaIndexTen();
+    set(idx, ten);
+    saveTen(ten);
+
+    JpaEvenIndex eTen = new JpaEvenIndex();
+    set(idx, eTen);
+    saveTenEven(eTen);
+
+    JpaIdxTwenty i20 = new JpaIdxTwenty();
+    set(idx, i20);
+    saveTwenty(i20);
+
+    JpaTwentyEven ie20 = new JpaTwentyEven();
+    set(idx, ie20);
+    saveEvenTwenty(ie20);
+
+    JpaIdxFortyEven i40 = new JpaIdxFortyEven();
+    set(idx, i40);
+    saveFortyEven(i40);
+
+    JpaIdxForty ie40 = new JpaIdxForty();
+    set(idx, ie40);
+    saveForty(ie40);
+
+    JpaIdxEth eth = new JpaIdxEth();
+    set(idx, eth);
+    saveEth(eth);
+
+    JpaIdxEthEven eEth = new JpaIdxEthEven();
+    set(idx, eEth);
+    saveEthEven(eEth);
+
+    JpaIndexTotal tot = new JpaIndexTotal();
+    set(idx, tot);
+    saveTotal(tot);
+
+    JpaIndexTotalEven eTot = new JpaIndexTotalEven();
+    set(idx, eTot);
+    saveTotalEven(eTot);
+
+    JpaCurrency curr = new JpaCurrency();
+    set(idx, curr);
+    saveCurrency(curr);
+
+    JpaPlatform plat = new JpaPlatform();
+    set(idx, plat);
+    savePlatform(plat);
+
+    JpaApplication app = new JpaApplication();
+    set(idx, app);
+    saveAplication(app);
+  }
+
+  private void set(JpaIndex src, JpaIndex desc) {
+    desc.setBletchId(src.getBletchId());
+    desc.setIndexValueBtc(src.getIndexValueBtc());
+    desc.setIndexValueUsd(src.getIndexValueUsd());
+    desc.setTimeStamp(src.getTimeStamp());
+    desc.setId(src.getId());
+  }
+
   public void deleteAll() {
     this.indexRepo.deleteAll();
     this.evenIdxRepo.deleteAll();
@@ -303,3 +365,4 @@ public class PrimeRepo {
     this.applicationRepo.deleteAll();
   }
 }
+
