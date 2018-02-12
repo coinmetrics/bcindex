@@ -202,6 +202,7 @@ ul, dd {
     justify-content: space-around;
     flex-direction: row;
     text-align: center;
+    padding-bottom: 5px;
 }
 
 .ticker-info-box ul li {
