@@ -519,7 +519,7 @@ table.download-table tbody tr:hover {
 .timezone{width:90%;background-color:#edf2f7;font-size:9px;text-align:center;justify-content:center;
     padding-left:5%;padding-right:5%;color:#000419;}
 .weights-link{width:90%;background-color:#edf2f7;font-size:14px;text-align:center;justify-content:center;
-    padding-left:5%;padding-right:5%;color:#000419;}
+    padding-left:5%;padding-right:5%;padding-top:20px;color:#000419;}
 .disclaimer-mobile{width:100%;background-color:#edf2f7;font-size:7px;text-align:center;justify-content:center;
     padding-left:1%;padding-right:1%;color:#000419;}
 .row{width:100%;background-color:#edf2f7;height:50px;}
