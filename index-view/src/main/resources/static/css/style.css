@@ -510,7 +510,7 @@ table.download-table tbody tr:hover {
 }
 
 .container{width:100%;background-color:#F7F9F9;}
-.masterbody{max-width:900px;max-height:600px;justify-content: center;align-content: center;margin-left: auto;margin-right: auto;}
+.masterbody{max-width:1050px;max-height:700px;justify-content: center;align-content: center;margin-left: auto;margin-right: auto;}
 .containerdownloads{background-color:#F7F9F9;}
 .containerindex{width:100%;background-color:#F7F9F9;padding-left:10px;padding-top:none;}
 .container-slogan{width:100%;background-color:#edf2f7;font-size:20px;color:#424949;text-align:center;font-weight:500;}
@@ -520,7 +520,7 @@ table.download-table tbody tr:hover {
 .timezone{width:90%;background-color:#edf2f7;font-size:9px;text-align:center;justify-content:center;
     padding-left:5%;padding-right:5%;color:#000419;}
 .weights-link{width:90%;background-color:#edf2f7;font-size:14px;text-align:center;justify-content:center;
-    padding-left:5%;padding-right:5%;padding-top:20px;color:#000419;}
+    padding-left:5%;padding-right:5%;padding-top:10px;color:#000419;}
 .disclaimer-mobile{width:100%;background-color:#edf2f7;font-size:7px;text-align:center;justify-content:center;
     padding-left:1%;padding-right:1%;color:#000419;}
 .row{width:100%;background-color:#edf2f7;height:50px;}
@@ -615,6 +615,7 @@ table.download-table tbody tr:hover {
     .chart-element{padding-left:10px;padding-right:10px;}
     .main-chart-element{padding-left:20px;padding-right:20px;}
     .disclaimer{display:none;}
+    .weights-link{padding-top:25px;}
     #onboard-mobile{display:none;}
     body {
         font-size: 90%;
@@ -638,6 +639,7 @@ table.download-table tbody tr:hover {
     .topnav{padding-left:25%;}
     .btn-timeframe-mobile{display:none;}
     .disclaimer-mobile{display:none;}
+    .weights-link{padding-top:45px;}
     .ticker-info-box ul li dt-a {font-size:10px;display:none;}
     #onboard-mobile{display:none;}
     .topnav li a.nav-icon{display:none;}
