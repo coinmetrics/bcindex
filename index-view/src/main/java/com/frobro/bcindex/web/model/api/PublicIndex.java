@@ -60,8 +60,25 @@ public enum PublicIndex {
     public IndexType getPrivateIdx() {
       return IndexType.TOTAL_EVEN_INDEX;
     }
+  },
+  CURRENCY_INDEX{
+    @Override
+    public IndexType getPrivateIdx() {
+      return IndexType.CURRENCY_SECTOR;
+    }
+  },
+  PLATFORM_INDEX{
+    @Override
+    public IndexType getPrivateIdx() {
+      return IndexType.PLATFORM_SECTOR;
+    }
+  },
+  APPLICATION_INDEX{
+    @Override
+    public IndexType getPrivateIdx() {
+      return IndexType.APPLICATION_SECTOR;
+    }
   };
-
 
   public static PublicIndex getPublicIdx(IndexType privateIdx) {
     PublicIndex publicIndex;
@@ -93,6 +110,15 @@ public enum PublicIndex {
         break;
       case TOTAL_EVEN_INDEX:
         publicIndex = PublicIndex.TOTAL_EVEN_INDEX;
+        break;
+      case CURRENCY_SECTOR:
+        publicIndex = PublicIndex.CURRENCY_INDEX;
+        break;
+      case PLATFORM_SECTOR:
+        publicIndex = PublicIndex.PLATFORM_INDEX;
+        break;
+      case APPLICATION_SECTOR:
+        publicIndex = PublicIndex.APPLICATION_INDEX;
         break;
       default:
         publicIndex = TEN_INDEX;
