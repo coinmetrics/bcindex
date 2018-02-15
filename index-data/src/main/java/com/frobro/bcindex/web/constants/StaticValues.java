@@ -39,15 +39,15 @@ public class StaticValues {
       // Currency index values
   public static final String CURR_INDEX_NAME = "currency index";
   public static final double DIVISOR_CURRENCY = 2601648821.01;
-  public static final String MKT_CAP_FILE_CURRENCY = "business_rules/Currency_feb.csv";
+  public static final String MKT_CAP_FILE_CURRENCY = "business_rules/Currency_feb_rebal.csv";
 
         // Platform index values
   public static final String PLATFORM_INDEX_NAME = "platform index";
   public static final double DIVISOR_PLATFORM = 2109871931.01;
-  public static final String MKT_CAP_FILE_PLATFORM = "business_rules/Platform_feb.csv";
+  public static final String MKT_CAP_FILE_PLATFORM = "business_rules/Platform_feb_rebal.csv";
 
         // Application index values
   public static final String APP_INDEX_NAME = "application index";
   public static final double DIVISOR_APPLICATION = 237854409.31;
-  public static final String MKT_CAP_FILE_APPLICATION = "business_rules/Application_feb.csv";
+  public static final String MKT_CAP_FILE_APPLICATION = "business_rules/Application_feb_rebal.csv";
 }
