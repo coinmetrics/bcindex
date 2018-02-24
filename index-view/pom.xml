@@ -4,7 +4,7 @@
   <groupId>com.frobro.bcindex.web</groupId>
   <artifactId>index-view</artifactId>
   <packaging>jar</packaging>
-  <version>1.4.8</version>
+  <version>1.4.9</version>
   <name>index-view</name>
   <url>http://maven.apache.org</url>
 
@@ -37,7 +37,7 @@
         <version>2.0.2</version>
         <configuration>
           <processTypes>
-            <web>java -Dspring.profiles.active=prod -Dserver.port=$PORT -jar target/index-view-1.4.8.jar</web>
+            <web>java -Dspring.profiles.active=prod -Dserver.port=$PORT -jar target/index-view-1.4.9.jar</web>
           </processTypes>
         </configuration>
       </plugin>

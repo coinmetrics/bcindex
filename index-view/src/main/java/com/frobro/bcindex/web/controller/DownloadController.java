@@ -63,6 +63,41 @@ public class DownloadController {
     return responseFile(IndexType.EVEN_ETH.name());
   }
 
+  @RequestMapping(path = "/bletchley_forty.csv", method = RequestMethod.GET)
+  public ResponseEntity<ByteArrayResource> download_forty() throws IOException {
+    return responseFile(IndexType.FORTY_INDEX.name());
+  }
+
+  @RequestMapping(path = "/bletchley_forty_even.csv", method = RequestMethod.GET)
+  public ResponseEntity<ByteArrayResource> download_forty_even() throws IOException {
+    return responseFile(IndexType.FORTY_EVEN_INDEX.name());
+  }
+
+  @RequestMapping(path = "/bletchley_total.csv", method = RequestMethod.GET)
+  public ResponseEntity<ByteArrayResource> download_total() throws IOException {
+    return responseFile(IndexType.TOTAL_INDEX.name());
+  }
+
+  @RequestMapping(path = "/bletchley_total_even.csv", method = RequestMethod.GET)
+  public ResponseEntity<ByteArrayResource> download_total_even() throws IOException {
+    return responseFile(IndexType.TOTAL_EVEN_INDEX.name());
+  }
+
+  @RequestMapping(path = "/bletchley_currency.csv", method = RequestMethod.GET)
+  public ResponseEntity<ByteArrayResource> download_currency() throws IOException {
+    return responseFile(IndexType.CURRENCY_SECTOR.name());
+  }
+
+  @RequestMapping(path = "/bletchley_platform.csv", method = RequestMethod.GET)
+  public ResponseEntity<ByteArrayResource> download_platform() throws IOException {
+    return responseFile(IndexType.PLATFORM_SECTOR.name());
+  }
+
+  @RequestMapping(path = "/bletchley_application.csv", method = RequestMethod.GET)
+  public ResponseEntity<ByteArrayResource> download_application() throws IOException {
+    return responseFile(IndexType.APPLICATION_SECTOR.name());
+  }
+
   private ResponseEntity<ByteArrayResource> responseFile(String tableName) throws IOException {
     CsvFile csvFile = new CsvFile();
     // define the time interval between points
