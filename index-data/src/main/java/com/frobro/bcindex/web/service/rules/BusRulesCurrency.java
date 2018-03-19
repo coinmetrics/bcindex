@@ -40,4 +40,8 @@ public class BusRulesCurrency extends BusRulesSector {
   protected String getFileName() {
     return StaticValues.MKT_CAP_FILE_CURRENCY;
   }
+
+  public boolean hasEven() {
+    return Boolean.FALSE;
+  }
 }

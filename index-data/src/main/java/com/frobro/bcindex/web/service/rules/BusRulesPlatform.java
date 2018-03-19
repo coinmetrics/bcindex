@@ -40,4 +40,8 @@ public class BusRulesPlatform extends BusRulesSector {
   protected String getFileName() {
     return StaticValues.MKT_CAP_FILE_PLATFORM;
   }
+
+  public boolean hasEven() {
+    return Boolean.FALSE;
+  }
 }

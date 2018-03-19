@@ -3,8 +3,10 @@ package com.frobro.bcindex.web.controller;
 import com.frobro.bcindex.core.db.domain.*;
 import com.frobro.bcindex.core.db.service.*;
 import com.frobro.bcindex.core.db.service.files.BletchFiles;
+import com.frobro.bcindex.core.db.service.weight.*;
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.service.TickerService;
+import com.frobro.bcindex.web.service.WeightService;
 import com.frobro.bcindex.web.service.persistence.FileDataSaver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -46,6 +48,23 @@ public class SeedController {
     fileDataSaver = new FileDataSaver(oRepo, eRepo, twRepo, teRepo,ethRepo,eteRepo,
         fRepo,feRepo,toRepo,toeRepo,cRepo,pRepo,aRepo);
   }
+
+  @Autowired
+  public void initWeightRepo(WeightTenRepo ten,
+                             WeightTwentyRepo twenty,
+                             WeightFortyRepo forty,
+                             WeightTotalRepo total,
+                             WeightEthRepo eth,
+                             WeightCurrencyRepo curr,
+                             WeightPlatformRepo plat,
+                             WeightAppRepo app) {
+
+    WeightService weightService = new WeightService(
+        ten,twenty,forty,total,eth,curr,plat,app);
+
+    tickerService.setWeightService(weightService);
+  }
+
 
   @PostConstruct
   public void start(){

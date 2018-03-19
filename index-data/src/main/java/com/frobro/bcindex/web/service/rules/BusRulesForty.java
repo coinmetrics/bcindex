@@ -7,7 +7,7 @@ import com.frobro.bcindex.web.model.Ticker;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BusRulesForty extends BusinessRules {
+public class BusRulesForty extends HasEvenIndexRules {
     private static final BcLog log = BcLog.getLogger(BusRulesForty.class);
     protected static Map<String,Ticker> tickers;
 

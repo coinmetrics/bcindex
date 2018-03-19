@@ -4,8 +4,6 @@ import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.domain.Index;
 import com.frobro.bcindex.web.model.BletchleyData;
 import com.frobro.bcindex.web.service.persistence.IndexDbDto;
-import static org.junit.Assert.assertEquals;
-
 import com.frobro.bcindex.web.service.rules.BusRulesTen;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -13,6 +11,8 @@ import org.junit.Test;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by rise on 3/23/17.

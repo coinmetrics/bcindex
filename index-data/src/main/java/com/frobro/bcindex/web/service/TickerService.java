@@ -1,9 +1,12 @@
 package com.frobro.bcindex.web.service;
 
+import static com.frobro.bcindex.core.db.model.IndexName.*;
 import java.io.IOException;
 import java.util.*;
 
 import com.frobro.bcindex.core.db.domain.*;
+import com.frobro.bcindex.core.db.model.IndexName;
+import com.frobro.bcindex.core.db.model.WeightApi;
 import com.frobro.bcindex.core.db.service.*;
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.domain.Index;
@@ -19,6 +22,10 @@ public class TickerService {
 
   private static final BcLog log = BcLog.getLogger(TickerService.class);
   private final CryptoCompare cryptoCompare = new CryptoCompare();
+  private long updateTime;
+  private WeightService weightService;
+  private PublishService publishService = new PublishService();
+
   // calculators
   private final IndexCalculator indexCalculatorTen = new IndexCalculatorTen();
   private final IndexCalculator indexCalculatorTwenty = new IndexCalculatorTwenty();
@@ -56,6 +63,12 @@ public class TickerService {
   private BletchleyData inputPlatform = newPlatform();
   private BletchleyData inputCurrency = newCurrency();
 
+  public TickerService() {}
+
+  public void setWeightService(WeightService service) {
+    this.weightService = service;
+  }
+
   public void setIndexRepo(IndexRepo repo, EvenIdxRepo eRepo,
                            TwentyRepo tRepo, TwentyEvenRepo teRepo,
                            EthRepo etRepo, EthEvenRepo eteRepo,
@@ -77,11 +90,35 @@ public class TickerService {
 
       update();
       saveIndices();
+      saveWeights();
+      publishWeights();
 
     } catch (Exception e) {
       log.error("could not successfully update. ", e);
     }
     return this;
+  }
+
+  private void publishWeights() {
+    WeightApi data = new WeightApi();
+
+    data.addIndex(TEN, indexCalculatorTen.getWeights());
+    data.addIndex(TEN_EVEN, indexCalculatorTen.getWeightsEven());
+
+    data.addIndex(TWENTY, indexCalculatorTen.getWeights());
+    data.addIndex(TWENTY_EVEN, indexCalculatorTen.getWeightsEven());
+
+    data.addIndex(FORTY, indexCalculatorTen.getWeights());
+    data.addIndex(FORTY_EVEN, indexCalculatorTen.getWeightsEven());
+
+    data.addIndex(TOTAL, indexCalculatorTen.getWeights());
+    data.addIndex(TWENTY_EVEN, indexCalculatorTen.getWeightsEven());
+
+    data.addIndex(CURRENCY, indexCalculatorTen.getWeights());
+    data.addIndex(PLATFORM, indexCalculatorTen.getWeights());
+    data.addIndex(APPLICATION, indexCalculatorTen.getWeights());
+
+    publishService.publish(data);
   }
 
   private void update() throws IOException {
@@ -107,71 +144,69 @@ public class TickerService {
     // TODO: move this to batch call
     updateTickerBtc(cryptoCompare.extractBtcFromData(apiData));
 
-    long time = System.currentTimeMillis();
+    updateTime = System.currentTimeMillis();
 
     // update 10 idx
     inputDataTen.filterAndSet(apiData);
-    inputDataTen.setLastUpdate(time);
+    inputDataTen.setLastUpdate(updateTime);
     calculateAndSetIndexesTen(inputDataTen);
 
     // update 20 idx
     inputDataTwenty.filterAndSet(apiData);
-    inputDataTwenty.setLastUpdate(time);
+    inputDataTwenty.setLastUpdate(updateTime);
     calculateAndSetIndexesTwenty(inputDataTwenty);
 
     // update ETH idx
     inputEth.filterAndSet(apiData);
-    inputEth.setLastUpdate(time);
+    inputEth.setLastUpdate(updateTime);
     calculateAndSetIndexesEth(inputEth);
 
     // update forty idx
     inputForty.filterAndSet(apiData);
-    inputForty.setLastUpdate(time);
+    inputForty.setLastUpdate(updateTime);
     calculateAndSetIndexesForty(inputForty);
 
     // update total idx
     inputTotal.filterAndSet(apiData);
-    inputTotal.setLastUpdate(time);
+    inputTotal.setLastUpdate(updateTime);
     calculateAndSetIndexesTotal(inputTotal);
 
     inputApp.filterAndSet(apiData);
-    inputApp.setLastUpdate(time);
+    inputApp.setLastUpdate(updateTime);
     calculateAndSetIndexesApp(inputApp);
 
     inputPlatform.filterAndSet(apiData);
-    inputPlatform.setLastUpdate(time);
+    inputPlatform.setLastUpdate(updateTime);
     calculateAndSetIndexesPlatform(inputPlatform);
 
     inputCurrency.filterAndSet(apiData);
-    inputCurrency.setLastUpdate(time);
+    inputCurrency.setLastUpdate(updateTime);
     calculateAndSetIndexesCurrency(inputCurrency);
 
     logIndexSummary();
   }
 
   private void logIndexSummary() {
-    String summary = "\nten      [btc=" + lastIndex.indexValueBtc + ", usd=" + lastIndex.indexValueUsd + "]\n"
-                     + "ten even [btc=" + lastEvenIndex.indexValueBtc + ", usd=" + lastEvenIndex.indexValueUsd + "]\n"
-        + "-----------------------------\n"
-        + "twenty      [btc=" + lastTwentyIdx.indexValueBtc + ", usd=" + lastTwentyIdx.indexValueUsd + "]\n"
-        + "twenty even [btc=" + lastEvenTwentyIdx.indexValueBtc + ", usd=" + lastEvenTwentyIdx.indexValueUsd + "]\n"
-        + "-----------------------------\n"
-        + "forty      [btc=" + lastIdxForty.indexValueBtc + ", usd=" + lastIdxForty.indexValueUsd + "]\n"
-        + "forty even [btc=" + lastIdxFortyEven.indexValueBtc + ", usd=" + lastIdxFortyEven.indexValueUsd + "]\n"
-        + "-----------------------------\n"
-        + "eth      [btc=" + lastIdxEth.indexValueBtc + ", usd=" + lastIdxEth.indexValueUsd + "]\n"
-        + "eth even [btc=" + lastIdxEthEven.indexValueBtc + ", usd=" + lastIdxEthEven.indexValueUsd + "]\n"
-        + "-----------------------------\n"
-        + "total      [btc=" + lastIdxTotal.indexValueBtc + ", usd=" + lastIdxTotal.indexValueUsd + "]\n"
-        + "total even [btc=" + lastIdxTotalEven.indexValueBtc + ", usd=" + lastIdxTotalEven.indexValueUsd + "]\n"
-        + "-----------------------------\n"
-        + "application [btc=" + lastIdxApp.indexValueBtc + ", usd=" + lastIdxApp.indexValueUsd + "]\n"
-        + "-----------------------------\n"
-        + "platform [btc=" + lastIdxPlatform.indexValueBtc + ", usd=" + lastIdxPlatform.indexValueUsd + "]\n"
-        + "-----------------------------\n"
-        + "currency [btc=" + lastIdxCurrency.indexValueBtc + ", usd=" + lastIdxCurrency.indexValueUsd + "]\n"
-        ;
-        log.debug(summary);
+    LogService logService = new LogService();
+    logService.addAllWeights("Ten",indexCalculatorTen)
+              .addAllWeights("Twenty",indexCalculatorTwenty)
+              .addAllWeights("Forty",indexCalculatorForty)
+              .addAllWeights("Total",indexCalculatorTotal)
+              .addAllWeights("Ethereum",indexCalculatorEth)
+              .addSingleWeights("Currency",indexCalculatorCurrency.getWeights())
+              .addSingleWeights("Platform",indexCalculatorPlatform.getWeights())
+              .addSingleWeights("Application",indexCalculatorApp.getWeights())
+
+              .addIndexValue("Ten",lastIndex, lastEvenIndex)
+              .addIndexValue("Twenty",lastTwentyIdx, lastEvenTwentyIdx)
+              .addIndexValue("Forty",lastIdxForty, lastIdxFortyEven)
+              .addIndexValue("Total",lastIdxTotal, lastIdxTotalEven)
+              .addIndexValue("Ethereum",lastIdxEth, lastIdxEthEven)
+              .addIndexValue("Currency",lastIdxCurrency)
+              .addIndexValue("Platform",lastIdxPlatform)
+              .addIndexValue("Application",lastIdxApp);
+
+    log.debug(logService.getLogMessage());
   }
 
   private void clearInputData() {
@@ -217,8 +252,10 @@ public class TickerService {
     return new BletchleyData(new BusRulesCurrency());
   }
 
+  /* get rid of these */
   private void calculateAndSetIndexesTwenty(BletchleyData data) {
     indexCalculatorTwenty.updateLast(data);
+    // multiples will completed for the index weights at this point
     lastTwentyIdx = indexCalculatorTwenty.calcuateOddIndex();
     lastEvenTwentyIdx = indexCalculatorTwenty.calculateEvenIndex();
   }
@@ -350,6 +387,30 @@ public class TickerService {
     idx.setIndexValueBtc(dto.indexValueBtc)
         .setIndexValueUsd(dto.indexValueUsd)
         .setTimeStamp(dto.timeStamp);
+  }
+
+  private void saveWeights() {
+    weightService.saveTen(indexCalculatorTen.getWeights(),
+                          indexCalculatorTen.getWeightsEven(),
+                          updateTime);
+
+    weightService.saveTwenty(indexCalculatorTwenty.getWeights(),
+        indexCalculatorTwenty.getWeightsEven(), updateTime);
+
+    weightService.saveEther(indexCalculatorEth.getWeights(),
+        indexCalculatorEth.getWeightsEven(), updateTime);
+
+    weightService.saveForty(indexCalculatorForty.getWeights(),
+        indexCalculatorForty.getWeightsEven(), updateTime);
+
+    weightService.saveTotal(indexCalculatorTotal.getWeights(),
+        indexCalculatorTotal.getWeightsEven(), updateTime);
+
+    weightService.saveCurrency(indexCalculatorCurrency.getWeights(), updateTime);
+
+    weightService.savePlatform(indexCalculatorPlatform.getWeights(), updateTime);
+
+    weightService.saveApp(indexCalculatorApp.getWeights(), updateTime);
   }
 
   public Collection<Index> getLatestCap() {

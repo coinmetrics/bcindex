@@ -2,14 +2,18 @@ package com.frobro.bcindex.web.service.rules;
 
 import com.frobro.bcindex.core.db.service.files.BletchFiles;
 import com.frobro.bcindex.web.bclog.BcLog;
+import com.frobro.bcindex.web.domain.Index;
+import com.frobro.bcindex.web.model.BletchleyData;
 import com.frobro.bcindex.web.model.Ticker;
+import com.frobro.bcindex.web.service.MultiplierService;
+
 import java.util.*;
 
 /**
  * Created by rise on 3/23/17.
  */
 abstract public class BusinessRules {
-  private static final BcLog log = BcLog.getLogger(BusinessRules.class);
+  private static final BcLog LOG = BcLog.getLogger(BusinessRules.class);
   private static final int EVEN_MULT_POS = 2;
   protected static final String DELIMINATOR = ",";
   protected static final int NAME_POS = 0;
@@ -41,9 +45,9 @@ abstract public class BusinessRules {
   }
 
   protected void logValues(Map<String,Ticker> map, String index) {
-    log.debug(index + " multipliers");
+    LOG.debug(index + " multipliers");
     map.entrySet().stream().forEach(entry -> {
-      log.debug("mapping ticker: " + entry.getKey()
+      LOG.debug("mapping ticker: " + entry.getKey()
           + " with multiplier: " + entry.getValue().getMultiplier()
           + " with even mult:  " + entry.getValue().getEvenMultiplier());
     });
@@ -73,7 +77,7 @@ abstract public class BusinessRules {
   }
 
   private void logError(String tickerName) {
-    log.error("Error cannot find ticker: " + tickerName);
+    LOG.error("Error cannot find ticker: " + tickerName);
   }
 
   private Optional<Double> wrapInOptional(Double val) {
@@ -92,10 +96,31 @@ abstract public class BusinessRules {
     return new HashSet<>(getTickers().keySet());
   }
 
+  public List<Ticker> getTickerList() {
+    return new ArrayList<>(getTickers().values());
+  }
+
+  public boolean hasEven() {
+    return Boolean.TRUE;
+  }
+
+  public BletchleyData calculateMarketCap(BletchleyData data) {
+    LOG.debug("calculating market cap for " + indexName());
+
+    Map<String,Index> indexList = data.getLastIndexes();
+    MultiplierService multService = new MultiplierService(indexList);
+
+    indexList.keySet().stream().forEach(ticker -> {
+      Optional<Double> multiplier = getMultipler(ticker);
+      multService.updateMarketCapIfValid(multiplier, ticker);
+
+    });
+    return data;
+  }
+
   abstract protected Map<String,Ticker> getTickers();
   abstract public double getDivisor();
   abstract public double getDivisorEven();
   abstract public String indexName();
-
 }
 

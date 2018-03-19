@@ -2,15 +2,35 @@ import requests
 import json
 import datetime
 
-local = "http://localhost:8090/api/index"
-stage = "http://stage-index-view.herokuapp.com/api/index"
-prod = "http://www.bletchleyindexes.com/api/index";
+def checkIndex():
+    local = "http://localhost:8090/api/index"
+    stage = "http://stage-index-view.herokuapp.com/api/index"
+    prod = "http://www.bletchleyindexes.com/api/index";
 
-data = {'index':'xxxFORTY_INDEX', 'currency':'USD','timeFrame':'DAILY'}
+    data = {'index':'FORTY_INDEX', 'currency':'USD','timeFrame':'DAILY'}
 
-resp = requests.post(local, json=data)
-#resp = requests.post(stage, json=data)
-#resp = requests.post(prod, json=data)
+    return requests.post(local, json=data)
+    #resp = requests.post(stage, json=data)
+    #resp = requests.post(prod, json=data)
 
-print resp.text
+def checkWeights():
+    local = "http://localhost:8090/api/weight"
+    stage = "http://stage-index-view.herokuapp.com/api/weight"
+    prod = "http://www.bletchleyindexes.com/api/weight";
+
+    data = {'index':'TEN'}
+
+    return requests.post(local, json=data)
+
+def checkWeightList():
+    local = "http://localhost:8090/api/weight/list"
+    stage = "http://stage-index-view.herokuapp.com/api/weight"
+    prod = "http://www.bletchleyindexes.com/api/weight";
+
+    data = {'indexList':['TEN','TWENTY','FORTY']}
+
+    return requests.post(local, json=data)
+
+print checkWeightList().text
+# print checkWeights().text
 

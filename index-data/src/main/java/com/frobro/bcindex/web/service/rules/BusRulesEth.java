@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * Created by rise on 7/16/17.
  */
-public class BusRulesEth extends BusinessRules {
+public class BusRulesEth extends HasEvenIndexRules {
   private static final BcLog log = BcLog.getLogger(BusRulesEth.class);
   protected static Map<String,Ticker> tickers;
 

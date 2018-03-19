@@ -9,7 +9,7 @@ import java.util.*;
 /**
  * Created by rise on 6/11/17.
  */
-public class BusRulesTwenty extends BusinessRules {
+public class BusRulesTwenty extends HasEvenIndexRules {
   private static final BcLog log = BcLog.getLogger(BusRulesTwenty.class);
   protected static Map<String,Ticker> tickers;
 

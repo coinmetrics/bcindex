@@ -8,24 +8,9 @@ import java.util.Optional;
 
 public class IndexCalculatorSector extends IndexCalculator {
   private static final BcLog log = BcLog.getLogger(IndexCalculatorSector.class);
-  private final BusinessRules businessRules;
 
   public IndexCalculatorSector(BusinessRules businessRules) {
     super(businessRules);
-    this.businessRules = businessRules;
-  }
-
-  @Override
-  protected IndexCalculator calculateMarketCap() {
-    log.debug("calculating market cap for " + indexName());
-
-    lastIndexList.keySet().stream().forEach(ticker -> {
-
-      Optional<Double> multiplier = businessRules.getMultipler(ticker);
-      new MultiplierService(lastIndexList)
-          .updateMarketCapIfValid(multiplier, ticker);
-    });
-    return this;
   }
 
   public IndexDbDto calculateEvenIndex() {

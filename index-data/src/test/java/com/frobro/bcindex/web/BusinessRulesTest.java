@@ -1,7 +1,13 @@
 package com.frobro.bcindex.web;
 
+import com.frobro.bcindex.core.db.model.WeightApi;
+import com.frobro.bcindex.web.service.PublishService;
 import com.frobro.bcindex.web.service.rules.*;
 import org.junit.Test;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.junit.Assert.assertTrue;
 
 public class BusinessRulesTest {
