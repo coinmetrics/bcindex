@@ -6,7 +6,7 @@ package com.frobro.bcindex.web.constants;
 public class StaticValues {
   // 10 index values
   public static final String TEN_INDEX_NAME = "10 INDEX";
-  public static final double DIVISOR_TEN = 240639512.6;
+  public static final double DIVISOR_TEN = 240639512.6d;
   public static final double DIVISOR_EVEN_TEN = 79279311.23;
   public static final double CONSTANT_TEN = 16922812;
   public static final double CONSTANT_EVEN_TEN = 3122343.809;
@@ -38,7 +38,7 @@ public class StaticValues {
 
       // Currency index values
   public static final String CURR_INDEX_NAME = "currency index";
-  public static final double DIVISOR_CURRENCY = 2990050253;
+  public static final double DIVISOR_CURRENCY = 2990050253d;
   public static final String MKT_CAP_FILE_CURRENCY = "business_rules/Currency_march_rebal.csv";
 
         // Platform index values
