@@ -20,16 +20,16 @@ def checkWeights():
 
     data = {'index':'TEN'}
 
-    return requests.post(stage, json=data)
+    return requests.post(prod, json=data)
 
 def checkWeightList():
     local = "http://localhost:8090/api/weight/list"
     stage = "http://stage-index-view.herokuapp.com/api/weight/list"
-    prod = "http://www.bletchleyindexes.com/api/weight";
+    prod = "http://www.bletchleyindexes.com/api/weight/list";
 
     data = {'indexList':['TEN','TWENTY','FORTY']}
 
-    return requests.post(stage, json=data)
+    return requests.post(prod, json=data)
 
 print checkWeightList().text
 # print checkWeights().text
