@@ -31,6 +31,15 @@ def checkWeightList():
 
     return requests.post(prod, json=data)
 
-print checkWeightList().text
+def checkPrice():
+    prod = "http://www.bletchleyindexes.com/api/index";
+
+    data = {'index':'FORTY_INDEX','currencyxx':'USD','timeFrame':'DAILY'}
+
+    return requests.post(prod, json=data)
+
+
+print checkPrice().text
+#print checkWeightList().text
 # print checkWeights().text
 
