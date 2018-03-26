@@ -17,9 +17,9 @@ public class Index implements Comparable<Index> {
   @Override
   public int compareTo(Index other) {
     int result = 0;
-    if (this.getMktCap() > other.getMktCap()) {
+    if (this.getMultiplier() > other.getMultiplier()) {
       result = 1;
-    } else if (this.getMktCap() < other.getMktCap()) {
+    } else if (this.getMultiplier() < other.getMultiplier()) {
       result = -1;
     }
     return result;
@@ -49,7 +49,7 @@ public class Index implements Comparable<Index> {
     return evenMult;
   }
 
-  public double getMktCap() {
+  public double getMultiplier() {
     return mktCap;
   }
 

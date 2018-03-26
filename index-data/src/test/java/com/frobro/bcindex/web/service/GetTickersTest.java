@@ -43,7 +43,7 @@ public class GetTickersTest {
     // then
 //   double expectedIndexValue = -1*(a+ b + service.getConstant()) / (new BusRulesTen().getDivisor());
 //    Assert.assertEquals(expectedIndexValue, service.getIndexValue(),0.001);
-    assertEquals(b, service.getLatestCap().iterator().next().getMktCap(), 0.001);
+    assertEquals(b, service.getLatestCap().iterator().next().getMultiplier(), 0.001);
   }
 
   private void turnOnConsoleLogging() {
@@ -116,7 +116,7 @@ public class GetTickersTest {
     double divisor =  222310310.380042;
 
     for (Index idx : input.getLastIndexes().values()) {
-      double mult = idx.getMktCap() * idx.getLast();
+      double mult = idx.getMultiplier() * idx.getLast();
 
 //      System.out.println(idx.getName() + ": " +
 //          idx.getMktCap() + " * " + idx.getLast()

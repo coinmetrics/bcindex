@@ -110,7 +110,7 @@ public abstract class IndexCalculator {
     double lastSum = 0;
     for (Index ticker : lastIndexList.values()) {
       if (ticker.isMktCapValid()) {
-        lastSum += ticker.getMktCap();
+        lastSum += ticker.getMultiplier();
       }
       else {
         log.error("invalid market cap for " + ticker.getName());

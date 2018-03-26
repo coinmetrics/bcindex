@@ -15,7 +15,7 @@ public class Weight {
     final Map<String,Double> weights = new HashMap<>();
 
     for (Index idx : dataMap.values()) {
-      weights.put(idx.getName(), idx.getMktCap()/sum);
+      weights.put(idx.getName(), idx.getMultiplier()/sum);
     }
     return weights;
   }
