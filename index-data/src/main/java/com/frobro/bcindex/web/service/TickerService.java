@@ -90,7 +90,7 @@ public class TickerService {
 
       update();
       saveIndices();
-      saveWeights();
+//      saveWeights();
       publishWeights();
 
     } catch (Exception e) {

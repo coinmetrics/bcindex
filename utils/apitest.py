@@ -32,9 +32,11 @@ def checkWeightList():
     return requests.post(prod, json=data)
 
 def checkPrice():
-    prod = "http://www.bletchleyindexes.com/api/index";
+    prod = "http://www.bletchleyindexes.com/blet/index";
+    stage = "http://stage-index-view.herokuapp.com/blet/index"
+    local = "http://localhost:8090/blet/index"
 
-    data = {'index':'FORTY_INDEX','currencyxx':'USD','timeFrame':'DAILY'}
+    data = {'index':'FORTY_INDEX','currency':'USD','timeFrame':'MAX'}
 
     return requests.post(prod, json=data)
 
