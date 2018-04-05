@@ -56,4 +56,22 @@ public class WeightApi {
     });
     return response;
   }
+
+  @Override
+  public String toString() {
+    final StringBuilder state = new StringBuilder();
+    final String lineBreak = "\n";
+
+    allIndexes.entrySet().forEach(entry -> {
+      state.append(entry.getKey()).append(lineBreak);
+      entry.getValue().entrySet().forEach(v -> {
+        state.append("  " + v.getKey() + "=" + v.getValue()).append(lineBreak);
+      });
+    });
+
+    state.append("number indices: " + allIndexes.keySet().size()).append(lineBreak);
+    state.append(lineBreak);
+
+    return state.toString();
+  }
 }

@@ -105,18 +105,21 @@ public class TickerService {
     data.addIndex(TEN, indexCalculatorTen.getWeights());
     data.addIndex(TEN_EVEN, indexCalculatorTen.getWeightsEven());
 
-    data.addIndex(TWENTY, indexCalculatorTen.getWeights());
-    data.addIndex(TWENTY_EVEN, indexCalculatorTen.getWeightsEven());
+    data.addIndex(TWENTY, indexCalculatorTwenty.getWeights());
+    data.addIndex(TWENTY_EVEN, indexCalculatorTwenty.getWeightsEven());
 
-    data.addIndex(FORTY, indexCalculatorTen.getWeights());
-    data.addIndex(FORTY_EVEN, indexCalculatorTen.getWeightsEven());
+    data.addIndex(FORTY, indexCalculatorForty.getWeights());
+    data.addIndex(FORTY_EVEN, indexCalculatorForty.getWeightsEven());
 
-    data.addIndex(TOTAL, indexCalculatorTen.getWeights());
-    data.addIndex(TWENTY_EVEN, indexCalculatorTen.getWeightsEven());
+    data.addIndex(TOTAL, indexCalculatorTotal.getWeights());
+    data.addIndex(TOTAL_EVEN, indexCalculatorTotal.getWeightsEven());
 
-    data.addIndex(CURRENCY, indexCalculatorTen.getWeights());
-    data.addIndex(PLATFORM, indexCalculatorTen.getWeights());
-    data.addIndex(APPLICATION, indexCalculatorTen.getWeights());
+    data.addIndex(ETHEREUM, indexCalculatorEth.getWeights());
+    data.addIndex(ETHEREUM_EVEN, indexCalculatorEth.getWeightsEven());
+
+    data.addIndex(CURRENCY, indexCalculatorCurrency.getWeights());
+    data.addIndex(PLATFORM, indexCalculatorPlatform.getWeights());
+    data.addIndex(APPLICATION, indexCalculatorApp.getWeights());
 
     publishService.publish(data);
   }
