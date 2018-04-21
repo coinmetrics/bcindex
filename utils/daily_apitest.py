@@ -4,8 +4,9 @@ import datetime
 import time
 
 def checkDaily():
+    prod = "http://bletchleyindexes.com/daily/currency"
     stage = "http://stage-index-view.herokuapp.com/daily/ten"
-    return requests.get(stage)
+    return requests.get(prod)
 
 def toLocalDate(epoch):
     seconds = epoch/1000
