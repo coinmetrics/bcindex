@@ -4,7 +4,8 @@ import com.frobro.bcindex.core.db.model.IndexName;
 import com.frobro.bcindex.core.db.model.WeightApi;
 import com.frobro.bcindex.web.model.api.weight.WeightDto;
 import com.frobro.bcindex.web.model.api.weight.WeightListDto;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,7 +16,7 @@ import java.util.Map;
 
 @RestController
 public class WeightApiController {
-  private static final Logger LOG = Logger.getLogger(WeightApiController.class);
+  private static final Logger LOG = LoggerFactory.getLogger(WeightApiController.class);
   private WeightApi weightCache = new WeightApi();
 
   @RequestMapping(value = "blet/weight", method = RequestMethod.POST)

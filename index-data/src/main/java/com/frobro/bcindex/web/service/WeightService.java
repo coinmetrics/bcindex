@@ -58,7 +58,7 @@ public class WeightService {
       dataList.add(jpa);
     }
 
-    this.tenRepo.save(dataList);
+    this.tenRepo.saveAll(dataList);
   }
 
   public void saveTwenty(Map<String,Double> dataMap,
@@ -84,7 +84,7 @@ public class WeightService {
           .setTimeStamp(time);
       dataList.add(jpa);
     }
-    this.twentyRepo.save(dataList);
+    this.twentyRepo.saveAll(dataList);
   }
 
   public void saveForty(Map<String,Double> dataMap,
@@ -109,7 +109,7 @@ public class WeightService {
           .setTimeStamp(time);
       dataList.add(jpa);
     }
-    this.fortyRepo.save(dataList);
+    this.fortyRepo.saveAll(dataList);
   }
 
   public void saveTotal(Map<String,Double> dataMap,
@@ -135,7 +135,7 @@ public class WeightService {
           .setTimeStamp(time);
       dataList.add(jpa);
     }
-    this.totalRepo.save(dataList);
+    this.totalRepo.saveAll(dataList);
   }
 
   public void saveEther(Map<String,Double> dataMap,
@@ -161,7 +161,7 @@ public class WeightService {
           .setTimeStamp(time);
       dataList.add(jpa);
     }
-    this.ethRepo.save(dataList);
+    this.ethRepo.saveAll(dataList);
   }
 
   public void saveCurrency(Map<String,Double> dataMap, long time) {
@@ -175,7 +175,7 @@ public class WeightService {
           .setTimeStamp(time);
       dataList.add(jpa);
     }
-    this.currRepo.save(dataList);
+    this.currRepo.saveAll(dataList);
   }
 
   public void savePlatform(Map<String,Double> dataMap, long time) {
@@ -188,7 +188,7 @@ public class WeightService {
           .setTimeStamp(time);
       dataList.add(jpa);
     }
-    this.platformRepo.save(dataList);
+    this.platformRepo.saveAll(dataList);
   }
 
   public void saveApp(Map<String,Double> dataMap, long time) {
@@ -201,7 +201,7 @@ public class WeightService {
           .setTimeStamp(time);
       dataList.add(jpa);
     }
-    this.appRepo.save(dataList);
+    this.appRepo.saveAll(dataList);
   }
 
   private void convertToJpa(Map<String,Double> dataMap,

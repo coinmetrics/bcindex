@@ -52,7 +52,7 @@ public class IndexRepoTest extends DbBaseTest {
     repo.saveTen(second);
 
     // when
-    JpaIndex latest = oddRepo.findOne(second.getId());
+    JpaIndex latest = oddRepo.findById(second.getId()).get();
 
     // then
     assertEquals(second.getId(), latest.getId());
