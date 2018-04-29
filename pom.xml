@@ -11,6 +11,7 @@
     <module>core-db</module>
     <module>index-data</module>
     <module>index-view</module>
+    <module>index-api</module>
   </modules>
 </project>
 
