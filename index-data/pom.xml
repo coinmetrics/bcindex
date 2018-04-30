@@ -4,7 +4,7 @@
   <groupId>com.frobro.bcindex.web</groupId>
   <artifactId>index-data</artifactId>
   <packaging>jar</packaging>
-  <version>1.5.3</version>
+  <version>1.5.4</version>
   <name>index-data</name>
   <url>http://maven.apache.org</url>
 
@@ -38,7 +38,7 @@
         <configuration>
           <appName>bc-index-data</appName>
           <processTypes>
-            <web>java -Dspring.profiles.active=prod -Dserver.port=$PORT -jar target/index-data-1.5.3.jar</web>
+            <web>java -Dspring.profiles.active=prod -Dserver.port=$PORT -jar target/index-data-1.5.4.jar</web>
           </processTypes>
         </configuration>
       </plugin>
@@ -96,7 +96,7 @@
             <configuration>
               <appName>stage-index-data</appName>
               <processTypes>
-                <web>java -Dspring.profiles.active=stage -Dserver.port=$PORT -jar target/index-data-1.5.3.jar</web>
+                <web>java -Dspring.profiles.active=stage -Dserver.port=$PORT -jar target/index-data-1.5.4.jar</web>
               </processTypes>            </configuration>
           </plugin>
         </plugins>
@@ -112,7 +112,7 @@
             <configuration>
               <appName>bc-index-data</appName>
               <processTypes>
-                <web>java -Dspring.profiles.active=prod -Dserver.port=$PORT -jar target/index-data-1.5.3.jar</web>
+                <web>java -Dspring.profiles.active=prod -Dserver.port=$PORT -jar target/index-data-1.5.4.jar</web>
               </processTypes>
             </configuration>
           </plugin>
