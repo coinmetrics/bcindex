@@ -4,9 +4,15 @@ import datetime
 import time
 
 def checkDaily():
-    prod = "http://bletchleyindexes.com/daily/currency"
+    prod = "http://bletchleyindexes.com/daily/ten/even"
     stage = "http://stage-index-view.herokuapp.com/daily/ten"
-    return requests.get(prod)
+    local = "http://localhost:8090/daily/ten"
+
+    endPt = prod
+    print("hitting end point: " + endPt)
+    print("")
+
+    return requests.get(endPt)
 
 def toLocalDate(epoch):
     seconds = epoch/1000

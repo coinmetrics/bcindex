@@ -21,13 +21,23 @@ public class JsonIdBasedQuery extends IdBasedQuery {
     super(jdbc);
   }
 
+  @Override
+  public String query(String table) {
+    // TODO: hard coded Postgres functions below (to_timestamp, date_part)
+    return "select index_value_usd as " + PX_USD +
+                ", index_value_btc as " + PX_BTC +
+                ", time_stamp as " + EPOCH_TIME +
+        "   from " + table + " " +
+        "   where date_part('hour',to_timestamp(time_stamp/1000)) = 0 " +
+        "   and date_part('minute',to_timestamp(time_stamp/1000)) = 0 order by bletch_id desc";
+  }
+
   public String getDbData(IndexType index) {
     String query = query(index.name());
 
     JsonRowMapper rowMapper = new JsonRowMapper();
 
     jdbc.query(query, rowMapper);
-
     return toString(rowMapper.holder.build());
   }
 
@@ -51,15 +61,6 @@ public class JsonIdBasedQuery extends IdBasedQuery {
     @Override
     public Object mapRow(ResultSet rs, int num) {
       try {
-        holder
-            .firstEpochTime(rs.getString(FRIST_EPOCH_TIME))
-            .firstBtcPx(rs.getString(FIRST_PX_BTC))
-            .firstUsdPx(rs.getString(FIRST_PX_USD))
-
-            .lastEpochTime(rs.getString(LAST_EPOCH_TIME))
-            .lastBtcPx(rs.getString(LAST_PX_BTC))
-            .lastUsdPx(rs.getString(LAST_PX_USD));
-
         JsonRow json = new JsonRow();
         json.pxBtc = rs.getString(PX_BTC);
         json.pxUsd = rs.getString(PX_USD);
