@@ -1,0 +1,39 @@
+********** Daily Price API **********
+
+Example request
+    endPoint = "http://www.bletchleyindexes.com/daily/ten";
+
+    requests.get(endPoint).text
+
+The response is a json array of 3 fields:
+    time: in milliseconds from epoch
+    pxBtc: the price in bitcoin of the index at that time
+    pxUsd: the price in US dollars of the index at that time
+
+Example response:
+
+[
+  {
+    "time": "1518233188726",
+    "pxBtc": "0.00943229859182764287",
+    "pxUsd": "84.5807419947213219"
+  },
+  {
+    "time": "1518319527682",
+    "pxBtc": "0.00918424425296507363",
+    "pxUsd": "74.2234801972050633"
+  },
+  {
+    "time": "1518405921657",
+    "pxBtc": "0.00914714570885927919",
+    "pxUsd": "77.8383681811947383"
+  }
+]
+
+End point naming convention:
+    
+    /daily/<indexName>  
+
+    to get the even weighted version:
+    /daily/<indexName>/even  
+

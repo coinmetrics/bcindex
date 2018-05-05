@@ -8,19 +8,20 @@ import com.frobro.bcindex.web.service.TimerService;
 import com.frobro.bcindex.web.service.cache.CacheLoader;
 import com.frobro.bcindex.web.service.cache.CacheUpdateMgr;
 import com.frobro.bcindex.web.service.cache.DataCache;
-import com.frobro.bcindex.web.service.time.TimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by rise on 5/12/17.

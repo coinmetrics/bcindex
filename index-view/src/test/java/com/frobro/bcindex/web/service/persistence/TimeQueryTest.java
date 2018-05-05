@@ -57,7 +57,7 @@ public class TimeQueryTest extends DbBaseTest {
   }
 
   private void populateDb() {
-    this.oddRepo.save(data);
+    this.oddRepo.saveAll(data);
   }
 
   private long day() {

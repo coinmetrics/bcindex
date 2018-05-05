@@ -3,7 +3,6 @@ package com.frobro.bcindex.web.controller;
 import com.frobro.bcindex.web.model.CsvFile;
 import com.frobro.bcindex.web.model.api.IndexType;
 import com.frobro.bcindex.web.service.query.CsvIdBasedQuery;
-import com.frobro.bcindex.web.service.query.CsvTimeQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.concurrent.TimeUnit;
 
 @RestController
 public class DownloadController {
@@ -103,7 +101,7 @@ public class DownloadController {
     // define the time interval between points
     CsvIdBasedQuery query = new CsvIdBasedQuery(jdbc);
     // get data from db
-    File file = csvFile.populateAndGetFile(query.getCsvContent(tableName));
+    File file = csvFile.populateAndGetFile(query.getDbData(tableName));
 
     // write data to resource
     Path path = Paths.get(file.getAbsolutePath());

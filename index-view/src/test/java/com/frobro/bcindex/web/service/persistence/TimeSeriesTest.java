@@ -42,7 +42,7 @@ public class TimeSeriesTest extends DbBaseTest {
     ApiResponse response = ser.getData(req);
 
     verifyPassThroughFields(req, response);
-    double btcClose = oddRepo.findOne(1L).getIndexValueBtc();
+    double btcClose = oddRepo.findById(1L).get().getIndexValueBtc();
     assertEquals(btcClose, response.prevClose, 0.01);
     assertEquals(req.currency, response.currency);
   }

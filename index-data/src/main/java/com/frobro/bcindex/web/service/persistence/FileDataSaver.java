@@ -101,8 +101,8 @@ public class FileDataSaver {
       bid = updateBid(bid);
     }
 
-    this.twentyRepo.save(tenList);
-    this.twentyEvenRepo.save(evenList);
+    this.twentyRepo.saveAll(tenList);
+    this.twentyEvenRepo.saveAll(evenList);
   }
 
   private void saveDataTen(String fileName) {
