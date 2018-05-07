@@ -17,9 +17,9 @@ public abstract class PublishService {
     this.endPoint = endPoint;
   }
 
-  public void publish(WeightApi data) {
+  public void publishWeight(WeightApi data) {
     data.addKey();
-    publish(data.getRawData());
+    publish(data);
   }
 
   public void publish(Object data) {

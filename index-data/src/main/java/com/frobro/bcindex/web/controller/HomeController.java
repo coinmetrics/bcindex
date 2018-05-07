@@ -4,6 +4,7 @@ import com.frobro.bcindex.core.db.domain.ApplicationRepo;
 import com.frobro.bcindex.core.db.domain.CurrencyRepo;
 import com.frobro.bcindex.core.db.domain.PlatformRepo;
 import com.frobro.bcindex.core.db.service.*;
+import com.frobro.bcindex.web.service.publish.DailyWeightPubService;
 import com.frobro.bcindex.web.service.publish.PricePublishService;
 import com.frobro.bcindex.web.service.publish.PublishService;
 import com.frobro.bcindex.web.service.TickerService;
@@ -26,12 +27,14 @@ public class HomeController {
   private TimerService timerService;
   private WeightPublishService weightPublisher = new WeightPublishService();
   private PricePublishService pricePublisher = new PricePublishService();
+  private DailyWeightPubService dailyWeightPub = new DailyWeightPubService();
 
   @Autowired
   public void setEnvironment(Environment env) {
     // pull values from application.properties
     weightPublisher.createPublishEndPoint(env.getProperty(weightPublisher.publishEndPtKey()));
     pricePublisher.createPublishEndPoint(env.getProperty(pricePublisher.publishEndPtKey()));
+    dailyWeightPub.createPublishEndPoint(env.getProperty(dailyWeightPub.publishEndPtKey()));
   }
 
   @Autowired

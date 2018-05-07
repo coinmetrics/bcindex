@@ -1,4 +1,4 @@
-package com.frobro.bcindex.web;
+package com.frobro.bcindex.web.configuration;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.domain.EntityScan;

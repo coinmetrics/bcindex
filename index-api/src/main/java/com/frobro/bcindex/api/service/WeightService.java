@@ -1,13 +1,26 @@
 package com.frobro.bcindex.api.service;
 
 import com.frobro.bcindex.api.domain.weight.*;
-import com.frobro.bcindex.api.service.weight.*;
+import com.frobro.bcindex.api.service.persistence.*;
+import com.frobro.bcindex.core.db.model.IndexName;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 public class WeightService {
+  private static final Logger LOG = LoggerFactory.getLogger(WeightService.class);
+  private long tenBletchId;
+  private long twentyBletchId;
+  private long fortyBletchId;
+  private long totalBletchId;
+  private long ethBletchId;
+  private long currBletchId;
+  private long platformBletchId;
+  private long appBletchId;
+
   private WeightTenRepo tenRepo;
   private WeightTwentyRepo twentyRepo;
   private WeightFortyRepo fortyRepo;
@@ -35,186 +48,146 @@ public class WeightService {
     this.appRepo = a;
   }
 
-  public void saveTen(Map<String, Double> dataMap,
-                      Map<String, Double> dataMapEven,
-                      long time) {
-
-    final List<JpaWeightTen> dataList = new ArrayList<>(dataMap.size());
-    for (Map.Entry<String, Double> entry : dataMap.entrySet()) {
-      JpaWeightTen jpa = new JpaWeightTen();
-      jpa.setIndexName("ten index")
-          .setTicker(entry.getKey())
-          .setWeight(entry.getValue())
-          .setTimeStamp(time);
-      dataList.add(jpa);
-    }
-
-    for (Map.Entry<String, Double> entry : dataMapEven.entrySet()) {
-      JpaWeightTen jpa = new JpaWeightTen();
-      jpa.setIndexName("ten even index")
-          .setTicker(entry.getKey())
-          .setWeight(entry.getValue())
-          .setTimeStamp(time);
-      dataList.add(jpa);
-    }
-
-    this.tenRepo.saveAll(dataList);
+  public void save(List<DoaService> doaList) {
+    doaList.forEach(doa -> {
+      save(doa);
+    });
   }
 
-  public void saveTwenty(Map<String, Double> dataMap,
-                         Map<String, Double> dataMapEven,
-                         long time) {
-
-    final List<JpaWeightTwenty> dataList = new ArrayList<>(dataMap.size());
-
-    for (Map.Entry<String, Double> entry : dataMap.entrySet()) {
-      JpaWeightTwenty jpa = new JpaWeightTwenty();
-      jpa.setIndexName("twenty even index")
-          .setTicker(entry.getKey())
-          .setWeight(entry.getValue())
-          .setTimeStamp(time);
-      dataList.add(jpa);
+  private void save(DoaService doa) {
+    IndexName idx = doa.getName();
+    switch (idx) {
+      case TEN:
+        saveTen(doa);
+        break;
+      case TWENTY:
+        saveTwenty(doa);
+        break;
+      case FORTY:
+        saveForty(doa);
+        break;
+      case TOTAL:
+        saveTotal(doa);
+        break;
+      case ETHEREUM:
+        saveEthereum(doa);
+        break;
+      case CURRENCY:
+        saveCurrency(doa);
+        break;
+      case PLATFORM:
+        savePlatform(doa);
+        break;
+      case APPLICATION:
+        saveApplication(doa);
+        break;
     }
-
-    for (Map.Entry<String, Double> entry : dataMapEven.entrySet()) {
-      JpaWeightTwenty jpa = new JpaWeightTwenty();
-      jpa.setIndexName("twenty even index")
-          .setTicker(entry.getKey())
-          .setWeight(entry.getValue())
-          .setTimeStamp(time);
-      dataList.add(jpa);
-    }
-    this.twentyRepo.saveAll(dataList);
   }
 
-  public void saveForty(Map<String, Double> dataMap,
-                        Map<String, Double> dataMapEven,
-                        long time) {
-
-    final List<JpaWeightForty> dataList = new ArrayList<>(dataMap.size());
-    for (Map.Entry<String, Double> entry : dataMap.entrySet()) {
-      JpaWeightForty jpa = new JpaWeightForty();
-      jpa.setIndexName("forty index")
-          .setTicker(entry.getKey())
-          .setWeight(entry.getValue())
-          .setTimeStamp(time);
-      dataList.add(jpa);
-    }
-
-    for (Map.Entry<String, Double> entry : dataMapEven.entrySet()) {
-      JpaWeightForty jpa = new JpaWeightForty();
-      jpa.setIndexName("ten even index")
-          .setTicker(entry.getKey())
-          .setWeight(entry.getValue())
-          .setTimeStamp(time);
-      dataList.add(jpa);
-    }
-    this.fortyRepo.saveAll(dataList);
+  private void saveTen(DoaService doa) {
+    JpaWeightTen data = new JpaWeightTen();
+    populate(doa,tenBletchId++, data);
+    this.tenRepo.save(data);
   }
 
-  public void saveTotal(Map<String, Double> dataMap,
-                        Map<String, Double> dataMapEven,
-                        long time) {
-
-    final List<JpaWeightTotal> dataList = new ArrayList<>(dataMap.size());
-
-    for (Map.Entry<String, Double> entry : dataMap.entrySet()) {
-      JpaWeightTotal jpa = new JpaWeightTotal();
-      jpa.setIndexName("ten index")
-          .setTicker(entry.getKey())
-          .setWeight(entry.getValue())
-          .setTimeStamp(time);
-      dataList.add(jpa);
-    }
-
-    for (Map.Entry<String, Double> entry : dataMapEven.entrySet()) {
-      JpaWeightTotal jpa = new JpaWeightTotal();
-      jpa.setIndexName("ten even index")
-          .setTicker(entry.getKey())
-          .setWeight(entry.getValue())
-          .setTimeStamp(time);
-      dataList.add(jpa);
-    }
-    this.totalRepo.saveAll(dataList);
+  private void saveTwenty(DoaService doa) {
+    JpaWeightTwenty data = new JpaWeightTwenty();
+    populate(doa,twentyBletchId++, data);
+    this.twentyRepo.save(data);
   }
 
-  public void saveEther(Map<String, Double> dataMap,
-                        Map<String, Double> dataMapEven,
-                        long time) {
-
-    final List<JpaWeightEther> dataList = new ArrayList<>(dataMap.size());
-
-    for (Map.Entry<String, Double> entry : dataMap.entrySet()) {
-      JpaWeightEther jpa = new JpaWeightEther();
-      jpa.setIndexName("ten index")
-          .setTicker(entry.getKey())
-          .setWeight(entry.getValue())
-          .setTimeStamp(time);
-      dataList.add(jpa);
-    }
-
-    for (Map.Entry<String, Double> entry : dataMapEven.entrySet()) {
-      JpaWeightEther jpa = new JpaWeightEther();
-      jpa.setIndexName("ten even index")
-          .setTicker(entry.getKey())
-          .setWeight(entry.getValue())
-          .setTimeStamp(time);
-      dataList.add(jpa);
-    }
-    this.ethRepo.saveAll(dataList);
+  private void saveForty(DoaService doa) {
+    JpaWeightForty data = new JpaWeightForty();
+    populate(doa,fortyBletchId++, data);
+    this.fortyRepo.save(data);
   }
 
-  public void saveCurrency(Map<String, Double> dataMap, long time) {
-    final List<JpaCurrency> dataList = new ArrayList<>(dataMap.size());
-
-    for (Map.Entry<String, Double> entry : dataMap.entrySet()) {
-      JpaCurrency jpa = new JpaCurrency();
-      jpa.setIndexName("ten index")
-          .setTicker(entry.getKey())
-          .setWeight(entry.getValue())
-          .setTimeStamp(time);
-      dataList.add(jpa);
-    }
-    this.currRepo.saveAll(dataList);
+  private void saveTotal(DoaService doa) {
+    JpaWeightTotal data = new JpaWeightTotal();
+    populate(doa,totalBletchId++, data);
+    this.totalRepo.save(data);
   }
 
-  public void savePlatform(Map<String, Double> dataMap, long time) {
-    final List<JpaPlatform> dataList = new ArrayList<>(dataMap.size());
-    for (Map.Entry<String, Double> entry : dataMap.entrySet()) {
-      JpaPlatform jpa = new JpaPlatform();
-      jpa.setIndexName("ten index")
-          .setTicker(entry.getKey())
-          .setWeight(entry.getValue())
-          .setTimeStamp(time);
-      dataList.add(jpa);
-    }
-    this.platformRepo.saveAll(dataList);
+  private void saveEthereum(DoaService doa) {
+    JpaWeightEther data = new JpaWeightEther();
+    populate(doa,ethBletchId++, data);
+    this.ethRepo.save(data);
   }
 
-  public void saveApp(Map<String, Double> dataMap, long time) {
-    final List<JpaWeightApp> dataList = new ArrayList<>(dataMap.size());
-    for (Map.Entry<String, Double> entry : dataMap.entrySet()) {
-      JpaWeightApp jpa = new JpaWeightApp();
-      jpa.setIndexName("ten index")
-          .setTicker(entry.getKey())
-          .setWeight(entry.getValue())
-          .setTimeStamp(time);
-      dataList.add(jpa);
-    }
-    this.appRepo.saveAll(dataList);
+  private void saveCurrency(DoaService doa) {
+    JpaCurrency data = new JpaCurrency();
+    populate(doa,currBletchId++, data);
+    this.currRepo.save(data);
   }
 
-  private void convertToJpa(Map<String, Double> dataMap,
-                            List<JpaWeight> dataList,
-                            Class<? extends JpaWeight> clazz,
-                            long time) {
+  private void savePlatform(DoaService doa) {
+    JpaPlatform data = new JpaPlatform();
+    populate(doa,platformBletchId++, data);
+    this.platformRepo.save(data);
+  }
 
-    for (Map.Entry<String, Double> entry : dataMap.entrySet()) {
-      dataList.add(new JpaWeightTen()
-          .setIndexName("")
-          .setTicker(entry.getKey())
-          .setWeight(entry.getValue())
-          .setTimeStamp(time));
+  private void saveApplication(DoaService doa) {
+    JpaWeightApp data = new JpaWeightApp();
+    populate(doa,appBletchId++, data);
+    this.appRepo.save(data);
+  }
+
+  private void populate(DoaService doa, long bid, JpaWeight jpa) {
+    jpa.populate(doa);
+    jpa.setBletchId(bid);
+  }
+
+  public List<DoaService> get(IndexName indexName) {
+    List<DoaService> list;
+
+    if (indexName.isEven()) {
+      list = getFullIndex(indexName.getEvenMatch());
     }
+    else {
+      list = getFullIndex(indexName);
+    }
+    return list;
+  }
+
+  public List<DoaService> getFullIndex(IndexName indexName) {
+    List<DoaService> list = new ArrayList<>();
+    switch (indexName) {
+      case TEN:
+        list = getList(tenRepo.findAll());
+        break;
+      case TWENTY:
+        list = getList(twentyRepo.findAll());
+        break;
+      case FORTY:
+        list = getList(fortyRepo.findAll());
+        break;
+      case TOTAL:
+        list = getList(totalRepo.findAll());
+        break;
+      case ETHEREUM:
+        list = getList(ethRepo.findAll());
+        break;
+      case CURRENCY:
+        list = getList(currRepo.findAll());
+        break;
+      case PLATFORM:
+        list = getList(platformRepo.findAll());
+        break;
+      case APPLICATION:
+        list = getList(appRepo.findAll());
+        break;
+      default:
+        LOG.error("could not find index: " + indexName);
+        break;
+    }
+    return list;
+  }
+
+  private List<DoaService> getList(Iterable<? extends JpaWeight> iterable) {
+    List<DoaService> doaList = new LinkedList<>();
+    iterable.forEach(jpa -> {
+      doaList.add(jpa.getDoa());
+    });
+    return doaList;
   }
 }

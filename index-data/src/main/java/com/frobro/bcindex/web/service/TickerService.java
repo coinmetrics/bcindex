@@ -14,6 +14,7 @@ import com.frobro.bcindex.web.domain.Index;
 import com.frobro.bcindex.web.model.*;
 import com.frobro.bcindex.web.service.apis.CryptoCompare;
 import com.frobro.bcindex.web.service.persistence.IndexDbDto;
+import com.frobro.bcindex.web.service.publish.DailyWeightPubService;
 import com.frobro.bcindex.web.service.publish.PricePublishService;
 import com.frobro.bcindex.web.service.publish.WeightPublishService;
 import com.frobro.bcindex.web.service.rules.*;
@@ -30,6 +31,7 @@ public class TickerService {
   // publishers
   private WeightPublishService weightPublishService;
   private PricePublishService pricePublishService;
+  private DailyWeightPubService dailyWeightPubService;
 
   // calculators
   private final IndexCalculator indexCalculatorTen = new IndexCalculatorTen();
@@ -94,13 +96,17 @@ public class TickerService {
     this.pricePublishService = publisher;
   }
 
+  public void setDailyWeightPublisher(DailyWeightPubService publisher) {
+    this.dailyWeightPubService = publisher;
+  }
+
   public TickerService updateTickers() {
     try {
 
       update();
       saveIndices();
       publishWeights();
-      publishPrice();
+//      publishPrice();
 
     } catch (Exception e) {
       log.error("could not successfully update. ", e);
@@ -182,6 +188,7 @@ public class TickerService {
   private void publishWeights() {
     WeightApi data = new WeightApi();
 
+    data.setTime(updateTime);
     data.addIndex(TEN, indexCalculatorTen.getWeights());
     data.addIndex(TEN_EVEN, indexCalculatorTen.getWeightsEven());
 
@@ -201,7 +208,8 @@ public class TickerService {
     data.addIndex(PLATFORM, indexCalculatorPlatform.getWeights());
     data.addIndex(APPLICATION, indexCalculatorApp.getWeights());
 
-    weightPublishService.publish(data);
+    weightPublishService.publishWeight(data);
+    dailyWeightPubService.publishWeight(data);
   }
 
   private void update() throws IOException {

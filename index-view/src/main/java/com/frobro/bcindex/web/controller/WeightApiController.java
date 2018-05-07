@@ -20,10 +20,10 @@ public class WeightApiController {
   private WeightApi weightCache = new WeightApi();
 
   @RequestMapping(value = "blet/weight", method = RequestMethod.POST)
-  public void cacheUpdate(@RequestBody Map<String,Map<String,Double>> data) {
-    if (WeightApi.isSecure(data)) {
-      weightCache.removeKeyIfExists(data);
-      weightCache.update(data);
+  public void cacheUpdate(@RequestBody WeightApi data) {
+    if (data != null && data.amSecure()) {
+      data.removeKeyIfExists();
+      weightCache = data;
     }
   }
 
@@ -49,8 +49,8 @@ public class WeightApiController {
   }
 
   @RequestMapping(value = "api/weight/list", method = RequestMethod.POST)
-  public Map<String,Map<String,Double>> getApiWeights(@RequestBody WeightListDto dto) {
-    Map<String,Map<String,Double>> response;
+  public Map<IndexName,Map<String,Double>> getApiWeights(@RequestBody WeightListDto dto) {
+    Map<IndexName,Map<String,Double>> response;
 
     try {
 

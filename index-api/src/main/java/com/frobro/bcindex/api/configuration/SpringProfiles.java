@@ -1,8 +1,5 @@
-package com.frobro.bcindex.web.configuration;
+package com.frobro.bcindex.api.configuration;
 
-/**
- * Created by rise on 5/20/17.
- */
 public enum SpringProfiles {
   DEV {
     @Override

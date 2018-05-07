@@ -6,8 +6,11 @@ import com.frobro.bcindex.core.db.service.files.BletchFiles;
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.service.TickerService;
 import com.frobro.bcindex.web.service.persistence.FileDataSaver;
+import com.frobro.bcindex.web.service.publish.PricePublishService;
+import com.frobro.bcindex.web.service.publish.WeightPublishService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,6 +32,15 @@ public class SeedController {
   private TickerService tickerService = new TickerService();
   private FileDataSaver fileDataSaver;
   PrimeRepo repo;
+  private WeightPublishService weightPublisher = new WeightPublishService();
+  private PricePublishService pricePublisher = new PricePublishService();
+
+  @Autowired
+  public void setEnvironment(Environment env) {
+    // pull values from application.properties
+    weightPublisher.createPublishEndPoint(env.getProperty(weightPublisher.publishEndPtKey()));
+    pricePublisher.createPublishEndPoint(env.getProperty(pricePublisher.publishEndPtKey()));
+  }
 
   @Autowired
   public void setRepos(EvenIdxRepo eRepo, IndexRepo oRepo,
@@ -43,6 +55,9 @@ public class SeedController {
         fRepo,feRepo,toRepo,toeRepo,cRepo,pRepo,aRepo);
     tickerService.setIndexRepo(oRepo,eRepo,twRepo,teRepo,ethRepo,eteRepo,
         fRepo,feRepo,toRepo,toeRepo,cRepo,pRepo,aRepo);
+    tickerService.setDailyPxPublisher(pricePublisher);
+    tickerService.setWeightPublisher(weightPublisher);
+
     // ETH index not currently supported in file saver
     fileDataSaver = new FileDataSaver(oRepo, eRepo, twRepo, teRepo,ethRepo,eteRepo,
         fRepo,feRepo,toRepo,toeRepo,cRepo,pRepo,aRepo);
