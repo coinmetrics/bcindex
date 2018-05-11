@@ -6,6 +6,7 @@ import com.frobro.bcindex.core.db.service.files.BletchFiles;
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.service.TickerService;
 import com.frobro.bcindex.web.service.persistence.FileDataSaver;
+import com.frobro.bcindex.web.service.publish.DailyWeightPubService;
 import com.frobro.bcindex.web.service.publish.PricePublishService;
 import com.frobro.bcindex.web.service.publish.WeightPublishService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,12 +35,14 @@ public class SeedController {
   PrimeRepo repo;
   private WeightPublishService weightPublisher = new WeightPublishService();
   private PricePublishService pricePublisher = new PricePublishService();
+  private DailyWeightPubService dailyWeightPub = new DailyWeightPubService();
 
   @Autowired
   public void setEnvironment(Environment env) {
     // pull values from application.properties
     weightPublisher.createPublishEndPoint(env.getProperty(weightPublisher.publishEndPtKey()));
     pricePublisher.createPublishEndPoint(env.getProperty(pricePublisher.publishEndPtKey()));
+    dailyWeightPub.createPublishEndPoint(env.getProperty(dailyWeightPub.publishEndPtKey()));
   }
 
   @Autowired
@@ -55,8 +58,10 @@ public class SeedController {
         fRepo,feRepo,toRepo,toeRepo,cRepo,pRepo,aRepo);
     tickerService.setIndexRepo(oRepo,eRepo,twRepo,teRepo,ethRepo,eteRepo,
         fRepo,feRepo,toRepo,toeRepo,cRepo,pRepo,aRepo);
+
     tickerService.setDailyPxPublisher(pricePublisher);
     tickerService.setWeightPublisher(weightPublisher);
+    tickerService.setDailyWeightPublisher(dailyWeightPub);
 
     // ETH index not currently supported in file saver
     fileDataSaver = new FileDataSaver(oRepo, eRepo, twRepo, teRepo,ethRepo,eteRepo,

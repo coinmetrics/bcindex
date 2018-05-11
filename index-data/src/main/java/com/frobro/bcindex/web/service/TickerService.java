@@ -3,6 +3,7 @@ package com.frobro.bcindex.web.service;
 import static com.frobro.bcindex.core.db.model.IndexName.*;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 import com.frobro.bcindex.core.db.domain.*;
 import com.frobro.bcindex.core.db.model.IndexName;
@@ -101,12 +102,16 @@ public class TickerService {
   }
 
   public TickerService updateTickers() {
+    long start = System.currentTimeMillis();
     try {
 
       update();
       saveIndices();
       publishWeights();
 //      publishPrice();
+
+      log.debug("update finished in "
+          + TimeUnit.MILLISECONDS.toSeconds((System.currentTimeMillis() - start)) + " seconds");
 
     } catch (Exception e) {
       log.error("could not successfully update. ", e);

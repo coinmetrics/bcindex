@@ -1,5 +1,6 @@
 package com.frobro.bcindex.api.controller;
 
+import com.frobro.bcindex.api.IndexApiApp;
 import com.frobro.bcindex.api.model.JsonData;
 import com.frobro.bcindex.api.model.JsonElement;
 import com.frobro.bcindex.api.service.DataMapper;
@@ -49,18 +50,22 @@ public class WeightController {
     loadCache();
   }
 
+  @RequestMapping("/amup")
+  public String dataWeight() {
+    return IndexApiApp.class.getName() + " is running";
+  }
+
   @RequestMapping(value = "/daily/weight", method = RequestMethod.POST)
   public String getDailyWeights(@RequestBody IndexName indexName) {
     return cache.getResonse(indexName);
   }
 
-  @RequestMapping("/data/weight")
-  public String dataWeight() {
-    return "accept weights";
-  }
 
-  @RequestMapping(value = "blet/weight", method = RequestMethod.POST)
+  /* receive data */
+  @RequestMapping(value = "blet/weight/daily", method = RequestMethod.POST)
   public void cacheUpdate(@RequestBody WeightApi data) {
+    System.out.println("receivded data " + data);
+
     if (data != null && data.amSecure()) {
       data.removeKeyIfExists();
       processData(data);
@@ -70,6 +75,8 @@ public class WeightController {
 
   private void processData(WeightApi data) {
     cache.update(null);
+    System.out.println("processing data " + data);
+
     weightService.save(dataMapper.toDoaList(data));
   }
 

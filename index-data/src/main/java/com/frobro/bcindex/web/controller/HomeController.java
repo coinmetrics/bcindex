@@ -55,6 +55,7 @@ public class HomeController {
 
     tickerService.setWeightPublisher(weightPublisher);
     tickerService.setDailyPxPublisher(pricePublisher);
+    tickerService.setDailyWeightPublisher(dailyWeightPub);
 
     timerService = new TimerService(tickerService);
   }

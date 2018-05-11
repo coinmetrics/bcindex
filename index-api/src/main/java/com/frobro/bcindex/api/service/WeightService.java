@@ -55,6 +55,8 @@ public class WeightService {
   }
 
   private void save(DoaService doa) {
+    System.out.println("saving data " + doa);
+
     IndexName idx = doa.getName();
     switch (idx) {
       case TEN:

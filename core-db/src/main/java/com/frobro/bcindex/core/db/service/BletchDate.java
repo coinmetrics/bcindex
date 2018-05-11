@@ -2,12 +2,12 @@ package com.frobro.bcindex.core.db.service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 /**
  * Created by rise on 6/17/17.
@@ -50,6 +50,27 @@ public class BletchDate {
     } catch (ParseException pe) {
       throw new RuntimeException(pe);
     }
+  }
+
+  public static long getZeroUtcToday() {
+    return getZeroUtc(Clock.systemUTC(),0);
+  }
+
+  public static long getZeroUtcTomorrow(Clock clock) {
+    return getZeroUtc(clock,1);
+  }
+
+  // allow clock to be swapped for testing
+  public static long getZeroUtc(Clock clock, long dayOffset) {
+    LocalTime midnight = LocalTime.MIDNIGHT;
+    LocalDate today = LocalDate.now(clock);
+    LocalDateTime todayMidnight = LocalDateTime.of(today, midnight);
+
+    todayMidnight = todayMidnight.plusDays(dayOffset);
+
+    ZoneId id = ZoneId.of("UTC");
+    ZonedDateTime zdt = todayMidnight.atZone(id);
+    return SECONDS.toMillis(zdt.toEpochSecond());
   }
 
   public static long weeksToMillis(long wks) {
