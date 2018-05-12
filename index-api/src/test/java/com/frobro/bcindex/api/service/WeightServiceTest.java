@@ -2,8 +2,8 @@ package com.frobro.bcindex.api.service;
 
 import com.frobro.bcindex.api.model.JsonData;
 import com.frobro.bcindex.api.service.persistence.*;
-import com.frobro.bcindex.core.db.model.IndexName;
-import com.frobro.bcindex.core.db.model.WeightApi;
+import com.frobro.bcindex.core.model.IndexName;
+import com.frobro.bcindex.core.model.WeightApi;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;

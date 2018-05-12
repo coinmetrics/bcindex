@@ -1,7 +1,7 @@
 package com.frobro.bcindex.web.controller;
 
-import com.frobro.bcindex.core.db.model.IndexName;
-import com.frobro.bcindex.core.db.model.WeightApi;
+import com.frobro.bcindex.core.model.IndexName;
+import com.frobro.bcindex.core.model.WeightApi;
 import com.frobro.bcindex.web.model.api.weight.WeightDto;
 import com.frobro.bcindex.web.model.api.weight.WeightListDto;
 import org.slf4j.Logger;

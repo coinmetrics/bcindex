@@ -1,6 +1,6 @@
 package com.frobro.bcindex.web.service;
 
-import com.frobro.bcindex.core.db.service.DoubleService;
+import com.frobro.bcindex.core.service.DoubleService;
 import com.frobro.bcindex.web.service.persistence.IndexDbDto;
 
 import java.util.Map;

@@ -3,7 +3,7 @@ package com.frobro.bcindex.web.service.cache;
 import static com.frobro.bcindex.web.service.cache.DataNamer.createName;
 import static org.junit.Assert.*;
 
-import com.frobro.bcindex.core.db.service.BletchDate;
+import com.frobro.bcindex.core.service.BletchDate;
 import com.frobro.bcindex.web.framework.ExpirationPopulator;
 import com.frobro.bcindex.web.model.api.*;
 import com.frobro.bcindex.web.model.api.Currency;

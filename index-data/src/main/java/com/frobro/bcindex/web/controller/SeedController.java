@@ -2,7 +2,8 @@ package com.frobro.bcindex.web.controller;
 
 import com.frobro.bcindex.core.db.domain.*;
 import com.frobro.bcindex.core.db.service.*;
-import com.frobro.bcindex.core.db.service.files.BletchFiles;
+import com.frobro.bcindex.core.service.BletchDate;
+import com.frobro.bcindex.core.service.BletchFiles;
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.service.TickerService;
 import com.frobro.bcindex.web.service.persistence.FileDataSaver;

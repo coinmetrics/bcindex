@@ -1,7 +1,7 @@
 package com.frobro.bcindex.api.domain.weight;
 
 import com.frobro.bcindex.api.service.persistence.DoaService;
-import com.frobro.bcindex.core.db.model.IndexName;
+import com.frobro.bcindex.core.model.IndexName;
 
 import javax.persistence.*;
 

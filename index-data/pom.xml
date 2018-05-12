@@ -123,6 +123,11 @@
 
   <dependencies>
     <dependency>
+      <groupId>com.frobro.bcindex.core</groupId>
+      <artifactId>core</artifactId>
+      <version>1.0</version>
+    </dependency>
+    <dependency>
       <groupId>com.frobro.bcindex.core.db</groupId>
       <artifactId>core-db</artifactId>
       <version>1.0</version>

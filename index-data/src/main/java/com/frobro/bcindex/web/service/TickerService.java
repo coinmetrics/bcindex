@@ -1,14 +1,14 @@
 package com.frobro.bcindex.web.service;
 
-import static com.frobro.bcindex.core.db.model.IndexName.*;
+import static com.frobro.bcindex.core.model.IndexName.*;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import com.frobro.bcindex.core.db.domain.*;
-import com.frobro.bcindex.core.db.model.IndexName;
-import com.frobro.bcindex.core.db.model.IndexPrice;
-import com.frobro.bcindex.core.db.model.WeightApi;
+import com.frobro.bcindex.core.model.IndexName;
+import com.frobro.bcindex.core.model.IndexPrice;
+import com.frobro.bcindex.core.model.WeightApi;
 import com.frobro.bcindex.core.db.service.*;
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.domain.Index;

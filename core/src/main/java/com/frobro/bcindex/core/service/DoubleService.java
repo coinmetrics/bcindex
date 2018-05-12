@@ -1,4 +1,4 @@
-package com.frobro.bcindex.core.db.service;
+package com.frobro.bcindex.core.service;
 
 import java.text.DecimalFormat;
 

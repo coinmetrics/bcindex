@@ -2,7 +2,7 @@ package com.frobro.bcindex.api.service;
 
 import com.frobro.bcindex.api.domain.weight.*;
 import com.frobro.bcindex.api.service.persistence.*;
-import com.frobro.bcindex.core.db.model.IndexName;
+import com.frobro.bcindex.core.model.IndexName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,8 +49,6 @@ public class WeightService {
   }
 
   public void save(List<DoaService> doaList) {
-    System.out.println("doa list size: " + doaList.size());
-
     doaList.forEach(doa -> {
       save(doa);
     });

@@ -1,7 +1,6 @@
 package com.frobro.bcindex.web.service.publish;
 
-import com.frobro.bcindex.core.db.model.WeightApi;
-import com.frobro.bcindex.core.db.service.BletchDate;
+import com.frobro.bcindex.core.service.BletchDate;
 import com.frobro.bcindex.web.bclog.BcLog;
 
 import java.time.Clock;

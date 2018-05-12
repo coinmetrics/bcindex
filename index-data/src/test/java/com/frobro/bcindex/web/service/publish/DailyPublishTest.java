@@ -1,7 +1,7 @@
 package com.frobro.bcindex.web.service.publish;
 
-import com.frobro.bcindex.core.db.model.WeightApi;
-import com.frobro.bcindex.core.db.service.BletchDate;
+import com.frobro.bcindex.core.model.WeightApi;
+import com.frobro.bcindex.core.service.BletchDate;
 import com.frobro.bcindex.web.testframework.MockDailyWeightPubService;
 import com.frobro.bcindex.web.testframework.TestClock;
 import org.junit.Test;

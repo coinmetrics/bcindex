@@ -1,9 +1,9 @@
 package com.frobro.bcindex.web.model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.frobro.bcindex.core.db.model.IndexName;
-import com.frobro.bcindex.core.db.model.WeightApi;
-import com.frobro.bcindex.core.db.model.WeightDto;
+import com.frobro.bcindex.core.model.IndexName;
+import com.frobro.bcindex.core.model.WeightApi;
+import com.frobro.bcindex.core.model.WeightDto;
 import org.junit.Test;
 
 import java.util.HashMap;

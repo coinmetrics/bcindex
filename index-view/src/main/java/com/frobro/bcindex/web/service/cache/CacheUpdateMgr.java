@@ -1,11 +1,7 @@
 package com.frobro.bcindex.web.service.cache;
 
-import com.frobro.bcindex.core.db.service.BletchDate;
-import com.frobro.bcindex.web.model.api.ApiResponse;
 import com.frobro.bcindex.web.model.api.IndexType;
-import com.frobro.bcindex.web.model.api.RequestDto;
 import com.frobro.bcindex.web.model.api.TimeFrame;
-import com.frobro.bcindex.web.service.DataProvider;
 import com.frobro.bcindex.web.service.TimeSeriesService;
 import com.frobro.bcindex.web.service.query.GroupUpdate;
 import org.slf4j.Logger;

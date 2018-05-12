@@ -1,7 +1,7 @@
 package com.frobro.bcindex.api.controller;
 
-import com.frobro.bcindex.core.db.model.IndexName;
-import com.frobro.bcindex.core.db.model.IndexPrice;
+import com.frobro.bcindex.core.model.IndexName;
+import com.frobro.bcindex.core.model.IndexPrice;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

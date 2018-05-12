@@ -2,8 +2,8 @@ package com.frobro.bcindex.web.service.publish;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.frobro.bcindex.core.db.model.IndexPrice;
-import com.frobro.bcindex.core.db.model.WeightApi;
+import com.frobro.bcindex.core.model.IndexPrice;
+import com.frobro.bcindex.core.model.WeightApi;
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.service.apis.HttpApi;
 

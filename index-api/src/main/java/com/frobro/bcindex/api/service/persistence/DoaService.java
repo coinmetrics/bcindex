@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.frobro.bcindex.core.db.model.IndexName;
+import com.frobro.bcindex.core.model.IndexName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

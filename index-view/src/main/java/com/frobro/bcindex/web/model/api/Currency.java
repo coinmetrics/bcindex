@@ -1,6 +1,6 @@
 package com.frobro.bcindex.web.model.api;
 
-import com.frobro.bcindex.core.db.service.DoubleService;
+import com.frobro.bcindex.core.service.DoubleService;
 
 /**
  * Created by rise on 5/12/17.

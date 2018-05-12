@@ -3,8 +3,8 @@ package com.frobro.bcindex.api.service;
 import com.frobro.bcindex.api.model.JsonData;
 import com.frobro.bcindex.api.model.JsonElement;
 import com.frobro.bcindex.api.service.persistence.DoaService;
-import com.frobro.bcindex.core.db.model.IndexName;
-import com.frobro.bcindex.core.db.model.WeightApi;
+import com.frobro.bcindex.core.model.IndexName;
+import com.frobro.bcindex.core.model.WeightApi;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -2,7 +2,7 @@ package com.frobro.bcindex.web.service.cache;
 
 import static com.frobro.bcindex.web.model.api.TimeFrame.*;
 
-import com.frobro.bcindex.core.db.service.BletchDate;
+import com.frobro.bcindex.core.service.BletchDate;
 import com.frobro.bcindex.web.model.api.IndexType;
 import com.frobro.bcindex.web.model.api.TimeFrame;
 import com.frobro.bcindex.web.service.query.IndexUpdate;

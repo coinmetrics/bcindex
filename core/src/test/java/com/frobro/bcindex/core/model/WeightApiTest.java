@@ -1,4 +1,4 @@
-package com.frobro.bcindex.core.db.model;
+package com.frobro.bcindex.core.model;
 
 import org.junit.Test;
 
