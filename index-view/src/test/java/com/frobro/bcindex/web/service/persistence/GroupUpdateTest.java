@@ -1,6 +1,5 @@
 package com.frobro.bcindex.web.service.persistence;
 
-import static org.junit.Assert.assertEquals;
 import com.frobro.bcindex.web.model.api.IndexType;
 import com.frobro.bcindex.web.service.TimeSeriesService;
 import com.frobro.bcindex.web.service.query.GroupUpdate;
@@ -8,6 +7,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

@@ -1,9 +1,5 @@
 package com.frobro.bcindex.web.service.query;
 
-import static com.frobro.bcindex.web.service.query.CsvTimeQuery.getBtcCol;
-import static com.frobro.bcindex.web.service.query.CsvTimeQuery.getTimeCol;
-import static com.frobro.bcindex.web.service.query.CsvTimeQuery.getUsdCol;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.Instant;
@@ -12,6 +8,8 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
+
+import static com.frobro.bcindex.web.service.query.CsvTimeQuery.*;
 
 class BletchCsv implements Populatable {
   private CsvDate csvDate = new CsvDate();

@@ -1,8 +1,5 @@
 package com.frobro.bcindex.web.service.cache;
 
-import static com.frobro.bcindex.web.service.cache.DataNamer.createName;
-import static org.junit.Assert.*;
-
 import com.frobro.bcindex.core.service.BletchDate;
 import com.frobro.bcindex.web.framework.ExpirationPopulator;
 import com.frobro.bcindex.web.model.api.*;
@@ -17,6 +14,9 @@ import org.junit.Test;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+
+import static com.frobro.bcindex.web.service.cache.DataNamer.createName;
+import static org.junit.Assert.assertEquals;
 
 public class IdxCacheTest {
 

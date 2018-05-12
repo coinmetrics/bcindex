@@ -1,7 +1,5 @@
 package com.frobro.bcindex.web.service.cache;
 
-import static com.frobro.bcindex.web.model.api.TimeFrame.*;
-
 import com.frobro.bcindex.core.service.BletchDate;
 import com.frobro.bcindex.web.model.api.IndexType;
 import com.frobro.bcindex.web.model.api.TimeFrame;
@@ -11,6 +9,7 @@ import org.junit.Test;
 
 import java.util.concurrent.TimeUnit;
 
+import static com.frobro.bcindex.web.model.api.TimeFrame.*;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 

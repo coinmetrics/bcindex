@@ -1,6 +1,9 @@
 package com.frobro.bcindex.web.service.persistence;
 
-import com.frobro.bcindex.core.db.domain.*;
+import com.frobro.bcindex.core.db.domain.ApplicationRepo;
+import com.frobro.bcindex.core.db.domain.CurrencyRepo;
+import com.frobro.bcindex.core.db.domain.JpaIndexTen;
+import com.frobro.bcindex.core.db.domain.PlatformRepo;
 import com.frobro.bcindex.core.db.service.*;
 import com.frobro.bcindex.web.controller.ApiController;
 import org.junit.After;
