@@ -213,8 +213,8 @@ public class TickerService {
     data.addIndex(PLATFORM, indexCalculatorPlatform.getWeights());
     data.addIndex(APPLICATION, indexCalculatorApp.getWeights());
 
-//    weightPublishService.publish(data);
-    dailyWeightPubService.publish(data.getWeightDto());
+    weightPublishService.publish(data);
+    dailyWeightPubService.publish(data);
   }
 
   private void update() throws IOException {

@@ -1,5 +1,6 @@
 package com.frobro.bcindex.web.testframework;
 
+import com.frobro.bcindex.core.model.WeightApi;
 import com.frobro.bcindex.web.service.publish.DailyWeightPubService;
 
 import java.time.Clock;
@@ -14,7 +15,7 @@ public class MockDailyWeightPubService extends DailyWeightPubService {
   }
 
   @Override
-  public void publish(Object data) {
+  public void publish(WeightApi data) {
     // no op
   }
 }

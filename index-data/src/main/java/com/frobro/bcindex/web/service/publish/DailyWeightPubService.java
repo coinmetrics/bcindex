@@ -1,5 +1,6 @@
 package com.frobro.bcindex.web.service.publish;
 
+import com.frobro.bcindex.core.model.WeightApi;
 import com.frobro.bcindex.core.service.BletchDate;
 import com.frobro.bcindex.web.bclog.BcLog;
 
@@ -28,14 +29,13 @@ public class DailyWeightPubService extends PublishService {
     return "dailyWeightEndPoint";
   }
 
-  @Override
-  public void publish(Object data) {
-//    if (publishTimeMillis - data.getTime() <= 0) {
-      super.publish(data);
+  public void publish(WeightApi data) {
+    if (publishTimeMillis - data.getTime() <= 0) {
+      httpPublisher.publish(data.getWeightDto());
       resetPublishTime();
       publishCount++;
       LOG.info("Publishing daily weight data");
-//    }
+    }
   }
 
   public long getNumTimesPublished() {
