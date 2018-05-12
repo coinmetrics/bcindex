@@ -2,6 +2,7 @@ package com.frobro.bcindex.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.frobro.bcindex.api.IndexApiApp;
+import com.frobro.bcindex.api.model.IndexDto;
 import com.frobro.bcindex.api.model.JsonData;
 import com.frobro.bcindex.api.model.JsonElement;
 import com.frobro.bcindex.api.service.DataMapper;
@@ -44,6 +45,7 @@ public class WeightController {
         ten,twenty,forty,total,eth,curr,plat,app);
   }
 
+
   @PostConstruct
   public void init() {
     loadCache();
@@ -55,15 +57,19 @@ public class WeightController {
   }
 
   @RequestMapping(value = "/daily/weight", method = RequestMethod.POST)
-  public JsonData getDailyWeights(@RequestBody IndexName indexName) {
-    return cache.getResonse(indexName);
+  public JsonData getDailyWeights(@RequestBody IndexDto dto) throws Exception {
+    return cache.getResonse(dto.getIndex());
   }
 
+  @RequestMapping(value = "/daily/weight/nocache", method = RequestMethod.POST)
+  public JsonData getDailyWeightsNoCache(@RequestBody IndexDto dto) throws Exception {
+    return toJsonData(dto.getIndex());
+  }
 
   /* receive data */
   @RequestMapping(value = "blet/weight/daily", method = RequestMethod.POST)
-  public void cacheUpdate(@RequestBody String body) throws Exception {
-    WeightDto dto = new ObjectMapper().readValue(body,WeightDto.class);
+  public void cacheUpdate(@RequestBody WeightDto dto) throws Exception {
+    LOG.info("received daily weight data: " + dto.indexes.keySet());
     WeightApi data = new WeightApi(dto);
 
     if (data != null && data.amSecure()) {
@@ -94,7 +100,11 @@ public class WeightController {
 
   private void loadCache() {
     for (IndexName indexName : IndexName.values()) {
-      cache.update(dataMapper.toJsonData(indexName, weightService.get(indexName)));
+      cache.update(toJsonData(indexName));
     }
+  }
+
+  private JsonData toJsonData(IndexName indexName) {
+    return dataMapper.toJsonData(indexName, weightService.get(indexName));
   }
 }

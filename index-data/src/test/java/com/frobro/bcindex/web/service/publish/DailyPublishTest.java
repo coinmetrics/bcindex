@@ -3,7 +3,6 @@ package com.frobro.bcindex.web.service.publish;
 import com.frobro.bcindex.core.model.WeightApi;
 import com.frobro.bcindex.core.service.BletchDate;
 import com.frobro.bcindex.web.testframework.MockDailyWeightPubService;
-import com.frobro.bcindex.web.testframework.TestClock;
 import org.junit.Test;
 
 import java.time.ZoneOffset;
@@ -18,7 +17,7 @@ public class DailyPublishTest {
   @Test
   public void shouldNotPublishUnlessMore24HoursPass() {
     // given
-    TestClock clock = getUtcClock();
+    DeloreanClock clock = getUtcClock();
 
     // and time is set to 1am UTC
     clock.moveTimeForward(HOURS.toMillis(1));
@@ -45,10 +44,16 @@ public class DailyPublishTest {
 
     // then expect one publish event to occur
     assertEquals(1, pubService.getNumTimesPublished());
+    // and time to be reset so another publish will not happen
+    clock.forwardHours(3);
+    data.setTime(clock.millis());
+    pubService.publish(data);
+    // expect no publish. publish time has been reset to 0 UTC today
+    assertEquals(1, pubService.getNumTimesPublished());
   }
 
-  private TestClock getUtcClock() {
-    TestClock clock = new TestClock(ZoneOffset.UTC);
+  private DeloreanClock getUtcClock() {
+    DeloreanClock clock = new DeloreanClock();
     clock.setInitialTime(BletchDate.getZeroUtcToday());
     return clock;
   }
@@ -59,7 +64,7 @@ public class DailyPublishTest {
     int numHours = dayToHours(8);
 
     // and
-    TestClock clock = getUtcClock();
+    DeloreanClock clock = getUtcClock();
     DailyWeightPubService pubService = new MockDailyWeightPubService(clock);
     WeightApi data = new WeightApi();
     // and

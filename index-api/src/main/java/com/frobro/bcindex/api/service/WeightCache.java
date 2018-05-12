@@ -14,6 +14,6 @@ public class WeightCache {
   }
 
   public void update(JsonData jsonData) {
-    cache.put(jsonData.indexName,jsonData);
+    cache.put(jsonData.index,jsonData);
   }
 }

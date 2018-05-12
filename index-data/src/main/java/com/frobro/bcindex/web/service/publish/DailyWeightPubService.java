@@ -1,6 +1,7 @@
 package com.frobro.bcindex.web.service.publish;
 
 import com.frobro.bcindex.core.model.WeightApi;
+import com.frobro.bcindex.core.model.WeightDto;
 import com.frobro.bcindex.core.service.BletchDate;
 import com.frobro.bcindex.web.bclog.BcLog;
 
@@ -12,6 +13,7 @@ public class DailyWeightPubService extends PublishService {
   private Clock clock = Clock.systemUTC();
   private long publishTimeMillis;
 
+  // WARNING
   // possible data loss if app dies after 0 UTC
   // but before a publish happens. In this rare event
   // can just add the missing data point to the db
@@ -31,11 +33,15 @@ public class DailyWeightPubService extends PublishService {
 
   public void publish(WeightApi data) {
     if (publishTimeMillis - data.getTime() <= 0) {
-      httpPublisher.publish(data.getWeightDto());
+      publish(data.getWeightDto());
       resetPublishTime();
       publishCount++;
-      LOG.info("Publishing daily weight data");
+      LOG.info("Published daily weight data");
     }
+  }
+
+  protected void publish(WeightDto dto) {
+    httpPublisher.publish(dto);
   }
 
   public long getNumTimesPublished() {

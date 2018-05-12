@@ -1,18 +1,31 @@
-package com.frobro.bcindex.web.testframework;
+package com.frobro.bcindex.web.service.publish;
 
-import java.time.Clock;
-import java.time.Instant;
-import java.time.ZoneId;
+import com.frobro.bcindex.core.service.BletchDate;
+
+import java.time.*;
 
 import static java.util.concurrent.TimeUnit.HOURS;
 
-public class TestClock extends Clock {
+/**
+ * Used for testing to control time
+ * Go see Back to the Future if the name makes
+ * no sense.
+ */
+public class DeloreanClock extends Clock {
   private final ZoneId zone;
   private long timeOffset = 0;
   private long initialTime = System.currentTimeMillis() + HOURS.toMillis(1);
 
-  public TestClock(ZoneId zone) {
-    this.zone = zone;
+  public DeloreanClock() {
+    this.zone = ZoneOffset.UTC;
+  }
+
+  public DeloreanClock(ZoneId zoneId) {
+    this.zone = zoneId;
+  }
+
+  public String humanReadableTime() {
+    return BletchDate.toDate(millis());
   }
 
   public void forwardHours(long hours) {
@@ -37,7 +50,7 @@ public class TestClock extends Clock {
     if (zone.equals(this.zone)) {  // intentional NPE
       return this;
     }
-    return new TestClock(zone);
+    return new DeloreanClock(zone);
   }
 
   @Override
@@ -52,8 +65,8 @@ public class TestClock extends Clock {
 
   @Override
   public boolean equals(Object obj) {
-    if (obj instanceof TestClock) {
-      return zone.equals(((TestClock) obj).zone);
+    if (obj instanceof DeloreanClock) {
+      return zone.equals(((DeloreanClock) obj).zone);
     }
     return false;
   }
@@ -65,6 +78,6 @@ public class TestClock extends Clock {
 
   @Override
   public String toString() {
-    return "TestClock[" + zone + "]";
+    return "DeloreanClock[" + zone + "]";
   }
 }

@@ -243,7 +243,7 @@ public class TickerService {
     // TODO: move this to batch call
     updateTickerBtc(cryptoCompare.extractBtcFromData(apiData));
 
-    updateTime = System.currentTimeMillis();
+    updateTime = BletchClock.getTimeEpochMillis();
 
     // update 10 idx
     inputDataTen.filterAndSet(apiData);

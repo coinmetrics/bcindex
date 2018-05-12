@@ -62,7 +62,7 @@ public class DataMapper {
     JsonData jsonData = new JsonData();
     List<JsonElement> jElementList = toJElementList(indexName.isEven(), doaList);
     jsonData.elementList = jElementList;
-    jsonData.indexName = indexName;
+    jsonData.index = indexName;
     return jsonData;
   }
 
