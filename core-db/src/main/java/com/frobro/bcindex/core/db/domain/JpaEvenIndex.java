@@ -1,6 +1,6 @@
 package com.frobro.bcindex.core.db.domain;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
 
 /**
  * Created by rise on 5/9/17.
