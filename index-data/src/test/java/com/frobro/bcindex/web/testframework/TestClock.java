@@ -1,6 +1,5 @@
 package com.frobro.bcindex.web.testframework;
 
-import static java.util.concurrent.TimeUnit.*;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneId;

@@ -3,7 +3,6 @@ package com.frobro.bcindex.web.service;
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.service.persistence.IndexDbDto;
 import com.frobro.bcindex.web.service.rules.BusRulesTwenty;
-import com.frobro.bcindex.web.service.rules.BusinessRules;
 
 /**
  * Created by rise on 6/11/17.

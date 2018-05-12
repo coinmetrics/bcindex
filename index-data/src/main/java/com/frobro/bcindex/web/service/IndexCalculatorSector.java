@@ -4,8 +4,6 @@ import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.service.persistence.IndexDbDto;
 import com.frobro.bcindex.web.service.rules.BusinessRules;
 
-import java.util.Optional;
-
 public class IndexCalculatorSector extends IndexCalculator {
   private static final BcLog log = BcLog.getLogger(IndexCalculatorSector.class);
 

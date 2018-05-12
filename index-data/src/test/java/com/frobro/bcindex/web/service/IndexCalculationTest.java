@@ -1,7 +1,5 @@
 package com.frobro.bcindex.web.service;
 
-import static org.junit.Assert.assertEquals;
-
 import com.frobro.bcindex.web.model.BletchleyData;
 import com.frobro.bcindex.web.service.persistence.IndexDbDto;
 import com.frobro.bcindex.web.service.rules.BusRulesEth;
@@ -13,6 +11,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by rise on 7/15/17.

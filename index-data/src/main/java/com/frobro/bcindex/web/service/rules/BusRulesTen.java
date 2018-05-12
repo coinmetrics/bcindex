@@ -4,7 +4,8 @@ import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.constants.StaticValues;
 import com.frobro.bcindex.web.model.Ticker;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by rise on 6/11/17.

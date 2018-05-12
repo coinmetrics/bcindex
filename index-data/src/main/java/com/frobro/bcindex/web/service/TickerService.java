@@ -1,24 +1,27 @@
 package com.frobro.bcindex.web.service;
 
-import static com.frobro.bcindex.core.model.IndexName.*;
-import java.io.IOException;
-import java.util.*;
-import java.util.concurrent.TimeUnit;
-
 import com.frobro.bcindex.core.db.domain.*;
+import com.frobro.bcindex.core.db.service.*;
 import com.frobro.bcindex.core.model.IndexName;
 import com.frobro.bcindex.core.model.IndexPrice;
 import com.frobro.bcindex.core.model.WeightApi;
-import com.frobro.bcindex.core.db.service.*;
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.domain.Index;
-import com.frobro.bcindex.web.model.*;
+import com.frobro.bcindex.web.model.BletchleyData;
 import com.frobro.bcindex.web.service.apis.CryptoCompare;
 import com.frobro.bcindex.web.service.persistence.IndexDbDto;
 import com.frobro.bcindex.web.service.publish.DailyWeightPubService;
 import com.frobro.bcindex.web.service.publish.PricePublishService;
 import com.frobro.bcindex.web.service.publish.WeightPublishService;
 import com.frobro.bcindex.web.service.rules.*;
+
+import java.io.IOException;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
+import static com.frobro.bcindex.core.model.IndexName.*;
 
 /**
  * Created by rise on 3/23/17.
