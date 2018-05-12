@@ -1,7 +1,5 @@
 package com.frobro.bcindex.api.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.frobro.bcindex.api.model.JsonData;
 import com.frobro.bcindex.core.model.IndexName;
 
