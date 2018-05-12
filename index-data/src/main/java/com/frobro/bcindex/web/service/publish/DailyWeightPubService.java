@@ -30,10 +30,9 @@ public class DailyWeightPubService extends PublishService {
   }
 
   @Override
-  public void publishWeight(WeightApi data) {
+  public void publish(Object data) {
 //    if (publishTimeMillis - data.getTime() <= 0) {
-      data.addKey();
-      publish(data);
+      super.publish(data);
       resetPublishTime();
       publishCount++;
       LOG.info("Publishing daily weight data");

@@ -29,7 +29,7 @@ public class DailyPublishTest {
     data.setTime(clock.millis());
 
     // when publish is called
-    pubService.publishWeight(data);
+    pubService.publish(data);
 
     // and nothing should happen. ie publish count == 0
     assertEquals(0, pubService.getNumTimesPublished());
@@ -41,7 +41,7 @@ public class DailyPublishTest {
     // and new time is set on incoming data
     data.setTime(clock.millis());
     // and publish is called
-    pubService.publishWeight(data);
+    pubService.publish(data);
 
     // then expect one publish event to occur
     assertEquals(1, pubService.getNumTimesPublished());
@@ -65,13 +65,13 @@ public class DailyPublishTest {
     // and
     data.setTime(clock.millis());
     // and publish is called
-    pubService.publishWeight(data);
+    pubService.publish(data);
 
     long publishCount = 0;
 
     // when move time forward 1 hour at a time
     for (int i=0; i<numHours; i++) {
-      pubService.publishWeight(data);
+      pubService.publish(data);
 
       // then if day elapses expect publish count to ++
       if (dayElapsed(i)) {

@@ -9,22 +9,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class WeightCache {
-  ObjectMapper mapper = new ObjectMapper();
-  Map<IndexName,String> cache = new HashMap<>();
+  Map<IndexName,JsonData> cache = new HashMap<>();
 
-  public String getResonse(IndexName indexName) {
+  public JsonData getResonse(IndexName indexName) {
     return cache.get(indexName);
   }
 
   public void update(JsonData jsonData) {
-    cache.put(jsonData.indexName,toString(jsonData));
-  }
-
-  private String toString(JsonData jsonData) {
-    try {
-      return mapper.writeValueAsString(jsonData);
-    } catch (JsonProcessingException jpe) {
-      throw new RuntimeException(jpe);
-    }
+    cache.put(jsonData.indexName,jsonData);
   }
 }

@@ -29,7 +29,7 @@ public class WeightApiController {
 
   @RequestMapping(value = "eight/weight", method = RequestMethod.GET)
   public Map<String,Double> getWeights() {
-    return weightCache.getRawData().get(IndexName.TEN.name());
+    return weightCache.getWeight(IndexName.TEN);
   }
 
   @RequestMapping(value = "api/weight", method = RequestMethod.POST)

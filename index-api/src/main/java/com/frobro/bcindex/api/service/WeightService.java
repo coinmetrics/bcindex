@@ -49,6 +49,8 @@ public class WeightService {
   }
 
   public void save(List<DoaService> doaList) {
+    System.out.println("doa list size: " + doaList.size());
+
     doaList.forEach(doa -> {
       save(doa);
     });

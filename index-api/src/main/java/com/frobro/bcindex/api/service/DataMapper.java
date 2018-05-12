@@ -16,15 +16,14 @@ public class DataMapper {
   public List<DoaService> toDoaList(WeightApi data) {
     // weight api to doa service
     long time = data.getTime();
-    Map<IndexName,Map<String,Double>> raw = data.getRawData();
 
     List<DoaService> doaList = new LinkedList<>();
-    for (IndexName indexName : raw.keySet()) {
+    for (IndexName indexName : data.getIndexes()) {
       // if even skip
       if (not(indexName.isEven())) {
         DoaService doa = new DoaService();
         // add data
-        doa.setDataMap(raw.get(indexName));
+        doa.setDataMap(data.getWeight(indexName));
         doa.setTime(time);
         doa.setName(indexName);
 
@@ -33,23 +32,26 @@ public class DataMapper {
         // if has associated even index add it
         if (even != null) {
 
-          if (raw.keySet().contains(even)) {
-            doa.setDataMapEven(raw.get(even));
+          if (data.getIndexes().contains(even)) {
+            doa.setDataMapEven(data.getWeight(even));
           }
           else {
             LOG.error("could not find even index: " + even
-                + ". Matching index: " + indexName + ". In data: " + raw);
+                + ". Matching index: " + indexName + ". In data: " + data.getIndexes());
           }
 
-        }
-        else {
-          LOG.error("could not find even index: " + indexName.getEvenMatch() +
-              " that should match: " + indexName + " in data: " + raw);
         }
         doaList.add(doa);
       }
     }
     return doaList;
+  }
+
+  public JsonElement toJsonElement(long time, Map<String,Double> weights) {
+    JsonElement element = new JsonElement();
+    element.time = time;
+    element.dataMap = weights;
+    return element;
   }
 
   private boolean not(boolean b) {
@@ -64,6 +66,7 @@ public class DataMapper {
     return jsonData;
   }
 
+  // get even or normal weight depending on isEven
   public List<JsonElement> toJElementList(boolean isEven, List<DoaService> doaList) {
     List<JsonElement> jsonElementList = new ArrayList<>(doaList.size());
 

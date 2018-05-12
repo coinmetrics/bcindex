@@ -3,6 +3,7 @@ package com.frobro.bcindex.web.model;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.frobro.bcindex.core.db.model.IndexName;
 import com.frobro.bcindex.core.db.model.WeightApi;
+import com.frobro.bcindex.core.db.model.WeightDto;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -34,9 +35,10 @@ public class WeightApiTest {
 
 
     // when data is serialized
-    String json = new ObjectMapper().writeValueAsString(api);
+    String json = new ObjectMapper().writeValueAsString(api.getWeightDto());
+
     // and data is deserialized
-    WeightApi parsedApi = new ObjectMapper().readValue(json, WeightApi.class);
+    WeightApi parsedApi = new WeightApi(new ObjectMapper().readValue(json, WeightDto.class));
 
     // then the original and deserialized data are equal
     assertEquals(api,parsedApi);

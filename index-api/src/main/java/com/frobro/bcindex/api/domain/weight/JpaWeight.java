@@ -3,10 +3,7 @@ package com.frobro.bcindex.api.domain.weight;
 import com.frobro.bcindex.api.service.persistence.DoaService;
 import com.frobro.bcindex.core.db.model.IndexName;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 
 @MappedSuperclass
 public class JpaWeight {
@@ -16,6 +13,7 @@ public class JpaWeight {
 
   private long timeStamp;
   private long bletchId;
+  @Lob
   private String weights;
   private String indexName;
 

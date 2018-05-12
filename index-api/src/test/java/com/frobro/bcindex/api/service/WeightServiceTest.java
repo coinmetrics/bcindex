@@ -61,9 +61,9 @@ public class WeightServiceTest {
     // when
     weightService.save(doaList);
 
+    // then every index should have one row saved
     for (IndexName indexName : IndexName.values()) {
       List<DoaService> doaRetreived = weightService.get(indexName);
-      System.out.println(doaRetreived);
       JsonData jsonData = new JsonData();
       jsonData.elementList = new DataMapper().toJElementList(indexName.isEven(),doaRetreived);
 
