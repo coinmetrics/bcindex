@@ -9,7 +9,7 @@ public class StatusController {
 
   @RequestMapping("/")
   public String hone() {
-    return IndexApiApp.class.getName() + " is up";
+    return "Index API is up";
   }
 
   @RequestMapping("/status")
