@@ -1,6 +1,5 @@
 package com.frobro.bcindex.api.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.frobro.bcindex.api.IndexApiApp;
 import com.frobro.bcindex.api.model.IndexDto;
 import com.frobro.bcindex.api.model.JsonData;
