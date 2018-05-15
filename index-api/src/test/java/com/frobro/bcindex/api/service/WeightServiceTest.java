@@ -4,25 +4,25 @@ import com.frobro.bcindex.api.model.JsonData;
 import com.frobro.bcindex.api.service.persistence.*;
 import com.frobro.bcindex.core.model.IndexName;
 import com.frobro.bcindex.core.model.WeightApi;
-import org.junit.After;
+import com.frobro.bcindex.core.service.BletchClock;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static org.junit.Assert.assertEquals;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-public class WeightServiceTest {
+public class WeightServiceTest extends BaseDbTest {
 
   private WeightService weightService;
-  List<CrudRepository> repos = new ArrayList<>(8);
+  private Map<IndexName, WeightTenRepo> indexDbMap = new HashMap<>();
 
   @Autowired
   public void setWeightService(WeightTenRepo t,
@@ -35,24 +35,14 @@ public class WeightServiceTest {
                                WeightAppRepo ap) {
 
     this.weightService = new WeightService(t,tw,fo,to,et,cu,pl,ap);
-    repos.add(t); repos.add(tw); repos.add(fo); repos.add(to);
-    repos.add(et); repos.add(cu); repos.add(pl); repos.add(ap);
-  }
-
-  @After
-  public void tearDown() {
-    repos.stream().forEach(r -> {r.deleteAll();});
+    setReposForTearDown(t,tw,fo,to,et,cu,pl,ap);
+    indexDbMap.put(IndexName.TEN, t);
   }
 
   @Test
-  public void testDataMapper() {
+  public void testBasicSave() {
     // given weight api populated with data
-    WeightApi incomingData = new WeightApi();
-    for (IndexName indexName : IndexName.values()) {
-      incomingData.addIndex(indexName,createData());
-    }
-    long time = System.currentTimeMillis();
-    incomingData.setTime(time);
+    WeightApi incomingData = newApiData();
 
     // and a data mapper
     DataMapper dataMapper = new DataMapper();
@@ -70,6 +60,58 @@ public class WeightServiceTest {
       // then
       assertEquals(indexName.name(), incomingData.getWeight(indexName),jsonData.elementList.get(0).dataMap);
     }
+  }
+
+  @Test
+  public void testIncrements() {
+    // given
+    saveSomeData();
+
+    // and
+    assertEquals(1, weightService.get(IndexName.TEN).size());
+    assertEquals(1, weightService.getTenBletchId());
+    assertEquals(1, weightService.getBTenletchIdFromDb());
+
+    // when
+    saveSomeData();
+
+    assertEquals(2, weightService.get(IndexName.TEN).size());
+    assertEquals(2, weightService.getTenBletchId());
+    assertEquals(2, weightService.getBTenletchIdFromDb());
+  }
+
+  @Test
+  public void testStartUp() {
+    // given
+    saveSomeData();
+
+    // and
+    assertEquals(1, weightService.get(IndexName.TEN).size());
+    assertEquals(1, weightService.getTenBletchId());
+    assertEquals(1, weightService.getBTenletchIdFromDb());
+
+    // when
+    weightService = newWeightService();
+
+    // then
+    assertEquals(1, weightService.get(IndexName.TEN).size());
+    assertEquals(1, weightService.getTenBletchId());
+    assertEquals(1, weightService.getBTenletchIdFromDb());
+  }
+
+  private void saveSomeData() {
+    weightService.save(new DataMapper().toDoaList(newApiData()));
+  }
+
+  private WeightApi newApiData() {
+    WeightApi data = new WeightApi();
+    for (IndexName indexName : IndexName.values()) {
+      data.addIndex(indexName,createData());
+    }
+    long time = BletchClock.getEpochMillis();
+
+    data.setTime(time);
+    return data;
   }
 
   private Map<String,Double> createData() {

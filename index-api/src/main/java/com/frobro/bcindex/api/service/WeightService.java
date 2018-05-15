@@ -46,6 +46,33 @@ public class WeightService {
     this.currRepo = c;
     this.platformRepo = p;
     this.appRepo = a;
+    initCounts();
+  }
+
+  private void initCounts() {
+    tenBletchId = new CountDecider(tenRepo.count(),
+        tenRepo.findFirstByOrderByIdDesc()).decide();
+
+    twentyBletchId = new CountDecider(twentyRepo.count(),
+        twentyRepo.findFirstByOrderByIdDesc()).decide();
+
+    fortyBletchId = new CountDecider(fortyRepo.count(),
+        fortyRepo.findFirstByOrderByIdDesc()).decide();
+
+    totalBletchId = new CountDecider(totalRepo.count(),
+        totalRepo.findFirstByOrderByIdDesc()).decide();
+
+    ethBletchId =new CountDecider(ethRepo.count(),
+        ethRepo.findFirstByOrderByIdDesc()).decide();
+
+    currBletchId = new CountDecider(currRepo.count(),
+        currRepo.findFirstByOrderByIdDesc()).decide();
+
+    platformBletchId = new CountDecider(platformRepo.count(),
+        platformRepo.findFirstByOrderByIdDesc()).decide();
+
+    appBletchId = new CountDecider(appRepo.count(),
+        appRepo.findFirstByOrderByIdDesc()).decide();
   }
 
   public void save(List<DoaService> doaList) {
@@ -88,49 +115,49 @@ public class WeightService {
 
   private void saveTen(DoaService doa) {
     JpaWeightTen data = new JpaWeightTen();
-    populate(doa,tenBletchId++, data);
+    populate(doa,++tenBletchId, data);
     this.tenRepo.save(data);
   }
 
   private void saveTwenty(DoaService doa) {
     JpaWeightTwenty data = new JpaWeightTwenty();
-    populate(doa,twentyBletchId++, data);
+    populate(doa,++twentyBletchId, data);
     this.twentyRepo.save(data);
   }
 
   private void saveForty(DoaService doa) {
     JpaWeightForty data = new JpaWeightForty();
-    populate(doa,fortyBletchId++, data);
+    populate(doa,++fortyBletchId, data);
     this.fortyRepo.save(data);
   }
 
   private void saveTotal(DoaService doa) {
     JpaWeightTotal data = new JpaWeightTotal();
-    populate(doa,totalBletchId++, data);
+    populate(doa,++totalBletchId, data);
     this.totalRepo.save(data);
   }
 
   private void saveEthereum(DoaService doa) {
     JpaWeightEther data = new JpaWeightEther();
-    populate(doa,ethBletchId++, data);
+    populate(doa,++ethBletchId, data);
     this.ethRepo.save(data);
   }
 
   private void saveCurrency(DoaService doa) {
     JpaCurrency data = new JpaCurrency();
-    populate(doa,currBletchId++, data);
+    populate(doa,++currBletchId, data);
     this.currRepo.save(data);
   }
 
   private void savePlatform(DoaService doa) {
     JpaPlatform data = new JpaPlatform();
-    populate(doa,platformBletchId++, data);
+    populate(doa,++platformBletchId, data);
     this.platformRepo.save(data);
   }
 
   private void saveApplication(DoaService doa) {
     JpaWeightApp data = new JpaWeightApp();
-    populate(doa,appBletchId++, data);
+    populate(doa,++appBletchId, data);
     this.appRepo.save(data);
   }
 
@@ -188,8 +215,45 @@ public class WeightService {
   private List<DoaService> getList(Iterable<? extends JpaWeight> iterable) {
     List<DoaService> doaList = new LinkedList<>();
     iterable.forEach(jpa -> {
+      System.out.println(jpa.getBletchId());
       doaList.add(jpa.getDoa());
     });
     return doaList;
+  }
+
+  public long getTenBletchId() {
+    return tenBletchId;
+  }
+
+  public long getBTenletchIdFromDb() {
+    return tenRepo.findFirstByOrderByIdDesc().getBletchId();
+  }
+
+  public long getTwentyBletchId() {
+    return twentyBletchId;
+  }
+
+  public long getFortyBletchId() {
+    return fortyBletchId;
+  }
+
+  public long getTotalBletchId() {
+    return totalBletchId;
+  }
+
+  public long getEthBletchId() {
+    return ethBletchId;
+  }
+
+  public long getCurrBletchId() {
+    return currBletchId;
+  }
+
+  public long getPlatformBletchId() {
+    return platformBletchId;
+  }
+
+  public long getAppBletchId() {
+    return appBletchId;
   }
 }
