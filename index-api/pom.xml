@@ -106,9 +106,9 @@
             <groupId>com.heroku.sdk</groupId>
             <artifactId>heroku-maven-plugin</artifactId>
             <configuration>
-              <appName>bc-index-data</appName>
+              <appName>bc-index-api</appName>
               <processTypes>
-                <web>java -Dspring.profiles.active=prod -Dserver.port=$PORT -jar target/index-data-1.5.4.jar</web>
+                <web>java -Dspring.profiles.active=prod -Dserver.port=$PORT -jar target/index-api-1.5.4.jar</web>
               </processTypes>
             </configuration>
           </plugin>
