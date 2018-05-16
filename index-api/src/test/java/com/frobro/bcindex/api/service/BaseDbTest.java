@@ -15,8 +15,6 @@ import java.util.List;
 import java.util.Map;
 import static com.frobro.bcindex.core.model.IndexName.*;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
 public class BaseDbTest {
   private Map<IndexName,CrudRepository> repos = new HashMap<>();
   private WeightTenRepo tenRepo;

@@ -19,6 +19,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import static org.junit.Assert.assertEquals;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class WeightServiceTest extends BaseDbTest {
 
   private WeightService weightService;
