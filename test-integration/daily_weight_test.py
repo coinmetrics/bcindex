@@ -22,6 +22,7 @@ def forward_time(num_hours):
     json_data = str(num_hours)
     requests.post(endpt_move_time, json=json_data)
 
+print("running daily weight test")
 mark = "====>"
 print(mark + "assert weight api db is empty")
 assert_daily_weightDb_isempty()
