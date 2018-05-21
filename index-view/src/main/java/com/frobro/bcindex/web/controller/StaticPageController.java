@@ -44,4 +44,9 @@ public class StaticPageController {
   public String idxPerfPost() {
     return "idx_perf_post";
   }
+
+  @RequestMapping("/blog/blog_5_20_2018")
+  public String blog_5_20_2018() {
+    return "blog_5_20_2018";
+  }
 }

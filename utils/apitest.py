@@ -41,8 +41,12 @@ def checkPrice():
 
     return requests.post(prod, json=data)
 
+def checkDailyPrice():
+    stage = "http://stage-index-view.herokuapp.com/daily/ten"
+    return requests.get(stage)
 
-#print checkPrice().text
-print checkWeightList().text
+# print checkPrice().text
+print checkDailyPrice().text
+# print checkWeightList().text
 #print checkWeights().text
 
