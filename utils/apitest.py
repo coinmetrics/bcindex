@@ -1,6 +1,6 @@
 import requests
 import json
-import datetime
+import time
 
 def checkIndex():
     local = "http://localhost:8090/api/index"
@@ -32,6 +32,22 @@ def checkWeightList():
 
     return requests.post(prod, json=data)
 
+def checkDailyWeight():
+    local = "http://localhost:8085/daily/weight"
+    prod = "????/daily/weight";
+    stage = "https://stage-index-api.herokuapp.com/daily/weight"
+
+    data = {'index':'TEN'}
+    return requests.post(stage, json=data)
+
+def checkDailyWeightContents():
+    for entry in checkDailyWeight().json()['elementList']:
+        print toLocalDate(entry['time'])
+
+def toLocalDate(epoch):
+    seconds = epoch/1000
+    return time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(seconds))
+
 def checkPrice():
     prod = "http://www.bletchleyindexes.com/blet/index";
     stage = "http://stage-index-view.herokuapp.com/blet/index"
@@ -46,7 +62,11 @@ def checkDailyPrice():
     return requests.get(stage)
 
 # print checkPrice().text
-print checkDailyPrice().text
+# print checkDailyPrice().text
 # print checkWeightList().text
 #print checkWeights().text
+# print checkDailyWeight().text
+print checkDailyWeightContents()
+
+
 

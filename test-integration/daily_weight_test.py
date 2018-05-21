@@ -8,9 +8,15 @@ endpt_day_weight_nocache = endpt_day_weight + "/nocache";
 def assert_daily_weightDb_isempty():
     assert_daily_weightDb_hasEntries(0)
 
+def assert_daily_weightCache_hasEntries(num_entries):
+    assert_daily_weight_hasEntries(endpt_day_weight,um_entries)
+
 def assert_daily_weightDb_hasEntries(num_entries):
+    assert_daily_weight_hasEntries(endpt_day_weight,num_entries)
+
+def assert_daily_weight_hasEntries(endpt, num_entries):
     data = {'index':'TEN'}
-    elist = requests.post(endpt_day_weight, json=data).json()['elementList']
+    elist = requests.post(endpt, json=data).json()['elementList']
     assert num_entries == len(elist)
 
 def call_new_data():
@@ -42,8 +48,10 @@ assert_daily_weightDb_isempty()
 print(mark + "call new data again")
 call_new_data()
 
-print(mark + "assert 1 entry exists")
+print(mark + "assert 1 entry in cache")
 assert_daily_weightDb_hasEntries(1)
+
+print(mark + "assert 1 entry in db")
 
 # call new data
 # assert 1 entry exists
