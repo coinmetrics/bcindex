@@ -23,6 +23,8 @@ def assert_weight_add_to_one(weights):
     sum = 0.0
     for ticker,weight in weights.iteritems():
         sum = sum + weight
+    if (sum != 1.0):
+        print sum
     assert 1.0 == sum
 
 print("running Real Time Weight test")
