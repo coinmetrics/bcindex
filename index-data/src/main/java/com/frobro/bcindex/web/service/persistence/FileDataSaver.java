@@ -2,7 +2,7 @@ package com.frobro.bcindex.web.service.persistence;
 
 import com.frobro.bcindex.core.db.domain.*;
 import com.frobro.bcindex.core.db.service.*;
-import com.frobro.bcindex.core.db.service.files.BletchFiles;
+import com.frobro.bcindex.core.service.BletchFiles;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

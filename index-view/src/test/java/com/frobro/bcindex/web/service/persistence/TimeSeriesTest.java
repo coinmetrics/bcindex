@@ -1,6 +1,5 @@
 package com.frobro.bcindex.web.service.persistence;
 
-import com.frobro.bcindex.core.db.domain.JpaIndexTen;
 import com.frobro.bcindex.web.model.api.*;
 import com.frobro.bcindex.web.service.DbTickerService;
 import org.junit.Ignore;
@@ -8,8 +7,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

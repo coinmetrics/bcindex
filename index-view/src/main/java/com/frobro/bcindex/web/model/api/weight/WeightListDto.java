@@ -1,6 +1,6 @@
 package com.frobro.bcindex.web.model.api.weight;
 
-import com.frobro.bcindex.core.db.model.IndexName;
+import com.frobro.bcindex.core.model.IndexName;
 
 import java.util.List;
 

@@ -5,9 +5,7 @@ import com.frobro.bcindex.web.model.api.ApiResponse;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static com.frobro.bcindex.web.service.query.CsvTimeQuery.getBtcCol;
-import static com.frobro.bcindex.web.service.query.CsvTimeQuery.getTimeCol;
-import static com.frobro.bcindex.web.service.query.CsvTimeQuery.getUsdCol;
+import static com.frobro.bcindex.web.service.query.CsvTimeQuery.*;
 
 class CachePopulator implements Populatable {
   private final ApiResponse usd;

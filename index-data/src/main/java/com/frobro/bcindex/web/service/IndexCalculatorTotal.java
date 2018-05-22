@@ -1,10 +1,7 @@
 package com.frobro.bcindex.web.service;
 
-import com.frobro.bcindex.web.bclog.BcLog;
-import com.frobro.bcindex.web.constants.StaticValues;
 import com.frobro.bcindex.web.service.persistence.IndexDbDto;
 import com.frobro.bcindex.web.service.rules.BusRulesTotal;
-import com.frobro.bcindex.web.service.rules.BusinessRules;
 
 public class IndexCalculatorTotal extends IndexCalculator {
 

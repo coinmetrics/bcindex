@@ -4,7 +4,7 @@ package com.frobro.bcindex.core.db;
  * Hello world!
  *
  */
-public class App 
+public class App
 {
     public static void main( String[] args )
     {

@@ -1,19 +1,27 @@
 package com.frobro.bcindex.web.service;
 
-import static com.frobro.bcindex.core.db.model.IndexName.*;
-import java.io.IOException;
-import java.util.*;
-
 import com.frobro.bcindex.core.db.domain.*;
-import com.frobro.bcindex.core.db.model.IndexName;
-import com.frobro.bcindex.core.db.model.WeightApi;
 import com.frobro.bcindex.core.db.service.*;
+import com.frobro.bcindex.core.model.IndexName;
+import com.frobro.bcindex.core.model.IndexPrice;
+import com.frobro.bcindex.core.model.WeightApi;
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.domain.Index;
-import com.frobro.bcindex.web.model.*;
+import com.frobro.bcindex.web.model.BletchleyData;
 import com.frobro.bcindex.web.service.apis.CryptoCompare;
 import com.frobro.bcindex.web.service.persistence.IndexDbDto;
+import com.frobro.bcindex.web.service.publish.DailyWeightPubService;
+import com.frobro.bcindex.web.service.publish.PricePublishService;
+import com.frobro.bcindex.web.service.publish.WeightPublishService;
 import com.frobro.bcindex.web.service.rules.*;
+
+import java.io.IOException;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
+import static com.frobro.bcindex.core.model.IndexName.*;
 
 /**
  * Created by rise on 3/23/17.
@@ -23,8 +31,11 @@ public class TickerService {
   private static final BcLog log = BcLog.getLogger(TickerService.class);
   private final CryptoCompare cryptoCompare = new CryptoCompare();
   private long updateTime;
-  private WeightService weightService;
-  private PublishService publishService = new PublishService();
+
+  // publishers
+  private WeightPublishService weightPublishService;
+  private PricePublishService pricePublishService;
+  private DailyWeightPubService dailyWeightPubService;
 
   // calculators
   private final IndexCalculator indexCalculatorTen = new IndexCalculatorTen();
@@ -65,10 +76,6 @@ public class TickerService {
 
   public TickerService() {}
 
-  public void setWeightService(WeightService service) {
-    this.weightService = service;
-  }
-
   public void setIndexRepo(IndexRepo repo, EvenIdxRepo eRepo,
                            TwentyRepo tRepo, TwentyEvenRepo teRepo,
                            EthRepo etRepo, EthEvenRepo eteRepo,
@@ -85,13 +92,29 @@ public class TickerService {
                                   currRepo,pRepo,aRepo);
   }
 
+  public void setWeightPublisher(WeightPublishService publisher) {
+    this.weightPublishService = publisher;
+  }
+
+  public void setDailyPxPublisher(PricePublishService publisher) {
+    this.pricePublishService = publisher;
+  }
+
+  public void setDailyWeightPublisher(DailyWeightPubService publisher) {
+    this.dailyWeightPubService = publisher;
+  }
+
   public TickerService updateTickers() {
+    long start = System.currentTimeMillis();
     try {
 
       update();
       saveIndices();
-//      saveWeights();
       publishWeights();
+//      publishPrice();
+
+      log.debug("update finished in "
+          + TimeUnit.MILLISECONDS.toSeconds((System.currentTimeMillis() - start)) + " seconds");
 
     } catch (Exception e) {
       log.error("could not successfully update. ", e);
@@ -99,9 +122,81 @@ public class TickerService {
     return this;
   }
 
+  private void publishPrice() {
+    Map<String,IndexPrice> prices = new HashMap<>();
+    IndexPrice ten = new IndexPrice();
+    ten.indexName = IndexName.TEN.name();
+    ten.pxBtc = lastIndex.indexValueBtc;
+    ten.pxUsd = lastIndex.indexValueUsd;
+    ten.pxEvenBtc = lastEvenIndex.indexValueBtc;
+    ten.pxEvenUsd = lastEvenIndex.indexValueUsd;
+    ten.timeStamp = updateTime;
+    prices.put(ten.indexName, ten);
+
+    IndexPrice twenty = new IndexPrice();
+    twenty.indexName = IndexName.TWENTY.name();
+    twenty.pxBtc = lastTwentyIdx.indexValueBtc;
+    twenty.pxUsd = lastTwentyIdx.indexValueUsd;
+    twenty.pxEvenBtc = lastEvenTwentyIdx.indexValueBtc;
+    twenty.pxEvenUsd = lastEvenTwentyIdx.indexValueUsd;
+    twenty.timeStamp = updateTime;
+    prices.put(twenty.indexName, twenty);
+
+    IndexPrice forty = new IndexPrice();
+    forty.indexName = IndexName.FORTY.name();
+    forty.pxBtc = lastIdxForty.indexValueBtc;
+    forty.pxUsd = lastIdxForty.indexValueUsd;
+    forty.pxEvenBtc = lastIdxFortyEven.indexValueBtc;
+    forty.pxEvenUsd = lastIdxFortyEven.indexValueUsd;
+    forty.timeStamp = updateTime;
+    prices.put(forty.indexName, forty);
+
+    IndexPrice total = new IndexPrice();
+    total.indexName = IndexName.TOTAL.name();
+    total.pxBtc = lastIdxTotal.indexValueBtc;
+    total.pxUsd = lastIdxTotal.indexValueUsd;
+    total.pxEvenBtc = lastIdxTotalEven.indexValueBtc;
+    total.pxEvenUsd = lastIdxTotalEven.indexValueUsd;
+    total.timeStamp = updateTime;
+    prices.put(total.indexName, total);
+
+    IndexPrice ethereum = new IndexPrice();
+    ethereum.indexName = IndexName.ETHEREUM.name();
+    ethereum.pxBtc = lastIdxEth.indexValueBtc;
+    ethereum.pxUsd = lastIdxEth.indexValueUsd;
+    ethereum.pxEvenBtc = lastIdxEthEven.indexValueBtc;
+    ethereum.pxEvenUsd = lastIdxEthEven.indexValueUsd;
+    ethereum.timeStamp = updateTime;
+    prices.put(ethereum.indexName, ethereum);
+
+    IndexPrice currency = new IndexPrice();
+    currency.indexName = IndexName.CURRENCY.name();
+    currency.pxBtc = lastIdxCurrency.indexValueBtc;
+    currency.pxUsd = lastIdxCurrency.indexValueUsd;
+    currency.timeStamp = updateTime;
+    prices.put(currency.indexName, currency);
+
+    IndexPrice platform = new IndexPrice();
+    platform.indexName = IndexName.PLATFORM.name();
+    platform.pxBtc = lastIdxPlatform.indexValueBtc;
+    platform.pxUsd = lastIdxPlatform.indexValueUsd;
+    platform.timeStamp = updateTime;
+    prices.put(platform.indexName, platform);
+
+    IndexPrice application = new IndexPrice();
+    application.indexName = IndexName.APPLICATION.name();
+    application.pxBtc = lastIdxTotal.indexValueBtc;
+    application.pxUsd = lastIdxTotal.indexValueUsd;
+    application.timeStamp = updateTime;
+    prices.put(application.indexName, application);
+
+    pricePublishService.publish(prices);
+  }
+
   private void publishWeights() {
     WeightApi data = new WeightApi();
 
+    data.setTime(updateTime);
     data.addIndex(TEN, indexCalculatorTen.getWeights());
     data.addIndex(TEN_EVEN, indexCalculatorTen.getWeightsEven());
 
@@ -121,7 +216,8 @@ public class TickerService {
     data.addIndex(PLATFORM, indexCalculatorPlatform.getWeights());
     data.addIndex(APPLICATION, indexCalculatorApp.getWeights());
 
-    publishService.publish(data);
+    weightPublishService.publish(data);
+    dailyWeightPubService.publish(data);
   }
 
   private void update() throws IOException {
@@ -147,7 +243,7 @@ public class TickerService {
     // TODO: move this to batch call
     updateTickerBtc(cryptoCompare.extractBtcFromData(apiData));
 
-    updateTime = System.currentTimeMillis();
+    updateTime = BletchClock.getTimeEpochMillis();
 
     // update 10 idx
     inputDataTen.filterAndSet(apiData);
@@ -390,30 +486,6 @@ public class TickerService {
     idx.setIndexValueBtc(dto.indexValueBtc)
         .setIndexValueUsd(dto.indexValueUsd)
         .setTimeStamp(dto.timeStamp);
-  }
-
-  private void saveWeights() {
-    weightService.saveTen(indexCalculatorTen.getWeights(),
-                          indexCalculatorTen.getWeightsEven(),
-                          updateTime);
-
-    weightService.saveTwenty(indexCalculatorTwenty.getWeights(),
-        indexCalculatorTwenty.getWeightsEven(), updateTime);
-
-    weightService.saveEther(indexCalculatorEth.getWeights(),
-        indexCalculatorEth.getWeightsEven(), updateTime);
-
-    weightService.saveForty(indexCalculatorForty.getWeights(),
-        indexCalculatorForty.getWeightsEven(), updateTime);
-
-    weightService.saveTotal(indexCalculatorTotal.getWeights(),
-        indexCalculatorTotal.getWeightsEven(), updateTime);
-
-    weightService.saveCurrency(indexCalculatorCurrency.getWeights(), updateTime);
-
-    weightService.savePlatform(indexCalculatorPlatform.getWeights(), updateTime);
-
-    weightService.saveApp(indexCalculatorApp.getWeights(), updateTime);
   }
 
   public Collection<Index> getLatestCap() {

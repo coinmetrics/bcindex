@@ -4,11 +4,11 @@ import com.frobro.bcindex.core.db.domain.ApplicationRepo;
 import com.frobro.bcindex.core.db.domain.CurrencyRepo;
 import com.frobro.bcindex.core.db.domain.PlatformRepo;
 import com.frobro.bcindex.core.db.service.*;
-import com.frobro.bcindex.core.db.service.weight.*;
-import com.frobro.bcindex.web.service.PublishService;
 import com.frobro.bcindex.web.service.TickerService;
 import com.frobro.bcindex.web.service.TimerService;
-import com.frobro.bcindex.web.service.WeightService;
+import com.frobro.bcindex.web.service.publish.DailyWeightPubService;
+import com.frobro.bcindex.web.service.publish.PricePublishService;
+import com.frobro.bcindex.web.service.publish.WeightPublishService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,11 +24,16 @@ public class HomeController {
 
   private TickerService tickerService = new TickerService();
   private TimerService timerService;
-  private Environment environment;
+  private WeightPublishService weightPublisher = new WeightPublishService();
+  private PricePublishService pricePublisher = new PricePublishService();
+  private DailyWeightPubService dailyWeightPub = new DailyWeightPubService();
 
   @Autowired
   public void setEnvironment(Environment env) {
-    PublishService.createPublishEndPoint(env.getProperty(PublishService.publichHostKey()));
+    // pull values from application.properties
+    weightPublisher.createPublishEndPoint(env.getProperty(weightPublisher.publishEndPtKey()));
+    pricePublisher.createPublishEndPoint(env.getProperty(pricePublisher.publishEndPtKey()));
+    dailyWeightPub.createPublishEndPoint(env.getProperty(dailyWeightPub.publishEndPtKey()));
   }
 
   @Autowired
@@ -46,23 +51,12 @@ public class HomeController {
                                fRepo, feRepo,
                                toRepo, toeRepo,
                                cRepo, pRepo, aRepo);
+
+    tickerService.setWeightPublisher(weightPublisher);
+    tickerService.setDailyPxPublisher(pricePublisher);
+    tickerService.setDailyWeightPublisher(dailyWeightPub);
+
     timerService = new TimerService(tickerService);
-  }
-
-  @Autowired
-  public void initWeightRepo(WeightTenRepo ten,
-                             WeightTwentyRepo twenty,
-                             WeightFortyRepo forty,
-                             WeightTotalRepo total,
-                             WeightEthRepo eth,
-                             WeightCurrencyRepo curr,
-                             WeightPlatformRepo plat,
-                             WeightAppRepo app) {
-
-    WeightService weightService = new WeightService(
-        ten,twenty,forty,total,eth,curr,plat,app);
-
-    tickerService.setWeightService(weightService);
   }
 
   @RequestMapping("/bc-health-check")

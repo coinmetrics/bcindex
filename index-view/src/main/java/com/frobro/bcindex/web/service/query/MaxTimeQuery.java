@@ -1,6 +1,6 @@
 package com.frobro.bcindex.web.service.query;
 
-import com.frobro.bcindex.core.db.service.BletchDate;
+import com.frobro.bcindex.core.service.BletchDate;
 import com.frobro.bcindex.web.model.api.ApiResponse;
 import com.frobro.bcindex.web.model.api.MaxApiResponse;
 import com.frobro.bcindex.web.model.api.RequestDto;

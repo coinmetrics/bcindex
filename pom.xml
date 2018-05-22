@@ -8,9 +8,11 @@
   <packaging>pom</packaging>
   <version>1.0</version>
   <modules>
+    <module>core</module>
     <module>core-db</module>
     <module>index-data</module>
     <module>index-view</module>
+    <module>index-api</module>
   </modules>
 </project>
 

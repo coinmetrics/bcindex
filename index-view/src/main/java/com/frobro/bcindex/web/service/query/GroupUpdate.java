@@ -2,8 +2,6 @@ package com.frobro.bcindex.web.service.query;
 
 import com.frobro.bcindex.web.model.api.IndexType;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;

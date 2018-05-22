@@ -1,7 +1,7 @@
 package com.frobro.bcindex.web.model.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.frobro.bcindex.core.db.service.BletchDate;
+import com.frobro.bcindex.core.service.BletchDate;
 
 import java.io.IOException;
 import java.util.stream.Collectors;

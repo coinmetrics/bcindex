@@ -37,6 +37,13 @@ public enum SpringProfiles {
     return false;
   }
 
+  public static void setProfileIfNeeded() {
+    if (DEV.shouldActivate()) {
+      System.setProperty(DEV.getKey(),
+          DEV.getValue());
+    }
+  }
+
   public boolean isActive() {
     String profile = getProfile();
     return notNull(profile) && getValue().equals(profile);

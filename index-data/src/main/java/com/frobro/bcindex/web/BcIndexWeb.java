@@ -20,14 +20,7 @@ public class BcIndexWeb {
 
   public static void main(String[] args) {
     H2Configuration.startIfConfigured();
-    setProfileIfNeeded();
+    SpringProfiles.setProfileIfNeeded();
     SpringApplication.run(APPLICATION_CLASS, args);
-  }
-
-  private static void setProfileIfNeeded() {
-    if (SpringProfiles.DEV.shouldActivate()) {
-      System.setProperty(SpringProfiles.DEV.getKey(),
-          SpringProfiles.DEV.getValue());
-    }
   }
 }

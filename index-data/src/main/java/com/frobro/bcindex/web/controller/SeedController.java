@@ -2,21 +2,29 @@ package com.frobro.bcindex.web.controller;
 
 import com.frobro.bcindex.core.db.domain.*;
 import com.frobro.bcindex.core.db.service.*;
-import com.frobro.bcindex.core.db.service.files.BletchFiles;
-import com.frobro.bcindex.core.db.service.weight.*;
+import com.frobro.bcindex.core.service.BletchDate;
+import com.frobro.bcindex.core.service.BletchFiles;
 import com.frobro.bcindex.web.bclog.BcLog;
+import com.frobro.bcindex.web.service.BletchClock;
 import com.frobro.bcindex.web.service.TickerService;
-import com.frobro.bcindex.web.service.WeightService;
 import com.frobro.bcindex.web.service.persistence.FileDataSaver;
+import com.frobro.bcindex.web.service.publish.DailyWeightPubService;
+import com.frobro.bcindex.web.service.publish.DeloreanClock;
+import com.frobro.bcindex.web.service.publish.PricePublishService;
+import com.frobro.bcindex.web.service.publish.WeightPublishService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.env.Environment;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
-import java.util.*;
-import java.util.concurrent.TimeUnit;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by rise on 5/20/17.
@@ -26,10 +34,22 @@ import java.util.concurrent.ThreadLocalRandom;
 @Profile({"dev","pgres"})
 public class SeedController {
 
-  private static final BcLog log = BcLog.getLogger(SeedController.class);
+  private static final BcLog LOG = BcLog.getLogger(SeedController.class);
   private TickerService tickerService = new TickerService();
   private FileDataSaver fileDataSaver;
   PrimeRepo repo;
+  private DeloreanClock deloreanClock = new DeloreanClock();
+  private WeightPublishService weightPublisher = new WeightPublishService();
+  private PricePublishService pricePublisher = new PricePublishService();
+  private DailyWeightPubService dailyWeightPub = new DailyWeightPubService(deloreanClock);
+
+  @Autowired
+  public void setEnvironment(Environment env) {
+    // pull values from application.properties
+    weightPublisher.createPublishEndPoint(env.getProperty(weightPublisher.publishEndPtKey()));
+    pricePublisher.createPublishEndPoint(env.getProperty(pricePublisher.publishEndPtKey()));
+    dailyWeightPub.createPublishEndPoint(env.getProperty(dailyWeightPub.publishEndPtKey()));
+  }
 
   @Autowired
   public void setRepos(EvenIdxRepo eRepo, IndexRepo oRepo,
@@ -44,33 +64,23 @@ public class SeedController {
         fRepo,feRepo,toRepo,toeRepo,cRepo,pRepo,aRepo);
     tickerService.setIndexRepo(oRepo,eRepo,twRepo,teRepo,ethRepo,eteRepo,
         fRepo,feRepo,toRepo,toeRepo,cRepo,pRepo,aRepo);
+
+    tickerService.setDailyPxPublisher(pricePublisher);
+    tickerService.setWeightPublisher(weightPublisher);
+    tickerService.setDailyWeightPublisher(dailyWeightPub);
+
     // ETH index not currently supported in file saver
     fileDataSaver = new FileDataSaver(oRepo, eRepo, twRepo, teRepo,ethRepo,eteRepo,
         fRepo,feRepo,toRepo,toeRepo,cRepo,pRepo,aRepo);
   }
 
-  @Autowired
-  public void initWeightRepo(WeightTenRepo ten,
-                             WeightTwentyRepo twenty,
-                             WeightFortyRepo forty,
-                             WeightTotalRepo total,
-                             WeightEthRepo eth,
-                             WeightCurrencyRepo curr,
-                             WeightPlatformRepo plat,
-                             WeightAppRepo app) {
-
-    WeightService weightService = new WeightService(
-        ten,twenty,forty,total,eth,curr,plat,app);
-
-    tickerService.setWeightService(weightService);
-  }
-
 
   @PostConstruct
   public void start(){
-    log.info("populating the database with mock data ...");
+    LOG.info("populating the database with mock data ...");
     seed();
 //    fileDataSaver.saveData();
+    BletchClock.setClock(deloreanClock);
   }
 
   @RequestMapping("/filedata")
@@ -84,6 +94,20 @@ public class SeedController {
     tickerService.updateTickers();
     return "done getting new data";
   }
+
+  /* Begin daily weight testing */
+  @RequestMapping(value = "/forward_time", method = RequestMethod.POST)
+  public String forwardTime(@RequestBody long numHours) {
+    LOG.debug("current time: " + deloreanClock.humanReadableTime());
+
+    deloreanClock.forwardHours(numHours);
+
+    LOG.debug("moved time " + numHours + " hours. New time: " +
+        deloreanClock.humanReadableTime());
+    return "time forwarded " + numHours + " hours ";
+  }
+
+  /* End daily weight testing */
 
   @RequestMapping("/seed")
   public String seed() {

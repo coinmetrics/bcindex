@@ -1,7 +1,7 @@
 package com.frobro.bcindex.web.controller;
 
-import com.frobro.bcindex.core.db.model.IndexName;
-import com.frobro.bcindex.core.db.model.WeightApi;
+import com.frobro.bcindex.core.model.IndexName;
+import com.frobro.bcindex.core.model.WeightApi;
 import com.frobro.bcindex.web.model.api.weight.WeightDto;
 import com.frobro.bcindex.web.model.api.weight.WeightListDto;
 import org.slf4j.Logger;
@@ -20,16 +20,16 @@ public class WeightApiController {
   private WeightApi weightCache = new WeightApi();
 
   @RequestMapping(value = "blet/weight", method = RequestMethod.POST)
-  public void cacheUpdate(@RequestBody Map<String,Map<String,Double>> data) {
-    if (WeightApi.isSecure(data)) {
-      weightCache.removeKeyIfExists(data);
-      weightCache.update(data);
+  public void cacheUpdate(@RequestBody WeightApi data) {
+    if (data != null && data.amSecure()) {
+      data.removeKeyIfExists();
+      weightCache = data;
     }
   }
 
   @RequestMapping(value = "eight/weight", method = RequestMethod.GET)
   public Map<String,Double> getWeights() {
-    return weightCache.getRawData().get(IndexName.TEN.name());
+    return weightCache.getWeight(IndexName.TEN);
   }
 
   @RequestMapping(value = "api/weight", method = RequestMethod.POST)
@@ -49,8 +49,8 @@ public class WeightApiController {
   }
 
   @RequestMapping(value = "api/weight/list", method = RequestMethod.POST)
-  public Map<String,Map<String,Double>> getApiWeights(@RequestBody WeightListDto dto) {
-    Map<String,Map<String,Double>> response;
+  public Map<IndexName,Map<String,Double>> getApiWeights(@RequestBody WeightListDto dto) {
+    Map<IndexName,Map<String,Double>> response;
 
     try {
 

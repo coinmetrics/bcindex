@@ -2,7 +2,6 @@ package com.frobro.bcindex.web.service;
 
 import com.frobro.bcindex.web.service.persistence.IndexDbDto;
 import com.frobro.bcindex.web.service.rules.BusRulesTen;
-import com.frobro.bcindex.web.service.rules.BusinessRules;
 
 /**
  * Created by rise on 6/11/17.

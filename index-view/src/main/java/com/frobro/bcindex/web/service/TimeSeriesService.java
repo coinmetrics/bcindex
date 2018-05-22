@@ -1,10 +1,11 @@
 package com.frobro.bcindex.web.service;
 
 import com.frobro.bcindex.web.bclog.BcLog;
-import com.frobro.bcindex.web.model.api.*;
+import com.frobro.bcindex.web.model.api.ApiResponse;
+import com.frobro.bcindex.web.model.api.RequestDto;
+import com.frobro.bcindex.web.model.api.TimeFrame;
 import com.frobro.bcindex.web.service.query.GroupUpdate;
 import com.frobro.bcindex.web.service.query.GroupUpdateQuery;
-import com.frobro.bcindex.web.service.query.IndexUpdate;
 import com.frobro.bcindex.web.service.query.TimeSeriesQuery;
 import org.springframework.jdbc.core.JdbcTemplate;
 

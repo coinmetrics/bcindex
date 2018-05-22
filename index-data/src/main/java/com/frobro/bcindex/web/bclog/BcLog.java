@@ -1,8 +1,5 @@
 package com.frobro.bcindex.web.bclog;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.PrintWriter;
 import java.io.StringWriter;
 

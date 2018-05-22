@@ -1,6 +1,5 @@
 package com.frobro.bcindex.web.service.apis;
 
-import com.frobro.bcindex.web.domain.Index;
 import org.junit.Test;
 
 import java.io.IOException;
