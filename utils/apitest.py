@@ -41,12 +41,14 @@ def checkDailyPrice():
 ### api ###
 localapi = "http://localhost:8085"
 stageapi = "http://stage-index-api.herokuapp.com"
-prodapi = "http://bc-index-api.herokuapp.com"
-APIENV = stageapi
+# prodapi = "http://bc-index-api.herokuapp.com"
+prodapi = "https://api.bletchleyindexes.com"
+APIENV = prodapi
 
 def checkDailyWeight():
     endpt = APIENV + "/daily/weight"
     data = {'index':'TEN'}
+    print endpt
     return requests.post(endpt, json=data)
 
 def checkDailyWeightContents():
@@ -58,11 +60,11 @@ def toLocalDate(epoch):
     return time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(seconds))
 
 
-print checkPrice().text
+# print checkPrice().text
 # print checkDailyPrice().text
 # print checkWeightList().text
 # print checkWeights().text
-# print checkDailyWeight().text
+print checkDailyWeight().text
 # print checkDailyWeightContents()
 
 
