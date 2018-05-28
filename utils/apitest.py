@@ -41,7 +41,6 @@ def checkDailyPrice():
 ### api ###
 localapi = "http://localhost:8085"
 stageapi = "http://stage-index-api.herokuapp.com"
-# prodapi = "http://bc-index-api.herokuapp.com"
 prodapi = "https://api.bletchleyindexes.com"
 APIENV = prodapi
 
