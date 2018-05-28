@@ -18,8 +18,6 @@
   <li><a th:href="@{/contact}" href="contact.html">Contact</a></li>
   <li><a class="active" th:href="@{/blog}" href="blog.html">Blog</a></li>
 </div>
-
-
 </head>
 <body>
    
@@ -62,165 +60,73 @@ function topFunction() {
 
 <div class="containerbody">
 <br/><br/>
-    <h1 align = "center">Weekly report for week of 5/13/2018</h1>
-    <p>Our first weekly report on metrics for the digital asset class. Graphics will improve over the next few versions. Thanks for bearing with us. Feedback greatly appreciated!</p>
+    <h1 align = "center">Digital Assets Recap for Week Ending 5/27/2018</h1>
+    <p>Our second weekly report on metrics for the digital asset class. As always, we present the following data without commentary. Data is for the one week period from 0 UTC on 5/20 to 0 UTC on 5/27. If there are any missing performance metrics you would like to see, please let us know.</p>
 
+    <div class="blog-table">
     <h2 align = "center">Returns of Crytpo Benchmarks</h2>
-
-    <div style="overflow-x:auto;width:50%;padding-left:25%;padding-right:25%;align-content: center;">
-<table id="weightsequal">
-  <tr>
-        <th></th>
-        <th>Week</th>
-        <th>MTD</th>
-        <th>YTD</th>
-        </tr>
-        <tr>
-        <td>10</td>    
-        <td>-3.45%</td>
-        <td>-10.16%</td>
-        <td>-40.92%</td>
-        </tr>
-        <tr>
-        <td>Total</td>
-        <td>-3.56%</td>
-        <td>-11.31%</td>
-        <td>-41.90%</td>
-        </tr>
-        <tr>
-        <td>BTC</td>
-        <td>-2.81%</td>
-        <td>-10.80%</td>
-        <td>-40.44%</td>
-        </tr>
-        <tr>
-        <td>ETH</td>
-        <td>1.81%</td>
-        <td>3.88%</td>
-        <td>-6.08%</td>
-        </tr>
-        </table>
-       </div>
-
-
+    <img th:src="@{/img/5_26_18_summary.PNG}" src="../static/img/5_26_18_summary.PNG" />
+    </div>  
     
+    <div class="blog-table">
+    <h2 align = "center">Bletchley 10 Constituents</h2>
+    <p>Contribution is the portion of the return for the Bletchley 10 Index attributable to each coin, currently there is some error as we didn't have accurate weights at the beginning of this week saved. Because of this the sum of the contributions doesn't equal the weekly return on the 10 index.</p>
+    <img th:src="@{/img/5_26_18_10.PNG}" src="../static/img/5_26_18_10.PNG" />
+    </div> 
 
     <div class="blog-image">
     <h2 align = "center">Bletchley Total Index Chart</h2>
-    <img th:src="@{/img/5_20_18_total.PNG}" src="../static/img/5_20_18_total.PNG" width="60%" height="100%" alt="" />
-    </div>
-
-    <h2 align = "center">Bletchley 10 Constituents</h2>
-    <p>Contribution is the portion of the return for the Bletchley 10 Index attributable to each coin, currently there is some error as we didn't have accurate weights at the beginning of this week saved. Because of this the sum of the contributions doesn't equal the weekly return on the 10 index.</p>
-
-        <div style="overflow-x:auto;width:50%;padding-left:25%;padding-right:25%;align-content: center;">
-<table id="weightsequal">
-  <tr>
-        <th></th>
-        <th>Return</th>
-        <th>Weighting</th>
-        <th>Contribution</th>
-        </tr>
-        <tr>
-        <td>BTC</td>    
-        <td>-2.81%</td>
-        <td>52.25%</td>
-        <td>-1.47%</td>
-        </tr>
-        <tr>
-        <td>ETH</td>
-        <td>1.82%</td>
-        <td>19.41%</td>
-        <td>0.35%</td>
-        </tr>
-        <tr>
-        <td>XRP</td>
-        <td>-1.30%</td>
-        <td>10.52%</td>
-        <td>-0.14%</td>
-        </tr>
-        <tr>
-        <td>BCH</td>
-        <td>-19.30%</td>
-        <td>5.68%</td>
-        <td>-1.10%</td>
-        </tr>
-        <tr>
-        <td>XLM</td>
-        <td>-12.50%</td>
-        <td>2.43%</td>
-        <td>-0.30%</td>
-        </tr>
-        <tr>
-        <td>LTC</td>
-        <td>-4.71%</td>
-        <td>2.94%</td>
-        <td>-0.14%</td>
-        </tr>
-        <tr>
-        <td>ADA</td>
-        <td>-8.04%</td>
-        <td>2.53%</td>
-        <td>-0.20%</td>
-        </tr>
-        <tr>
-        <td>DASH</td>
-        <td>-4.79%</td>
-        <td>1.24%</td>
-        <td>-0.06%</td>
-        </tr>
-        <tr>
-        <td>EOS</td>
-        <td>-5.94%</td>
-        <td>2.66%</td>
-        <td>-0.16%</td>
-        </tr>
-        <tr>
-        <td>ZEC</td>
-        <td>39.62%</td>
-        <td>0.35%</td>
-        <td>0.14%</td>
-        </tr>
-        </table>
-       </div>
+    <img th:src="@{/img/5_26_18_chart.PNG}" src="../static/img/5_26_18_chart.PNG" width="60%" height="100%" alt="" />
+    </div> 
 
     <div class="blog-table">
     <h2 align = "center">Sharpe Ratios and Volatility</h2>
     <p>Volatilities are annualized to a 365 day year. Volatility, standard deviation, and return are all displayed in percentage terms.</p>
     <h2 align = "center">Weekly</h2>
-    <img th:src="@{/img/5_20_18_summary_weekly.PNG}" src="../static/img/5_20_18_summary_weekly.PNG" width="100%"/>
+    <img th:src="@{/img/5_26_18_summary_weekly.PNG}" src="../static/img/5_26_18_summary_weekly.PNG" />
     <br/>
     <br/>
     <h2 align = "center">Month to Date</h2>
-    <img th:src="@{/img/5_20_18_summary_monthly.PNG}" src="../static/img/5_20_18_summary_monthly.PNG" width="100%"/>
+    <img th:src="@{/img/5_26_18_summary_mtd.PNG}" src="../static/img/5_26_18_summary_mtd.PNG" />
     <br/>
     <br/>
     <h2 align = "center">Year to Date</h2>
-    <img th:src="@{/img/5_20_18_summary_yearly.PNG}" src="../static/img/5_20_18_summary_yearly.PNG" width="100%"/>
+    <img th:src="@{/img/5_26_18_summary_ytd.PNG}" src="../static/img/5_26_18_summary_ytd.PNG" />
     </div>
 
     <div class="blog-table">
     <h3 align = "center">Correlations</h3>
     <p>Calculated off of daily returns, spearman method.</p>
     <h2 align = "center">Weekly</h2>
-    <img th:src="@{/img/5_20_18_corr_weekly.PNG}" src="../static/img/5_20_18_corr_weekly.PNG" width="100%"/>
+    <img th:src="@{/img/5_26_18_corr_weekly.PNG}" src="../static/img/5_26_18_corr_weekly.PNG" />
     <br/>
     <br/>
     <h2 align = "center">Month to Date</h2>
-    <img th:src="@{/img/5_20_18_corr_monthly.PNG}" src="../static/img/5_20_18_corr_monthly.PNG" width="100%"/>
+    <img th:src="@{/img/5_26_18_corr_mtd.PNG}" src="../static/img/5_26_18_corr_mtd.PNG" />
     <br/>
     <br/>
     <h2 align = "center">Year to Date</h2>
-    <img th:src="@{/img/5_20_18_corr_yearly.PNG}" src="../static/img/5_20_18_corr_yearly.PNG" width="100%"/>
+    <img th:src="@{/img/5_26_18_corr_ytd.PNG}" src="../static/img/5_26_18_corr_ytd.PNG"/>
     </div>
     
     <div class="blog-table">
     <h2 align = "center">Betas</h2>
     <p>Beta is defined as the covariance of the asset and the benchmark divided against the variance of the normalizing benchmark, in this case the Bletchley 10 Index.</p>
     <br/>
-    <img th:src="@{/img/5_20_18_betas.PNG}" src="../static/img/5_20_18_betas.PNG" width="45%"/>
+    <img th:src="@{/img/5_26_18_betas.PNG}" src="../static/img/5_26_18_betas.PNG" />
     <br/>
     <br/>
+
+    <div class="blog-table">
+    <h2 align = "center">Largest Daily Moves</h2>
+    <img th:src="@{/img/5_26_18_high_low_all.PNG}" src="../static/img/5_26_18_high_low_all.PNG" width="80%"/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <img th:src="@{/img/5_26_18_high_low_coins.PNG}" src="../static/img/5_26_18_high_low_coins.PNG" width="80%"/>
+    <br/>
+    <br/>    
       
     <div class="container">
         <div class="container-slogan">
