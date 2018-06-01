@@ -38,12 +38,12 @@ public class StaticValues {
 
       // Currency index values
   public static final String CURR_INDEX_NAME = "currency index";
-  public static final double DIVISOR_CURRENCY = 2872526000;
+  public static final double DIVISOR_CURRENCY = 2872526000.0;
   public static final String MKT_CAP_FILE_CURRENCY = "business_rules/Currency_may_rebal.csv";
 
         // Platform index values
   public static final String PLATFORM_INDEX_NAME = "platform index";
-  public static final double DIVISOR_PLATFORM = 2175786000;
+  public static final double DIVISOR_PLATFORM = 2175786000.0;
   public static final String MKT_CAP_FILE_PLATFORM = "business_rules/Platform_may_rebal.csv";
 
         // Application index values
