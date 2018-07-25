@@ -45,24 +45,35 @@
     <h1 align = "center">Updates and Announcements</h1>
 <br/>
 <div class="containerbody">
+
+<button class="accordion-two">Supporting Float Change Metrics</button>
+<div class="panel">
+    <div class="blogdate"><p>August 1st, 2018</p></div>
+    <p>We've released a new report as part of our monthly rebalance showing the changes in float (circulating supply) for each asset and index in the Bletchley Universe. This report will be necessary for asset managers tracking an index to accurately predict what trades they will need to make to replicate the rebalance. See the first version <a th:href="@{/weights/august_floats_2018.csv}" href="../static/weights/august_floats_2018.csv">here</a>.</p>
+</div>
+
 <button class="accordion">Removal of Currency Sector Cap</button>
 <div class="panel">
+    <div class="blogdate"><p>July 15th, 2018</p></div>
     <p>We have removed the 25% cap on any single asset in our currency sector. There is no longer any limit to the maximum weight an asset may have in the currency index. The platform and application indexes remain unchanged with the 25% cap in place.</p>
 </div>
 
-<button class="accordion-two">Turnover and detailed weighting metrics</button>
+<button class="accordion-two">Supporting Turnover and Detailed Weighting Metrics</button>
 <div class="panel">
+    <div class="blogdate"><p>July 1st, 2018</p></div>
     <p>We've released a new report as part of our monthly rebalance showing the previous and new weighting of every asset in the Bletchley universe. We also now provide summarized turnover metrics for each index. See the first version <a th:href="@{/weights/july.csv}" href="../static/weights/july.csv">here</a>.</p>
 </div>
 
 <button class="accordion">July Rebalance</button>
 <div class="panel">
+    <div class="blogdate"><p>July 1st, 2018</p></div>
     <p>July rebalance was completed at 22:30 UTC on June 30th. Please click <a th:href="@{/blog/blog_july_2018}" href="blog_july_2018.html">here</a> for our new detailed report. Please click <a th:href="@{/weights/july.csv}" href="../static/weights/july.csv">here</a> for stats on turnover and weight changes.</p>
 </div>
 
 <button class="accordion-two">June Rebalance</button>
 <div class="panel">
 <br/>
+  <div class="blogdate"><p>June 1st, 2018</p></div>
   The June Rebalance will be effective as of 6/1/2018 at approximately 00:00 UTC and index membership changes are confirmed. Note that there was no May rebalance due to our rebalancing date change. Please click <a th:href="@{/weights/may.csv}" href="../static/weights/may.csv">here</a> for updated index membership and weightings.<br/><br/>
   <b>Bletchley 10 Indexes</b>
   <div class='containerindex'>
@@ -269,6 +280,7 @@
 
 <button class="accordion">Rebalancing Date Change</button>
 <div class="panel">
+    <div class="blogdate"><p>May 15th, 2018</p></div>
     <p>
         We are changing our rebalancing day to the first day of each month, at 00:00 UTC. This will be effective with our May rebalance, and will occur June 1st at 00:00 UTC.</p>
 </div>

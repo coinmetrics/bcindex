@@ -174,8 +174,8 @@ a:active,a:hover{outline-width:0}abbr[title]{border-bottom:none;text-decoration:
 
 
 button.accordion {
-    background-color: #D7DBDD;
-    color: #444;
+    background-color: #424949;
+    color: #ffffff;
     cursor: pointer;
     padding: 18px;
     width: 100%;
@@ -184,11 +184,12 @@ button.accordion {
     outline: none;
     font-size: 15px;
     transition: 0.4s;
+    
 }
 
 button.accordion-two {
-    background-color: #BBBDBD;
-    color: #444;
+    background-color: #000C4D;
+    color: #ffffff;
     cursor: pointer;
     padding: 18px;
     width: 100%;
@@ -201,11 +202,11 @@ button.accordion-two {
 
 
 button.accordion.active, button.accordion:hover {
-    background-color: #D7DBDD; 
+    background-color: #229954; 
 }
 
 button.accordion-two.active, button.accordion-two:hover {
-    background-color: #BBBDBD; 
+    background-color: #229954; 
 }
 
 div.panel {
