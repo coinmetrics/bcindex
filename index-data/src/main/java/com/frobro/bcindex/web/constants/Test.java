@@ -3,7 +3,7 @@ package com.frobro.bcindex.web.constants;
 /**
  * Created by rise on 7/13/17.
  */
-public class StaticValues {
+public class Test {
   // 10 index values
   public static final String TEN_INDEX_NAME = "10 INDEX";
   public static final double DIVISOR_TEN = 246622202.901;
