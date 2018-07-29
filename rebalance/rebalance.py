@@ -1,14 +1,14 @@
 
 # coding: utf-8
 
-# In[127]:
+# In[148]:
 
 import json
 import requests
 import pandas as pd
 
 
-# In[128]:
+# In[149]:
 
 list_indexes = ['10' , '20' , '40' , 'Total' , 'ETH' , 'Currency' , 'Platform' , 'Application']
 weights_API_list = ['TEN' , 'TWENTY' , 'FORTY' , 'TOTAL' , 'ETHEREUM' , 'CURRENCY' , 'PLATFORM' , 'APPLICATION']
@@ -16,7 +16,7 @@ old_month = 'july'            #change these every rebalance
 new_month = 'august'          #change these every rebalance
 
 
-# In[129]:
+# In[150]:
 
 #change file path below! Three times!
 #read in inputs and declare variables
@@ -30,14 +30,14 @@ for k in indexes:
     if (k == 'Currency' or k == 'Platform' or k == 'Application'):
         indexes[k] = pd.DataFrame()
         #change below to point to prod business_rules
-        indexes[k] = pd.read_csv('C:/Users/stoin/Desktop/Mike/Bletch/bcindex/index-data/src/main/resources/business_rules/'+k+'_'+new_month+'_rebal.csv' , index_col=[0] , names=[k,'Adj Float'])
+        indexes[k] = pd.read_csv('C:/Users/stoin/Desktop/Mike/Bletch/bcindex/index-data/src/main/resources/business_rules/'+k+'_'+old_month+'_rebal.csv' , index_col=[0] , names=[k,'Adj Float'])
     else:
         indexes[k] = pd.DataFrame()
         #change below to point to prod business_rules
-        indexes[k] = pd.read_csv('C:/Users/stoin/Desktop/Mike/Bletch/bcindex/index-data/src/main/resources/business_rules/'+k+'_'+new_month+'_rebal.csv' , index_col=[0] , names=[k,'Float' , 'Adj Float'])
+        indexes[k] = pd.read_csv('C:/Users/stoin/Desktop/Mike/Bletch/bcindex/index-data/src/main/resources/business_rules/'+k+'_'+old_month+'_rebal.csv' , index_col=[0] , names=[k,'Float' , 'Adj Float'])
 
 
-# In[130]:
+# In[151]:
 
 #API Call function
 def daily_price_historical(symbol, base):
@@ -47,13 +47,13 @@ def daily_price_historical(symbol, base):
     return df
 
 
-# In[131]:
+# In[152]:
 
 #get BTC price
 bitcoin = daily_price_historical('BTC','USD')
 
 
-# In[132]:
+# In[153]:
 
 #calculate new index values, only do one for sectors (just one weighting scheme)
 for k in indexes:
@@ -98,7 +98,7 @@ for k in indexes:
             print k, 'missing ticker!'
 
 
-# In[133]:
+# In[154]:
 
 #change file path below! four times!
 #read in input and declare variables
@@ -130,7 +130,7 @@ for k in indexes:
     indexes_new[k] = indexes[k]
 
 
-# In[134]:
+# In[155]:
 
 #main function to calculate new floats and divisors
 for k in indexes:
@@ -233,7 +233,7 @@ for k in indexes:
         new_constants.loc[k,('Adj BTC')] = new_constants.loc[k,('Adj USD')] / bitcoin
 
 
-# In[135]:
+# In[156]:
 
 #check for ticker issues
 for k in indexes:
@@ -242,13 +242,13 @@ for k in indexes:
             print k, 'missing ticker!' , indexes[k]['Price']
 
 
-# In[136]:
+# In[157]:
 
 #these should always almost match old prod index values
 new_constants
 
 
-# In[137]:
+# In[158]:
 
 for k in indexes:
     if (k == 'Currency' or k == 'Platform' or k == 'Application'):
@@ -259,7 +259,7 @@ for k in indexes:
         indexes_float_change[k]['Float Change Percent'] = (indexes_new[k]['Float'] / indexes_old[k]['Float']) - 1
 
 
-# In[138]:
+# In[159]:
 
 #change file path below!
 #only when actually running rebalance - change this to StaticValues and point to prod constants dir
@@ -267,7 +267,7 @@ with open('C:/Users/stoin/Desktop/Mike/Bletch/bcindex/index-data/src/main/java/c
     lines = constants.readlines()
 
 
-# In[139]:
+# In[160]:
 
 ten_divisor = new_constants.loc['10']['Divisor'].astype(str)
 ten_divisor_even = new_constants.loc['10']['Adj Divisor'].astype(str)
@@ -284,7 +284,7 @@ platform_divisor = new_constants.loc['Platform']['Divisor'].astype(str)
 application_divisor = new_constants.loc['Application']['Divisor'].astype(str)
 
 
-# In[140]:
+# In[161]:
 
 #DO NOT TOUCH! Extremely sensitive and hard to catch errors!
 new_csv_file_lines = {8 , 9 , 12 , 18 , 24 , 30 , 36 , 41 , 46 , 51 , 16 , 17,22,23,28,29,34,35,40,45,50}
@@ -335,7 +335,7 @@ for l in new_csv_file_lines:
         lines[l] = '  public static final String MKT_CAP_FILE_APPLICATION = "business_rules/Application_'+new_month+'_rebal.csv";\n'
 
 
-# In[141]:
+# In[162]:
 
 #change file path below!
 #have to change this to point to production constants and switch to StaticValues.java
@@ -344,7 +344,7 @@ with open('C:/Users/stoin/Desktop/Mike/Bletch/bcindex/index-data/src/main/java/c
 constants.close()
 
 
-# In[142]:
+# In[163]:
 
 #change file path below!
 #change below twice to point to prod business_rules directory!
@@ -359,7 +359,7 @@ for k in indexes:
     indexes_final[k].to_csv('C:/Users/stoin/Desktop/Mike/Bletch/bcindex/index-data/src/main/resources/business_rules/'+k+'_'+new_month+'_rebal.csv' , header = False)
 
 
-# In[143]:
+# In[164]:
 
 weights_API_list = ['TEN' , 'TWENTY' , 'FORTY' , 'TOTAL' , 'ETHEREUM' , 'CURRENCY' , 'PLATFORM' , 'APPLICATION']
 endPoint = "https://www.bletchleyindexes.com/api/weight";
@@ -370,7 +370,7 @@ for k in weights_API_list:
     old_weights[k]['Weight'] = pd.read_json(response, typ='series' , encoding='utf-8')
 
 
-# In[144]:
+# In[165]:
 
 list_indexes = ['10' , '20' , '40' , 'Total' , 'ETH' , 'Currency' , 'Platform' , 'Application']
 weights_API_list = ['TEN' , 'TWENTY' , 'FORTY' , 'TOTAL' , 'ETHEREUM' , 'CURRENCY' , 'PLATFORM' , 'APPLICATION']
@@ -385,7 +385,7 @@ old_weights['Application'] = old_weights['APPLICATION']
 old_weights['Total'] = old_weights['TOTAL']
 
 
-# In[145]:
+# In[166]:
 
 sectors = ['Application' , 'Platform' , 'Currency']
 for k in indexes:
@@ -424,7 +424,7 @@ for k in indexes:
     turnover_summary.loc[k,('Turnover')] = turnover[k]['Turnover'].abs().sum()/2
 
 
-# In[146]:
+# In[167]:
 
 #change file path below!
 upload_weights = pd.DataFrame()
@@ -444,4 +444,19 @@ for k in indexes:
 #change to point to prod static/weights directory!
 upload_weights.to_csv('C:/Users/stoin/Desktop/Mike/Bletch/bcindex/index-view/src/main/resources/static/weights/'+new_month+'_2018.csv')
 upload_floats.to_csv('C:/Users/stoin/Desktop/Mike/Bletch/bcindex/index-view/src/main/resources/static/weights/'+new_month+'_floats_2018.csv')
+
+
+# In[168]:
+
+turnover_summary
+
+
+# In[172]:
+
+upload_weights
+
+
+# In[ ]:
+
+
 
