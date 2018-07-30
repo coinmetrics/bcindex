@@ -7,6 +7,7 @@ import json
 import requests
 import pandas as pd
 
+STATIC_VAL_FILE = '..//index-data/src/main/java/com/frobro/bcindex/web/constants/StaticValues.java'
 
 # In[149]:
 
@@ -263,7 +264,7 @@ for k in indexes:
 
 #change file path below!
 #only when actually running rebalance - change this to StaticValues and point to prod constants dir
-with open('../index-data/src/main/java/com/frobro/bcindex/web/constants/Test.java','r') as constants:
+with open(STATIC_VAL_FILE,'r') as constants:
     lines = constants.readlines()
 
 
@@ -339,7 +340,7 @@ for l in new_csv_file_lines:
 
 #change file path below!
 #have to change this to point to production constants and switch to StaticValues.java
-with open('../index-data/src/main/java/com/frobro/bcindex/web/constants/Test.java','w') as constants:
+with open(STATIC_VAL_FILE,'w') as constants:
     constants.writelines( lines )
 constants.close()
 
