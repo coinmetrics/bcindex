@@ -22,7 +22,7 @@ new_month = 'august'          #change these every rebalance
 #read in inputs and declare variables
 indexes = dict.fromkeys(list_indexes)
 #change below to point to prod business_rules
-old_constants = pd.read_csv('C:/Users/stoin/Desktop/Mike/Bletch/bcindex/index-data/src/main/resources/business_rules/All_'+old_month+'.csv' , index_col=[0])
+old_constants = pd.read_csv('../index-data/src/main/resources/business_rules/All_'+old_month+'.csv' , index_col=[0])
 new_values = old_constants * 1
 new_values['Mkt Cap'] = old_constants['USD'] * 0
 new_values['Adj Mkt Cap'] = old_constants['USD'] * 0
@@ -30,11 +30,11 @@ for k in indexes:
     if (k == 'Currency' or k == 'Platform' or k == 'Application'):
         indexes[k] = pd.DataFrame()
         #change below to point to prod business_rules
-        indexes[k] = pd.read_csv('C:/Users/stoin/Desktop/Mike/Bletch/bcindex/index-data/src/main/resources/business_rules/'+k+'_'+old_month+'_rebal.csv' , index_col=[0] , names=[k,'Adj Float'])
+        indexes[k] = pd.read_csv('../index-data/src/main/resources/business_rules/'+k+'_'+old_month+'_rebal.csv' , index_col=[0] , names=[k,'Adj Float'])
     else:
         indexes[k] = pd.DataFrame()
         #change below to point to prod business_rules
-        indexes[k] = pd.read_csv('C:/Users/stoin/Desktop/Mike/Bletch/bcindex/index-data/src/main/resources/business_rules/'+k+'_'+old_month+'_rebal.csv' , index_col=[0] , names=[k,'Float' , 'Adj Float'])
+        indexes[k] = pd.read_csv('../index-data/src/main/resources/business_rules/'+k+'_'+old_month+'_rebal.csv' , index_col=[0] , names=[k,'Float' , 'Adj Float'])
 
 
 # In[151]:
@@ -120,13 +120,13 @@ for k in indexes:
     if (k == 'Currency' or k == 'Platform' or k == 'Application'):
         indexes[k] = pd.DataFrame()
         #change to point to prod business_rules dir!
-        indexes[k] = pd.read_csv('C:/Users/stoin/Desktop/Mike/Bletch/bcindex/index-data/src/main/resources/business_rules/'+k+'_pre_'+new_month+'.csv' , index_col=[0])
-        indexes_old[k] = pd.read_csv('C:/Users/stoin/Desktop/Mike/Bletch/bcindex/index-data/src/main/resources/business_rules/'+k+'_'+old_month+'_rebal.csv' , index_col=[0] , names=[k,'Adj Float'])
+        indexes[k] = pd.read_csv('../index-data/src/main/resources/business_rules/'+k+'_pre_'+new_month+'.csv' , index_col=[0])
+        indexes_old[k] = pd.read_csv('../index-data/src/main/resources/business_rules/'+k+'_'+old_month+'_rebal.csv' , index_col=[0] , names=[k,'Adj Float'])
     else:
         indexes[k] = pd.DataFrame()
         #change to point to prod business_rules dir!
-        indexes[k] = pd.read_csv('C:/Users/stoin/Desktop/Mike/Bletch/bcindex/index-data/src/main/resources/business_rules/'+k+'_pre_'+new_month+'.csv' , index_col=[0])
-        indexes_old[k] = pd.read_csv('C:/Users/stoin/Desktop/Mike/Bletch/bcindex/index-data/src/main/resources/business_rules/'+k+'_'+old_month+'_rebal.csv' , index_col=[0] , names=[k,'Float','Adj Float'])
+        indexes[k] = pd.read_csv('../index-data/src/main/resources/business_rules/'+k+'_pre_'+new_month+'.csv' , index_col=[0])
+        indexes_old[k] = pd.read_csv('../index-data/src/main/resources/business_rules/'+k+'_'+old_month+'_rebal.csv' , index_col=[0] , names=[k,'Float','Adj Float'])
     indexes_new[k] = indexes[k]
 
 
@@ -263,7 +263,7 @@ for k in indexes:
 
 #change file path below!
 #only when actually running rebalance - change this to StaticValues and point to prod constants dir
-with open('C:/Users/stoin/Desktop/Mike/Bletch/bcindex/index-data/src/main/java/com/frobro/bcindex/web/constants/Test.java','r') as constants:
+with open('../index-data/src/main/java/com/frobro/bcindex/web/constants/Test.java','r') as constants:
     lines = constants.readlines()
 
 
@@ -339,7 +339,7 @@ for l in new_csv_file_lines:
 
 #change file path below!
 #have to change this to point to production constants and switch to StaticValues.java
-with open('C:/Users/stoin/Desktop/Mike/Bletch/bcindex/index-data/src/main/java/com/frobro/bcindex/web/constants/Test.java','w') as constants:
+with open('../index-data/src/main/java/com/frobro/bcindex/web/constants/Test.java','w') as constants:
     constants.writelines( lines )
 constants.close()
 
@@ -348,7 +348,7 @@ constants.close()
 
 #change file path below!
 #change below twice to point to prod business_rules directory!
-new_constants.to_csv('C:/Users/stoin/Desktop/Mike/Bletch/bcindex/index-data/src/main/resources/business_rules/All_'+new_month+'.csv')
+new_constants.to_csv('../index-data/src/main/resources/business_rules/All_'+new_month+'.csv')
 indexes_final = dict.fromkeys(list_indexes)
 for k in indexes:
     if (k == 'Currency' or k == 'Platform' or k == 'Application'):
@@ -356,7 +356,7 @@ for k in indexes:
     else:
         indexes_final[k] = indexes[k].drop(['Price' , 'Mkt Cap' , 'Weight' , 'Equal' , 'AWF' , 'Adj Mkt Cap' , 'Adj Weight'],axis=1)
     #change below to point to prod business_rules!!
-    indexes_final[k].to_csv('C:/Users/stoin/Desktop/Mike/Bletch/bcindex/index-data/src/main/resources/business_rules/'+k+'_'+new_month+'_rebal.csv' , header = False)
+    indexes_final[k].to_csv('../index-data/src/main/resources/business_rules/'+k+'_'+new_month+'_rebal.csv' , header = False)
 
 
 # In[164]:
@@ -442,8 +442,8 @@ for k in indexes:
     upload_floats = upload_floats.append(index_float_name)
     upload_floats = pd.concat([upload_floats , indexes_float_change[k]])
 #change to point to prod static/weights directory!
-upload_weights.to_csv('C:/Users/stoin/Desktop/Mike/Bletch/bcindex/index-view/src/main/resources/static/weights/'+new_month+'_2018.csv')
-upload_floats.to_csv('C:/Users/stoin/Desktop/Mike/Bletch/bcindex/index-view/src/main/resources/static/weights/'+new_month+'_floats_2018.csv')
+upload_weights.to_csv('../index-view/src/main/resources/static/weights/'+new_month+'_2018.csv')
+upload_floats.to_csv('../index-view/src/main/resources/static/weights/'+new_month+'_floats_2018.csv')
 
 
 # In[168]:
