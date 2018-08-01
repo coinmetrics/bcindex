@@ -28,7 +28,7 @@ public class StaticValues {
   public static final String ETH_INDEX_NAME = "Ethereum INDEX";
   public static final double DIVISOR_ETHER = 83302280.00;
   public static final double DIVISOR_EVEN_ETHER = 84370900.00;
-  public static final String MKT_CAP_FILE_EHTER = "business_rules/ETH_july_rebal.csv";
+  public static final String MKT_CAP_FILE_ETHER = "business_rules/ETH_july_rebal.csv";
 
     // Total index values
   public static final String TOTAL_INDEX_NAME = "Total INDEX";

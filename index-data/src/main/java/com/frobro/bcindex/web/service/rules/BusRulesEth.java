@@ -23,7 +23,7 @@ public class BusRulesEth extends HasEvenIndexRules {
 
   private void populate() {
     tickers = new HashMap<>();
-    populateValuesFromFile(tickers, StaticValues.MKT_CAP_FILE_EHTER);
+    populateValuesFromFile(tickers, StaticValues.MKT_CAP_FILE_ETHER);
   }
 
   @Override
