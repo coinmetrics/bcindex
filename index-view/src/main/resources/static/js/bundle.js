@@ -229,23 +229,19 @@ var Config = {
         }, {
             id: 'TOTAL_INDEX',
             text: 'Bletchley Total Index'
-           },
-           {
+        }, {
             id: 'TOTAL_EVEN_INDEX',
             text: 'Bletchley Total Even Index'
         }, {
-                id: 'CURRENCY_SECTOR',
-                text: 'Bletchley Currency Index'
-            },
-            {
-                id: 'PLATFORM_SECTOR',
-                text: 'Bletchley Platform Index'
-            },
-            {
-                id: 'APPLICATION_SECTOR',
-                text: 'Bletchley Application Index'
-            }
-        ],
+            id: 'CURRENCY_SECTOR',
+            text: 'Bletchley Currency Index'
+        }, {
+            id: 'PLATFORM_SECTOR',
+            text: 'Bletchley Platform Index'
+        }, {
+            id: 'APPLICATION_SECTOR',
+            text: 'Bletchley Application Index'
+        }],
         currency: [{
             id: 'USD',
             text: 'US Dollar',
@@ -371,10 +367,10 @@ var Config = {
                         displayFormats: {
                             'minute': 'H:mm',
                             'hour': 'MMM D',
-                            'day': 'MMM D',
-                            'week': 'MMM',
-                            'month': 'MMM',
-                            'year': 'MMM'
+                            'day': 'MMM YY',
+                            'week': 'MMM YY',
+                            'month': 'MMM YY',
+                            'year': 'YY'
                         }
                     },
                     scaleLabel: {

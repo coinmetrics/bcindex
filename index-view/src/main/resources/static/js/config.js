@@ -191,10 +191,10 @@ let Config = {
                         displayFormats: {
                             'minute': 'H:mm', 
                             'hour': 'MMM D',
-                            'day' : 'MMM D',
-                            'week' : 'MMM',
-                            'month' : 'MMM',
-                            'year' : 'MMM'
+                            'day' : 'MMM YY',
+                            'week' : 'MMM YY',
+                            'month' : 'MMM YY',
+                            'year' : 'YY'
                         },
                     },
                     scaleLabel: {
