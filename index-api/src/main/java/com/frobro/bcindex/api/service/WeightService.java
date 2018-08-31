@@ -82,7 +82,7 @@ public class WeightService {
   }
 
   private void save(DoaService doa) {
-    System.out.println("saving data " + doa);
+    LOG.debug("saving data: " + doa);
 
     IndexName idx = doa.getName();
     switch (idx) {
@@ -215,7 +215,6 @@ public class WeightService {
   private List<DoaService> getList(Iterable<? extends JpaWeight> iterable) {
     List<DoaService> doaList = new LinkedList<>();
     iterable.forEach(jpa -> {
-      System.out.println(jpa.getBletchId());
       doaList.add(jpa.getDoa());
     });
     return doaList;
