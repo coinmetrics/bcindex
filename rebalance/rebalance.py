@@ -13,8 +13,9 @@ STATIC_VAL_FILE = '..//index-data/src/main/java/com/frobro/bcindex/web/constants
 
 list_indexes = ['10' , '20' , '40' , 'Total' , 'ETH' , 'Currency' , 'Platform' , 'Application']
 weights_API_list = ['TEN' , 'TWENTY' , 'FORTY' , 'TOTAL' , 'ETHEREUM' , 'CURRENCY' , 'PLATFORM' , 'APPLICATION']
-old_month = 'august'            #change these every rebalance
-new_month = 'september'          #change these every rebalance
+
+old_month = 'september'        #change these every rebalance
+new_month = 'october'          #change these every rebalance
 
 
 # In[150]:
