@@ -79,7 +79,7 @@ public class CryptoCompare {
     return COIN_COMPARE_BASE + removeTrailingDelim(baseRequest.toString()) + CURRENCY;
   }
 
-  public Map<String,Index> getData(Set<String> coins) throws IOException {
+  private Map<String,Index> getData(Set<String> coins) throws IOException {
     final String request = generateRequest(coins);
     String response = http.makeApiCall(request);
 
@@ -88,10 +88,6 @@ public class CryptoCompare {
 
   private String removeTrailingDelim(String reqStr) {
     return reqStr.substring(0, reqStr.length() - DELIM.length());
-  }
-
-  public double getBtcPrice() throws IOException {
-    return getBtcPrice(http.makeApiCall(COIN_COMPARE_BTC_ENDPOINT));
   }
 
   /************* Parsing logic *************/

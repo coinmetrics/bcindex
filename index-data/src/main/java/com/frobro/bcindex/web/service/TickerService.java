@@ -9,6 +9,7 @@ import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.domain.Index;
 import com.frobro.bcindex.web.model.BletchleyData;
 import com.frobro.bcindex.web.service.apis.CryptoCompare;
+import com.frobro.bcindex.web.service.apis.NomicsApi;
 import com.frobro.bcindex.web.service.persistence.IndexDbDto;
 import com.frobro.bcindex.web.service.publish.DailyWeightPubService;
 import com.frobro.bcindex.web.service.publish.PricePublishService;
@@ -29,7 +30,7 @@ import static com.frobro.bcindex.core.model.IndexName.*;
 public class TickerService {
 
   private static final BcLog log = BcLog.getLogger(TickerService.class);
-  private final CryptoCompare cryptoCompare = new CryptoCompare();
+  private final NomicsApi cryptoCompare = new NomicsApi();
   private long updateTime;
 
   // publishers
