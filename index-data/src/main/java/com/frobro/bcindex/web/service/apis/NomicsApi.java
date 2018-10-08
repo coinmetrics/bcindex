@@ -81,19 +81,20 @@ public class NomicsApi  {
       while(itr.hasNext()) {
         JsonNode node = itr.next();
 
-        JsonNode coinNode = node.get(SYMBOL_KEY);
+        JsonNode symbolNode = node.get(SYMBOL_KEY);
         JsonNode priceNode = node.get(PRICE_KEY);
 
-        // if the key doesn't exist
-        if (coinNode == null) {
+        // if the key doesn't exist throw an error
+        if (symbolNode == null) {
           throwNullNodeError(SYMBOL_KEY, node);
         }
+        // same if price doesn't exist
         if (priceNode == null) {
           throwNullNodeError(PRICE_KEY, node);
         }
 
         // if this coin is in this node
-        if (coin.equalsIgnoreCase(coinNode.asText())) {
+        if (coin.equalsIgnoreCase(symbolNode.asText())) {
           addCoin(tickers, coin, priceNode.asDouble());
           foundCoinsCnt++;
 
@@ -117,6 +118,10 @@ public class NomicsApi  {
         + " in node: " + node);
   }
 
+  /*
+   * create add data to the index data structure and add it to the map
+   * so given a symbol we can get its value, mkt cap, ect
+   */
   private void addCoin(Map<String, Index> tickerMap, String coin, double value) {
     Index index = new Index()
         .setName(coin)
