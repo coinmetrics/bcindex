@@ -1,24 +1,28 @@
 
 # coding: utf-8
 
-# In[148]:
+# In[5]:
+
 
 import json
 import requests
+import datetime
 import pandas as pd
+import urllib.request
+import codecs
 
-STATIC_VAL_FILE = '..//index-data/src/main/java/com/frobro/bcindex/web/constants/StaticValues.java'
 
-# In[149]:
+# In[6]:
+
 
 list_indexes = ['10' , '20' , '40' , 'Total' , 'ETH' , 'Currency' , 'Platform' , 'Application']
 weights_API_list = ['TEN' , 'TWENTY' , 'FORTY' , 'TOTAL' , 'ETHEREUM' , 'CURRENCY' , 'PLATFORM' , 'APPLICATION']
+old_month = 'october'            #change these every rebalance
+new_month = 'november'          #change these every rebalance
 
-old_month = 'september'        #change these every rebalance
-new_month = 'october'          #change these every rebalance
 
+# In[7]:
 
-# In[150]:
 
 #change file path below! Three times!
 #read in inputs and declare variables
@@ -32,30 +36,43 @@ for k in indexes:
     if (k == 'Currency' or k == 'Platform' or k == 'Application'):
         indexes[k] = pd.DataFrame()
         #change below to point to prod business_rules
-        indexes[k] = pd.read_csv('../index-data/src/main/resources/business_rules/'+k+'_'+old_month+'_rebal.csv' , index_col=[0] , names=[k,'Adj Float'])
+        indexes[k] = pd.read_csv('../index-data/src/main/resources/business_rules/'+k+'_'+new_month+'_rebal.csv' , index_col=[0] , names=[k,'Adj Float'])
     else:
         indexes[k] = pd.DataFrame()
         #change below to point to prod business_rules
-        indexes[k] = pd.read_csv('../index-data/src/main/resources/business_rules/'+k+'_'+old_month+'_rebal.csv' , index_col=[0] , names=[k,'Float' , 'Adj Float'])
+        indexes[k] = pd.read_csv('../index-data/src/main/resources/business_rules/'+k+'_'+new_month+'_rebal.csv' , index_col=[0] , names=[k,'Float' , 'Adj Float'])
 
 
-# In[151]:
-
-#API Call function
-def daily_price_historical(symbol, base):
-    url = 'https://min-api.cryptocompare.com/data/price?fsym={}&tsyms={}'            .format(symbol.upper(), base.upper())
-    page = requests.get(url)
-    df = page.json()['USD']
-    return df
+# In[8]:
 
 
-# In[152]:
+url = "https://api.nomics.com/v1/prices?key=8ab88c64570680aeb728a3109e69dd96"
+#page = (urllib.request.urlopen(url).read())
+response = (urllib.request.urlopen(url).read())
+response = response.decode('utf-8')
+d = json.loads(response)
+all_prices = pd.DataFrame(d)
+all_prices = all_prices.set_index('currency')
+all_prices['Price'] = pd.to_numeric(all_prices['price'])
+
+
+# In[9]:
+
+
+def daily_price_historical(symbol,base):
+    a = all_prices.loc[symbol]['Price']
+    return a
+
+
+# In[10]:
+
 
 #get BTC price
 bitcoin = daily_price_historical('BTC','USD')
 
 
-# In[153]:
+# In[12]:
+
 
 #calculate new index values, only do one for sectors (just one weighting scheme)
 for k in indexes:
@@ -65,7 +82,7 @@ for k in indexes:
                 df = daily_price_historical(t,'USD')
                 indexes[k].loc[t,('Price')] = df
             except:
-                print t , 'no price!'
+                print (t , 'no price!')
         indexes[k]['Mkt Cap'] = indexes[k]['Price']*indexes[k]['Adj Float']
         indexes[k]['Weight'] = indexes[k]['Mkt Cap'] / indexes[k]['Mkt Cap'].sum()
         sum_weight = indexes[k]['Weight'].sum()
@@ -74,14 +91,14 @@ for k in indexes:
         new_values.loc[k,('USD')] = indexes[k]['Mkt Cap'].sum() / new_values.loc[k,('Divisor')]
         new_values.loc[k,('BTC')] = new_values.loc[k,('USD')] / bitcoin
         if (indexes[k]['Price'] < 0.001).any() == True:
-            print k, 'missing ticker!'
+            print (k, 'missing ticker!')
     else:
         for t in indexes[k].index:
             try:
                 df = daily_price_historical(t,'USD')
                 indexes[k].loc[t,('Price')] = df
             except:
-                print t , 'no price!'
+                print (t , 'no price!')
         indexes[k]['Mkt Cap'] = indexes[k]['Price']*indexes[k]['Float']
         indexes[k]['Weight'] = indexes[k]['Mkt Cap'] / indexes[k]['Mkt Cap'].sum()
         indexes[k]['Equal'] = 1.00 / (len(indexes[k]))
@@ -97,10 +114,11 @@ for k in indexes:
         new_values.loc[k,('BTC')] = new_values.loc[k,('USD')] / bitcoin
         new_values.loc[k,('Adj BTC')] = new_values.loc[k,('Adj USD')] / bitcoin
         if (indexes[k]['Price'] < 0.001).any() == True:
-            print k, 'missing ticker!'
+            print (k, 'missing ticker!')
 
 
-# In[154]:
+# In[13]:
+
 
 #change file path below! four times!
 #read in input and declare variables
@@ -132,7 +150,8 @@ for k in indexes:
     indexes_new[k] = indexes[k]
 
 
-# In[155]:
+# In[15]:
+
 
 #main function to calculate new floats and divisors
 for k in indexes:
@@ -142,7 +161,7 @@ for k in indexes:
                 df = daily_price_historical(t,'USD')
                 indexes[k].loc[t,('Price')] = df
             except:
-                print t , 'error'
+                print (t , 'error')
         if (k == 'Platform' or k == 'Application'):
             weight_cap = 0.2500
         else:
@@ -216,7 +235,7 @@ for k in indexes:
                 df = daily_price_historical(t,'USD')
                 indexes[k].loc[t,('Price')] = df
             except:
-                print t , 'error'
+                print (t , 'error')
         indexes[k]['Mkt Cap'] = indexes[k]['Price']*indexes[k]['Float']
         indexes[k]['Weight'] = indexes[k]['Mkt Cap'] / indexes[k]['Mkt Cap'].sum()
         indexes[k]['Equal'] = 1.00 / (len(indexes[k]))
@@ -235,22 +254,25 @@ for k in indexes:
         new_constants.loc[k,('Adj BTC')] = new_constants.loc[k,('Adj USD')] / bitcoin
 
 
-# In[156]:
+# In[16]:
+
 
 #check for ticker issues
 for k in indexes:
     #print indexes[k]['Price']
     if (indexes[k]['Price'] < 0.0001).any() == True:
-            print k, 'missing ticker!' , indexes[k]['Price']
+            print (k, 'missing ticker!' , indexes[k]['Price'])
 
 
-# In[157]:
+# In[17]:
+
 
 #these should always almost match old prod index values
 new_constants
 
 
-# In[158]:
+# In[18]:
+
 
 for k in indexes:
     if (k == 'Currency' or k == 'Platform' or k == 'Application'):
@@ -261,15 +283,17 @@ for k in indexes:
         indexes_float_change[k]['Float Change Percent'] = (indexes_new[k]['Float'] / indexes_old[k]['Float']) - 1
 
 
-# In[159]:
+# In[19]:
+
 
 #change file path below!
 #only when actually running rebalance - change this to StaticValues and point to prod constants dir
-with open(STATIC_VAL_FILE,'r') as constants:
+with open(STATIC_CONSTANTS_JAVA_FILE,'r') as constants:
     lines = constants.readlines()
 
 
-# In[160]:
+# In[20]:
+
 
 ten_divisor = new_constants.loc['10']['Divisor'].astype(str)
 ten_divisor_even = new_constants.loc['10']['Adj Divisor'].astype(str)
@@ -286,7 +310,8 @@ platform_divisor = new_constants.loc['Platform']['Divisor'].astype(str)
 application_divisor = new_constants.loc['Application']['Divisor'].astype(str)
 
 
-# In[161]:
+# In[21]:
+
 
 #DO NOT TOUCH! Extremely sensitive and hard to catch errors!
 new_csv_file_lines = {8 , 9 , 12 , 18 , 24 , 30 , 36 , 41 , 46 , 51 , 16 , 17,22,23,28,29,34,35,40,45,50}
@@ -337,16 +362,18 @@ for l in new_csv_file_lines:
         lines[l] = '  public static final String MKT_CAP_FILE_APPLICATION = "business_rules/Application_'+new_month+'_rebal.csv";\n'
 
 
-# In[162]:
+# In[22]:
+
 
 #change file path below!
 #have to change this to point to production constants and switch to StaticValues.java
-with open(STATIC_VAL_FILE,'w') as constants:
+with open(STATIC_CONSTANTS_JAVA_FILE,'w') as constants:
     constants.writelines( lines )
 constants.close()
 
 
-# In[163]:
+# In[23]:
+
 
 #change file path below!
 #change below twice to point to prod business_rules directory!
@@ -361,7 +388,8 @@ for k in indexes:
     indexes_final[k].to_csv('../index-data/src/main/resources/business_rules/'+k+'_'+new_month+'_rebal.csv' , header = False)
 
 
-# In[164]:
+# In[24]:
+
 
 weights_API_list = ['TEN' , 'TWENTY' , 'FORTY' , 'TOTAL' , 'ETHEREUM' , 'CURRENCY' , 'PLATFORM' , 'APPLICATION']
 endPoint = "https://www.bletchleyindexes.com/api/weight";
@@ -372,7 +400,8 @@ for k in weights_API_list:
     old_weights[k]['Weight'] = pd.read_json(response, typ='series' , encoding='utf-8')
 
 
-# In[165]:
+# In[25]:
+
 
 list_indexes = ['10' , '20' , '40' , 'Total' , 'ETH' , 'Currency' , 'Platform' , 'Application']
 weights_API_list = ['TEN' , 'TWENTY' , 'FORTY' , 'TOTAL' , 'ETHEREUM' , 'CURRENCY' , 'PLATFORM' , 'APPLICATION']
@@ -387,7 +416,8 @@ old_weights['Application'] = old_weights['APPLICATION']
 old_weights['Total'] = old_weights['TOTAL']
 
 
-# In[166]:
+# In[26]:
+
 
 sectors = ['Application' , 'Platform' , 'Currency']
 for k in indexes:
@@ -426,7 +456,8 @@ for k in indexes:
     turnover_summary.loc[k,('Turnover')] = turnover[k]['Turnover'].abs().sum()/2
 
 
-# In[167]:
+# In[27]:
+
 
 #change file path below!
 upload_weights = pd.DataFrame()
@@ -446,19 +477,4 @@ for k in indexes:
 #change to point to prod static/weights directory!
 upload_weights.to_csv('../index-view/src/main/resources/static/weights/'+new_month+'_2018.csv')
 upload_floats.to_csv('../index-view/src/main/resources/static/weights/'+new_month+'_floats_2018.csv')
-
-
-# In[168]:
-
-turnover_summary
-
-
-# In[172]:
-
-upload_weights
-
-
-# In[ ]:
-
-
 
