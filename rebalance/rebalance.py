@@ -14,6 +14,7 @@ import codecs
 
 # In[6]:
 
+STATIC_CONSTANTS_JAVA_FILE = "../index-data/src//main/java/com/frobro/bcindex/web/constants/StaticValues.java"
 
 list_indexes = ['10' , '20' , '40' , 'Total' , 'ETH' , 'Currency' , 'Platform' , 'Application']
 weights_API_list = ['TEN' , 'TWENTY' , 'FORTY' , 'TOTAL' , 'ETHEREUM' , 'CURRENCY' , 'PLATFORM' , 'APPLICATION']
@@ -48,9 +49,10 @@ for k in indexes:
 
 url = "https://api.nomics.com/v1/prices?key=8ab88c64570680aeb728a3109e69dd96"
 #page = (urllib.request.urlopen(url).read())
-response = (urllib.request.urlopen(url).read())
-response = response.decode('utf-8')
-d = json.loads(response)
+# response = (urllib.request.urlopen(url).read())
+# response = response.decode('utf-8')
+response = requests.get(url)
+d = response.json()
 all_prices = pd.DataFrame(d)
 all_prices = all_prices.set_index('currency')
 all_prices['Price'] = pd.to_numeric(all_prices['price'])
