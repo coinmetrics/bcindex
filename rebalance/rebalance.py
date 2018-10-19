@@ -126,6 +126,7 @@ for k in indexes:
 #read in input and declare variables
 indexes , indexes_old = dict.fromkeys(list_indexes) , dict.fromkeys(list_indexes)
 indexes_clean = dict.fromkeys(list_indexes)
+floats_temp = dict.fromkeys(list_indexes)
 indexes_new , old_weights = dict.fromkeys(list_indexes) , dict.fromkeys(list_indexes)
 new_weights , new_weights_clean = dict.fromkeys(list_indexes) , dict.fromkeys(list_indexes)
 old_weights_clean , turnover = dict.fromkeys(list_indexes) , dict.fromkeys(list_indexes)
@@ -139,6 +140,7 @@ fields_sector = [0, 12]
 
 for k in indexes:
     indexes_float_change[k] = pd.DataFrame()
+    floats_temp[k] = pd.DataFrame()
     if (k == 'Currency' or k == 'Platform' or k == 'Application'):
         indexes[k] = pd.DataFrame()
         #change to point to prod business_rules dir!
@@ -278,11 +280,26 @@ new_constants
 
 for k in indexes:
     if (k == 'Currency' or k == 'Platform' or k == 'Application'):
+        floats_temp[k]['Weight'] = indexes[k]['Weight4']
+        floats_temp[k]['Price'] = indexes[k]['Price']
+        indexes_float_change[k]['Float'] = indexes[k]['Adj Float']
         indexes_float_change[k]['Float Change'] = indexes[k]['Adj Float'] - indexes_old[k]['Adj Float']
         indexes_float_change[k]['Float Change Percent'] = (indexes[k]['Adj Float'] / indexes_old[k]['Adj Float']) - 1
+        mult = 1000000/((indexes_float_change[k]['Float'] / indexes_float_change[k]\
+        ['Float'][0])*floats_temp[k]['Price']).sum()
+        indexes_float_change[k]['Units per $1m'] = mult*((indexes_float_change[k]['Float'] / indexes_float_change[k]\
+        ['Float'][0]))
     else:
+        #print (indexes_float_change[k][indexes_float_change[k].index.duplicated()])
+        floats_temp[k]['Weight'] = indexes[k]['Weight']
+        floats_temp[k]['Price'] = indexes[k]['Price']
+        indexes_float_change[k]['Float'] = indexes[k]['Float']
         indexes_float_change[k]['Float Change'] = indexes_new[k]['Float'] - indexes_old[k]['Float']
         indexes_float_change[k]['Float Change Percent'] = (indexes_new[k]['Float'] / indexes_old[k]['Float']) - 1
+        mult = 1000000/((indexes_float_change[k]['Float'] / indexes_float_change[k]\
+        ['Float'][0])*floats_temp[k]['Price']).sum()
+        indexes_float_change[k]['Units per $1m'] = mult*((indexes_float_change[k]['Float'] / indexes_float_change[k]\
+        ['Float'][0]))
 
 
 # In[19]:
@@ -471,9 +488,9 @@ for k in indexes:
     index_name.loc[k] = ['New Weight' , 'Old Weight' , 'Turnover']
     upload_weights = upload_weights.append(index_name)
     upload_weights = pd.concat([upload_weights , weights_master[k]])
-    index_float_name = pd.DataFrame(columns = ['Float Change' , 'Float Change Percent'])
+    index_float_name = pd.DataFrame(columns = ['Float' , 'Float Change' , 'Float Change Percent' , 'Units per $1m'])
     index_float_name.set_index = (k+' Index')
-    index_float_name.loc[k] = ['Float Change' , 'Float Change Percent']
+    index_float_name.loc[k] = ['Float' , 'Float Change' , 'Float Change Percent' , 'Units per $1m']
     upload_floats = upload_floats.append(index_float_name)
     upload_floats = pd.concat([upload_floats , indexes_float_change[k]])
 #change to point to prod static/weights directory!
