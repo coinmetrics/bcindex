@@ -489,8 +489,8 @@ for k in indexes:
     upload_weights = upload_weights.append(index_name)
     upload_weights = pd.concat([upload_weights , weights_master[k]])
     index_float_name = pd.DataFrame(columns = ['Float' , 'Float Change' , 'Float Change Percent' , 'Units per $1m'])
-    index_float_name.set_index = (k+' Index')
     index_float_name.loc[k] = ['Float' , 'Float Change' , 'Float Change Percent' , 'Units per $1m']
+    index_float_name.rename(index={k:k+' Index'},inplace=True)
     upload_floats = upload_floats.append(index_float_name)
     upload_floats = pd.concat([upload_floats , indexes_float_change[k]])
 #change to point to prod static/weights directory!
