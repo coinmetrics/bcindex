@@ -40,6 +40,10 @@ public class RequestConverter {
       return new ObjectMapper().readValue(json, PublicRequest.class);
   }
 
+  public static SecurePublicRequest secureConvert(String json) throws IOException {
+    return new ObjectMapper().readValue(json, SecurePublicRequest.class);
+  }
+
   public static PublicApiResponse convert(ApiResponse privateResp) {
     PublicApiResponse publicResp = new PublicApiResponse();
     publicResp.currency = privateResp.currency;

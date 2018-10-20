@@ -4,10 +4,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ApiKeyService {
-  private static Set<String> knownKeys = new HashSet<>();
+  private static final String NOMICS_KEY = "abcnomics";
+  private static final String PROP_SHOT_KEY = "abctrader";
+  private static final Set<String> knownKeys = new HashSet<>();
 
   static {
-    knownKeys.add("fkdjfdkfj98r9");
+    knownKeys.add(NOMICS_KEY);
+    knownKeys.add(PROP_SHOT_KEY);
   }
 
   public static boolean isKeyValid(String apiKey) {
