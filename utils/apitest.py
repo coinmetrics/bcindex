@@ -6,10 +6,10 @@ local = "http://localhost:8090"
 stage = "http://stage-index-view.herokuapp.com"
 prod = "http://www.bletchleyindexes.com"
 
-ENV = prod
+ENV = local
 
 def checkIndex():
-    endpt = ENV + "/api/index"
+    endpt = ENV + "/api/index/protected"
     data = {'index':'FORTY_INDEX', 'currency':'USD','timeFrame':'DAILY'}
 
     return requests.post(endpt, json=data)
@@ -63,8 +63,10 @@ def toLocalDate(epoch):
 # print checkDailyPrice().text
 # print checkWeightList().text
 # print checkWeights().text
-print checkDailyWeight().text
+# print checkDailyWeight().text
 # print checkDailyWeightContents()
-
+resp = checkIndex()
+print resp.status_code
+print resp.text
 
 

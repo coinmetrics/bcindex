@@ -23,12 +23,15 @@ def assert_weight_add_to_one(weights):
     sum = 0.0
     for ticker,weight in weights.iteritems():
         sum = sum + weight
-    if (sum != 1):
-        print("error sum is not 1. It is: " + str(sum))
+        sum = sum*1.0
+    if (not isclose(1.0, sum)):
+        print("error sum is not " + str(type(1.0)) + ". It is: " + str(type(sum)))
     else:
         print("SUCCESS")
         
-    assert 1.0 == sum
+def isclose(expected, actual, rel_tol=1e-09, abs_tol=0.0):
+    return abs(expected - actual) <= max(rel_tol * max(abs(expected), abs(actual)), abs_tol)
+
 
 print("running Real Time Weight test")
 mark = "====>"

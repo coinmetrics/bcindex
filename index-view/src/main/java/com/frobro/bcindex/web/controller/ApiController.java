@@ -1,7 +1,12 @@
 package com.frobro.bcindex.web.controller;
 
+import static com.frobro.bcindex.web.model.api.RequestConverter.convert;
+import static com.frobro.bcindex.web.model.api.RequestConverter.secureConvert;
+
 import com.frobro.bcindex.web.bclog.BcLog;
+import com.frobro.bcindex.web.exception.ApiKeyInvalidException;
 import com.frobro.bcindex.web.model.api.*;
+import com.frobro.bcindex.web.service.ApiKeyService;
 import com.frobro.bcindex.web.service.DbTickerService;
 import com.frobro.bcindex.web.service.TimeSeriesService;
 import com.frobro.bcindex.web.service.TimerService;
@@ -31,12 +36,13 @@ public class ApiController {
   private static final String CONTROLLER_OFF = "bletch.controller.off";
   private static final BcLog log = BcLog.getLogger(ApiController.class);
 
-  private DbTickerService dbTickerService = new DbTickerService();
   private TimerService timerService;
   private CacheUpdateMgr cacheMgr;
   private DataCache cache = new DataCache();
   private JdbcTemplate jdbc;
   private ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
+  // protected to be mocked out for testing
+  protected DbTickerService dbTickerService = new DbTickerService();
 
   public static void turnOffThisControllerForTesting() {
     System.setProperty(CONTROLLER_OFF,"true");
@@ -97,19 +103,38 @@ public class ApiController {
     return "updated";
   }
 
+  @RequestMapping(value = "api/index/protected", method = RequestMethod.POST)
+  public String publicProtectedApiEndPoint(@RequestBody String reqStr) {
+
+    try {
+      SecurePublicRequest pubReq = secureConvert(reqStr);
+
+      if (!ApiKeyService.isKeyValid(pubReq.apiKey)) {
+        throw new ApiKeyInvalidException(ApiKeyService.getUnknowKeyMsg());
+      }
+
+      return processRequest(convert(pubReq));
+
+    } catch (IOException ioe) {
+      log.error(ioe);
+      return errorRequest();
+    }
+  }
+
   @RequestMapping(value = "api/index", method = RequestMethod.POST)
   public String publicApiEndPoint(@RequestBody String reqStr) {
 
     try {
 
-      PublicRequest pubReq = RequestConverter.convert(reqStr);
-      RequestDto dto = RequestConverter.convert(pubReq);
-      return processRequest(dto);
+      return processRequest(convert(convert(reqStr)));
 
     } catch (IOException ioe) {
       log.error("error parsing api request:\n", ioe);
+      return errorRequest();
     }
+  }
 
+  private String errorRequest() {
     return DbTickerService.toJson(
         ResponseEntity.status(HttpStatus.BAD_REQUEST)
             .body("supported currency ("
@@ -130,9 +155,9 @@ public class ApiController {
                 + ", " + PublicTimeFrame.WEEKLY + ")"));
   }
 
-  private String processRequest(RequestDto req) {
+  protected String processRequest(RequestDto req) {
     ApiResponse privateResp = dbTickerService.getData(req);
-    PublicApiResponse publicResp = RequestConverter.convert(privateResp);
+    PublicApiResponse publicResp = convert(privateResp);
     return DbTickerService.toJson(publicResp);
   }
 
