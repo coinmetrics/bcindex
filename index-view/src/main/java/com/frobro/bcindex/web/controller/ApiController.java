@@ -2,6 +2,7 @@ package com.frobro.bcindex.web.controller;
 
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.model.api.*;
+import com.frobro.bcindex.web.service.ApiKeyService;
 import com.frobro.bcindex.web.service.DbTickerService;
 import com.frobro.bcindex.web.service.TimeSeriesService;
 import com.frobro.bcindex.web.service.TimerService;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.concurrent.Executors;
@@ -98,11 +100,15 @@ public class ApiController {
   }
 
   @RequestMapping(value = "api/index", method = RequestMethod.POST)
-  public String publicApiEndPoint(@RequestBody String reqStr) {
+  public String publicApiEndPoint(@RequestBody String reqStr, HttpServletResponse response) {
 
     try {
 
       PublicRequest pubReq = RequestConverter.convert(reqStr);
+      if (!ApiKeyService.isKeyValid(pubReq.apiKey)) {
+        return ApiKeyService.getUnknowKeyMsg();
+      }
+      
       RequestDto dto = RequestConverter.convert(pubReq);
       return processRequest(dto);
 
