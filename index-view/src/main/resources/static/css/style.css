@@ -579,6 +579,8 @@ table.download-table tbody tr:hover {
 #mc_embed_signup_mobile label.error {display:block; float:none; width:auto; margin-left:1.05em; text-align:left; padding:.5em 0;}
 
 .container{width:100%;background-color:#F7F9F9;}
+.containerbody{background-color: background-color: #edf2f7}
+.containerbodyblog{background-color: #edf2f7}
 .masterbody{max-width:1050px;max-height:700px;justify-content: center;align-content: center;margin-left: auto;margin-right: auto;}
 .containerdownloads{background-color:#F7F9F9;}
 .containerindex{width:100%;background-color:#F7F9F9;padding-left:10px;padding-top:none;}
@@ -611,9 +613,9 @@ table.download-table tbody tr:hover {
 .half-mobile-image{width:50%;background-color:#ECF0F1;float:left;text-align:center;height:200px;padding:80px 0;}
 .half-API{width:50%;background-color:#ECF0F1;float:left;text-align:center;height:200px;padding:80px 0;}
 .half-API-image{width:50%;background-color:#ECF0F1;float:left;text-align:center;height:200px;padding:80px 0;}
-.blog-image{width:100%;background-color:#ECF0F1;float:left;text-align:center;height:100%;padding:20px 0;}
-.blog-image-mobile{width:100%;background-color:#ECF0F1;float:left;text-align:center;height:100%;padding:20px 0;}
-.blog-table{width:100%;background-color:#ECF0F1;float:left;text-align:center;height:100%;padding:20px 0;}
+.blog-image{width:100%;background-color:#edf2f7;float:left;text-align:center;height:100%;padding:20px 0;}
+.blog-image-mobile{width:100%;background-color:#edf2f7;float:left;text-align:center;height:100%;padding:20px 0;}
+.blog-table{width:100%;background-color:#edf2f7;float:left;text-align:center;height:100%;padding:20px 0;}
 .halfcontact{width:50%;background-color:#F7F9F9;float:left;text-align:center;height:250px;padding:40px 0;}
 .halfcontact{width:50%;background-color:#F7F9F9;float:left;text-align:center;height:250px;padding:40px 0;}
 .halfdownload{width:50%;background-color:#F7F9F9;float:left;text-align:center;height:125px;padding:40px 0;}
