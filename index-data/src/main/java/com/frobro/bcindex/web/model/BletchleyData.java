@@ -54,16 +54,20 @@ public class BletchleyData {
     return new HashSet<>(businessRules.getIndexes());
   }
 
-  public BletchleyData filterAndSet(Map<String,Index> members) {
-    for (String coin : businessRules.getIndexes()) {
-      if (members.containsKey(coin)) {
-        lastIndexes.put(coin, members.get(coin));
+  // returns set of missed coins for testing
+  public Set<String> filterAndSet(Map<String,Index> receivedCoins) {
+    Set<String> missedCoins = new HashSet<>();
+
+    for (String neededCoin : businessRules.getIndexes()) {
+      if (receivedCoins.containsKey(neededCoin)) {
+        lastIndexes.put(neededCoin, receivedCoins.get(neededCoin));
       }
       else {
-        LOG.error("no data for coin: " + coin);
+        LOG.error("no data for coin: " + neededCoin);
+        missedCoins.add(neededCoin);
       }
     }
-    return this;
+    return missedCoins;
   }
 
   // public for testing
