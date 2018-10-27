@@ -131,7 +131,8 @@ indexes_new , old_weights = dict.fromkeys(list_indexes) , dict.fromkeys(list_ind
 new_weights , new_weights_clean = dict.fromkeys(list_indexes) , dict.fromkeys(list_indexes)
 old_weights_clean , turnover = dict.fromkeys(list_indexes) , dict.fromkeys(list_indexes)
 indexes_float_change = dict.fromkeys(list_indexes)
-old_constants = new_values
+indexes_float_change_publish = dict.fromkeys(list_indexes)
+old_constants = pd.read_csv('C:/Users\stoin\Desktop\Mike\Jupyter\Inputb\\All_pre_'+new_month+'.csv' , index_col=[0])
 new_constants = old_constants * 0
 new_constants = new_constants.drop(['Mkt Cap' , 'Adj Mkt Cap'],axis=1)
 
@@ -140,6 +141,7 @@ fields_sector = [0, 12]
 
 for k in indexes:
     indexes_float_change[k] = pd.DataFrame()
+    indexes_float_change_publish[k] = pd.DataFrame()
     floats_temp[k] = pd.DataFrame()
     if (k == 'Currency' or k == 'Platform' or k == 'Application'):
         indexes[k] = pd.DataFrame()
@@ -280,26 +282,32 @@ new_constants
 
 for k in indexes:
     if (k == 'Currency' or k == 'Platform' or k == 'Application'):
-        floats_temp[k]['Weight'] = indexes[k]['Weight4']
-        floats_temp[k]['Price'] = indexes[k]['Price']
+        indexes_float_change[k]['Weight'] = indexes[k]['Weight4']
+        indexes_float_change[k]['Price'] = indexes[k]['Price']
+        indexes_float_change[k]['Previous Float'] = indexes_old[k]['Adj Float']
         indexes_float_change[k]['Float'] = indexes[k]['Adj Float']
         indexes_float_change[k]['Float Change'] = indexes[k]['Adj Float'] - indexes_old[k]['Adj Float']
-        indexes_float_change[k]['Float Change Percent'] = (indexes[k]['Adj Float'] / indexes_old[k]['Adj Float']) - 1
-        mult = 1000000/((indexes_float_change[k]['Float'] / indexes_float_change[k]\
-        ['Float'][0])*floats_temp[k]['Price']).sum()
-        indexes_float_change[k]['Units per $1m'] = mult*((indexes_float_change[k]['Float'] / indexes_float_change[k]\
-        ['Float'][0]))
+        indexes_float_change[k]['Float Change Percent'] = ((indexes[k]['Adj Float'] / indexes_old[k]['Adj Float']) - 1)*100
+        indexes_float_change[k]['Float Change Units per 1 bps'] = indexes_float_change[k]['Float Change'] * 0.0001
+        indexes_float_change[k]['Funding'] = indexes_float_change[k]['Float Change Units per 1 bps'] * indexes_float_change[k]['Price']
+        indexes_float_change[k]['Funding Units per 1 bps'] = (-indexes_float_change[k]['Funding'].sum()*\
+                                                        indexes_float_change[k]['Weight']) / indexes_float_change[k]['Price']
+        indexes_float_change[k]['Total Flow Units per 1 bps'] = indexes_float_change[k]['Float Change Units per 1 bps']\
+        + indexes_float_change[k]['Funding Units per 1 bps']
     else:
         #print (indexes_float_change[k][indexes_float_change[k].index.duplicated()])
-        floats_temp[k]['Weight'] = indexes[k]['Weight']
-        floats_temp[k]['Price'] = indexes[k]['Price']
+        indexes_float_change[k]['Weight'] = indexes[k]['Weight']
+        indexes_float_change[k]['Price'] = indexes[k]['Price']
+        indexes_float_change[k]['Previous Float'] = indexes_old[k]['Float']
         indexes_float_change[k]['Float'] = indexes[k]['Float']
         indexes_float_change[k]['Float Change'] = indexes_new[k]['Float'] - indexes_old[k]['Float']
-        indexes_float_change[k]['Float Change Percent'] = (indexes_new[k]['Float'] / indexes_old[k]['Float']) - 1
-        mult = 1000000/((indexes_float_change[k]['Float'] / indexes_float_change[k]\
-        ['Float'][0])*floats_temp[k]['Price']).sum()
-        indexes_float_change[k]['Units per $1m'] = mult*((indexes_float_change[k]['Float'] / indexes_float_change[k]\
-        ['Float'][0]))
+        indexes_float_change[k]['Float Change Percent'] = ((indexes_new[k]['Float'] / indexes_old[k]['Float']) - 1)*100
+        indexes_float_change[k]['Float Change Units per 1 bps'] = indexes_float_change[k]['Float Change'] * 0.0001
+        indexes_float_change[k]['Funding'] = indexes_float_change[k]['Float Change Units per 1 bps'] * indexes_float_change[k]['Price']
+        indexes_float_change[k]['Funding Units per 1 bps'] = (-indexes_float_change[k]['Funding'].sum()*\
+                                                        indexes_float_change[k]['Weight']) / indexes_float_change[k]['Price']
+        indexes_float_change[k]['Total Flow Units per 1 bps'] = indexes_float_change[k]['Float Change Units per 1 bps']\
+        + indexes_float_change[k]['Funding Units per 1 bps']
 
 
 # In[19]:
@@ -480,19 +488,24 @@ for k in indexes:
 
 #change file path below!
 upload_weights = pd.DataFrame()
+for k in indexes:
+    turnover_summary.rename(index={k:k+' Index'},inplace=True)
 upload_weights = pd.concat([turnover_summary ])
 upload_floats = pd.DataFrame()
 for k in indexes:
     index_name = pd.DataFrame(columns = ['New Weight' , 'Old Weight' , 'Turnover'])
-    index_name.set_index = (k+' Index')
     index_name.loc[k] = ['New Weight' , 'Old Weight' , 'Turnover']
+    index_name.rename(index={k:k+' Index'},inplace=True)
     upload_weights = upload_weights.append(index_name)
     upload_weights = pd.concat([upload_weights , weights_master[k]])
-    index_float_name = pd.DataFrame(columns = ['Float' , 'Float Change' , 'Float Change Percent' , 'Units per $1m'])
-    index_float_name.loc[k] = ['Float' , 'Float Change' , 'Float Change Percent' , 'Units per $1m']
+    index_float_name = pd.DataFrame(columns = ['Float','Float Change','Float Change Percent' ,\
+                                               'Float Change Units per 1 bps','Funding Units per 1 bps','Total Flow Units per 1 bps'])
+    index_float_name.loc[k] = ['Float' , 'Float Change' , 'Float Change Percent' , 'Float Change Units per 1 bps','Funding Units per 1 bps',\
+                              'Total Flow Units per 1 bps']
     index_float_name.rename(index={k:k+' Index'},inplace=True)
     upload_floats = upload_floats.append(index_float_name)
-    upload_floats = pd.concat([upload_floats , indexes_float_change[k]])
+    indexes_float_change_publish[k] = indexes_float_change[k].drop(['Previous Float', 'Weight','Price','Funding'],axis=1)
+    upload_floats = pd.concat([upload_floats , indexes_float_change_publish[k]])
 #change to point to prod static/weights directory!
 upload_weights.to_csv('../index-view/src/main/resources/static/weights/'+new_month+'_2018.csv')
 upload_floats.to_csv('../index-view/src/main/resources/static/weights/'+new_month+'_floats_2018.csv')
