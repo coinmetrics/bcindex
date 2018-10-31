@@ -132,7 +132,7 @@ new_weights , new_weights_clean = dict.fromkeys(list_indexes) , dict.fromkeys(li
 old_weights_clean , turnover = dict.fromkeys(list_indexes) , dict.fromkeys(list_indexes)
 indexes_float_change = dict.fromkeys(list_indexes)
 indexes_float_change_publish = dict.fromkeys(list_indexes)
-old_constants = pd.read_csv('C:/Users\stoin\Desktop\Mike\Jupyter\Inputb\\All_pre_'+new_month+'.csv' , index_col=[0])
+old_constants = new_values
 new_constants = old_constants * 0
 new_constants = new_constants.drop(['Mkt Cap' , 'Adj Mkt Cap'],axis=1)
 
