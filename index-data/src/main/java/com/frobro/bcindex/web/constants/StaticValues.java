@@ -38,7 +38,7 @@ public class StaticValues {
 
       // Currency index values
   public static final String CURR_INDEX_NAME = "currency index";
-  public static final double DIVISOR_CURRENCY = 3444288916;
+  public static final double DIVISOR_CURRENCY = 3444288916.0;
   public static final String MKT_CAP_FILE_CURRENCY = "business_rules/Currency_november_rebal.csv";
 
         // Platform index values
