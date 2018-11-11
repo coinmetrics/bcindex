@@ -5,7 +5,6 @@ import com.frobro.bcindex.web.model.api.TimeFrame;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class CsvTimeQuery {
   private static final String MIN_TIME = "minTime";

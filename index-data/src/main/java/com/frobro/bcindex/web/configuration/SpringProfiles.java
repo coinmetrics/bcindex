@@ -20,7 +20,8 @@ public enum SpringProfiles {
       return getProfile() == null;
     }
   },
-  POSTGRES;
+  POSTGRES,
+  RELEASE;
 
   public String getValue() {
     return name().toLowerCase();
@@ -34,6 +35,13 @@ public enum SpringProfiles {
    */
   public boolean shouldActivate() {
     return false;
+  }
+
+  public static void setProfileIfNeeded() {
+    if (DEV.shouldActivate()) {
+      System.setProperty(DEV.getKey(),
+          DEV.getValue());
+    }
   }
 
   public boolean isActive() {

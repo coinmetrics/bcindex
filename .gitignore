@@ -18,3 +18,5 @@ build_profiles/
 lib/
 info/
 **/node_modules/**
+Pipfile.lock
+Pipfile

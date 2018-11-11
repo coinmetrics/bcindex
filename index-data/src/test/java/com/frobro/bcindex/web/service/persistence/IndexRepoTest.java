@@ -1,15 +1,14 @@
 package com.frobro.bcindex.web.service.persistence;
 
-import static org.junit.Assert.assertEquals;
-
 import com.frobro.bcindex.core.db.domain.*;
 import com.frobro.bcindex.core.db.service.*;
-import com.frobro.bcindex.web.domain.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by rise on 4/19/17.
@@ -24,6 +23,13 @@ public class IndexRepoTest {
   private TwentyEvenRepo twentyEvenRepo;
   private EthRepo ethRepo;
   private EthEvenRepo ethEvenRepo;
+  private FortyIdxRepo fortyRepo;
+  private FortyEvenIdxRepo fortyEvenRepo;
+  private TotalRepo totalRepo;
+  private TotalEvenRepo totalEvenRepo;
+  private CurrencyRepo currencyRepo;
+  private PlatformRepo platformRepo;
+  private ApplicationRepo appRepo;
   private PrimeRepo primeRepo;
 
   @Autowired
@@ -32,17 +38,34 @@ public class IndexRepoTest {
                            TwentyRepo trepo,
                            TwentyEvenRepo terepo,
                            EthRepo etRepo,
-                           EthEvenRepo eteRepo) {
+                           EthEvenRepo eteRepo,
+                           FortyIdxRepo fRepo,
+                           FortyEvenIdxRepo feRepo,
+                           TotalRepo toRepo,
+                           TotalEvenRepo toeRepo,
+                           CurrencyRepo cRepo,
+                           PlatformRepo pRepo,
+                           ApplicationRepo aRepo) {
     this.indexRepo = repo;
     this.evenRepo = eRepo;
     this.twentyRepo = trepo;
     this.twentyEvenRepo = terepo;
     this.ethRepo = etRepo;
     this.ethEvenRepo = eteRepo;
+    this.fortyRepo = fRepo;
+    this.fortyEvenRepo = feRepo;
+    this.totalRepo = toRepo;
+    this.totalEvenRepo = toeRepo;
+    this.currencyRepo = cRepo;
+    this.platformRepo = pRepo;
+    this.appRepo = aRepo;
 
     primeRepo = PrimeRepo.getRepo(indexRepo,evenRepo,
                               twentyRepo,twentyEvenRepo,
-                              ethRepo, ethEvenRepo);
+                              ethRepo, ethEvenRepo,
+                              fRepo, feRepo,
+                              toRepo, toeRepo,
+                              cRepo,pRepo,aRepo);
   }
 
   @Test
@@ -98,6 +121,36 @@ public class IndexRepoTest {
     JpaTwentyEven retreived = twentyEvenRepo.findByTimeStamp(index.getTimeStamp().getTime()).get(0);
 
     validate(index, retreived);
+  }
+
+  @Test
+  public void testSaveForty() {
+    JpaIdxForty forty = new JpaIdxForty();
+    populate(forty);
+    primeRepo.saveForty(forty);
+    JpaIdxForty retrieved = fortyRepo.findFirstByOrderByIdDesc();
+    validate(forty, retrieved);
+
+    JpaIdxFortyEven fortyEven = new JpaIdxFortyEven();
+    populate(fortyEven);
+    primeRepo.saveFortyEven(fortyEven);
+    JpaIdxFortyEven retrievedEven = fortyEvenRepo.findFirstByOrderByIdDesc();
+    validate(forty, retrievedEven);
+  }
+
+  @Test
+  public void testSaveTotal() {
+    JpaIndexTotal total = new JpaIndexTotal();
+    populate(total);
+    primeRepo.saveTotal(total);
+    JpaIndexTotal retrieved = totalRepo.findFirstByOrderByIdDesc();
+    validate(total, retrieved);
+
+    JpaIndexTotalEven totalEven = new JpaIndexTotalEven();
+    populate(totalEven);
+    primeRepo.saveTotalEven(totalEven);
+    JpaIndexTotalEven retrievedEven = totalEvenRepo.findFirstByOrderByIdDesc();
+    validate(totalEven, retrievedEven);
   }
 
   private void populate(JpaIndex idx) {

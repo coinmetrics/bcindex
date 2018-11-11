@@ -15,5 +15,8 @@
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "vinyl-source-stream": "^1.1.0"
+  },
+  "dependencies": {
+    "cryptocompare": "^0.2.0"
   }
 }

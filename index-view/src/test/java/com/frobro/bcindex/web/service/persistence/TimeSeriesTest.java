@@ -1,6 +1,5 @@
 package com.frobro.bcindex.web.service.persistence;
 
-import com.frobro.bcindex.core.db.domain.JpaIndexTen;
 import com.frobro.bcindex.web.model.api.*;
 import com.frobro.bcindex.web.service.DbTickerService;
 import org.junit.Ignore;
@@ -8,8 +7,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -42,24 +39,9 @@ public class TimeSeriesTest extends DbBaseTest {
     ApiResponse response = ser.getData(req);
 
     verifyPassThroughFields(req, response);
-    double btcClose = oddRepo.findOne(1L).getIndexValueBtc();
+    double btcClose = oddRepo.findById(1L).get().getIndexValueBtc();
     assertEquals(btcClose, response.prevClose, 0.01);
     assertEquals(req.currency, response.currency);
-  }
-
-  private void populateDb(int numEntries, double price) {
-    long now = System.currentTimeMillis();
-    for (int i=1; i<=numEntries; i++) {
-      JpaIndexTen idx = IndexFactory.getNewOdd();
-      if (i == numEntries) {
-        idx.setIndexValueUsd(price);
-      }
-      // add a minute, since that is the resolution
-      // we will save things in prod
-      now += TimeUnit.MINUTES.toMillis(1);
-      idx.setTimeStamp(now);
-      repo.saveTen(idx);
-    }
   }
 
   @Test

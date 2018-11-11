@@ -11,7 +11,7 @@
 
 
     <div class="topnav">
-        <li><a th:href="@{/home}" href="home.html" class="homelink">Bletchley Indexes</a></li>
+        <li><a class="homelink" th:href="@{https://www.bletchleyindexes.com/home}" href="https://www.bletchleyindexes.com/home"><img th:src="@{/img/logo_small.PNG}" src="../static/img/logo_small.PNG" width="50px" height="50px" alt=""></a></li>
         <li><a th:href="@{/home}" href="home.html">Home</a></li>
         <li><a th:href="@{/methodology}" href="methodology.html">Methodology</a></li>
         <li><a th:href="@{/annc}" href="annc.html">Updates</a></li>
@@ -39,10 +39,10 @@
 
 <div class="containerdownloads">
         <div class="download-header">
-            <h2>Bletchley Indexes Exportable Daily Data</h2>
+            <h2>Bletchley Indexes Exportable Daily Price Data</h2>
         </div>    
         <table class="download-table">
-            <caption>Bletchley Indexes Exportable Daily Data</caption>
+            <caption>Bletchley Indexes Exportable Daily Price Data</caption>
             <thead>
                 <tr>
                     <th>Index name</th>
@@ -63,6 +63,14 @@
                     <td><a href="bletchley_ethereum.csv">Download</a></td>
                 </tr>
                 <tr>
+                    <td>Forty Index</td>
+                    <td><a href="bletchley_forty.csv">Download</a></td>
+                </tr>
+                <tr>
+                    <td>Total Index</td>
+                    <td><a href="bletchley_total.csv">Download</a></td>
+                </tr>
+                <tr>
                     <td>Ten Even Index</td>
                     <td><a href="bletchley_ten_even.csv">Download</a></td>
                 </tr>
@@ -74,6 +82,26 @@
                     <td>Ethereum Token Even Index</td>
                     <td><a href="bletchley_ethereum_even.csv">Download</a></td>
                 </tr>
+                <tr>
+                    <td>Forty Even Index</td>
+                    <td><a href="bletchley_forty_even.csv">Download</a></td>
+                </tr>
+                <tr>
+                    <td>Total Even Index</td>
+                    <td><a href="bletchley_total_even.csv">Download</a></td>
+                </tr>
+                <tr>
+                    <td>Currency Index</td>
+                    <td><a href="bletchley_currency.csv">Download</a></td>
+                </tr>
+                <tr>
+                    <td>Platform Index</td>
+                    <td><a href="bletchley_platform.csv">Download</a></td>
+                </tr>
+                <tr>
+                    <td>Application Index</td>
+                    <td><a href="bletchley_application.csv">Download</a></td>
+                </tr>
             </tbody>
         </table>
 </div>
@@ -81,6 +109,9 @@
 <div class="container-slogan" style="background-color:#F7F9F9;">
 <p>&nbsp;</p>
     <p>Bletchley - A Better Benchmark</p>
+    <a th:href="@{https://www.bletchleyindexes.com/home}" href="https://www.bletchleyindexes.com/home"><img th:src="@{/img/logo_small.PNG}" src="../static/img/logo_small.PNG" width="50px" height="50px" alt=""></a>
+    <br/>
+    <br/>
 </div>
 
 <script>

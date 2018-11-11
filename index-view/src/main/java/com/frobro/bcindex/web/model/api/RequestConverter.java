@@ -1,7 +1,7 @@
 package com.frobro.bcindex.web.model.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.frobro.bcindex.core.db.service.BletchDate;
+import com.frobro.bcindex.core.service.BletchDate;
 
 import java.io.IOException;
 import java.util.stream.Collectors;
@@ -38,6 +38,10 @@ public class RequestConverter {
 
   public static PublicRequest convert(String json) throws IOException {
       return new ObjectMapper().readValue(json, PublicRequest.class);
+  }
+
+  public static SecurePublicRequest secureConvert(String json) throws IOException {
+    return new ObjectMapper().readValue(json, SecurePublicRequest.class);
   }
 
   public static PublicApiResponse convert(ApiResponse privateResp) {

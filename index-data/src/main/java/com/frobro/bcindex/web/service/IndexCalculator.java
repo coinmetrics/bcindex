@@ -3,7 +3,9 @@ package com.frobro.bcindex.web.service;
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.domain.Index;
 import com.frobro.bcindex.web.model.BletchleyData;
+import com.frobro.bcindex.web.model.Weight;
 import com.frobro.bcindex.web.service.persistence.IndexDbDto;
+import com.frobro.bcindex.web.service.rules.BusinessRules;
 
 import java.util.*;
 
@@ -13,27 +15,34 @@ import java.util.*;
 public abstract class IndexCalculator {
 
   private static final BcLog log = BcLog.getLogger(IndexCalculator.class);
+
   // for 10 idx
   protected double constantEven;
   protected double constant;
-  private double lastUsdPerBtc;
 
-  private final BusinessRules businessRules;
+  // fields that live for the life of this instance
   protected final double divisor;
   protected final double divisorEven;
+  protected final BusinessRules businessRules;
+  // fields that are reset with every update
+  private double lastUsdPerBtc;
+  private Map<String,Double> weights;
+  private Map<String,Double> weightsEven;
   protected long lastTimeStamp;
   protected Map<String,Index> lastIndexList;
 
-  public IndexCalculator() {
-    businessRules = newBusRules();
-    divisor = getDivisor();
-    divisorEven = getDivisorEven();
+  protected IndexCalculator(BusinessRules rules) {
+    this.businessRules = rules;
+    divisor = businessRules.getDivisor();
+    divisorEven = businessRules.getDivisorEven();
+    weights = new HashMap<>();
+    weightsEven = new HashMap<>();
   }
 
-  abstract protected BusinessRules newBusRules();
-  abstract protected double getDivisor();
-  abstract protected double getDivisorEven();
-  abstract protected String indexName();
+  protected String indexName() {
+    return businessRules.indexName();
+  }
+
   abstract protected double buildFromSum(double lastSum,
                                          double constant,
                                          double divisor);
@@ -45,10 +54,15 @@ public abstract class IndexCalculator {
   public void updateLast(BletchleyData newData) {
     lastIndexList = newData.getLastIndexes();
     lastTimeStamp = newData.getTimeStamp();
-
-    calculateMarketCap();
-
     lastUsdPerBtc = newData.getPriceUsdBtc();
+
+    resetMktWeights();
+    businessRules.calculateMarketCap(newData);
+  }
+
+  private void resetMktWeights() {
+    weights = new HashMap<>();
+    weightsEven = new HashMap<>();
   }
 
   public IndexDbDto calcuateOddIndex() {
@@ -60,21 +74,26 @@ public abstract class IndexCalculator {
   }
 
   private IndexDbDto calculateOddIndex(double usdPerBtc, long timeStamp) {
-    double indexPrice = calculateIndexValueBtc();
+    double sum = calculateSum();
+    double indexPrice = calculateIndexValueBtc(sum);
 
     IndexDbDto dto = newDbDto(indexPrice, usdPerBtc, timeStamp);
     logUsdCalc("original", dto.indexValueBtc, usdPerBtc,
         dto.indexValueUsd, dto.timeStamp);
 
+    weights = Weight.calculateWeight(lastIndexList, sum);
     return dto;
   }
 
   private IndexDbDto calculateEvenIndex(double usdPerBtc, long timeStamp) {
-    double indexPrice = calculateIndexValueEven();
+    double sum = calculateSumEven();
+    double indexPrice = calculateIndexValueEven(sum);
 
     IndexDbDto dto = newDbDto(indexPrice, usdPerBtc, timeStamp);
     logUsdCalc("even",dto.indexValueBtc, usdPerBtc,
         dto.indexValueUsd, timeStamp);
+
+    weightsEven = Weight.calculateWeight(lastIndexList, sum);
 
     return dto;
   }
@@ -87,30 +106,21 @@ public abstract class IndexCalculator {
         + result + "\n");
   }
 
-  protected IndexCalculator calculateMarketCap() {
-    log.debug("calculating market cap for " + indexName());
-
-    lastIndexList.keySet().stream().forEach(ticker -> {
-
-      Optional<Double> multiplier = businessRules.getMultipler(ticker);
-      MultiplierService multService = new MultiplierService(lastIndexList)
-          .updateMarketCapIfValid(multiplier, ticker);
-
-      Optional<Double> evenMultipler = businessRules.getMultiplierEven(ticker);
-      multService.updateEvenMktCapIfValid(evenMultipler, ticker);
-    });
-    return this;
-  }
-
-  private double calculateIndexValueBtc() {
-    log.debug("calculating index value for " + indexName());
-
+  private double calculateSum() {
     double lastSum = 0;
     for (Index ticker : lastIndexList.values()) {
       if (ticker.isMktCapValid()) {
-        lastSum += ticker.getMktCap();
+        lastSum += ticker.getMultiplier();
+      }
+      else {
+        log.error("invalid market cap for " + ticker.getName());
       }
     }
+    return lastSum;
+  }
+
+  private double calculateIndexValueBtc(double lastSum) {
+    log.debug("calculating index value for " + indexName());
 
     double btcValue = buildFromSum(lastSum,constant,divisor);
     logCalculation(lastSum, btcValue);
@@ -118,15 +128,19 @@ public abstract class IndexCalculator {
     return btcValue;
   }
 
-  private double calculateIndexValueEven() {
-    log.debug("calculating even index for " + indexName());
-
+  private double calculateSumEven() {
     double lastSum = 0;
     for (Index ticker : lastIndexList.values()) {
       if (ticker.isMktCapValid()) {
         lastSum += ticker.getEvenMult();
       }
     }
+    return lastSum;
+  }
+
+  private double calculateIndexValueEven(double lastSum) {
+    log.debug("calculating even index for " + indexName());
+
     double btcResultEven = buildFromSum(lastSum,constantEven,divisorEven);
     logCalculationEven(lastSum, btcResultEven);
     return btcResultEven;
@@ -158,5 +172,13 @@ public abstract class IndexCalculator {
     List<Index> sorted = new ArrayList<>(lastIndexList.values());
     Collections.reverse(sorted);
     return sorted;
+  }
+
+  public Map<String,Double> getWeights() {
+    return new HashMap<>(weights);
+  }
+
+  public Map<String,Double> getWeightsEven() {
+    return new HashMap<>(weightsEven);
   }
 }

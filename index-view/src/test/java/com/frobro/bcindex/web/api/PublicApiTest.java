@@ -1,8 +1,9 @@
 package com.frobro.bcindex.web.api;
 
-import static org.junit.Assert.assertEquals;
 import com.frobro.bcindex.web.model.api.*;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class PublicApiTest {
 

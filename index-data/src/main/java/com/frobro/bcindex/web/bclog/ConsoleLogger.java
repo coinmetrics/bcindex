@@ -1,8 +1,5 @@
 package com.frobro.bcindex.web.bclog;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
-
 public class ConsoleLogger extends BcLog {
   private final String className;
 

@@ -2,17 +2,17 @@ package com.frobro.bcindex.web.service;
 
 import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.domain.Index;
-import com.frobro.bcindex.web.model.BletchInTen;
 import com.frobro.bcindex.web.model.BletchleyData;
 import com.frobro.bcindex.web.service.persistence.IndexDbDto;
-import static org.junit.Assert.assertEquals;
+import com.frobro.bcindex.web.service.rules.BusRulesTen;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by rise on 3/23/17.
@@ -43,7 +43,7 @@ public class GetTickersTest {
     // then
 //   double expectedIndexValue = -1*(a+ b + service.getConstant()) / (new BusRulesTen().getDivisor());
 //    Assert.assertEquals(expectedIndexValue, service.getIndexValue(),0.001);
-    assertEquals(b, service.getLatestCap().iterator().next().getMktCap(), 0.001);
+    assertEquals(b, service.getLatestCap().iterator().next().getMultiplier(), 0.001);
   }
 
   private void turnOnConsoleLogging() {
@@ -58,7 +58,7 @@ public class GetTickersTest {
     // and
     double btcPrice = 2674.0;
     // and
-    BletchleyData input = new BletchInTen();
+    BletchleyData input = new BletchleyData(new BusRulesTen());
     input.setLastUpdate(System.currentTimeMillis());
     input.setLastUsdBtc(btcPrice);
     input.setMembers(populateIndices());
@@ -116,7 +116,7 @@ public class GetTickersTest {
     double divisor =  222310310.380042;
 
     for (Index idx : input.getLastIndexes().values()) {
-      double mult = idx.getMktCap() * idx.getLast();
+      double mult = idx.getMultiplier() * idx.getLast();
 
 //      System.out.println(idx.getName() + ": " +
 //          idx.getMktCap() + " * " + idx.getLast()

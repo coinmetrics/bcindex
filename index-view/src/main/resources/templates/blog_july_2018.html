@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="keywords" content="About, Index, Fund, Passive, Digital Asset, Bletchley"/>
+    <meta name="description" content="A description of the mission and values of the Bletchley Indexes."/>
+    <title>Bletchley Indexes: About us</title>
+    <link th:href="@{/css/style.css}" href="../static/css/style.css"  rel="stylesheet" type="text/css"  />
+
+<div class="topnav">
+  <li><a class="homelink" th:href="@{https://www.bletchleyindexes.com/home}" href="https://www.bletchleyindexes.com/home"><img th:src="@{/img/logo_small.PNG}" src="../static/img/logo_small.PNG" width="50px" height="50px" alt=""></a></li>
+  <li><a th:href="@{/home}" href="home.html">Home</a></li>
+  <li><a th:href="@{/methodology}" href="methodology.html">Methodology</a></li>
+  <li><a th:href="@{/annc}" href="annc.html">Updates</a></li>
+  <li><a th:href="@{/about}" href="about.html">About</a></li>
+  <li><a th:href="@{/contact}" href="contact.html">Contact</a></li>
+  <li><a class="active" th:href="@{/blog}" href="blog.html">Blog</a></li>
+</div>
+</head>
+<body>
+   
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-98341900-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+<button onclick="topFunction()" id="myBtn" title="Go to top"><img th:src="@{/img/UpArrow.png}" src="../static/img/UpArrow.png" /></button>
+
+
+<script>
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20){
+        document.getElementById("myBtn").style.display = "block";
+    } 
+    else{
+        document.getElementById("myBtn").style.display = "none";
+    }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+}
+</script>
+
+
+
+<div class="containerbody">
+<br/>
+    <div class="blog-table">
+    <h1 align = "center">July Rebalance Report</h1>
+    <p>As always, we present the following data without commentary. Cut-off date used was 6/28 this month. The rebalance was completed as of 22:30 UTC on 6/30. Month to date data is from 6/1 to 7/1. Quarter to date (Q2) data is from 4/1 to 7/1. If there are any missing performance metrics you would like to see, please let us know.</p>
+    <p>BTC dominance and market cap reflect only the Bletchley Total Index (70 assets).
+    Turnover is defined as the total percent of assets that would need to be traded to properly track each index before and after the rebalance. <a th:href="@{/weights/july.csv}" href="../static/weights/july.csv">Detailed asset weights and turnover statistics available here</a>.
+    Contribution is the portion of the return for the Bletchley 10 Index attributable to each coin.</p>
+    <img th:src="@{/img/Summary_july_2018.PNG}" src="../static/img/Summary_july_2018.PNG" />
+    </div>  
+
+    <div class="blog-image">
+    <h2 align = "center">Bletchley Total Index Chart</h2>
+    <img th:src="@{/img/chart_july_2018.PNG}" src="../static/img/chart_july_2018.PNG" width="60%" height="100%" alt="" />
+    </div> 
+
+    <div class="blog-image-mobile">
+    <h2 align = "center">Bletchley Total Index Chart</h2>
+    <img th:src="@{/img/chart_july_2018.PNG}" src="../static/img/chart_july_2018.PNG" width="100%" height="100%" alt="" />
+    </div> 
+
+    <div class="blog-table">
+    <h2 align = "center">Sharpe Ratios and Volatility</h2>
+    <p>Volatility, Sharpe, and Sortino ratios are calculated off daily returns and are annualized to a 365 day year. The Sortino ratio is benchmarked against bitcoin. Volatility, standard deviation, and return are all displayed in percentage terms.</p>
+    <img th:src="@{/img/Sharpe_july_2018.PNG}" src="../static/img/Sharpe_july_2018.PNG" width="100%" height="100%"/>
+    <br/>
+    </div>
+
+    <div class="blog-table">
+    <h3 align = "center">Correlations</h3>
+    <p>Calculated off of daily returns, spearman method.</p>
+    <img th:src="@{/img/corr_july_2018.PNG}" src="../static/img/corr_july_2018.PNG" width="100%" height="100%"/>
+    <br/>
+    </div>
+    
+    <div class="blog-table">
+    <h2 align = "center">Betas</h2>
+    <p>Beta is defined as the covariance of the asset and the benchmark divided against the variance of the normalizing benchmark, in this case the Bletchley 10 Index.</p>
+    <br/>
+    <img th:src="@{/img/betas_july_2018.PNG}" src="../static/img/betas_july_2018.PNG" />
+    <br/>
+    <br/>
+
+    <div class="blog-table">
+    <h2 align = "center">Largest daily moves for the month</h2>
+    <img th:src="@{/img/high_low_july_2018.PNG}" src="../static/img/high_low_july_2018.PNG" width="80%"/>
+    <br/>
+    <br/>
+ 
+      
+    <div class="container">
+        <div class="container-slogan">
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>Bletchley - A Better Benchmark</p>
+            <a th:href="@{https://www.bletchleyindexes.com/home}" href="https://www.bletchleyindexes.com/home"><img th:src="@{/img/logo_small.PNG}" src="../static/img/logo_small.PNG" width="50px" height="50px" alt=""></a>
+    <br/>
+    <br/>
+        </div>
+    </div>
+</div>
+</body>
+</html>

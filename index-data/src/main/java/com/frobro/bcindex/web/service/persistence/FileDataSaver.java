@@ -2,7 +2,7 @@ package com.frobro.bcindex.web.service.persistence;
 
 import com.frobro.bcindex.core.db.domain.*;
 import com.frobro.bcindex.core.db.service.*;
-import com.frobro.bcindex.core.db.service.files.BletchFiles;
+import com.frobro.bcindex.core.service.BletchFiles;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -38,18 +38,27 @@ public class FileDataSaver {
   private TwentyEvenRepo twentyEvenRepo;
   private EthRepo ethRepo;
   private EthEvenRepo ethEvenRepo;
+  private FortyIdxRepo fortyRepo;
+  private FortyEvenIdxRepo fortyEvenRepo;
   private PrimeRepo primeRepo;
 
   public FileDataSaver(IndexRepo ir, EvenIdxRepo eir,
                        TwentyRepo tr, TwentyEvenRepo ter,
-                       EthRepo ethRepo, EthEvenRepo ethEvenRepo) {
+                       EthRepo ethRepo, EthEvenRepo ethEvenRepo,
+                       FortyIdxRepo fRepo, FortyEvenIdxRepo feRepo,
+                       TotalRepo toRepo, TotalEvenRepo toeRepo,
+                       CurrencyRepo cr, PlatformRepo pr,
+                       ApplicationRepo ap) {
     this.indexRepo = ir;
     this.evenIdxRepo = eir;
     this.twentyRepo = tr;
     this.twentyEvenRepo = ter;
     this.ethRepo = ethRepo;
     this.ethEvenRepo = ethEvenRepo;
-    primeRepo = PrimeRepo.getRepo(ir,eir,tr,ter,ethRepo,ethEvenRepo);
+    this.fortyRepo = fRepo;
+    this.fortyEvenRepo = feRepo;
+    primeRepo = PrimeRepo.getRepo(ir,eir,tr,ter,ethRepo,ethEvenRepo,fRepo,feRepo,
+        toRepo,toeRepo,cr, pr, ap);
   }
 
   public void saveData() {
@@ -92,8 +101,8 @@ public class FileDataSaver {
       bid = updateBid(bid);
     }
 
-    this.twentyRepo.save(tenList);
-    this.twentyEvenRepo.save(evenList);
+    this.twentyRepo.saveAll(tenList);
+    this.twentyEvenRepo.saveAll(evenList);
   }
 
   private void saveDataTen(String fileName) {

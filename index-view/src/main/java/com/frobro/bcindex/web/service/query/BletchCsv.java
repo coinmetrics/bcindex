@@ -1,9 +1,5 @@
 package com.frobro.bcindex.web.service.query;
 
-import static com.frobro.bcindex.web.service.query.CsvTimeQuery.getBtcCol;
-import static com.frobro.bcindex.web.service.query.CsvTimeQuery.getTimeCol;
-import static com.frobro.bcindex.web.service.query.CsvTimeQuery.getUsdCol;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.Instant;
@@ -13,14 +9,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.frobro.bcindex.web.service.query.CsvTimeQuery.*;
+
 class BletchCsv implements Populatable {
-  private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-  private String firstPxUsd;
-  private String firstPxBtc;
-  private Long firstEpochTime;
-  private String lastPxUsd;
-  private String lastPxBtc;
-  private Long lastEpochTime;
+  private CsvDate csvDate = new CsvDate();
   LinkedList<String> lines = new LinkedList<>();
   String currLine = "";
 
@@ -34,34 +26,12 @@ class BletchCsv implements Populatable {
     return lines;
   }
 
-  private boolean not(boolean b) {
-    return !b;
-  }
-
   void addHeader(String header) {
-    String firstLine = dateToLine(firstEpochTime) + firstPxBtc + firstPxUsd;
-    addFirstLineIfAbsent(firstLine);
-
     lines.push(header);
-
-    String lastLine = dateToLine(lastEpochTime) + lastPxBtc + lastPxUsd;
-    addLastLineIfAbsent(lastLine);
   }
 
   void prependHeader(String header) {
     lines.push(header);
-  }
-
-  private void addFirstLineIfAbsent(String firstLine) {
-    if (not(firstLine.equals(lines.get(0)))) {
-      lines.push(firstLine);
-    }
-  }
-
-  private void addLastLineIfAbsent(String lastLine) {
-    if (not(lastLine.equals(lines.get(lines.size()-1)))) {
-      lines.addLast(lastLine);
-    }
   }
 
   private void addToCurrentLine(String s) {
@@ -79,55 +49,7 @@ class BletchCsv implements Populatable {
   }
 
   BletchCsv epochTime(long t) {
-    addToCurrentLine(dateToLine(t));
-    return this;
-  }
-
-  private String dateToLine(long t) {
-    LocalDateTime date =
-        LocalDateTime.ofInstant(Instant.ofEpochMilli(t), ZoneId.of("America/Chicago"));
-    return date.format(formatter) + "," + String.valueOf(t) + ",";
-  }
-
-  BletchCsv firstPxUsd(String px) {
-    if (this.firstPxUsd == null) {
-      firstPxUsd = px;
-    }
-    return this;
-  }
-
-  BletchCsv firstPxBt(String px) {
-    if (this.firstPxBtc == null) {
-      firstPxBtc = px;
-    }
-    return this;
-  }
-
-  BletchCsv firstEpochTime(long t) {
-    if (this.firstEpochTime == null) {
-      firstEpochTime = t;
-    }
-    return this;
-  }
-
-  BletchCsv lastPxUsd(String px) {
-    if (lastPxUsd == null) {
-      lastPxUsd = px;
-    }
-    return this;
-  }
-
-  BletchCsv lastPxBtc(String px) {
-    if (lastPxBtc == null) {
-      lastPxBtc = px;
-    }
-    return this;
-  }
-
-  BletchCsv lastEpochTime(long t) {
-    if (lastEpochTime == null) {
-      lastEpochTime = t;
-    }
+    addToCurrentLine(csvDate.dateToLine(t));
     return this;
   }
 

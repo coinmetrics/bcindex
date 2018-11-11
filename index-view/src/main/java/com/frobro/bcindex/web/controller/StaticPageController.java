@@ -44,4 +44,44 @@ public class StaticPageController {
   public String idxPerfPost() {
     return "idx_perf_post";
   }
+
+  @RequestMapping("/blog/blog_5_20_2018")
+  public String blog_5_20_2018() {
+    return "blog_5_20_2018";
+  }
+
+  @RequestMapping("/blog/blog_5_27_2018")
+  public String blog_5_27_2018() {
+    return "blog_5_27_2018";
+  }
+
+  @RequestMapping("/blog/blog_6_3_2018")
+  public String blog_6_3_2018() {
+    return "blog_6_3_2018";
+  }
+
+  @RequestMapping("/blog/blog_july_2018")
+  public String blog_july_2018() {
+    return "blog_july_2018";
+  }
+
+  @RequestMapping("/blog/blog_august_2018")
+  public String blog_august_2018() {
+    return "blog_august_2018";
+  }
+
+  @RequestMapping("/blog/blog_september_2018")
+  public String blog_september_2018() {
+  return "blog_september_2018";
+  }
+
+  @RequestMapping("/blog/blog_october_2018")
+  public String blog_october_2018() {
+  return "blog_october_2018";
+  }
+
+  @RequestMapping("/blog/blog_november_2018")
+  public String blog_november_2018() {
+  return "blog_november_2018";
+  }
 }

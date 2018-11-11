@@ -1,5 +1,7 @@
 package com.frobro.bcindex.web.model.api;
 
+import com.frobro.bcindex.web.service.StaticThresholds;
+
 /**
  * Created by rise on 7/3/17.
  */
@@ -11,35 +13,33 @@ public class MaxApiResponse extends ApiResponse {
 
   protected MaxApiResponse() {}
 
+  public long getMaxBletchId() {
+    return maxBletchId;
+  }
+
   public ApiResponse setTotalCount(long maxBletchId) {
     if (this.maxBletchId == null) {
       this.maxBletchId = maxBletchId;
     }
     if (queryTimeFrame == null) {
-      queryTimeFrame = setQueryTimeFrame(maxBletchId);
+      queryTimeFrame = StaticThresholds.getTimeFrame(maxBletchId);
       timeFrame = queryTimeFrame;
     }
     if (queryTimeUnit == null) {
-      queryTimeUnit = queryTimeFrame.getTimeStepUnit();
+      queryTimeUnit = setTimeUnit(queryTimeFrame, maxBletchId);
       timeUnit = queryTimeUnit;
     }
     return this;
   }
 
-  private TimeFrame setQueryTimeFrame(long maxBletchId) {
-    TimeFrame frame;
-    if (maxBletchId <= TimeFrame.DAILY.getNumDataPoints()) {
-      frame = TimeFrame.HOURLY;
-    }
-    else if (maxBletchId <= TimeFrame.WEEKLY.getNumDataPoints()) {
-      frame = TimeFrame.DAILY;
-    }
-    else if (maxBletchId <= (TimeFrame.MONTHLY.getNumDataPoints()*2)) {
-      frame = TimeFrame.MONTHLY;
+  private String setTimeUnit(TimeFrame frame, long maxBletchId) {
+    String unit;
+    if (maxBletchId <= (TimeFrame.MONTHLY.getNumDataPoints()*2)) {
+      unit = frame.getTimeStepUnit();
     }
     else {
-      frame = TimeFrame.QUARTERLY;
+      unit = TimeFrame.MAX.getDayTimeUnit();
     }
-    return frame;
+    return unit;
   }
 }

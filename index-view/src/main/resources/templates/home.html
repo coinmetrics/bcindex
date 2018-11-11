@@ -5,9 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="keywords" content="Cryptocurrency, Bitcoin, Index, Fund, Passive, Digital Asset, Crypto, Bletchley"/>
-    <meta name="description" content="A better benchmark for cryptocurrencies and digital assets. We provide
-				      multiple indexes to accurately measure market performance of segments of
-				      the digital asset industry."/>
+    <meta name="description" content="A better benchmark for crypto and digital assets. We provide multiple indexes to accurately measure market performance of segments of the digital asset industry to improve upon simple market cap."/>
     <title>Bletchley Indexes: A Better Benchmark</title>
     <link th:href="@{/css/style.css}" href="../static/css/style.css"  rel="stylesheet" type="text/css"  />
     <script 
@@ -27,7 +25,7 @@
     </script>
 
 <div class="topnav">
-  <li><a th:href="@{/home}" href="home.html" class="homelink">Bletchley Indexes</a></li>
+  <li><a class="homelink" th:href="@{https://www.bletchleyindexes.com/home}" href="https://www.bletchleyindexes.com/home"><img th:src="@{/img/logo_small.PNG}" src="../static/img/logo_small.PNG" width="50px" height="50px" alt=""></a></li>
   <li><a class="active" th:href="@{/home}" href="home.html">Home</a></li>
   <li><a th:href="@{/methodology}" href="methodology.html">Methodology</a></li>
   <li><a th:href="@{/annc}" href="annc.html">Updates</a></li>
@@ -48,7 +46,8 @@
   ga('send', 'pageview');
 
 </script>
-<br/><br/>
+<br/>
+<div class="masterbody">
     <div class="containerbody">
         <div class="index-usd-drop-down">
            <select class="index">
@@ -86,6 +85,7 @@
         <div class="info-element">
           <div id="stock-info"></div>
         </div>
+      </div>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -105,28 +105,78 @@
     </script>
 
     <script th:src="@{/js/bundle.js}" ></script>
-    <div class="weights-link">
+
     <p>&nbsp;</p>
-    <a th:href="@{/methodology.html#Index Weights}" href="methodology.html#Index Weights">Index Membership and Weightings</a>
-    <br/>
-    <br/>
-    </div>
-    <div class="weights-link">
-    <a th:href="@{/downloads.html}" href="downloads.html">Download Daily Data</a>
+    <div class="disclaimer">
     <p>&nbsp;</p>
     </div>
+
+    <div class="weights-link"> <a th:href="@{/weights/october_2018.csv}" href="../static/weights/october_2018.csv">Index membership, weightings, and turnover</a></div>
+    <div class="disclaimer-API">At most recent rebalance</div>
+    <div class="disclaimer-API-mobile">At most recent rebalance</div>
+    <div class="weights-link"><a th:href="@{/downloads}" href="downloads.html">Download daily price data</a></div>
+    <div class="disclaimer-API">API with historical and live data available (pricing and weightings), please contact us for details</div>
+    <div class="disclaimer-API-mobile">API with historical and live data available (pricing and weightings), please contact us for details</div>
+
+<p>&nbsp;</p>
+
+<div id="mc_embed_signup" style="justify-content: center; text-align:center;">
+<form action="https://bletchleyindexes.us18.list-manage.com/subscribe/post?u=658873bbc9c3bcac6eed8b2be&amp;id=758e72e50c" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+  <label for="mce-EMAIL">Subscribe to our monthly reports</label>
+  <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_658873bbc9c3bcac6eed8b2be_758e72e50c" tabindex="-1" value=""></div><br/>
+    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn btn-mailchimp"></div>
+    </div>
+</form>
+</div>
+
+<div id="mc_embed_signup_mobile" style="justify-content: center; text-align:center;">
+<form action="https://bletchleyindexes.us18.list-manage.com/subscribe/post?u=658873bbc9c3bcac6eed8b2be&amp;id=758e72e50c" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+  <label for="mce-EMAIL">Subscribe to our monthly reports</label>
+  <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_658873bbc9c3bcac6eed8b2be_758e72e50c" tabindex="-1" value=""></div><br/>
+    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn btn-mailchimp"></div>
+    </div>
+</form>
+</div>
 
     <script th:src="@{/js/menuService.js}" src="../static/js/menuService.js"></script>
-
-  <div class="container-slogan">
+    <br/>
+    <div class="container-slogan">
     <p>Bletchley - A Better Benchmark</p>
+    <a th:href="@{https://www.bletchleyindexes.com/home}" href="https://www.bletchleyindexes.com/home"><img th:src="@{/img/logo_small.PNG}" src="../static/img/logo_small.PNG" width="50px" height="50px" alt=""></a>
+    <br/>
+    <br/>
+    </div>
+    <div class="partners-section" style="align-content: center">
+    <div class="partners-border"></div>
+    <div class="partners-heading">
+      Partners</div>
+      <a th:href="@{http://nomics.com/}" href="http://nomics.com/" class="partners-image-nomics"><img th:src="@{/img/nomics_logo.png}" src="../static/img/nomics_logo.PNG" width="175px" height="75px" alt="" /></a>
+
+      <a th:href="@{http://onchainfx.com/}" href="http://onchainfx.com/" class="partners-image"><img th:src="@{/img/logo_ocfx.jpg}" src="../static/img/logo_ocfx.jpg" width="125px" height="75px" alt="" /></a>
+
+      <a th:href="@{http://nomics.com/}" href="http://nomics.com/" class="partners-image-nomics-mobile"><img th:src="@{/img/nomics_logo.png}" src="../static/img/nomics_logo.PNG" width="125px" height="50px" alt="" /></a>
+      <a th:href="@{http://onchainfx.com/}" href="http://onchainfx.com/" class="partners-image-mobile"><img th:src="@{/img/logo_ocfx.jpg}" src="../static/img/logo_ocfx.jpg" width="80px" height="50px" alt="" /></a>
+    <div class="partners-border"></div>
+    </div>
+    
+  <div class="disclaimer-mobile">
+  <p>All pricing provided by Nomics.com</p>
   </div>
   <div class="disclaimer">
-  <p>All times US Central (UTC -5) <br/>
+  <p>All pricing provided by Nomics.com</p>
+  </div>
+  <div class="disclaimer">
+  <p>Displayed times US Central (UTC -5) <br/>
   Bletchley Indexes is not a registered investment advisor or financial analyst. The Information provided is for informational purposes only, and does not constitute financial advice or solicitation of an offer to buy or sell, or as a recommendation or endorsement of any security or asset. Past performance is not indicative of future results. Bletchley Indexes is not responsible for any investment decision made by you. You are responsible for your own investment research and investment decisions.</p>
   </div>
   <div class="disclaimer-mobile">
-  <p>All times US Central (UTC -5) <br/>
+  <p>Displayed times US Central (UTC -5) <br/>
   Information provided is for informational purposes only, and does not constitute financial advice or solicitation of an offer to buy or sell, or as a recommendation or endorsement of any security or asset. You are responsible for your own investment research and investment decisions.</p>
   </div>
 </body>

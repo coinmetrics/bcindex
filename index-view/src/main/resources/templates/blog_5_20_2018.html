@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="keywords" content="About, Index, Fund, Passive, Digital Asset, Bletchley"/>
+    <meta name="description" content="A description of the mission and values of the Bletchley Indexes."/>
+    <title>Bletchley Indexes: About us</title>
+    <link th:href="@{/css/style.css}" href="../static/css/style.css"  rel="stylesheet" type="text/css"  />
+
+<div class="topnav">
+  <li><a class="homelink" th:href="@{https://www.bletchleyindexes.com/home}" href="https://www.bletchleyindexes.com/home"><img th:src="@{/img/logo_small.PNG}" src="../static/img/logo_small.PNG" width="50px" height="50px" alt=""></a></li>
+  <li><a th:href="@{/home}" href="home.html">Home</a></li>
+  <li><a th:href="@{/methodology}" href="methodology.html">Methodology</a></li>
+  <li><a th:href="@{/annc}" href="annc.html">Updates</a></li>
+  <li><a th:href="@{/about}" href="about.html">About</a></li>
+  <li><a th:href="@{/contact}" href="contact.html">Contact</a></li>
+  <li><a class="active" th:href="@{/blog}" href="blog.html">Blog</a></li>
+</div>
+
+
+</head>
+<body>
+   
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-98341900-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+<button onclick="topFunction()" id="myBtn" title="Go to top"><img th:src="@{/img/UpArrow.png}" src="../static/img/UpArrow.png" /></button>
+
+
+<script>
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20){
+        document.getElementById("myBtn").style.display = "block";
+    } 
+    else{
+        document.getElementById("myBtn").style.display = "none";
+    }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+}
+</script>
+
+
+
+<div class="containerbody">
+<br/><br/>
+    <h1 align = "center">Weekly report for Week of 5/13/2018</h1>
+    <p>Our first weekly report on metrics for the digital asset class. Graphics will improve over the next few versions. Thanks for bearing with us. Feedback greatly appreciated!</p>
+
+    <h2 align = "center">Returns of Crytpo Benchmarks</h2>
+
+    <div style="overflow-x:auto;width:50%;padding-left:25%;padding-right:25%;align-content: center;">
+<table id="weightsequal">
+  <tr>
+        <th></th>
+        <th>Week</th>
+        <th>MTD</th>
+        <th>YTD</th>
+        </tr>
+        <tr>
+        <td>10</td>    
+        <td>-3.45%</td>
+        <td>-10.16%</td>
+        <td>-40.92%</td>
+        </tr>
+        <tr>
+        <td>Total</td>
+        <td>-3.56%</td>
+        <td>-11.31%</td>
+        <td>-41.90%</td>
+        </tr>
+        <tr>
+        <td>BTC</td>
+        <td>-2.81%</td>
+        <td>-10.80%</td>
+        <td>-40.44%</td>
+        </tr>
+        <tr>
+        <td>ETH</td>
+        <td>1.81%</td>
+        <td>3.88%</td>
+        <td>-6.08%</td>
+        </tr>
+        </table>
+       </div>
+
+
+    
+
+    <div class="blog-image">
+    <h2 align = "center">Bletchley Total Index Chart</h2>
+    <img th:src="@{/img/5_20_18_total.PNG}" src="../static/img/5_20_18_total.PNG" width="60%" height="100%" alt="" />
+    </div>
+
+    <h2 align = "center">Bletchley 10 Constituents</h2>
+    <p>Contribution is the portion of the return for the Bletchley 10 Index attributable to each coin, currently there is some error as we didn't have accurate weights at the beginning of this week saved. Because of this the sum of the contributions doesn't equal the weekly return on the 10 index.</p>
+
+        <div style="overflow-x:auto;width:50%;padding-left:25%;padding-right:25%;align-content: center;">
+<table id="weightsequal">
+  <tr>
+        <th></th>
+        <th>Return</th>
+        <th>Weighting</th>
+        <th>Contribution</th>
+        </tr>
+        <tr>
+        <td>BTC</td>    
+        <td>-2.81%</td>
+        <td>52.25%</td>
+        <td>-1.47%</td>
+        </tr>
+        <tr>
+        <td>ETH</td>
+        <td>1.82%</td>
+        <td>19.41%</td>
+        <td>0.35%</td>
+        </tr>
+        <tr>
+        <td>XRP</td>
+        <td>-1.30%</td>
+        <td>10.52%</td>
+        <td>-0.14%</td>
+        </tr>
+        <tr>
+        <td>BCH</td>
+        <td>-19.30%</td>
+        <td>5.68%</td>
+        <td>-1.10%</td>
+        </tr>
+        <tr>
+        <td>XLM</td>
+        <td>-12.50%</td>
+        <td>2.43%</td>
+        <td>-0.30%</td>
+        </tr>
+        <tr>
+        <td>LTC</td>
+        <td>-4.71%</td>
+        <td>2.94%</td>
+        <td>-0.14%</td>
+        </tr>
+        <tr>
+        <td>ADA</td>
+        <td>-8.04%</td>
+        <td>2.53%</td>
+        <td>-0.20%</td>
+        </tr>
+        <tr>
+        <td>DASH</td>
+        <td>-4.79%</td>
+        <td>1.24%</td>
+        <td>-0.06%</td>
+        </tr>
+        <tr>
+        <td>EOS</td>
+        <td>-5.94%</td>
+        <td>2.66%</td>
+        <td>-0.16%</td>
+        </tr>
+        <tr>
+        <td>ZEC</td>
+        <td>39.62%</td>
+        <td>0.35%</td>
+        <td>0.14%</td>
+        </tr>
+        </table>
+       </div>
+
+    <div class="blog-table">
+    <h2 align = "center">Sharpe Ratios and Volatility</h2>
+    <p>Volatilities are annualized to a 365 day year. Volatility, standard deviation, and return are all displayed in percentage terms.</p>
+    <h2 align = "center">Weekly</h2>
+    <img th:src="@{/img/5_20_18_summary_weekly.PNG}" src="../static/img/5_20_18_summary_weekly.PNG" width="100%"/>
+    <br/>
+    <br/>
+    <h2 align = "center">Month to Date</h2>
+    <img th:src="@{/img/5_20_18_summary_monthly.PNG}" src="../static/img/5_20_18_summary_monthly.PNG" width="100%"/>
+    <br/>
+    <br/>
+    <h2 align = "center">Year to Date</h2>
+    <img th:src="@{/img/5_20_18_summary_yearly.PNG}" src="../static/img/5_20_18_summary_yearly.PNG" width="100%"/>
+    </div>
+
+    <div class="blog-table">
+    <h3 align = "center">Correlations</h3>
+    <p>Calculated off of daily returns, spearman method.</p>
+    <h2 align = "center">Weekly</h2>
+    <img th:src="@{/img/5_20_18_corr_weekly.PNG}" src="../static/img/5_20_18_corr_weekly.PNG" width="100%"/>
+    <br/>
+    <br/>
+    <h2 align = "center">Month to Date</h2>
+    <img th:src="@{/img/5_20_18_corr_monthly.PNG}" src="../static/img/5_20_18_corr_monthly.PNG" width="100%"/>
+    <br/>
+    <br/>
+    <h2 align = "center">Year to Date</h2>
+    <img th:src="@{/img/5_20_18_corr_yearly.PNG}" src="../static/img/5_20_18_corr_yearly.PNG" width="100%"/>
+    </div>
+    
+    <div class="blog-table">
+    <h2 align = "center">Betas</h2>
+    <p>Beta is defined as the covariance of the asset and the benchmark divided against the variance of the normalizing benchmark, in this case the Bletchley 10 Index.</p>
+    <br/>
+    <img th:src="@{/img/5_20_18_betas.PNG}" src="../static/img/5_20_18_betas.PNG" width="45%"/>
+    <br/>
+    <br/>
+      
+    <div class="container">
+        <div class="container-slogan">
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>Bletchley - A Better Benchmark</p>
+            <a th:href="@{https://www.bletchleyindexes.com/home}" href="https://www.bletchleyindexes.com/home"><img th:src="@{/img/logo_small.PNG}" src="../static/img/logo_small.PNG" width="50px" height="50px" alt=""></a>
+    <br/>
+    <br/>
+        </div>
+    </div>
+</div>
+</body>
+</html>

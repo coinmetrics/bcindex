@@ -2,19 +2,29 @@ package com.frobro.bcindex.web.controller;
 
 import com.frobro.bcindex.core.db.domain.*;
 import com.frobro.bcindex.core.db.service.*;
-import com.frobro.bcindex.core.db.service.files.BletchFiles;
+import com.frobro.bcindex.core.service.BletchDate;
+import com.frobro.bcindex.core.service.BletchFiles;
 import com.frobro.bcindex.web.bclog.BcLog;
+import com.frobro.bcindex.web.service.BletchClock;
 import com.frobro.bcindex.web.service.TickerService;
 import com.frobro.bcindex.web.service.persistence.FileDataSaver;
+import com.frobro.bcindex.web.service.publish.DailyWeightPubService;
+import com.frobro.bcindex.web.service.publish.DeloreanClock;
+import com.frobro.bcindex.web.service.publish.PricePublishService;
+import com.frobro.bcindex.web.service.publish.WeightPublishService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.env.Environment;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
-import java.util.*;
-import java.util.concurrent.TimeUnit;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by rise on 5/20/17.
@@ -24,27 +34,53 @@ import java.util.concurrent.ThreadLocalRandom;
 @Profile({"dev","pgres"})
 public class SeedController {
 
-  private static final BcLog log = BcLog.getLogger(SeedController.class);
+  private static final BcLog LOG = BcLog.getLogger(SeedController.class);
   private TickerService tickerService = new TickerService();
   private FileDataSaver fileDataSaver;
   PrimeRepo repo;
+  private DeloreanClock deloreanClock = new DeloreanClock();
+  private WeightPublishService weightPublisher = new WeightPublishService();
+  private PricePublishService pricePublisher = new PricePublishService();
+  private DailyWeightPubService dailyWeightPub = new DailyWeightPubService(deloreanClock);
+
+  @Autowired
+  public void setEnvironment(Environment env) {
+    // pull values from application.properties
+    weightPublisher.createPublishEndPoint(env.getProperty(weightPublisher.publishEndPtKey()));
+    pricePublisher.createPublishEndPoint(env.getProperty(pricePublisher.publishEndPtKey()));
+    dailyWeightPub.createPublishEndPoint(env.getProperty(dailyWeightPub.publishEndPtKey()));
+  }
 
   @Autowired
   public void setRepos(EvenIdxRepo eRepo, IndexRepo oRepo,
                        TwentyRepo twRepo, TwentyEvenRepo teRepo,
-                       EthRepo ethRepo, EthEvenRepo eteRepo) {
+                       EthRepo ethRepo, EthEvenRepo eteRepo,
+                       FortyIdxRepo fRepo, FortyEvenIdxRepo feRepo,
+                       TotalRepo toRepo, TotalEvenRepo toeRepo,
+                       CurrencyRepo cRepo, PlatformRepo pRepo,
+                       ApplicationRepo aRepo) {
 
-    repo = PrimeRepo.getRepo(oRepo,eRepo,twRepo,teRepo,ethRepo,eteRepo);
-    tickerService.setIndexRepo(oRepo, eRepo, twRepo, teRepo, ethRepo, eteRepo);
+    repo = PrimeRepo.getRepo(oRepo,eRepo,twRepo,teRepo,ethRepo,eteRepo,
+        fRepo,feRepo,toRepo,toeRepo,cRepo,pRepo,aRepo);
+    tickerService.setIndexRepo(oRepo,eRepo,twRepo,teRepo,ethRepo,eteRepo,
+        fRepo,feRepo,toRepo,toeRepo,cRepo,pRepo,aRepo);
+
+    tickerService.setDailyPxPublisher(pricePublisher);
+    tickerService.setWeightPublisher(weightPublisher);
+    tickerService.setDailyWeightPublisher(dailyWeightPub);
+
     // ETH index not currently supported in file saver
-    fileDataSaver = new FileDataSaver(oRepo, eRepo, twRepo, teRepo,ethRepo,eteRepo);
+    fileDataSaver = new FileDataSaver(oRepo, eRepo, twRepo, teRepo,ethRepo,eteRepo,
+        fRepo,feRepo,toRepo,toeRepo,cRepo,pRepo,aRepo);
   }
+
 
   @PostConstruct
   public void start(){
-    log.info("populating the database with mock data ...");
+    LOG.info("populating the database with mock data ...");
     seed();
 //    fileDataSaver.saveData();
+    BletchClock.setClock(deloreanClock);
   }
 
   @RequestMapping("/filedata")
@@ -58,6 +94,20 @@ public class SeedController {
     tickerService.updateTickers();
     return "done getting new data";
   }
+
+  /* Begin daily weight testing */
+  @RequestMapping(value = "/forward_time", method = RequestMethod.POST)
+  public String forwardTime(@RequestBody long numHours) {
+    LOG.debug("current time: " + deloreanClock.humanReadableTime());
+
+    deloreanClock.forwardHours(numHours);
+
+    LOG.debug("moved time " + numHours + " hours. New time: " +
+        deloreanClock.humanReadableTime());
+    return "time forwarded " + numHours + " hours ";
+  }
+
+  /* End daily weight testing */
 
   @RequestMapping("/seed")
   public String seed() {
@@ -73,11 +123,18 @@ public class SeedController {
       repo.saveTwenty(newTwenty(time));
       repo.saveEvenTwenty(new20Even(time));
       repo.saveEthEven(newEthEven(time));
+      repo.saveForty(newForty(time));
+      repo.saveFortyEven(newFortyEven(time));
+      repo.saveTotal(newTotal(time));
+      repo.saveTotalEven(newTotalEven(time));
+      repo.saveCurrency(newCurrency(time));
+      repo.savePlatform(newPlatform(time));
+      repo.saveAplication(newApplication(time));
     }
     return "done seeding";
   }
 
-  private boolean tooManyLines(int size, int maxSize) {
+  private boolean isTooLarge(int size, int maxSize) {
     return size > maxSize;
   }
 
@@ -88,23 +145,18 @@ public class SeedController {
     int numHours = 26;
     int numIterations = (int) TimeUnit.HOURS.toMinutes(numHours);
 
-    int size = tooManyLines(lines.size(), numIterations) ? numIterations : lines.size();
+    int size = isTooLarge(lines.size(), numIterations) ? numIterations : lines.size();
 
     List<JpaIndexTen> idxList = new ArrayList<>(size);
 
     long lastDate = 0;
     long diff = 0;
-    long time = 0;
-    for (int i=size-1; i>0; i--) {
+    // start clock from now - [time length]. so the last time
+    // will be now. That way new data will have consistent timestamps
+    long time = System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(size); //TimeUnit.MINUTES.toMillis(size);
+    for (int i=1; i<size-1; i++) {
       String line = lines.get(i);
       String[] vals = line.split(delim);
-      time = BletchDate.toEpochMilli(vals[datePos]);
-
-      // if is the most recent time set the time
-      // diff so all times will be recent
-      if (i == size-1) {
-        diff = System.currentTimeMillis() - time;
-      }
 
       JpaIndexTen idx = new JpaIndexTen();
       idx.setId(Long.valueOf(i));
@@ -122,35 +174,52 @@ public class SeedController {
       eth.setTimeStamp(BletchDate.toDate(vals[datePos]));
       repo.saveEth(eth);
 
-      if (i == (size-1)) {
-        lastDate = BletchDate.toDate(vals[datePos]).getTime();
-      }
-    }
-
-    // populate again!
-    lastDate += TimeUnit.MINUTES.toMillis(1);
-    for (int i=1; i<size; i++) {
-      String line = lines.get(i);
-      String[] vals = line.split(delim);
-      JpaIndexTen idx = new JpaIndexTen();
-      idx.setId(Long.valueOf(size + i));
-      idx.setIndexValueBtc(Double.parseDouble(vals[btcPos]));
-      idx.setIndexValueUsd(Double.parseDouble(vals[usdPos]));
-      idx.setTimeStamp(lastDate);
-      idxList.add(idx);
-      repo.saveTen(idx);
-
-      JpaIdxEth eth = new JpaIdxEth();
-      eth.setId(Long.valueOf(size+i));
-      eth.setIndexValueBtc(Double.parseDouble(vals[btcPos]));
-      eth.setIndexValueUsd(Double.parseDouble(vals[usdPos]));
-      eth.setTimeStamp(BletchDate.toDate(vals[datePos]));
-      repo.saveEth(eth);
-
-      lastDate += TimeUnit.MINUTES.toMillis(1);
+      time += TimeUnit.MINUTES.toMillis(1);
     }
 
     return idxList;
+  }
+
+  private JpaCurrency newCurrency(long time) {
+    JpaCurrency idx = new JpaCurrency();
+    populate(idx, time);
+    return idx;
+  }
+
+  private JpaPlatform newPlatform(long time) {
+    JpaPlatform idx = new JpaPlatform();
+    populate(idx, time);
+    return idx;
+  }
+
+  private JpaApplication newApplication(long time) {
+    JpaApplication idx = new JpaApplication();
+    populate(idx, time);
+    return idx;
+  }
+
+  private JpaIdxForty newForty(long time) {
+    JpaIdxForty idx = new JpaIdxForty();
+    populate(idx, time);
+    return idx;
+  }
+
+  private JpaIdxFortyEven newFortyEven(long time) {
+    JpaIdxFortyEven idx = new JpaIdxFortyEven();
+    populate(idx, time);
+    return idx;
+  }
+
+  private JpaIndexTotal newTotal(long time) {
+    JpaIndexTotal idx = new JpaIndexTotal();
+    populate(idx, time);
+    return idx;
+  }
+
+  private JpaIndexTotalEven newTotalEven(long time) {
+    JpaIndexTotalEven idx = new JpaIndexTotalEven();
+    populate(idx, time);
+    return idx;
   }
 
   private JpaIndexTen newOdd(long now) {

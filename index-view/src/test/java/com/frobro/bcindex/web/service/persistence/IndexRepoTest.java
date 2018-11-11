@@ -1,19 +1,16 @@
 package com.frobro.bcindex.web.service.persistence;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-
 import com.frobro.bcindex.core.db.domain.JpaIndex;
 import com.frobro.bcindex.core.db.domain.JpaIndexTen;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 /**
  * Created by rise on 4/19/17.
@@ -52,7 +49,7 @@ public class IndexRepoTest extends DbBaseTest {
     repo.saveTen(second);
 
     // when
-    JpaIndex latest = oddRepo.findOne(second.getId());
+    JpaIndex latest = oddRepo.findById(second.getId()).get();
 
     // then
     assertEquals(second.getId(), latest.getId());

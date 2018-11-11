@@ -1,12 +1,9 @@
 package com.frobro.bcindex.web.service;
 
-import static org.junit.Assert.assertEquals;
-
-import com.frobro.bcindex.web.model.BletchInEth;
-import com.frobro.bcindex.web.model.BletchInTen;
-import com.frobro.bcindex.web.model.BletchInTwenty;
 import com.frobro.bcindex.web.model.BletchleyData;
 import com.frobro.bcindex.web.service.persistence.IndexDbDto;
+import com.frobro.bcindex.web.service.rules.BusRulesEth;
+import com.frobro.bcindex.web.service.rules.BusRulesTen;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -14,6 +11,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by rise on 7/15/17.
@@ -24,10 +23,9 @@ public class IndexCalculationTest {
   @Test
   public void testTen() {
     // given
-    BletchleyData inputData = new BletchInTen();
+    BletchleyData inputData = new BletchleyData(new BusRulesTen());
     inputData.setLastUsdBtc(getLastBtc());
     inputData.setLastUpdate(getTime());
-    inputData.setMembers(getApiJsonTen());
     // and
     IndexCalculator calculator = new IndexCalculatorTen();
     calculator.updateLast(inputData);
@@ -54,12 +52,11 @@ public class IndexCalculationTest {
   public void testEth() {
     System.setProperty("bclog.console", "true");
     // given
-    BletchleyData inputData = new BletchInEth();
+    BletchleyData inputData = new BletchleyData(new BusRulesEth());
 //    BletchleyData inputData = new BletchInTwenty();
 
     inputData.setLastUsdBtc(getLastBtc());
     inputData.setLastUpdate(getTime());
-    inputData.setMembers(getApiJsonEth());
     // and
     IndexCalculator calculator = new IndexCalculatorEth();
 //    IndexCalculator calculator = new IndexCalculatorTwenty();

@@ -1,6 +1,6 @@
 package com.frobro.bcindex.web.model.api;
 
-import com.frobro.bcindex.core.db.service.BletchDate;
+import com.frobro.bcindex.core.service.BletchDate;
 import com.frobro.bcindex.web.bclog.BcLog;
 
 import java.util.LinkedList;
@@ -69,39 +69,41 @@ public class ApiResponse {
     return unit;
   }
 
-  public boolean timeElasped(long time) {
-    /* implement time frame.timeElasped which
-       returns true if this time stamp is past
-       the time frame time. for example
-       hour --> return TimeUnit.Hour.toMillis <
-                (time - getLastTime());
-     */
-//    return timeFrame.timeElasped(time);
-    return false;
+  public ApiResponse overWriteLastest(long time, double px) {
+    times.remove(times.size()-1);
+    addTime(time);
+    lastTime = times.get(times.size()-1);
+
+    data.remove(data.size()-1);
+    updatePrice(px);
+    return this;
+  }
+
+  public long getFirstTime() {
+    return BletchDate.toEpochMilli(firstTime);
+  }
+
+  public double getFirstPrice() {
+    return firstPx;
   }
 
   /*
-  public double lastPrice = UNINITIALIZED;
-  public Double high;
-  public Double low;
-  public Double prevClose;
-  public Double change;
-  public Double percentChange;
-
-  private String lastTime;
-  private String firstTime;
-  private Double firstPx;
+   * removes oldest and adds new time/price
    */
-  public ApiResponse update(long time, double px) {
-//    make sure this is right
+  public ApiResponse addNewAndRemoveLast(long time, double px) {
     times.remove(0);
     addTime(time);
     lastTime = times.get(times.size()-1);
     firstTime = times.get(0);
 
     data.remove(0);
+    updatePrice(px);
+    return this;
+  }
+
+  private void updatePrice(double px) {
     addPrice(px);
-    firstPx = data.get(0);
+    updateFirstPx(data.get(0));
     lastPrice = data.get(data.size()-1);
 
     if (px > high) {
@@ -113,7 +115,6 @@ public class ApiResponse {
     prevClose = firstPx;
     change = lastPrice - prevClose;
     percentChange = (change/prevClose)*100.0;
-    return this;
   }
 
   private ApiResponse addPrice(double px) {
@@ -308,5 +309,27 @@ public class ApiResponse {
     result = 31 * result + (firstTime != null ? firstTime.hashCode() : 0);
     result = 31 * result + (firstPx != null ? firstPx.hashCode() : 0);
     return result;
+  }
+
+  @Override
+  public String toString() {
+    return "ApiResponse{" +
+        "index=" + index +
+        ", currency=" + currency +
+        ", timeFrame=" + timeFrame +
+        ", timeUnit='" + timeUnit + '\'' +
+        ", lastPrice=" + lastPrice +
+        ", high=" + high +
+        ", low=" + low +
+        ", prevClose=" + prevClose +
+        ", change=" + change +
+        ", percentChange=" + percentChange +
+        ", data=" + data +
+        ", times=" + times +
+        ", lastTime='" + lastTime + '\'' +
+        ", firstTime='" + firstTime + '\'' +
+        ", firstPx=" + firstPx +
+        ", lastTimeMillis=" + lastTimeMillis +
+        '}';
   }
 }

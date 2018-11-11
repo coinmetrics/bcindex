@@ -1,0 +1,103 @@
+Daily Weights API
+
+The daily weights API provides the weights of each
+constituent at 0UTC every day. The time stamp 
+corresponding to each entry is in milliseconds from
+epoch. Every index is supported.
+
+TEN
+TEN_EVEN
+TWENTY
+TWENTY_EVEN
+FORTY
+FORTY_EVEN
+TOTAL
+TOTAL_EVEN
+ETHEREUM
+ETHEREUM_EVEN
+CURRENCY
+PLATFORM
+APPLICATION
+
+The end point is: https://api.bletchleyindexes.com/daily/weight
+and the data format for requests and responses is json
+
+Example request:
+
+    {'index':'TEN'}
+
+example using the python requests 
+(http://docs.python-requests.org/en/master/) library
+
+    endpt = https://api.bletchleyindexes.com/daily/weight
+    data = {'index':'TEN'}
+    requests.post(endpt, json=data)
+
+
+Example response:
+
+{
+  "index": "TEN",
+  "elementList": [
+    {
+      "time": 1526860807824,
+      "dataMap": {
+        "BTC": 0.4811905950587264,
+        "BCH": 0.07324380808595939,
+        "XRP": 0.09079897181979656,
+        "ETH": 0.23470237329228516,
+        "XLM": 0.020242870030934643,
+        "EOS": 0.03683035100862232,
+        "ZEC": 0.004314982635452703,
+        "LTC": 0.026000785676306423,
+        "DASH": 0.010674257656280493,
+        "ADA": 0.022001004735635793
+      }
+    },
+    {
+      "time": 1526947238023,
+      "dataMap": {
+        "BTC": 0.48633701566578047,
+        "BCH": 0.07134133695454442,
+        "XRP": 0.08994482627551807,
+        "ETH": 0.23433808142353232,
+        "XLM": 0.019743620058886868,
+        "EOS": 0.03637340012359569,
+        "ZEC": 0.004129403161664996,
+        "LTC": 0.025623264814710833,
+        "DASH": 0.010471202518209002,
+        "ADA": 0.02169784900355719
+      }
+    },
+    {
+      "time": 1527033655803,
+      "dataMap": {
+        "BTC": 0.49229806890189215,
+        "BCH": 0.07032616972409436,
+        "XRP": 0.09082142059607938,
+        "ETH": 0.23009376457483768,
+        "XLM": 0.01978138931707303,
+        "EOS": 0.03519454755697264,
+        "ZEC": 0.004189285905075079,
+        "LTC": 0.026093340614593615,
+        "DASH": 0.010408503589818402,
+        "ADA": 0.020793509219563806
+      }
+    },
+    {
+      "time": 1527120028414,
+      "dataMap": {
+        "BTC": 0.5020286493606718,
+        "BCH": 0.06692282166853447,
+        "XRP": 0.09106240364756747,
+        "ETH": 0.22485459402282829,
+        "XLM": 0.020160313838660373,
+        "EOS": 0.03348822105279654,
+        "ZEC": 0.0041524942117333345,
+        "LTC": 0.026188679843624878,
+        "DASH": 0.010726405336879949,
+        "ADA": 0.02041541701670293
+      }
+    }
+  ]
+}

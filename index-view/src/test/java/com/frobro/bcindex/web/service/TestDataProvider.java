@@ -1,9 +1,8 @@
 package com.frobro.bcindex.web.service;
 
 import com.frobro.bcindex.web.model.api.*;
+import com.frobro.bcindex.web.service.time.TimeService;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,29 +11,39 @@ public class TestDataProvider implements DataProvider {
   private static final Map<String,Integer> multMap = new HashMap<>();
   static {
     // indexes
-    multMap.put(IndexType.ODD_INDEX.name(), 10);
-    multMap.put(IndexType.EVEN_INDEX.name(), -10);
-    multMap.put(IndexType.INDEX_TWENTY.name(), 20);
-    multMap.put(IndexType.EVEN_TWENTY.name(), -20);
-    multMap.put(IndexType.INDEX_ETH.name(), 30);
-    multMap.put(IndexType.EVEN_ETH.name(), -30);
+    int mult = 10;
+    for (IndexType idx : IndexType.values()) {
+      multMap.put(idx.name(), mult);
+      mult += 10;
+    }
     // currencies
     multMap.put(Currency.USD.name(), 2);
     multMap.put(Currency.BTC.name(), 1);
-    // time frame
-    multMap.put(TimeFrame.HOURLY.name(), 10);
-    multMap.put(TimeFrame.DAILY.name(), 9);
-    multMap.put(TimeFrame.WEEKLY.name(), 8);
-    multMap.put(TimeFrame.MONTHLY.name(), 7);
-    multMap.put(TimeFrame.MAX.name(), 60);
+
+    int curCnt = 1;
+    for (Currency currency : Currency.values()) {
+      multMap.put(currency.name(), curCnt);
+      curCnt++;
+    }
+
+    int timeCnt = 5;
+    for (TimeFrame frame : TimeFrame.values()) {
+      multMap.put(frame.name(), timeCnt);
+      timeCnt++;
+    }
   }
-  private int multiplier;
 
   @Override
   public ApiResponse getData(RequestDto req) {
     ApiResponse resp = ApiResponse.newResponse(req);
-    multiplier = createUniqueMultiplier(req);
-    addPriceAndTime(resp);
+
+
+    // set total count to avoid later NPE
+    if (req.timeFrame == TimeFrame.MAX) {
+      ((MaxApiResponse)resp).setTotalCount(0);
+    }
+
+    addPriceAndTime(resp, createUniqueMultiplier(req));
     resp.calcAndFormatData();
     return resp;
   }
@@ -46,8 +55,8 @@ public class TestDataProvider implements DataProvider {
     return idxM + curM - time;
   }
 
-  private void addPriceAndTime(ApiResponse resp) {
-    long now = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
+  private void addPriceAndTime(ApiResponse resp, int multiplier) {
+    long now = TimeService.currentTimeMillis();
     double low = 1.0;
     double high = new Double(SIZE * multiplier);
     resp.updateFirst(low, (now-1));

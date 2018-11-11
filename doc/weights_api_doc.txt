@@ -1,0 +1,91 @@
+********** Weights API **********
+
+Example request:
+
+    endPoint = "http://www.bletchleyindexes.com/api/weight";
+
+    data = {'index':'TEN'}
+
+    requests.post(endPoint, json=data).text
+
+Example response:
+
+{
+    "BTC":0.5450559023265176,
+    "BCH":0.06418993185106449,
+    "XRP":0.09343386801419111,
+    "ETH":0.1957691922146598,
+    "XLM":0.01616205190857309,
+    "EOS":0.0180129660188961,
+    "ZEC":0.003199272779442996,
+    "LTC":0.033687264780168154,
+    "DASH":0.012081059394263896,
+    "ADA":0.018408490712222836
+}
+
+
+
+Example batch requests:
+
+    data = {'indexList':['TEN','TWENTY','FORTY']}
+
+    endPoint = "http://www.bletchleyindexes.com/api/weight/list
+
+    requests.post(endPoint, json=data).text
+
+Example batch response:
+
+{
+  "TWENTY": {
+    "BTC": 0.5451929261390461,
+    "BCH": 0.06402071519490368,
+    "XRP": 0.0935101145488305,
+    "ETH": 0.1955369195984767,
+    "XLM": 0.01623382227030128,
+    "EOS": 0.017956702420485464,
+    "ZEC": 0.003204148699652314,
+    "LTC": 0.033748350379470875,
+    "DASH": 0.012161258714956,
+    "ADA": 0.018435042033877164
+  },
+  "FORTY": {
+    "BTC": 0.5451929261390461,
+    "BCH": 0.06402071519490368,
+    "XRP": 0.0935101145488305,
+    "ETH": 0.1955369195984767,
+    "XLM": 0.01623382227030128,
+    "EOS": 0.017956702420485464,
+    "ZEC": 0.003204148699652314,
+    "LTC": 0.033748350379470875,
+    "DASH": 0.012161258714956,
+    "ADA": 0.018435042033877164
+  },
+  "TEN": {
+    "BTC": 0.5451929261390461,
+    "BCH": 0.06402071519490368,
+    "XRP": 0.0935101145488305,
+    "ETH": 0.1955369195984767,
+    "XLM": 0.01623382227030128,
+    "EOS": 0.017956702420485464,
+    "ZEC": 0.003204148699652314,
+    "LTC": 0.033748350379470875,
+    "DASH": 0.012161258714956,
+    "ADA": 0.018435042033877164
+  }
+}
+
+Supported indices are:
+ 
+   TEN,
+   TEN_EVEN,
+   TWENTY,
+   TWENTY_EVEN,
+   FORTY,
+   FORTY_EVEN,
+   TOTAL,
+   TOTAL_EVEN,
+   ETHEREUM,
+   ETHEREUM_EVEN,
+   CURRENCY,
+   PLATFORM,
+   APPLICATION

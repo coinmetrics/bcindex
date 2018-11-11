@@ -5,13 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="keywords" content="Announcements, Index, Fund, Announcement, Bletchley"/>
-    <meta name="description" content="Announcement information for the Bletchley Indexes."/>
+    <meta name="description" content="Announcement and other update information for the Bletchley Indexes."/>
     <title>Bletchley Indexes: Announcements</title>
     <link th:href="@{/css/style.css}" href="../static/css/style.css"  rel="stylesheet" type="text/css"  />
 
 
 <div class="topnav">
-  <li><a th:href="@{/home}" href="home.html" class="homelink">Bletchley Indexes</a></li>
+  <li><a class="homelink" th:href="@{https://www.bletchleyindexes.com/home}" href="https://www.bletchleyindexes.com/home"><img th:src="@{/img/logo_small.PNG}" src="../static/img/logo_small.PNG" width="50px" height="50px" alt=""></a></li>
   <li><a th:href="@{/home}" href="home.html">Home</a></li>
   <li><a th:href="@{/methodology}" href="methodology.html">Methodology</a></li>
   <li><a class="active" th:href="@{/annc}" href="annc.html">Updates</a></li>
@@ -34,15 +34,1095 @@
 
 </script>
 
-
+<!--
 <div id="onboard">
 <img th:src="@{/img/rsz_thailand.jpg}" src="../static/img/rsz_thailand.jpg" width="100%" height="300" alt="" />
 </div>
 <div id="onboard-mobile">
 <img th:src="@{/img/rsz_thailand_mobile.jpg}" src="../static/img/rsz_thailand_mobile.jpg" width="100%" height="300" alt="" />
+</div>-->
+<br/>
+    <h1 align = "center">Updates and Announcements</h1>
+<br/>
+<div class="containerbody">
+
+<button class="accordion-two">November Rebalance</button>
+<div class="panel">
+    <div class="blogdate"><p>November 1st, 2018</p></div>
+    <p>The November rebalance was completed at 01:00 UTC on November 1st. Please click <a th:href="@{/blog/blog_november_2018}" href="blog_november_2018.html">here</a> for our detailed report. Please click <a th:href="@{/weights/november_2018.csv}" href="../static/weights/november_2018.csv">here</a> for details on turnover and weight changes. And <a th:href="@{/weights/november_floats_2018.csv}" href="../static/weights/november_floats_2018.csv">here</a> for details on float changes.</p>
 </div>
 
-    <h1 align = "center">Updates and Announcements</h1>
+<button class="accordion">Tracking Improvements</button>
+<div class="panel">
+    <div class="blogdate"><p>October 24th, 2018</p></div>
+    <p>Beginning with the November rebalance we will be displaying the units of each asset required to accurately track each index along with our float changes (normalized to 1 basis point of tracking assets). While this could be backed out from weightings previously, publishing it explicity will allow asset managers with limited tracking experience to better handle rebalances.</p>
+</div>
+
+<button class="accordion-two">Pricing Data</button>
+<div class="panel">
+    <div class="blogdate"><p>October 10th, 2018</p></div>
+    <p>As of 13:00 UTC on October 10th, we switched all of our pricing data from cryptocompare.com to nomics.com.</p>
+</div>
+
+<button class="accordion">October Rebalance</button>
+<div class="panel">
+    <div class="blogdate"><p>October 1st, 2018</p></div>
+    <p>The October rebalance was completed at 01:00 UTC on October 1st. Please click <a th:href="@{/blog/blog_october_2018}" href="blog_october_2018.html">here</a> for our new detailed report. Please click <a th:href="@{/weights/october_2018.csv}" href="../static/weights/october_2018.csv">here</a> for details on turnover and weight changes. And <a th:href="@{/weights/october_floats_2018.csv}" href="../static/weights/october_floats_2018.csv">here</a> for details on float changes.</p>
+</div>
+
+<button class="accordion-two">September Rebalance</button>
+<div class="panel">
+    <div class="blogdate"><p>September 1st, 2018</p></div>
+    <p>The September rebalance was completed at 22:30 UTC on August 31st. Please click <a th:href="@{/blog/blog_september_2018}" href="blog_september_2018.html">here</a> for our detailed report. Please click <a th:href="@{/weights/september_2018.csv}" href="../static/weights/september_2018.csv">here</a> for details on turnover and weight changes. And <a th:href="@{/weights/september_floats_2018.csv}" href="../static/weights/september_floats_2018.csv">here</a> for details on float changes.</p>
+</div>
+
+<button class="accordion">August Rebalance</button>
+<div class="panel">
+    <div class="blogdate"><p>August 1st, 2018</p></div>
+    <p>The August rebalance was completed at 01:00 UTC on August 1st. Please click <a th:href="@{/blog/blog_august_2018}" href="blog_august_2018.html">here</a> for our new detailed report. Please click <a th:href="@{/weights/august_2018.csv}" href="../static/weights/august_2018.csv">here</a> for details on turnover and weight changes. And <a th:href="@{/weights/august_floats_2018.csv}" href="../static/weights/august_floats_2018.csv">here</a> for details on float changes.</p>
+</div>
+
+<button class="accordion-two">Supporting Float Change Metrics</button>
+<div class="panel">
+    <div class="blogdate"><p>August 1st, 2018</p></div>
+    <p>We've released a new report as part of our monthly rebalance showing the changes in float (circulating supply) for each asset and index in the Bletchley Universe. This report will be necessary for asset managers tracking an index to accurately predict what trades they will need to make to replicate the rebalance. See the first version <a th:href="@{/weights/august_floats_2018.csv}" href="../static/weights/august_floats_2018.csv">here</a>.</p>
+</div>
+
+<button class="accordion">Removal of Currency Sector Cap</button>
+<div class="panel">
+    <div class="blogdate"><p>July 15th, 2018</p></div>
+    <p>We have removed the 25% cap on any single asset in our currency sector. There is no longer any limit to the maximum weight an asset may have in the currency index. The platform and application indexes remain unchanged with the 25% cap in place.</p>
+</div>
+
+<button class="accordion-two">Supporting Turnover and Detailed Weighting Metrics</button>
+<div class="panel">
+    <div class="blogdate"><p>July 1st, 2018</p></div>
+    <p>We've released a new report as part of our monthly rebalance showing the previous and new weighting of every asset in the Bletchley universe. We also now provide summarized turnover metrics for each index. See the first version <a th:href="@{/weights/july.csv}" href="../static/weights/july.csv">here</a>.</p>
+</div>
+
+<button class="accordion">July Rebalance</button>
+<div class="panel">
+    <div class="blogdate"><p>July 1st, 2018</p></div>
+    <p>July rebalance was completed at 22:30 UTC on June 30th. Please click <a th:href="@{/blog/blog_july_2018}" href="blog_july_2018.html">here</a> for our new detailed report. Please click <a th:href="@{/weights/july.csv}" href="../static/weights/july.csv">here</a> for stats on turnover and weight changes.</p>
+</div>
+
+<button class="accordion-two">June Rebalance</button>
+<div class="panel">
+<br/>
+  <div class="blogdate"><p>June 1st, 2018</p></div>
+  The June Rebalance will be effective as of 6/1/2018 at approximately 00:00 UTC and index membership changes are confirmed. Note that there was no May rebalance due to our rebalancing date change. Please click <a th:href="@{/weights/may.csv}" href="../static/weights/may.csv">here</a> for updated index membership and weightings.<br/><br/>
+  <b>Bletchley 10 Indexes</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>No Changes
+  </li>
+</ul>
+</div>  
+  <b>Bletchley 20 Indexes</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>Additions
+    <ul class="second">
+        <li>ONT</li>
+        <li>BNB</li>
+        <li>ZRX</li>
+        <li>ZIL</li>
+        <li>DCR</li>
+    </ul>
+  </li>
+  <li>Deletions
+      <ul class ="second">
+        <li>XVG</li>
+        <li>DGD</li>
+        <li>BTG</li>
+        <li>NANO</li>
+        <li>SNT</li>
+    </ul>
+    </li>
+</ul>
+</div> 
+
+  <b>Bletchley 40 Indexes</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>Additions
+    <ul class="second">
+        <li>ELF</li>
+        <li>BTG</li>
+        <li>POLY</li>
+        <li>DGD</li>
+        <li>PPT</li>
+        <li>SNT</li>
+        <li>ZEN</li>
+        <li>XVG</li>
+        <li>XZC</li>
+        <li>NANO</li>
+        <li>LOOM</li>
+        <li>POWR</li>
+        <li>BNT</li>
+        <li>ENG</li>
+        <li>QASH</li>
+    </ul>
+  </li>
+  <li>Deletions
+      <ul class ="second">
+        <li>ONT</li>
+        <li>DCR</li>
+        <li>BNB</li>
+        <li>ZRX</li>
+        <li>FCT</li>
+        <li>VTC</li>
+        <li>GAME</li>
+        <li>ANT</li>
+        <li>ETHOS</li>
+        <li>WTC</li>
+        <li>ZIL</li>
+        <li>IOST</li>
+        <li>PAY</li>
+        <li>MTL</li>
+        <li>SALT</li>
+    </ul>
+    </li>
+</ul>
+</div> 
+
+  <b>Bletchley Total Market Indexes</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>Additions
+    <ul class="second">
+        <li>BNT</li>
+        <li>ELF</li>
+        <li>ENG</li>
+        <li>LOOM</li>
+        <li>POLY</li>
+        <li>POWR</li>
+        <li>PPT</li>
+        <li>QASH</li>
+        <li>XZC</li>
+        <li>ZEN</li>
+    </ul>
+  </li>
+  <li>Deletions
+      <ul class ="second">
+        <li>ANT</li>
+        <li>ETHOS</li>
+        <li>FCT</li>
+        <li>GAME</li>
+        <li>IOST</li>
+        <li>MTL</li>
+        <li>PAY</li>
+        <li>SALT</li>
+        <li>VTC</li>
+        <li>WTC</li>
+    </ul>
+    </li>
+</ul>
+</div> 
+
+  <b>Bletchley Currrency Index</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>Additions
+    <ul class ="second">
+      <li>XZC</li>
+      <li>ZEN</li>
+    </ul>
+  </li>
+  <li>Deletions
+      <ul class ="second">
+        <li>VTC</li>
+    </ul>
+    </li>
+</ul>
+</div>  
+
+  <b>Bletchley Platform Index</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>Additions
+    <ul class ="second">
+      <li>ELF</li>
+      <li>POWR</li>
+    </ul>
+  </li>
+  <li>Deletions
+      <ul class ="second">
+        <li>FCT</li>
+        <li>WTC</li>
+    </ul>
+    </li>
+</ul>
+</div> 
+
+  <b>Bletchley Application Index</b>
+ <div class='containerindex'>
+  <ul class="indexannc">
+  <li>Additions
+    <ul class ="second">
+      <li>BNT</li>
+      <li>ENG</li>
+      <li>LOOM</li>
+      <li>POLY</li>
+      <li>PPT</li>
+      <li>QASH</li>
+    </ul>
+  </li>
+  <li>Deletions
+      <ul class ="second">
+        <li>ANT</li>
+        <li>ETHOS</li>
+        <li>GAME</li>
+        <li>IOST</li>
+        <li>MTL</li>
+        <li>PAY</li>
+        <li>SALT</li>
+    </ul>
+    </li>
+</ul>
+</div> 
+
+  <b>Bletchley Ethereum Token Indexes</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>Additions
+    <ul class="second">
+        <li>ENG</li>
+        <li>LOOM</li>
+        <li>POLY</li>
+        <li>POWR</li>
+        <li>PPT</li>
+        <li>QASH</li>
+    </ul>
+  </li>
+    <li>Deletions
+      <ul class ="second">
+        <li>ANT</li>
+        <li>ETHOS</li>
+        <li>GAME</li>
+        <li>ICX</li>
+        <li>IOST</li>
+        <li>MTL</li>
+        <li>PAY</li>
+        <li>SALT</li>
+        <li>WTC</li>
+    </ul>
+    </li>
+</ul>
+</div> 
+
+
+</div>
+
+<button class="accordion">Rebalancing Date Change</button>
+<div class="panel">
+    <div class="blogdate"><p>May 15th, 2018</p></div>
+    <p>
+        We are changing our rebalancing day to the first day of each month, at 00:00 UTC. This will be effective with our May rebalance, and will occur June 1st at 00:00 UTC.</p>
+</div>
+
+<button class="accordion-two">April Rebalance</button>
+<div class="panel">
+<br/>
+  The April Rebalance will be effective as of 4/19/2018 at approximately 07:15 CST and index membership changes are confirmed. Please click <a th:href="@{/weights/april.csv}" href="../static/weights/april.csv">here</a> for updated index membership and weightings.<br/><br/>
+  <b>Bletchley 10 Indexes</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>No Changes
+  </li>
+</ul>
+</div>  
+  <b>Bletchley 20 Indexes</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>Additions
+    <ul class="second">
+        <li>XVG</li>
+    </ul>
+  </li>
+  <li>Deletions
+      <ul class ="second">
+        <li>GNO</li>
+    </ul>
+    </li>
+</ul>
+</div> 
+
+  <b>Bletchley 40 Indexes</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>Additions
+    <ul class="second">
+        <li>ANT</li>
+        <li>DCR</li>
+        <li>GNO</li>
+        <li>IOST</li>
+        <li>ONT</li>
+        <li>STORJ</li>
+        <li>WAN</li>
+    </ul>
+  </li>
+  <li>Deletions
+      <ul class ="second">
+        <li>BTM</li>
+        <li>GBYTE</li>
+        <li>LBC</li>
+        <li>POWR</li>
+        <li>PPT</li>
+        <li>QASH</li>
+        <li>XVG</li>
+    </ul>
+    </li>
+</ul>
+</div> 
+
+  <b>Bletchley Total Market Indexes</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>Additions
+    <ul class="second">
+        <li>ANT</li>
+        <li>DCR</li>
+        <li>IOST</li>
+        <li>ONT</li>
+        <li>STORJ</li>
+        <li>WAN</li>
+    </ul>
+  </li>
+  <li>Deletions
+      <ul class ="second">
+        <li>BTM</li>
+        <li>GBYTE</li>
+        <li>LBC</li>
+        <li>POWR</li>
+        <li>PPT</li>
+        <li>QASH</li>
+    </ul>
+    </li>
+</ul>
+</div> 
+
+  <b>Bletchley Currency Index</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>No Changes
+  </li>
+</ul>
+</div>  
+
+  <b>Bletchley Platform Index</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>Additions
+    <ul class ="second">
+      <li>DCR</li>
+      <li>ONT</li>
+      <li>WAN</li>
+    </ul>
+  </li>
+  <li>Deletions
+      <ul class ="second">
+        <li>GBYTE</li>
+        <li>BTN</li>
+        <li>POWR</li>
+    </ul>
+    </li>
+</ul>
+</div> 
+
+  <b>Bletchley Application Index</b>
+ <div class='containerindex'>
+  <ul class="indexannc">
+  <li>Additions
+    <ul class ="second">
+      <li>ANT</li>
+      <li>IOST</li>
+      <li>STORJ</li>
+    </ul>
+  </li>
+  <li>Deletions
+      <ul class ="second">
+        <li>LBC</li>
+        <li>PPT</li>
+        <li>QASH</li>
+    </ul>
+    </li>
+</ul>
+</div> 
+
+  <b>Bletchley Ethereum Token Indexes</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>Additions
+    <ul class="second">
+        <li>ANT</li>
+        <li>CVC</li>
+        <li>FUN</li>
+        <li>GAME</li>
+        <li>IOST</li>
+        <li>KNC</li>
+        <li>MTL</li>
+        <li>PAY</li>
+        <li>SALT</li>
+    </ul>
+  </li>
+    <li>Deletions
+      <ul class ="second">
+        <li>BTM</li>
+        <li>EOS</li>
+        <li>PPT</li>
+        <li>QASH</li>
+    </ul>
+    </li>
+</ul>
+</div> 
+
+
+</div>
+
+<button class="accordion">Update of Ethereum Token Index Methodology</button>
+<div class="panel">
+    <p>
+        We are altering our Ethereum Token Indexes to only include those ERC20 tokens that are in the Bletchley Universe. This change will align the ETH indexes with our sector indexes construction.</p>
+</div>
+
+<button class="accordion-two">March Rebalance</button>
+<div class="panel">
+<br/>
+  The March Rebalance will be effective as of 3/21/2018 at approximately 23:59 CST and index membership changes are confirmed. Please click <a th:href="@{/weights/march.csv}" href="../static/weights/march.csv">here</a> for updated index membership and weightings.<br/><br/>
+  <b>Bletchley 10 Indexes</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>No Changes
+  </li>
+</ul>
+</div>  
+  <b>Bletchley 20 Indexes</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>Additions
+    <ul class="second">
+        <li>DGD</li>
+        <li>NANO</li>
+    </ul>
+  </li>
+  <li>Deletions
+      <ul class ="second">
+        <li>DCR</li>
+        <li>ZRX</li>
+    </ul>
+    </li>
+</ul>
+</div> 
+
+  <b>Bletchley 40 Indexes</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>Additions
+    <ul class="second">
+        <li>ZRX</li>
+        <li>ZIL</li>
+        <li>AION</li>
+    </ul>
+  </li>
+  <li>Deletions
+      <ul class ="second">
+        <li>ZCL</li>
+        <li>DGD</li>
+        <li>NANO</li>
+    </ul>
+    </li>
+</ul>
+</div> 
+
+  <b>Bletchley Total Market Indexes</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>Additions
+    <ul class="second">
+        <li>ZIL</li>
+        <li>AION</li>
+    </ul>
+  </li>
+  <li>Deletions
+      <ul class ="second">
+        <li>ZCL</li>
+        <li>DCR</li>
+    </ul>
+    </li>
+</ul>
+</div> 
+
+  <b>Bletchley Currency Index</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>Deletions
+    <ul class="second">
+        <li>ZCL</li>
+    </ul>
+  </li>
+</ul>
+</div> 
+
+  <b>Bletchley Platform Index</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>Additions
+    <ul class ="second">
+      <li>ZIL</li>
+      <li>AION</li>
+    </ul>
+  </li>
+  <li>Deletions
+      <ul class ="second">
+        <li>DCR</li>
+    </ul>
+    </li>
+</ul>
+</div> 
+
+  <b>Bletchley Application Index</b>
+ <div class='containerindex'>
+  <ul class="indexannc">
+  <li>No Changes
+  </li>
+</ul>
+</div> 
+
+  <b>Bletchley Ethereum Token Indexes</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>Additions
+    <ul class="second">
+        <li>ZIL</li>
+        <li>AION</li>
+    </ul>
+  </li>
+    <li>Deletions
+      <ul class ="second">
+        <li>KNC</li>
+        <li>POWR</li>
+    </ul>
+    </li>
+</ul>
+</div> 
+
+
+</div>
+
+<button class="accordion">Release of Bletchley Sector Indexes</button>
+<div class="panel">
+    <p>
+        We are releasing our family of sector indexes. We allocate each member of the Bletchley Universe to one of our three categories; Currencies, Platforms, and Applications. Please see the methodology page for a full description and our various tools for current pricing.</p>
+</div>
+
+<button class="accordion-two">February Rebalance</button>
+<div class="panel">
+<br/>
+  The February Rebalance will be effective as of 2/21/2018 at approximately 23:55 CST and index membership changes are confirmed. Please click <a th:href="@{/weights/feb.csv}" href="../static/weights/feb.csv">here</a> for updated index membership and weightings. We have also released full supoprt for our sector indexes with this rebalance. Check out the details on our methodology page!<br/><br/>
+  <b>Bletchley 10 Indexes</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>No Changes
+  </li>
+</ul>
+</div>  
+  <b>Bletchley 20 Indexes</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>Additions
+    <ul class="second">
+        <li>VEN</li>
+        <li>ICX</li>
+        <li>SNT</li>
+    </ul>
+  </li>
+  <li>Deletions
+      <ul class ="second">
+        <li>STRAT</li>
+        <li>ARDR</li>
+        <li>XVG</li>
+    </ul>
+    </li>
+</ul>
+</div> 
+
+  <b>Bletchley 40 Indexes</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>Additions
+    <ul class="second">
+        <li>PPT</li>
+        <li>XRB</li>
+        <li>STRAT</li>
+        <li>ARDR</li>
+        <li>XVG</li>
+    </ul>
+  </li>
+  <li>Deletions
+      <ul class ="second">
+        <li>ICN</li>
+        <li>AION</li>
+        <li>ICX</li>
+        <li>VEN</li>
+        <li>SNT</li>
+    </ul>
+    </li>
+</ul>
+</div> 
+
+  <b>Bletchley Total Market Indexes</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>Additions
+    <ul class="second">
+        <li>PPT</li>
+        <li>XRB</li>
+    </ul>
+  </li>
+  <li>Deletions
+      <ul class ="second">
+        <li>ICN</li>
+        <li>AION</li>
+    </ul>
+    </li>
+</ul>
+</div> 
+
+  <b>Bletchley Currency Index</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>Additions
+    <ul class="second">
+        <li>XRB</li>
+    </ul>
+  </li>
+</ul>
+</div> 
+
+  <b>Bletchley Platform Index</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>Deletions
+      <ul class ="second">
+        <li>AION</li>
+    </ul>
+    </li>
+</ul>
+</div> 
+
+  <b>Bletchley Application Index</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>Additions
+    <ul class="second">
+        <li>PPT</li>
+    </ul>
+  </li>
+  <li>Deletions
+      <ul class ="second">
+        <li>ICN</li>
+    </ul>
+    </li>
+</ul>
+</div> 
+
+  <b>Bletchley Ethereum Token Indexes</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>Additions
+    <ul class="second">
+        <li>VEN</li>
+        <li>PPT</li>
+    </ul>
+  </li>
+    <li>Deletions
+      <ul class ="second">
+        <li>SALT</li>
+        <li>AION</li>
+        <li>FUN</li>
+        <li>ICN</li>
+    </ul>
+    </li>
+</ul>
+</div> 
+
+
+</div>
+
+
+
+<button class="accordion">January Rebalance</button>
+<div class="panel">
+<br/>
+  The January Rebalance will be effective as of 1/16/2017 at approximately 21:05 CST and index membership changes are confirmed. Please click <a th:href="@{/weights/jan.csv}" href="../static/weights/jan.csv">here</a> for updated index membership and weightings.<br/><br/>
+  <b>Bletchley 10 Indexes</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>Additions
+    <ul class="second">
+        <li>EOS</li>
+    </ul>
+  </li>
+  <li>Deletions
+      <ul class ="second">
+        <li>ETC</li>
+    </ul>
+    </li>
+</ul>
+</div>  
+  <b>Bletchley 20 Indexes</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>Additions
+    <ul class="second">
+        <li>ETC</li>
+        <li>ZRX</li>
+        <li>XVG</li>
+        <li>ARDR</li>
+    </ul>
+  </li>
+  <li>Deletions
+      <ul class ="second">
+        <li>EOS</li>
+        <li>HSR</li>
+        <li>WAVES</li>
+        <li>SALT</li>
+    </ul>
+    </li>
+</ul>
+</div> 
+
+  <b>Bletchley 40 Indexes</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>Additions
+    <ul class="second">
+        <li>HSR</li>
+        <li>SALT</li>
+        <li>WAVES</li>
+        <li>ICX</li>
+        <li>QASH</li>
+        <li>LRC</li>
+        <li>ETHOS</li>
+        <li>ZCL</li>
+        <li>AION</li>
+    </ul>
+  </li>
+  <li>Deletions
+      <ul class ="second">
+        <li>ARDR</li>
+        <li>EMC2</li>
+        <li>ZRX</li>
+        <li>NXT</li>
+        <li>XVG</li>
+        <li>XZC</li>
+        <li>MANA</li>
+        <li>SAN</li>
+        <li>BAY</li>
+    </ul>
+    </li>
+</ul>
+</div> 
+
+  <b>Bletchley Ethereum Token Indexes</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>Additions
+    <ul class="second">
+        <li>ICX</li>
+        <li>ETHOS</li>
+        <li>AION</li>
+        <li>LRC</li>
+    </ul>
+  </li>
+    <li>Deletions
+      <ul class ="second">
+        <li>PAY</li>
+        <li>SAN</li>
+        <li>CVC</li>
+        <li>MCO</li>
+        <li>MTL</li>
+    </ul>
+    </li>
+</ul>
+</div> 
+</div>
+
+<button class="accordion-two">December Rebalance</button>
+<div class="panel">
+<br/>
+  The December Rebalance will be effective as of 12/20/2017 at approximately 20:30 CST and index membership changes are confirmed. Please click <a th:href="@{/weights/dec.csv}" href="../static/weights/dec.csv">here</a> for updated index membership and weightings. We have also created a total market index composed of all members of our 10, 20, and 40 index that is now live.<br/><br/>
+  <b>Bletchley 10 Indexes</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>Additions
+    <ul class="second">
+        <li>Cardano</li>
+    </ul>
+  </li>
+  <li>Deletions
+      <ul class ="second">
+        <li>Monero</li>
+    </ul>
+    </li>
+</ul>
+</div>  
+  <b>Bletchley 20 Indexes</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>Additions
+    <ul class="second">
+        <li>Monero</li>
+        <li>Bitcoin Gold</li>
+        <li>Dogecoin</li>
+        <li>Tron</li>
+    </ul>
+  </li>
+  <li>Deletions
+      <ul class ="second">
+        <li>Cardano</li>
+        <li>PIVX</li>
+        <li>ARK</li>
+        <li>PAY</li>
+    </ul>
+    </li>
+</ul>
+</div> 
+
+  <b>Bletchley 40 Indexes</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>Additions
+    <ul class="second">
+        <li>PIVX</li>
+        <li>DigixDao</li>
+        <li>Ark</li>
+        <li>Pay</li>
+        <li>EMC2</li>
+        <li>Byteball</li>
+        <li>Library Credits</li>
+        <li>Bytom</li>
+        <li>SAN</li>
+        <li>BitBay</li>
+        <li>GXS</li>
+        <li>Zcoin</li>
+    </ul>
+  </li>
+  <li>Deletions
+      <ul class ="second">
+        <li>Dogecoin</li>
+        <li>Tron</li>
+        <li>ETP</li>
+        <li>Ethos</li>
+        <li>Bancor</li>
+        <li>SNGLS</li>
+        <li>PART</li>
+        <li>Monaco</li>
+        <li>ADX</li>
+        <li>LINK</li>
+        <li>ZEN</li>
+        <li>NXS</li>
+    </ul>
+    </li>
+</ul>
+</div> 
+
+  <b>Bletchley Ethereum Token Indexes</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>Additions
+    <ul class="second">
+        <li>Monaco</li>
+        <li>BTM</li>
+        <li>DGD</li>
+        <li>QASH</li>
+        <li>SAN</li>
+        <li>FUN</li>
+    </ul>
+  </li>
+    <li>Deletions
+      <ul class ="second">
+        <li>SNGLS</li>
+        <li>BNT</li>
+        <li>Ethos</li>
+    </ul>
+    </li>
+</ul>
+</div> 
+</div>
+
+
+<button class="accordion">Release of Bletchley 40 Index</button>
+<div class="panel">
+    <p>
+        We are releasing our small cap index, composed of 40 members ranked 31-70 in our eligible universe. Please see the methodology page for a full description and our various tools for current pricing.</p>
+</div>
+
+<button class="accordion-two">November Rebalance</button>
+<div class="panel">
+<br/>
+  The November Rebalance will be effective as of 11/15/2017 and index membership changes are confirmed. Please click <a th:href="@{/weights/nov.csv}" href="../static/weights/nov.csv">here</a> for updated index membership and weightings. <br/><br/>
+  <b>Bletchley 10 Indexes</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>No Changes
+  </li>
+</ul>
+</div> 
+  <b>Bletchley 20 Indexes</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>Additions
+    <ul class="second">
+        <li>NEM</li>
+        <li>Hcash</li>
+    </ul>
+  </li>
+  <li>Deletions
+      <ul class ="second">
+        <li>Dogecoin</li>
+        <li>Civic</li>
+    </ul>
+    </li>
+</ul>
+</div> 
+
+  <b>Bletchley 40 Indexes</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>Additions
+    <ul class="second">
+        <li>Dogecoin</li>
+        <li>TRON</li>
+        <li>Zencash</li>
+        <li>VeChain</li>
+        <li>ChainLink</li>
+        <li>Power Ledger</li>
+        <li>Zcoin</li>
+    </ul>
+  </li>
+  <li>Deletions
+      <ul class ="second">
+        <li>iExec RLC</li>
+        <li>Aragon</li>
+        <li>Ubiq</li>
+        <li>Melon</li>
+        <li>Enigma</li>
+        <li>Edgeless</li>
+        <li>Wings</li>
+    </ul>
+    </li>
+</ul>
+</div> 
+
+  <b>Bletchley Ethereum Token Indexes</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>Additions
+    <ul class="second">
+        <li>TRON</li>
+        <li>Bitquence</li>
+        <li>Power Ledger</li>
+    </ul>
+  </li>
+    <li>Deletions
+      <ul class ="second">
+        <li>Funfair</li>
+        <li>Monaco</li>
+        <li>Aragon</li>
+    </ul>
+    </li>
+</ul>
+</div> 
+</div>
+
+<button class="accordion">October Rebalance</button>
+<div class="panel">
+<br/>
+  The October Rebalance will be effective as of 10/18/2017 and index membership changes are confirmed. Note that this rebalance reflects our shifts to fully diluted market caps. Please click <a th:href="@{/weights/Oct.csv}" href="../static/weights/Oct.csv">here</a> for updated index membership and weightings. <br/><br/>
+  <b>Bletchley 10 Indexes</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>Additions
+    <ul class="second">
+        <li>Zcash</li>
+        <li>Stellar Lumens</li>
+    </ul>
+  </li>
+  <li>Deletions
+      <ul class ="second">
+        <li>NEM</li>
+        <li>IOTA</li>
+    </ul>
+    </li>
+</ul>
+</div> 
+  <b>Bletchley 20 Indexes</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>Additions
+    <ul class="second">
+        <li>Cardano</li>
+        <li>Gnosis</li>
+        <li>Decred</li>
+        <li>SALT</li>
+        <li>Sia</li>
+        <li>Dogecoin</li>
+        <li>Civic</li>
+        <li>IOTA</li>
+    </ul>
+  </li>
+  <li>Deletions
+      <ul class ="second">
+        <li>Zcash</li>
+        <li>Stellar Lumens</li>
+        <li>Bytecoin</li>
+        <li>BAT</li>
+        <li>Golem</li>
+        <li>BitShares</li>
+        <li>Komodo</li>
+        <li>Augur</li>
+    </ul>
+    </li>
+</ul>
+</div> 
+
+  <b>Bletchley Ethereum Token Indexes</b>
+  <div class='containerindex'>
+  <ul class="indexannc">
+  <li>Additions
+    <ul class="second">
+        <li>SALT</li>
+        <li>Binance</li>
+        <li>ZeroX</li>
+        <li>Kyber Network</li>
+        <li>Walton</li>
+    </ul>
+  </li>
+    <li>Deletions
+      <ul class ="second">
+        <li>DigixDAO</li>
+        <li>Populous</li>
+        <li>Edgeless</li>
+        <li>Cofound.it</li>
+        <li>Wings</li>
+        <li>Storj</li>
+    </ul>
+    </li>
+</ul>
+</div> 
+</div>
+
+
+<button class="accordion-two">Methodology Update: 2050 Market Caps</button>
+<div class="panel">
+  <p>
+  We are switching our source for the market capitilzation, and float percentages, of crypto assets from coinmarketcap.com to onchainfx.com. This is in accordance with our view that the typical market caps the community has been using are flawed, and a switch to fully diluted market cap is necessary. We applaud onchainfx for rising to fill that need.</p>
+  <p>This change will result primarily in zcash and stellar lumens being in the ten index. It will also make ethereum classic, maidsafecoin, and gnosis much higher on the selection list than before. Weightings will be relatively unaffected, as the publicly available supply is consistent between the two sources.</p>
+  <p>Additionally, we are adding a new rule to our general methodology. We are adding a float percentage requirement (or % available supply) of 10% to prevent the inclusion of assets that are extremely centralized. This requirement currently only excludes NEO GAS. </p>
+  <p>Also starting with the October rebalance we will no longer be updating the tables in the methodology section with the weightings at each rebalance. You can instead find a link to those on our updates page. We will leave the tables up to help provide historical context.</p>
+</div>
  
 <button class="accordion">September Rebalance</button>
 <div class="panel">
@@ -416,13 +1496,16 @@ for (i = 0; i < acc.length; i++) {
       ga('send', 'pageview');
 </script>
 
-
+</div>
 
 
 <div class="container">
 <div class="container-slogan-annc">
     <p>&nbsp;</p>
     <p>Bletchley - A Better Benchmark</p>
+    <a th:href="@{https://www.bletchleyindexes.com/home}" href="https://www.bletchleyindexes.com/home"><img th:src="@{/img/logo_small.PNG}" src="../static/img/logo_small.PNG" width="50px" height="50px" alt=""></a>
+    <br/>
+    <br/>
 </div>
 </div>
 

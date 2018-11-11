@@ -1,5 +1,6 @@
 package com.frobro.bcindex.web.service.query;
 
+import com.frobro.bcindex.core.service.BletchDate;
 import com.frobro.bcindex.web.model.api.ApiResponse;
 import com.frobro.bcindex.web.model.api.MaxApiResponse;
 import com.frobro.bcindex.web.model.api.RequestDto;
@@ -70,7 +71,7 @@ public class MaxTimeQuery extends TimeSeriesQuery {
         + " when count < " + TimeFrame.MONTHLY.getNumDataPoints()
         + " then " + TimeFrame.MONTHLY.getTimeStep()
 
-    + " else " + TimeFrame.QUARTERLY.getTimeStep()
+    + " else " +  BletchDate.MIN_IN_DAY
 
     + " end "
     + " from (select max(bletch_id) as count from " + table+ ") as modnum) ";

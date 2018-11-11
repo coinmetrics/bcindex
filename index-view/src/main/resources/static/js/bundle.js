@@ -209,17 +209,38 @@ var Config = {
             id: 'EVEN_INDEX',
             text: 'Bletchley 10 Even Index'
         }, {
+            id: 'INDEX_ETH',
+            text: 'Bletchley Ethereum Token Index'
+        }, {
+            id: 'EVEN_ETH',
+            text: 'Bletchley Ethereum Token Even Index'
+        }, {
             id: 'INDEX_TWENTY',
             text: 'Bletchley 20 Index'
         }, {
             id: 'EVEN_TWENTY',
             text: 'Bletchley 20 Even Index'
         }, {
-            id: 'INDEX_ETH',
-            text: 'Bletchley Ethereum Token Index'
+            id: 'FORTY_INDEX',
+            text: 'Bletchley 40 Index'
         }, {
-            id: 'EVEN_ETH',
-            text: 'Bletchley Ethereum Token Even Index'
+            id: 'FORTY_EVEN_INDEX',
+            text: 'Bletchley 40 Even Index'
+        }, {
+            id: 'TOTAL_INDEX',
+            text: 'Bletchley Total Index'
+        }, {
+            id: 'TOTAL_EVEN_INDEX',
+            text: 'Bletchley Total Even Index'
+        }, {
+            id: 'CURRENCY_SECTOR',
+            text: 'Bletchley Currency Index'
+        }, {
+            id: 'PLATFORM_SECTOR',
+            text: 'Bletchley Platform Index'
+        }, {
+            id: 'APPLICATION_SECTOR',
+            text: 'Bletchley Application Index'
         }],
         currency: [{
             id: 'USD',
@@ -310,7 +331,7 @@ var Config = {
             scales: {
                 yAxes: [{
                     gridLines: {
-                        color: "rgba(0, 100, 100, 0.3)"
+                        color: "rgba(0, 100, 100, 0.5)"
                     },
                     ticks: {
                         beginAtZero: false,
@@ -346,10 +367,10 @@ var Config = {
                         displayFormats: {
                             'minute': 'H:mm',
                             'hour': 'MMM D',
-                            'day': 'MMM D',
-                            'week': 'MMM',
-                            'month': 'MMM',
-                            'year': 'MMM'
+                            'day': 'MMM YY',
+                            'week': 'MMM YY',
+                            'month': 'MMM YY',
+                            'year': 'YY'
                         }
                     },
                     scaleLabel: {
