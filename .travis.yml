@@ -1,2 +1,8 @@
 language: java
-
+notifications:
+  email:
+    recipients:
+      - BletchleyIndexes@gmail.com
+      - froehlich@uwalumni.com
+    on_success: always # default: never
+    on_failure: always # default: always
