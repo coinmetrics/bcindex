@@ -7,4 +7,4 @@ notifications:
     on_success: always # default: never
     on_failure: always # default: always
 
-script: bundle exec mvn clean package && mvn clean 
+script: mvn clean package && ./deploy_all_stage.sh
