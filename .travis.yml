@@ -6,3 +6,5 @@ notifications:
       - froehlich@uwalumni.com
     on_success: always # default: never
     on_failure: always # default: always
+
+script: bundle exec mvn clean package && mvn clean 

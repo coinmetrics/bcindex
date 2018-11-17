@@ -18,8 +18,8 @@ STATIC_CONSTANTS_JAVA_FILE = "../index-data/src//main/java/com/frobro/bcindex/we
 
 list_indexes = ['10' , '20' , '40' , 'Total' , 'ETH' , 'Currency' , 'Platform' , 'Application']
 weights_API_list = ['TEN' , 'TWENTY' , 'FORTY' , 'TOTAL' , 'ETHEREUM' , 'CURRENCY' , 'PLATFORM' , 'APPLICATION']
-old_month = 'october'            #change these every rebalance
-new_month = 'november'          #change these every rebalance
+old_month = 'november'            #change these every rebalance
+new_month = 'december'          #change these every rebalance
 
 
 # In[7]:
