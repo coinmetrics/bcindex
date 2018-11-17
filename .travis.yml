@@ -7,4 +7,4 @@ notifications:
     on_success: always # default: never
     on_failure: always # default: always
 
-script: mvn clean package && mvn clean 
+script: mvn clean package && mvn clean heroku:deploy -P stage
