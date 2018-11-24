@@ -1,6 +1,7 @@
 language: java
 notifications:
   email:
+    on_pull_requests: true
     recipients:
       - BletchleyIndexes@gmail.com
       - froehlich@uwalumni.com
