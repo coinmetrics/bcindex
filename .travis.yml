@@ -7,4 +7,4 @@ notifications:
     on_success: always # default: never
     on_failure: always # default: always
 
-script: mvn clean package && ./deploy_all_stage.sh
+script: mvn clean package # && ./deploy_all_stage.sh # change this to deploy to prod to 
