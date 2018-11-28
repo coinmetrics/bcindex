@@ -2,10 +2,8 @@ package com.frobro.bcindex.web.service.apis;
 
 import com.frobro.bcindex.web.domain.Index;
 import com.frobro.bcindex.web.service.rules.*;
-import com.frobro.bcindex.web.testframework.HttpApiMock;
 import org.junit.Test;
 
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -13,9 +11,9 @@ import java.util.Set;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Unit test for simple App.
+ * Nomics Integration test
  */
-public class ApiTest {
+public class ApiIntegrationTest {
 
     @Test
     public void testNomicsParsing() throws Exception {
@@ -23,9 +21,9 @@ public class ApiTest {
         Set<String> coins = getCoins();
         NomicsApi nomics = new NomicsApi();
         nomics.batchCoins(coins);
-        nomics.mock(new HttpApiMock());
 
         // when
+        // this will make an external api call to nomics
         Map<String, Index> result = nomics.callBatchedData();
 
         // then
