@@ -3,7 +3,7 @@ language: java
 branches:
   only:
     - index_rel
-    - index_production_release
+    - index_rel_production
 notifications:
   email:
     on_pull_requests: true
