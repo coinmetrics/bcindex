@@ -1,4 +1,9 @@
 language: java
+# whitelist
+branches:
+  only:
+    - index_rel
+    - index_rel_production
 notifications:
   email:
     on_pull_requests: true

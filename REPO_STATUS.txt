@@ -1,4 +1,0 @@
-
-need to create another maven module to house the h2 logic. so if you want
-h2 functionality in your app (ie. index-data and index-api) you just add
-the h2 module to your classpath
