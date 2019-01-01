@@ -647,7 +647,7 @@ table.download-table tbody tr:hover {
 
 @media screen and (max-width: 600px) {
     .containerbody{margin-left:2.5%;margin-right:2.5%;}
-    .containerbodyblog{margin-left:2.5%;margin-right:2.5%;}
+    .containerbodyblog{margin-left:2.5%;margin-right:2.5%;max-width:450px;}
     .topnav{padding-left:2.5%;}
     .hide-large{margin-left:0%;}
     .btn-timeframe{display:none;}
@@ -698,7 +698,7 @@ table.download-table tbody tr:hover {
 
 @media screen and (max-width: 992px) and (min-width: 601px) {
     .containerbody{margin-left:10%;margin-right:10%;}
-    .containerbodyblog{margin-left:20%;margin-right:20%;}
+    .containerbodyblog{margin-left:20%;margin-right:20%;max-width:450px;}
     .containerdownloads{margin-left:10%;margin-right:10%;}
     .topnav{padding-left: 10%}
     .hide-large{margin-left:8%;}
@@ -734,7 +734,7 @@ table.download-table tbody tr:hover {
 @media screen and (min-width: 993px) {
     .hide-large{display:none!important}
     .containerbody{margin-left:25%;margin-right:25%;}
-    .containerbodyblog{margin-left:30%;margin-right:30%;max-width:500px;justify-content: center;align-content: center;}
+    .containerbodyblog{margin-left:30%;margin-right:30%;max-width:450px;justify-content: center;align-content: center;}
     .containerdownloads{margin-left:25%;margin-right:25%;}
     .topnav{padding-left:25%;}
     .btn-timeframe-mobile{display:none;}
