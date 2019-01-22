@@ -17,6 +17,7 @@ target-eclipse/
 build_profiles/
 lib/
 info/
+backup/
 **/node_modules/**
 Pipfile.lock
 Pipfile
