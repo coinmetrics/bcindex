@@ -56,6 +56,14 @@ public class BletchDate {
     return getZeroUtc(Clock.systemUTC(),0);
   }
 
+  public static long getZeroUtcToday(Clock clock) {
+    return getZeroUtc(clock, 0);
+  }
+
+  public static long getZeroUtcTomorrow() {
+    return getZeroUtc(Clock.systemUTC(), 1);
+  }
+
   public static long getZeroUtcTomorrow(Clock clock) {
     return getZeroUtc(clock,1);
   }
@@ -81,7 +89,7 @@ public class BletchDate {
     return daysToMillis(months * 31);
   }
 
-  private static long daysToMillis(long days) {
+  public static long daysToMillis(long days) {
     return TimeUnit.DAYS.toMillis(days);
   }
 
