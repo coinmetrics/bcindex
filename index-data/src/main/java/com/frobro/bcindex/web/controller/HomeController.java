@@ -4,8 +4,10 @@ import com.frobro.bcindex.core.db.domain.ApplicationRepo;
 import com.frobro.bcindex.core.db.domain.CurrencyRepo;
 import com.frobro.bcindex.core.db.domain.PlatformRepo;
 import com.frobro.bcindex.core.db.service.*;
+import com.frobro.bcindex.web.service.DailyTimer;
 import com.frobro.bcindex.web.service.TickerService;
 import com.frobro.bcindex.web.service.TimerService;
+import com.frobro.bcindex.web.service.persistence.DailyTimerRepo;
 import com.frobro.bcindex.web.service.publish.DailyWeightPubService;
 import com.frobro.bcindex.web.service.publish.PricePublishService;
 import com.frobro.bcindex.web.service.publish.WeightPublishService;
@@ -24,26 +26,29 @@ public class HomeController {
 
   private TickerService tickerService = new TickerService();
   private TimerService timerService;
-  private WeightPublishService weightPublisher = new WeightPublishService();
-  private PricePublishService pricePublisher = new PricePublishService();
-  private DailyWeightPubService dailyWeightPub = new DailyWeightPubService();
+  private WeightPublishService weightPublisher;
+  private PricePublishService pricePublisher;
+  private DailyWeightPubService dailyWeightPub;
 
   @Autowired
-  public void setEnvironment(Environment env) {
-    // pull values from application.properties
-    weightPublisher.createPublishEndPoint(env.getProperty(weightPublisher.publishEndPtKey()));
-    pricePublisher.createPublishEndPoint(env.getProperty(pricePublisher.publishEndPtKey()));
-    dailyWeightPub.createPublishEndPoint(env.getProperty(dailyWeightPub.publishEndPtKey()));
-  }
-
-  @Autowired
-  public void init(IndexRepo repo, EvenIdxRepo eRepo,
+  public void init(Environment env, IndexRepo repo, EvenIdxRepo eRepo,
                    TwentyRepo tRepo, TwentyEvenRepo teRepo,
                    EthRepo etRepo, EthEvenRepo eteRepo,
                    FortyIdxRepo fRepo, FortyEvenIdxRepo feRepo,
                    TotalRepo toRepo, TotalEvenRepo toeRepo,
                    CurrencyRepo cRepo, PlatformRepo pRepo,
-                   ApplicationRepo aRepo) {
+                   ApplicationRepo aRepo, DailyTimerRepo dtr) {
+
+    DailyTimer.setRepo(dtr);
+
+    weightPublisher = new WeightPublishService();
+    pricePublisher = new PricePublishService();
+    dailyWeightPub = new DailyWeightPubService();
+
+    // pull values from application.properties
+    weightPublisher.createPublishEndPoint(env.getProperty(weightPublisher.publishEndPtKey()));
+    pricePublisher.createPublishEndPoint(env.getProperty(pricePublisher.publishEndPtKey()));
+    dailyWeightPub.createPublishEndPoint(env.getProperty(dailyWeightPub.publishEndPtKey()));
 
     tickerService.setIndexRepo(repo, eRepo,
                                tRepo, teRepo,

@@ -1,18 +1,44 @@
 package com.frobro.bcindex.web.service.publish;
 
 import com.frobro.bcindex.core.model.WeightApi;
-import com.frobro.bcindex.core.service.BletchDate;
+import com.frobro.bcindex.web.service.DailyTimer;
+import com.frobro.bcindex.web.service.persistence.DailyFireTimes;
+import com.frobro.bcindex.web.service.persistence.DailyTimerRepo;
 import com.frobro.bcindex.web.testframework.MockDailyWeightPubService;
+import org.junit.After;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import java.time.ZoneOffset;
 import java.util.concurrent.TimeUnit;
 
 import static java.util.concurrent.TimeUnit.HOURS;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.junit.Assert.assertEquals;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class DailyPublishTest {
+
+  private DailyTimerRepo repo;
+
+  @Autowired
+  public void setup(DailyTimerRepo repo) {
+    this.repo = repo;
+    DailyTimer.setRepo(this.repo);
+  }
+
+  @After
+  public void tearDown() {
+    repo.deleteAll();
+  }
 
   @Test
   public void shouldNotPublishUnlessMore24HoursPass() {
@@ -53,14 +79,12 @@ public class DailyPublishTest {
   }
 
   private DeloreanClock getUtcClock() {
-    DeloreanClock clock = new DeloreanClock();
-    clock.setInitialTime(BletchDate.getZeroUtcToday());
-    return clock;
+    return DeloreanClock.getUtcClock();
   }
 
   @Test
   public void randomTest() {
-    // given a time duration
+    // given a time duration of 8 days
     int numHours = dayToHours(8);
 
     // and
@@ -90,6 +114,45 @@ public class DailyPublishTest {
       clock.forwardHours(1);
       data.setTime(clock.millis());
     }
+  }
+
+  @Test
+  public void existingFireTimesInDb() {
+    DeloreanClock clock = getUtcClock();
+
+    DailyTimer timer = new DailyTimer(DailyWeightPubService.getTimerName(),clock);
+    clock.forwardHours(25);
+    if (timer.shouldFire(clock.millis())) {
+      timer.fired();
+    }
+
+    clock.forwardDays(1);
+    if (timer.shouldFire(clock.millis())) {
+      timer.fired();
+    }
+
+    assertEquals(2L, timer.getTimesFired());
+    assertEquals(2L, repo.count());
+
+    DailyWeightPubService pubService = new MockDailyWeightPubService(clock);
+
+    WeightApi data = new WeightApi();
+    clock.forwardHours(5);
+    data.setTime(clock.millis());
+
+    // when
+    pubService.publish(data);
+    // and no publish happened because the time is not passed 0 UTC
+    assertEquals(0, pubService.getNumTimesPublished());
+    // and move time forward past 0 UTC
+    clock.forwardHours(24);
+    // set the new time on the data
+    data.setTime(clock.millis());
+    // and call publish again
+    pubService.publish(data);
+
+    // then expect one publish
+    assertEquals(1, pubService.getNumTimesPublished());
   }
 
   private boolean dayElapsed(int numHours) {
