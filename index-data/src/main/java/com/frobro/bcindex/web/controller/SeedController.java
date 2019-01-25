@@ -62,8 +62,7 @@ public class SeedController {
 
     repo = PrimeRepo.getRepo(oRepo,eRepo,twRepo,teRepo,ethRepo,eteRepo,
         fRepo,feRepo,toRepo,toeRepo,cRepo,pRepo,aRepo);
-    tickerService.setIndexRepo(oRepo,eRepo,twRepo,teRepo,ethRepo,eteRepo,
-        fRepo,feRepo,toRepo,toeRepo,cRepo,pRepo,aRepo);
+    tickerService.setIndexRepo(repo);
 
     tickerService.setDailyPxPublisher(pricePublisher);
     tickerService.setWeightPublisher(weightPublisher);

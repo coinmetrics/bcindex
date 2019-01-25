@@ -50,12 +50,14 @@ public class HomeController {
     pricePublisher.createPublishEndPoint(env.getProperty(pricePublisher.publishEndPtKey()));
     dailyWeightPub.createPublishEndPoint(env.getProperty(dailyWeightPub.publishEndPtKey()));
 
-    tickerService.setIndexRepo(repo, eRepo,
-                               tRepo, teRepo,
-                               etRepo, eteRepo,
-                               fRepo, feRepo,
-                               toRepo, toeRepo,
-                               cRepo, pRepo, aRepo);
+    PrimeRepo primeRepo = PrimeRepo.getRepo(repo, eRepo,
+        tRepo, teRepo,
+        etRepo, eteRepo,
+        fRepo, feRepo,
+        toRepo, toeRepo,
+        cRepo,pRepo,aRepo);
+
+    tickerService.setIndexRepo(primeRepo);
 
     tickerService.setWeightPublisher(weightPublisher);
     tickerService.setDailyPxPublisher(pricePublisher);
