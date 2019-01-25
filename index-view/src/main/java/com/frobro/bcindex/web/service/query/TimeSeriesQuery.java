@@ -26,7 +26,7 @@ public class TimeSeriesQuery {
   public TimeSeriesQuery(RequestDto req) {
     this.req = req;
     this.currency = getCurrColName(req.currency);
-    table = getIdxColName(req.index);
+    table = getTableName(req.index);
   }
 
   public String getCurrency() {
@@ -47,7 +47,7 @@ public class TimeSeriesQuery {
     int numOfPoints = req.timeFrame.getNumDataPoints();
     int numBack = req.timeFrame.getTimeStep();
 
-    String table = getIdxColName(req.index);
+    String table = getTableName(req.index);
     String idForTimeFrame = lastIdOfInterest(numOfPoints, table);
 
     String query = "select last." + currency + " as "
@@ -76,7 +76,7 @@ public class TimeSeriesQuery {
     return query;
   }
 
-  private String getIdxColName(IndexType type) {
+  protected String getTableName(IndexType type) {
     if (type == IndexType.EVEN_INDEX) {
       return "even_index";
     }

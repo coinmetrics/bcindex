@@ -1,16 +1,14 @@
 package com.frobro.bcindex.web.service.query;
 
 import com.frobro.bcindex.core.service.BletchDate;
-import com.frobro.bcindex.web.model.api.ApiResponse;
-import com.frobro.bcindex.web.model.api.MaxApiResponse;
-import com.frobro.bcindex.web.model.api.RequestDto;
-import com.frobro.bcindex.web.model.api.TimeFrame;
+import com.frobro.bcindex.web.model.api.*;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
  * Created by rise on 6/15/17.
  */
 public class MaxTimeQuery extends TimeSeriesQuery {
+  private static final String MAX_TABLE_NAME = "daily_values";
   private static final String ENTRIES = "entries";
   private static final String NUM = "num";
 
@@ -77,5 +75,10 @@ public class MaxTimeQuery extends TimeSeriesQuery {
     + " from (select max(bletch_id) as count from " + table+ ") as modnum) ";
 
     return modNumQuery;
+  }
+
+  @Override
+  protected String getTableName(IndexType type) {
+    return MAX_TABLE_NAME;
   }
 }

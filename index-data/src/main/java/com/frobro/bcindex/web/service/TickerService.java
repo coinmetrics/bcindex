@@ -10,6 +10,7 @@ import com.frobro.bcindex.web.domain.Index;
 import com.frobro.bcindex.web.model.BletchleyData;
 import com.frobro.bcindex.web.service.apis.CryptoCompare;
 import com.frobro.bcindex.web.service.apis.NomicsApi;
+import com.frobro.bcindex.web.service.persistence.DailyDataSaver;
 import com.frobro.bcindex.web.service.persistence.IndexDbDto;
 import com.frobro.bcindex.web.service.publish.DailyWeightPubService;
 import com.frobro.bcindex.web.service.publish.PricePublishService;
@@ -50,6 +51,7 @@ public class TickerService {
 
   // repos
   PrimeRepo repo;
+  private DailyDataSaver dailyDataSaver;
   // db data
   private IndexDbDto lastIndex;
   private IndexDbDto lastEvenIndex;
@@ -77,20 +79,8 @@ public class TickerService {
 
   public TickerService() {}
 
-  public void setIndexRepo(IndexRepo repo, EvenIdxRepo eRepo,
-                           TwentyRepo tRepo, TwentyEvenRepo teRepo,
-                           EthRepo etRepo, EthEvenRepo eteRepo,
-                           FortyIdxRepo fRepo, FortyEvenIdxRepo feRepo,
-                           TotalRepo toRepo, TotalEvenRepo toeRepo,
-                           CurrencyRepo currRepo, PlatformRepo pRepo,
-                           ApplicationRepo aRepo) {
-
-    this.repo = PrimeRepo.getRepo(repo, eRepo,
-                                  tRepo, teRepo,
-                                  etRepo, eteRepo,
-                                  fRepo, feRepo,
-                                  toRepo, toeRepo,
-                                  currRepo,pRepo,aRepo);
+  public void setIndexRepo(PrimeRepo repo) {
+    this.repo = repo;
   }
 
   public void setWeightPublisher(WeightPublishService publisher) {
@@ -417,6 +407,11 @@ public class TickerService {
     saveIndexForty();
     saveIndexTotal();
     saveSector();
+    saveDailyIfNecessary();
+  }
+
+  private void saveDailyIfNecessary() {
+    Object o = lastIndex.indexValueUsd;
   }
 
   private void saveIndexTen() {
