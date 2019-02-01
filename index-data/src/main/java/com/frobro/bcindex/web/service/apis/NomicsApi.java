@@ -13,10 +13,11 @@ import java.util.*;
 public class NomicsApi  {
   private static final Logger LOG = LoggerFactory.getLogger(NomicsApi.class);
 
-  private static final String BASE_URL = "https://api.nomics.com/v1/prices";
+  private static final String BASE_URL = "https://api.nomics.com/v1/prices/custom";
   private static final String API_KEY = "8ab88c64570680aeb728a3109e69dd96";
   private static final String DELIM = "?key=";
-  private static final String NOMICS_END_PT = BASE_URL + DELIM + API_KEY;
+  private static final String EXCLUDE_EXCHANGES = "&exchange_exclude=gdax";
+  private static final String NOMICS_END_PT = BASE_URL + DELIM + API_KEY + EXCLUDE_EXCHANGES;
   private static final String SYMBOL_KEY = "currency";
   private static final String PRICE_KEY = "price";
   private static final String BITCOIN_SYMBOL = "BTC";
