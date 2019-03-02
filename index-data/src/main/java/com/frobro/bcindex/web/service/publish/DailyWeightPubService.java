@@ -32,7 +32,8 @@ public class DailyWeightPubService extends PublishService {
   }
 
   public void publish(WeightApi data) {
-    if (publishTimeMillis - data.getTime() <= 0) {
+//    if (publishTimeMillis - data.getTime() <= 0) {
+    if (true) {
       publish(data.getWeightDto());
       resetPublishTime();
       publishCount++;
