@@ -3,12 +3,7 @@ import json
 import datetime
 import time
 
-def checkDaily():
-    prod = "http://bletchleyindexes.com/daily/ten/even"
-    stage = "http://stage-index-view.herokuapp.com/daily/ten"
-    local = "http://localhost:8090/daily/ten"
-
-    endPt = prod
+def checkDaily(endPt):
     print("hitting end point: " + endPt)
     print("")
 
@@ -20,12 +15,15 @@ def toLocalDate(epoch):
 
 
 ########## start script ##########
+prod = "http://bletchleyindexes.com/daily/ten/even"
+stage = "http://stage-index-view.herokuapp.com/daily/ten"
+local = "http://localhost:8090/daily/ten"
 
-body = checkDaily().text
+body = checkDaily(local).text
 bodyjson = json.loads(body)
 
 for ele in bodyjson:
-    print ele['pxBtc']
-    print ele['pxUsd']
-    print toLocalDate(long(ele['time']))
-    print ""
+    print(ele['pxBtc'])
+    print(ele['pxUsd'])
+    print(toLocalDate(int(ele['time'])))
+    print("")

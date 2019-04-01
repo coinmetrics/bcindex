@@ -15,8 +15,8 @@ public class DailyWeightPubService extends PublishService {
 
   // WARNING
   // possible data loss if app dies after 0 UTC
-  // but before a publish happens. In this rare event
-  // can just add the missing data point to the db
+  // but before a publish happens. 
+  // TODO: persist the time somewhere and read it on startup to fix
   public DailyWeightPubService() {
     resetPublishTime();
   }
