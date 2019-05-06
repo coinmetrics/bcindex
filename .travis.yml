@@ -3,7 +3,7 @@ language: java
 branches:
   only:
     - index_rel
-    - index_production_release
+    - index_rel_production
 notifications:
   email:
     on_pull_requests: true
@@ -13,3 +13,4 @@ notifications:
     on_success: always # default: never
     on_failure: always # default: always
 
+script: mvn clean package  && ./deploy_all_prod.sh 
