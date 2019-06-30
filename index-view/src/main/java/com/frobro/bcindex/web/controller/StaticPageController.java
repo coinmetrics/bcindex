@@ -119,4 +119,9 @@ public class StaticPageController {
   public String blog_june_2019() {
   return "blog_june_2019";
   }
+
+  @RequestMapping("/blog/blog_july_2019")
+  public String blog_july_2019() {
+  return "blog_july_2019";
+  }
 }
