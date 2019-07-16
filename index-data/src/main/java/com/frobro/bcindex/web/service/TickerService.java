@@ -9,7 +9,6 @@ import com.frobro.bcindex.web.bclog.BcLog;
 import com.frobro.bcindex.web.domain.Index;
 import com.frobro.bcindex.web.model.BletchleyData;
 import com.frobro.bcindex.web.service.apis.CryptoCompare;
-import com.frobro.bcindex.web.service.apis.NomicsApi;
 import com.frobro.bcindex.web.service.persistence.IndexDbDto;
 import com.frobro.bcindex.web.service.publish.DailyWeightPubService;
 import com.frobro.bcindex.web.service.publish.PricePublishService;
@@ -30,7 +29,7 @@ import static com.frobro.bcindex.core.model.IndexName.*;
 public class TickerService {
 
   private static final BcLog log = BcLog.getLogger(TickerService.class);
-  private final NomicsApi cryptoCompare = new NomicsApi();
+  private final CryptoCompare dataProvider = new CryptoCompare();
   private long updateTime;
 
   // publishers
@@ -227,7 +226,7 @@ public class TickerService {
     clearInputData();
 
     // batch all api calls
-    cryptoCompare.addBtcToBatch()
+    dataProvider.addBtcToBatch()
                .batchCoins(inputDataTen.getMembers())
                .batchCoins(inputDataTwenty.getMembers())
                .batchCoins(inputEth.getMembers())
@@ -238,11 +237,11 @@ public class TickerService {
                .batchCoins(inputCurrency.getMembers());
 
     // call the api to get the data
-    Map<String,Index> apiData = cryptoCompare.callBatchedData();
+    Map<String,Index> apiData = dataProvider.callBatchedData();
 
     // get bit coin latest
     // TODO: move this to batch call
-    updateTickerBtc(cryptoCompare.extractBtcFromData(apiData));
+    updateTickerBtc(dataProvider.extractBtcFromData(apiData));
 
     updateTime = BletchClock.getTimeEpochMillis();
 
