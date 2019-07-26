@@ -16,32 +16,7 @@ import static org.junit.Assert.assertEquals;
 public class ApiIntegrationTest {
 
     @Test
-    public void testNomicsParsing() throws Exception {
-        // given
-        Set<String> coins = getCoins();
-        NomicsApi nomics = new NomicsApi();
-        nomics.batchCoins(coins);
+    public void emptyFunction()  {}
 
-        // when
-        // this will make an external api call to nomics
-        Map<String, Index> result = nomics.callBatchedData();
-
-        // then
-        assertEquals(coins, result.keySet());
-    }
-
-    private Set<String> getCoins() {
-        BusRulesTotal total = new BusRulesTotal();
-        BusRulesApp sect = new BusRulesApp();
-        BusRulesPlatform plat = new BusRulesPlatform();
-        BusRulesCurrency curr = new BusRulesCurrency();
-
-        Set<String> allCoins = new HashSet<>();
-
-        allCoins.addAll(total.getIndexes());
-        allCoins.addAll(sect.getIndexes());
-        allCoins.addAll(plat.getIndexes());
-        allCoins.addAll(curr.getIndexes());
-        return allCoins;
-    }
+    
 }
