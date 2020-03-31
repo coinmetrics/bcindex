@@ -165,4 +165,9 @@ public class StaticPageController {
   return "blog_march_2020";
   }
 
+  @RequestMapping("/blog/blog_april_2020")
+  public String blog_april_2020() {
+  return "blog_april_2020";
+  }
+
 }
