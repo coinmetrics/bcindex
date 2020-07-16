@@ -179,15 +179,22 @@ public class StaticPageController {
   public String blog_june_2020() {
   return "blog_june_2020";
   }
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> ff6bebe7d726d2cf7776930cc93cd684854e29a1
   @RequestMapping("/blog/blog_july_2020")
   public String blog_july_2020() {
   return "blog_july_2020";
   }
+<<<<<<< HEAD
 
   @RequestMapping("/blog/blog_august_2020")
   public String blog_august_2020() {
   return "blog_august_2020";
   }
 
+=======
+>>>>>>> ff6bebe7d726d2cf7776930cc93cd684854e29a1
 }
